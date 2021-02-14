@@ -40,7 +40,10 @@ class MainViewModel: ObservableObject {
     func dialCode(url: String) {
         if let url = URL(string: "tel://\(url)"),
            UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [:], completionHandler: { hasOpened in
+                print(hasOpened)
+            })
+            selectedCode = ""
         } else {
             // Can not dial this code
             self.error = (true, "Can not dial this code")

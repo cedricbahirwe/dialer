@@ -11,10 +11,7 @@ import Foundation
 
 struct ContentView: View {
     var body: some View {
-        TestingView()
-//        VStack {
-//            Text("Hello")
-//        }
+        HomeView()
     }
 }
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		826BC40625D9772200A45C7B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40525D9772200A45C7B /* Models.swift */; };
+		826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40825D9774400A45C7B /* PassCodeView.swift */; };
 		827F2CEE25D95BD900C7C40A /* CallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CED25D95BD900C7C40A /* CallsView.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
 		827F2CF625D9653500C7C40A /* DialerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF525D9653500C7C40A /* DialerRow.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		826BC40525D9772200A45C7B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		826BC40825D9774400A45C7B /* PassCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeView.swift; sourceTree = "<group>"; };
 		827F2CED25D95BD900C7C40A /* CallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsView.swift; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		827F2CF525D9653500C7C40A /* DialerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerRow.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 				827F2CED25D95BD900C7C40A /* CallsView.swift */,
 				827F2CFA25D9687700C7C40A /* TestingView.swift */,
 				827F2CFD25D96B2F00C7C40A /* HomeView.swift */,
+				826BC40825D9774400A45C7B /* PassCodeView.swift */,
+				826BC40525D9772200A45C7B /* Models.swift */,
 				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
 				827F2CF525D9653500C7C40A /* DialerRow.swift */,
 				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
@@ -167,11 +173,13 @@
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				827F2CEE25D95BD900C7C40A /* CallsView.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
+				826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
 				827F2CF625D9653500C7C40A /* DialerRow.swift in Sources */,
 				827F2CFB25D9687700C7C40A /* TestingView.swift in Sources */,
 				82D41FCE25D1C78E00551D22 /* Helpers.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
+				826BC40625D9772200A45C7B /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
