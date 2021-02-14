@@ -54,7 +54,6 @@ struct HomeView: View {
                             self.bottomTextFieldPadding = abs(value)
                         }
                     })
-                    
                 }
                 
                 if showPinView == false {
@@ -128,7 +127,7 @@ struct HomeView: View {
             .background(
                 Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all)
             )
-            .navigationBarTitle("") //"Dialers📞📱☎️
+            .navigationBarTitle("", displayMode: .inline) //"Dialers📞📱☎️
             .navigationBarHidden(true)
         }
     }
