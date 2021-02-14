@@ -9,16 +9,15 @@ import SwiftUI
 
 
 struct PassCodeCodeView: UIViewRepresentable {
-    
-    
-    
+    @Binding var secureFields: Bool
+
     @State var viewWidth: CGFloat = .zero
     @State var txtFirst: UITextField = UITextField()
     @State var txtSecond: UITextField = UITextField()
     @State var txtThird: UITextField = UITextField()
     @State var txtFourth: UITextField = UITextField()
     @State var txtFifth: UITextField = UITextField()
-    
+        
     @Environment(\.colorScheme) var colorScheme
     
     var action: ((String) -> ())
@@ -30,7 +29,7 @@ struct PassCodeCodeView: UIViewRepresentable {
         field.placeholder = ""
         field.clearButtonMode = .whileEditing
         field.isSecureTextEntry = true
-        field.textColor = colorScheme == .light ?  UIColor.black : UIColor.white
+        field.textColor = UIColor.label
         field.font = UIFont.systemFont(ofSize: 35, weight: .black)
         field.textAlignment = .center
         field.autocorrectionType = .no
@@ -41,7 +40,7 @@ struct PassCodeCodeView: UIViewRepresentable {
         field.heightAnchor.constraint(equalToConstant: fieldHeight).isActive = true
         field.widthAnchor.constraint(equalToConstant: viewWidth-10).isActive = true
         
-        field.layer.borderColor = colorScheme == .light ?  UIColor.black.cgColor : UIColor.white.cgColor
+        field.layer.borderColor = UIColor.label.cgColor
         field.layer.borderWidth = 2
         field.layer.cornerRadius = 8
         
@@ -50,6 +49,7 @@ struct PassCodeCodeView: UIViewRepresentable {
     func updateViews(field: UITextField) {
         field.layer.borderColor = UIColor.label.cgColor
         field.textColor = UIColor.label
+        field.isSecureTextEntry = secureFields
     }
     
     func makeUIView(context: Context) -> UIStackView {
@@ -139,13 +139,14 @@ struct PassCodeCodeView: UIViewRepresentable {
                     passCode.append(fourthDigit)
                     passCode.append(fifthDigit)
                     
-                    parent.action(passCode)
-                    
-                    parent.txtFirst.text = ""
-                    parent.txtSecond.text = ""
-                    parent.txtThird.text = ""
-                    parent.txtFourth.text = ""
-                    parent.txtFifth.text = ""
+                    if passCode.count == 5 {
+                        parent.action(passCode)
+                        parent.txtFirst.text = ""
+                        parent.txtSecond.text = ""
+                        parent.txtThird.text = ""
+                        parent.txtFourth.text = ""
+                        parent.txtFifth.text = ""
+                    }
                 }
                 return false
             }

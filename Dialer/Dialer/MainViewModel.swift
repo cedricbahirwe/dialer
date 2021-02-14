@@ -10,7 +10,7 @@ import SwiftUI
 
 class MainViewModel: ObservableObject {
     @Published var selectedCode: String = ""
-    @Published var selectedDialer: DialerOption = .airtimeBalance
+    @Published var selectedDialer: DialerOption? = nil
     
     @Published var error: (state: Bool, message: String) = (false, "")
     let elements = "0123456789*#"
@@ -19,16 +19,13 @@ class MainViewModel: ObservableObject {
 
         switch selectedDialer {
         case .airtimeBalance:
-            dialCode(url: selectedDialer.value)
+            if let dialer = selectedDialer {
+                dialCode(url: dialer.value)
+            }
             return
         default:
             break
         }
-//        if elements.contains(selectedCode) {
-//
-//        }
-        //        UIApplication.shared.endEditing(true)
-        
         if !selectedCode.isEmpty {
             dialCode(url: selectedCode)
         } else {
@@ -43,7 +40,9 @@ class MainViewModel: ObservableObject {
             UIApplication.shared.open(url, options: [:], completionHandler: { hasOpened in
                 print(hasOpened)
             })
+            self.error.state = false
             selectedCode = ""
+            UIApplication.shared.endEditing(true)
         } else {
             // Can not dial this code
             self.error = (true, "Can not dial this code")
