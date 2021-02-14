@@ -10,12 +10,14 @@ import Combine
 import Foundation
 
 enum DialerOption {
-    case airtime
+    case internet
+    case call
     case momo(option: MomoOption)
     
     var value: String {
         switch self {
-        case .airtime: return ""
+        case .internet: return "*345*"
+        case .call: return "*140*"
         case .momo(option: let option):
             switch option {
             case .airtime:
@@ -25,7 +27,6 @@ enum DialerOption {
             }
         }
     } 
-    
 }
 
 enum MomoOption: String {
@@ -38,6 +39,7 @@ struct Dial: Identifiable {
     var title: String
     var subAction: [SubDial]?
 }
+
 struct SubDial: Identifiable {
     var id = UUID()
     var title: String
@@ -46,65 +48,79 @@ struct SubDial: Identifiable {
 struct ContentView: View {
     
     @State private var bottomTextFieldPadding: CGFloat = .zero
-    
     @EnvironmentObject var mainVM: MainViewModel
     
     var dialers: [Dial] = [
-        Dial(title: "Buy Airtime ⏰"),
+        Dial(title: "Buy Internet Bundle ⏰"),
         Dial(title: "Buy Call Packs 📞"),
-        Dial(title: "Buy Money Mobile 💰"),
+        Dial(title: "Buy with Mobile Money 💰"),
         Dial(title: "Settings ⚙️"),
+        Dial(title: "Check Airtime Balance ⚖️"),
+        Dial(title: "Check Mobile Money Balance ⚖️💲"),
     ]
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(dialers) { dialer in
-                    Text(dialer.title)
-                        .fontWeight(.semibold)
+            VStack (spacing: 0){
+                HStack {
+                    Text("Dialers📞📱☎️")
+                        .font(.system(size: 35, weight: .bold))
+                    Spacer()
                 }
-            }
-            .listStyle(PlainListStyle())
-            .resignKeyboardOnDragGesture()
-            .onReceive(Publishers.keyboardHeight, perform: { value in
-                withAnimation(Animation.easeIn(duration: 0.16)) {
-                    self.bottomTextFieldPadding = abs(value)
-                }
-            })
-            .navigationBarTitle("Dialers📞📱☎️")
-            .overlay(
-                VStack(spacing: 0){
-                    if mainVM.error.state {
-                        Text("An error Occured")
-                            .foregroundColor(.red)
-                    }
-                    HStack {
-                        TextField("Enter Your Code", text: $mainVM.selectedCode)
-                            .foregroundColor(Color.white)
-                            .padding(.leading)
-                            .frame(height: 36)
-                            .background(Color.white.opacity(0.2).cornerRadius(5))
-                            .keyboardType(.phonePad)
-                        
-                        Button(action: mainVM.dial) {
-                            Text("Dial")
-                                .foregroundColor(.white)
-                                .frame(width:80, height: 36)
-                                .background(Color.green)
-                                .cornerRadius(5)
+                .padding()
+                ZStack(alignment: .bottom) {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            ForEach(dialers) { dialer in
+                                HStack {
+                                    Text(dialer.title)
+                                        .fontWeight(.semibold)
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal)
+
+                                    Spacer()
+                                }
+                            }
                         }
                     }
+                    .resignKeyboardOnDragGesture()
+                    .onReceive(Publishers.keyboardHeight, perform: { value in
+                        withAnimation(Animation.easeIn(duration: 0.16)) {
+                            self.bottomTextFieldPadding = abs(value)
+                        }
+                    })
                     
+                    VStack(spacing: 0){
+                        if mainVM.error.state {
+                            Text(mainVM.error.message)
+                                .foregroundColor(.red)
+                        }
+                        HStack {
+                            TextField("Enter Your Code", text: $mainVM.selectedCode)
+                                .foregroundColor(Color.white)
+                                .padding(.leading)
+                                .frame(height: 36)
+                                .background(Color.white.opacity(0.2).cornerRadius(5))
+                                .keyboardType(.phonePad)
+                            
+                            Button(action: mainVM.dial) {
+                                Text("Dial")
+                                    .foregroundColor(.white)
+                                    .frame(width:80, height: 36)
+                                    .background(Color.green)
+                                    .cornerRadius(5)
+                            }
+                        }
+                        
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(Color.black.opacity(0.9))
+                    .padding(.bottom, bottomTextFieldPadding)
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 5)
-                .background(Color.black.opacity(0.9))
-                .padding(.bottom, bottomTextFieldPadding)
-                
-                
-                , alignment: .bottom
-            )
-            
+            }
+            .navigationBarTitle("")//"Dialers📞📱☎️
+            .navigationBarHidden(true)
         }
     }
 }
@@ -126,9 +142,9 @@ class MainViewModel: ObservableObject {
     func dial() {
 
         
-        if elements.contains(selectedCode) {
-            
-        }
+//        if elements.contains(selectedCode) {
+//
+//        }
         withAnimation {
             self.error.state.toggle()
         }
