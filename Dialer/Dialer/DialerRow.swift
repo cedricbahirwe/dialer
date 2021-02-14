@@ -10,18 +10,22 @@ import SwiftUI
 struct DialerRow: View {
     let title: String
     let action: () -> ()
+    let lineLimit: Int
     
-    init(title: String, perfom: @escaping () -> () = { }) {
+    init(title: String, _ lineLimit: Int = 1, perfom: @escaping () -> () = { }) {
         self.title = title
         self.action = perfom
+        self.lineLimit = lineLimit
     }
     var body: some View {
         VStack {
             HStack {
                 Text(title)
                     .fontWeight(.semibold)
+                    .lineLimit(lineLimit)
+                    .minimumScaleFactor(0.5)
                     .padding(.vertical, 8)
-                    .padding(.horizontal)
+                    .padding(.leading)
                     .foregroundColor(Color(.label))
 
                 Spacer()
@@ -30,7 +34,5 @@ struct DialerRow: View {
             .onTapGesture(perform: action)
             Divider()
         }
-//        .buttonStyle(PlainButtonStyle())
-
     }
 }

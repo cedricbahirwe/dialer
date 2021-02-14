@@ -12,7 +12,7 @@ struct CallsView: View {
     @EnvironmentObject var mainVM: MainViewModel
     
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             HeaderView(title: "Calls Menu")
             NavigationLink(destination: CallsSecondView(), isActive: $goToIrekure) { }
             ScrollView {
@@ -43,7 +43,7 @@ struct CallsSecondView: View {
     
     @State private var goToOtherPacks = false
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             HeaderView(title: "Pick one option")
             NavigationLink(destination: CallsThirdView(), isActive: $goToOtherPacks) { }
             ScrollView {
@@ -67,7 +67,7 @@ struct CallsThirdView: View {
         "200 RWF = 3600S (60M) + 20 SMS + 5MBs"
     ]
     var body: some View {
-        VStack (spacing: 0){
+        VStack (spacing: 10) {
             HeaderView(title: "Pick one option")
             ScrollView {
                 ForEach(0..<options.count, id:\.self) { index  in
