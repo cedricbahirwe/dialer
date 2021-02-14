@@ -16,7 +16,10 @@ struct HomeView: View {
     
     @State private var showPinView = false
     
+    @State private var borderCodeColor = Color(.label)
     
+    
+    @State private var goToCallsView = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -28,17 +31,21 @@ struct HomeView: View {
                     }
                     .padding()
                     
+                    NavigationLink(destination: CallsView(), isActive: $goToCallsView) { Text("") }
                     ScrollView {
                         VStack(alignment: .leading) {
                             DialerRow(title: "Buy Internet Bundle ⏰")
-                            DialerRow(title: "Buy Call Packs 📞")
+                            DialerRow(title: "Buy Call Packs 📞") {
+                                goToCallsView.toggle()
+                            }
                             DialerRow(title: "Buy with Mobile Money 💰")
-                            DialerRow(title: "Settings ⚙️")
                             DialerRow(title: "Check Airtime Balance ⚖️", perfom: mainVM.dial)
                             DialerRow(title: "Check Mobile Money Balance ⚖️💲") {
                                 showPinView.toggle()
                                 mainVM.selectedDialer = .momo(option: .balance)
                             }
+                            DialerRow(title: "Settings ⚙️")
+
                         }
                     }
                     .resignKeyboardOnDragGesture()
@@ -109,7 +116,7 @@ struct HomeView: View {
                     .padding()
                     .background(Color(.systemBackground))
                     .cornerRadius(15)
-                    .shadow(radius: 3)
+                    .shadow(color: Color(.label), radius: 3)
                     .padding()
                     .offset(y: -100)
                     .offset(y: showPinView ? 0 : 1200)

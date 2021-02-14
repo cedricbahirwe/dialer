@@ -21,9 +21,11 @@ struct CallsView: View {
                 Text(option)
             }
             .listStyle(PlainListStyle())
-            .navigationBarTitle("Calls")
+            
             
         }
+        .navigationBarHidden(false)
+        .navigationBarTitle("Calls", displayMode: .inline)
     }
 }
 

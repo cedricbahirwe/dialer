@@ -10,12 +10,16 @@ import SwiftUI
 
 struct PassCodeCodeView: UIViewRepresentable {
     
+    
+    
     @State var viewWidth: CGFloat = .zero
     @State var txtFirst: UITextField = UITextField()
     @State var txtSecond: UITextField = UITextField()
     @State var txtThird: UITextField = UITextField()
     @State var txtFourth: UITextField = UITextField()
     @State var txtFifth: UITextField = UITextField()
+    
+    @Environment(\.colorScheme) var colorScheme
     
     var action: ((String) -> ())
     
@@ -26,7 +30,7 @@ struct PassCodeCodeView: UIViewRepresentable {
         field.placeholder = ""
         field.clearButtonMode = .whileEditing
         field.isSecureTextEntry = true
-        field.textColor = UIColor.label
+        field.textColor = colorScheme == .light ?  UIColor.black : UIColor.white
         field.font = UIFont.systemFont(ofSize: 35, weight: .black)
         field.textAlignment = .center
         field.autocorrectionType = .no
@@ -37,10 +41,15 @@ struct PassCodeCodeView: UIViewRepresentable {
         field.heightAnchor.constraint(equalToConstant: fieldHeight).isActive = true
         field.widthAnchor.constraint(equalToConstant: viewWidth-10).isActive = true
         
-        field.layer.borderColor = UIColor.label.cgColor
+        field.layer.borderColor = colorScheme == .light ?  UIColor.black.cgColor : UIColor.white.cgColor
         field.layer.borderWidth = 2
         field.layer.cornerRadius = 8
         
+    }
+    
+    func updateViews(field: UITextField) {
+        field.layer.borderColor = UIColor.label.cgColor
+        field.textColor = UIColor.label
     }
     
     func makeUIView(context: Context) -> UIStackView {
@@ -79,6 +88,13 @@ struct PassCodeCodeView: UIViewRepresentable {
     
     func updateUIView(_ uiViewController: UIStackView, context: Context) {
         
+        updateViews(field: txtFirst)
+        updateViews(field: txtSecond)
+        updateViews(field: txtThird)
+        updateViews(field: txtFourth)
+        updateViews(field: txtFifth)
+        
+
     }
 
     func makeCoordinator() -> PassCodeCodeView.Coordinator {

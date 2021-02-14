@@ -22,6 +22,7 @@ struct DialerRow: View {
                     .fontWeight(.semibold)
                     .padding(.vertical, 8)
                     .padding(.horizontal)
+                    .foregroundColor(Color(.label))
 
                 Spacer()
             }
@@ -29,5 +30,7 @@ struct DialerRow: View {
             .onTapGesture(perform: action)
             Divider()
         }
+//        .buttonStyle(PlainButtonStyle())
+
     }
 }
