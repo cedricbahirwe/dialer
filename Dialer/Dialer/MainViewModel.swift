@@ -50,6 +50,34 @@ class MainViewModel: ObservableObject {
 //            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 //            self.present(alert, animated: true, completion: nil)
         }
+        
+        
+    }
+    
+    enum DialingError: Error {
+        case canNotDial, other
+        var message: String {
+            switch self {
+            case .canNotDial:
+                return "Can not dial this code"
+            default:
+                return "Unknown error occured"
+            }
+        }
+    }
+    static func dialCode(url: String, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
+        if let url = URL(string: "tel://\(url)"),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: { hasOpened in
+                print(hasOpened)
+                completion(.success("Successfully Dialed"))
+            })
+            UIApplication.shared.endEditing(true)
+            
+        } else {
+            // Can not dial this code
+            completion(.failure(.canNotDial))
+        }
     }
     
     func checkError() throws {

@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+class PurchaseViewModel: ObservableObject {
+    @Published var composedCode: String = ""
+}
 
 struct DashBoardView: View {
     @State var isSearching = false
+    @StateObject var data = PurchaseViewModel()
     var body: some View {
         NavigationView {
             VStack {
@@ -38,52 +42,11 @@ struct DashBoardView: View {
                         )
                     }
                 }
-                
                 .padding()
-                Text("My Lists")
-                    .textCase(.uppercase)
-                    
-                    .foregroundColor(Color(.label))
-                    .font(Font.system(size: 22, weight: .semibold, design: .rounded))
                 
-                
-                Form {
-                    Section(header:
-                                HStack(spacing:0) {
-                                    
-                                    Text("My Lists")
-                                        .foregroundColor(Color(.label))
-                                        .font(Font.system(size: 22, weight: .semibold, design: .rounded))
-                                        .textCase(.lowercase.)
+                Spacer()
+                bottomBarView
 
-                                    
-                                    Spacer()
-                                    //                                    ProgressView()
-                                }
-                    ) {
-                        ForEach(0..<3) { i in
-                            NavigationLink(destination:Text("Destination"))
-                            {
-                                HStack {
-                                    Image(systemName: "list.bullet")
-                                        .imageScale(.small)
-                                        .frame(width: 30, height: 30)
-                                        .background(Color.black)
-                                        .clipShape(Circle())
-                                        .foregroundColor(.white)
-                                    Text("The line \(i)")
-                                        .foregroundColor(Color(.label))
-                                    Spacer()
-                                    Text("\(i+1)")
-                                        .foregroundColor(.gray)
-                                }
-                                
-                            }
-                        }
-                    }
-                }
-                Spacer()
-                Spacer()
             }
             .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
             .navigationBarTitle("", displayMode: .inline)
