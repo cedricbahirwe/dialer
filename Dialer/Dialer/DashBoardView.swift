@@ -8,45 +8,100 @@
 import SwiftUI
 class PurchaseViewModel: ObservableObject {
     @Published var composedCode: String = ""
+    
+    @Published var purchaseDetail = PurchaseDetailModel()
+    
+    @Published var showbottomSheet: Bool = false
+    
+    struct PurchaseDetailModel {
+        var amount: String = ""
+        var code: String = ""
+    }
 }
 
+
+fileprivate enum DragState {
+    case open
+    case closed
+    case dragging(position: CGFloat)
+}
+fileprivate enum Constants {
+    static let radius: CGFloat = 16
+    static let indicatorHeight: CGFloat = 6
+    static let indicatorWidth: CGFloat = 60
+    static let snapRatio: CGFloat = 0.25
+    static let minHeightRatio: CGFloat = 0.3
+}
 struct DashBoardView: View {
     @State var isSearching = false
     @StateObject var data = PurchaseViewModel()
+
+    @State private var dragState: DragState = .closed
+
+    private var dragGesture: some Gesture {
+        DragGesture().onChanged { value in
+            let position = value.startLocation.y + value.translation.height
+            self.dragState = .dragging(position: position)
+        }.onEnded { value in
+            let snapDistance = 600 * Constants.snapRatio
+            self.data.showbottomSheet = value.translation.height < snapDistance
+            self.dragState = self.data.showbottomSheet ? .open : .closed
+        }
+    }
     var body: some View {
         NavigationView {
-            VStack {
-                headerView
-                VStack(spacing: 15) {
-                    HStack(spacing: 15) {
-                        DashItemView(
-                            title: "Buy with Momo",
-                            icon: "wallet.pass"
-                        )
+            ZStack(alignment: .bottom) {
+                VStack {
+                    headerView
+                    VStack(spacing: 15) {
+                        HStack(spacing: 15) {
+                            DashItemView(
+                                title: "Buy with Momo",
+                                icon: "wallet.pass"
+                            )
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                data.showbottomSheet.toggle()
+                            }
+                            
+                            DashItemView(
+                                title: "Buy Directly",
+                                icon: "speedometer"
+                            )
+                        }
                         
-                        DashItemView(
-                            title: "Buy Directly",
-                            icon: "speedometer"
-                        )
+                        HStack(spacing: 15) {
+                            DashItemView(
+                                title: "All Options",
+                                icon: "archivebox.circle.fill"
+                            )
+                            
+                            DashItemView(
+                                title: "History",
+                                icon: "calendar.circle.fill"
+                            )
+                        }
                     }
+                    .padding()
                     
-                    HStack(spacing: 15) {
-                        DashItemView(
-                            title: "All Options",
-                            icon: "archivebox.circle.fill"
-                        )
-                        
-                        DashItemView(
-                            title: "History",
-                            icon: "calendar.circle.fill"
-                        )
-                    }
-                }
-                .padding()
-                
-                Spacer()
-                bottomBarView
+                    Spacer()
+                    bottomBarView
 
+                }
+                
+                PurchaseDetailView(data: data)
+                    .offset(y: data.showbottomSheet ? 0 : 605)
+                    .gesture(self.dragGesture)
+                    .animation(.interactiveSpring())
+            
+//                BottomSheetView(isOpen: $data.showbottomSheet, maxHeight: 600) {
+//                    PurchaseDetailView(data: data)
+//                        .offset(y: data.showbottomSheet ? 0 : 605)
+//                        .gesture(self.dragGesture)
+//                        .animation(.interactiveSpring())
+//                }
+//                .edgesIgnoringSafeArea(.all)
+                
             }
             .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
             .navigationBarTitle("", displayMode: .inline)
