@@ -56,6 +56,7 @@ struct PurchaseDetailView: View {
                     
                     Button {
                         edition = .none
+                        data.confirmPurchase()
                         
                     } label: {
                         Text("Confirm")
@@ -65,6 +66,7 @@ struct PurchaseDetailView: View {
                             .cornerRadius(8)
                             .foregroundColor(.white)
                     }
+                    .disabled(!validCode && !validAmount)
                 }
                 
                 PinView(input: storeInput())

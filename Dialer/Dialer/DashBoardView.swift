@@ -16,6 +16,24 @@ class PurchaseViewModel: ObservableObject {
     struct PurchaseDetailModel {
         var amount: String = ""
         var code: String = ""
+        
+        var fullCode: String {
+            "*182*2*1*1*1*\(amount)*\(code)#"
+        }
+        
+
+    }
+    
+    func confirmPurchase() {
+        
+        MainViewModel.dialCode(url: purchaseDetail.fullCode, completion: { result in
+            switch result {
+            case .success(let message):
+                print("Message is", message)
+            case .failure(let error):
+                print(error.message)
+            }
+        })
     }
 }
 
