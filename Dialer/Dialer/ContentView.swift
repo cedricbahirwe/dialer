@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import Combine
 import Foundation
 
 struct ContentView: View {
     var body: some View {
-        HomeView()
+        DashBoardView()
     }
 }
 
