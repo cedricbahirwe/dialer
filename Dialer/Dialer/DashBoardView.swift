@@ -6,36 +6,6 @@
 //
 
 import SwiftUI
-class PurchaseViewModel: ObservableObject {
-    @Published var composedCode: String = ""
-    
-    @Published var purchaseDetail = PurchaseDetailModel()
-    
-    @Published var showbottomSheet: Bool = false
-    
-    struct PurchaseDetailModel {
-        var amount: String = ""
-        var code: String = ""
-        
-        var fullCode: String {
-            "*182*2*1*1*1*\(amount)*\(code)#"
-        }
-        
-
-    }
-    
-    func confirmPurchase() {
-        
-        MainViewModel.dialCode(url: purchaseDetail.fullCode, completion: { result in
-            switch result {
-            case .success(let message):
-                print("Message is", message)
-            case .failure(let error):
-                print(error.message)
-            }
-        })
-    }
-}
 
 
 fileprivate enum DragState {
@@ -52,7 +22,7 @@ fileprivate enum Constants {
 }
 struct DashBoardView: View {
     @State var isSearching = false
-    @StateObject var data = PurchaseViewModel()
+    @StateObject var data = MainViewModel()
 
     @State private var dragState: DragState = .closed
 
@@ -77,7 +47,6 @@ struct DashBoardView: View {
                                 title: "Buy with Momo",
                                 icon: "wallet.pass"
                             )
-                            .contentShape(Rectangle())
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
@@ -95,9 +64,12 @@ struct DashBoardView: View {
                             )
                             
                             DashItemView(
-                                title: "History",
+                                title: "Check Intenet Balance",
                                 icon: "calendar.circle.fill"
                             )
+                            .onTapGesture(perform: {
+                                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Code@*/ /*@END_MENU_TOKEN@*/
+                            })
                         }
                     }
                     .padding()
@@ -157,14 +129,18 @@ struct DashItemView: View {
             }
             
             Text(title)
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundColor(.gray)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
         }
         .padding(8)
         .frame(maxWidth: .infinity)
         .frame(height: 80)
         .background(Color(.tertiarySystemBackground))
         .cornerRadius(12)
+        .contentShape(Rectangle())
+
     }
 }
 

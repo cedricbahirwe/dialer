@@ -9,50 +9,6 @@ import Foundation
 import SwiftUI
 
 class MainViewModel: ObservableObject {
-    @Published var selectedCode: String = ""
-    @Published var selectedDialer: DialerOption? = nil
-    
-    @Published var error: (state: Bool, message: String) = (false, "")
-    let elements = "0123456789*#"
-    
-    func dial() {
-
-        switch selectedDialer {
-        case .airtimeBalance:
-            if let dialer = selectedDialer {
-                dialCode(url: dialer.value)
-            }
-            return
-        default:
-            break
-        }
-        if !selectedCode.isEmpty {
-            dialCode(url: selectedCode)
-        } else {
-            self.error = (true, "Enter a valid code")
-        }
-    }
-    
-    
-    func dialCode(url: String) {
-        if let url = URL(string: "tel://\(url)"),
-           UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: { hasOpened in
-                print(hasOpened)
-            })
-            self.error.state = false
-            selectedCode = ""
-            UIApplication.shared.endEditing(true)
-        } else {
-            // Can not dial this code
-            self.error = (true, "Can not dial this code")
-//            let alert = UIAlertController(title: "", message: "Can not call this number", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-        }
-        
-        
-    }
     
     enum DialingError: Error {
         case canNotDial, other
@@ -65,7 +21,49 @@ class MainViewModel: ObservableObject {
             }
         }
     }
-    static func dialCode(url: String, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
+    private let elements = "0123456789*#"
+
+    @Published var composedCode: String = ""
+    
+    @Published var purchaseDetail = PurchaseDetailModel()
+    
+    @Published var showbottomSheet: Bool = false
+    
+    struct PurchaseDetailModel {
+        var amount: String = ""
+        var code: String = ""
+        
+        var fullCode: String {
+            "*182*2*1*1*1*\(amount)*\(code)#"
+        }
+    }
+    
+    func confirmPurchase() {
+        
+        dialCode(url: purchaseDetail.fullCode, completion: { result in
+            switch result {
+            case .success(let message):
+                print("Message is", message)
+            case .failure(let error):
+                print(error.message)
+            }
+        })
+    }
+    
+    func checkBalance() {
+        composedCode = "*345*5#"
+        dialCode(url: composedCode, completion: { result in
+            switch result {
+            case .success(let message):
+                print("Message is", message)
+            case .failure(let error):
+                print(error.message)
+            }
+        })
+        
+    }
+    
+    private func dialCode(url: String, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         if let url = URL(string: "tel://\(url)"),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: { hasOpened in
@@ -78,9 +76,5 @@ class MainViewModel: ObservableObject {
             // Can not dial this code
             completion(.failure(.canNotDial))
         }
-    }
-    
-    func checkError() throws {
-    
     }
 }

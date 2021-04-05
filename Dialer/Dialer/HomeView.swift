@@ -12,7 +12,6 @@ import Combine
 struct HomeView: View {
     
     @State private var bottomTextFieldPadding: CGFloat = .zero
-    @EnvironmentObject var mainVM: MainViewModel
     
     @State private var showPinView = false
     
@@ -39,10 +38,10 @@ struct HomeView: View {
                                 goToCallsView.toggle()
                             }
                             DialerRow(title: "Buy with Mobile Money 💰")
-                            DialerRow(title: "Check Airtime Balance ⚖️", perfom: mainVM.dial)
+                            DialerRow(title: "Check Airtime Balance ⚖️", perfom: { })
                             DialerRow(title: "Check Mobile Money Balance ⚖️💲") {
                                 showPinView.toggle()
-                                mainVM.selectedDialer = .momo(option: .balance)
+//                                mainVM.selectedDialer = .momo(option: .balance)
                             }
                             DialerRow(title: "Settings ⚙️")
 
@@ -59,29 +58,29 @@ struct HomeView: View {
                 if showPinView == false {
                     VStack {
                         Spacer()
-                        VStack(spacing: 0){
-                            if mainVM.error.state {
-                                Text(mainVM.error.message)
-                                    .foregroundColor(.red)
-                            }
-                            HStack {
-                                TextField("Enter Your Code", text: $mainVM.selectedCode)
-                                    .foregroundColor(Color.white)
-                                    .padding(.leading)
-                                    .frame(height: 36)
-                                    .background(Color.white.opacity(0.2).cornerRadius(5))
-                                    .keyboardType(.phonePad)
-                                
-                                Button(action: mainVM.dial) {
-                                    Text("Dial")
-                                        .foregroundColor(.white)
-                                        .frame(width:80, height: 36)
-                                        .background(Color.green)
-                                        .cornerRadius(5)
-                                }
-                            }
-                            
-                        }
+//                        VStack(spacing: 0){
+//                            if mainVM.error.state {
+//                                Text(mainVM.error.message)
+//                                    .foregroundColor(.red)
+//                            }
+//                            HStack {
+//                                TextField("Enter Your Code", text: $mainVM.selectedCode)
+//                                    .foregroundColor(Color.white)
+//                                    .padding(.leading)
+//                                    .frame(height: 36)
+//                                    .background(Color.white.opacity(0.2).cornerRadius(5))
+//                                    .keyboardType(.phonePad)
+//
+//                                Button(action: mainVM.dial) {
+//                                    Text("Dial")
+//                                        .foregroundColor(.white)
+//                                        .frame(width:80, height: 36)
+//                                        .background(Color.green)
+//                                        .cornerRadius(5)
+//                                }
+//                            }
+//
+//                        }
                         .padding(.horizontal, 8)
                         .padding(.vertical, 5)
                         .background(Color.black.opacity(0.9))
@@ -115,8 +114,8 @@ struct HomeView: View {
                             
                         GeometryReader { proxy in
                             PassCodeCodeView(secureFields: $securePassCode, viewWidth: proxy.size.width/5) { passCode in
-                                mainVM.selectedCode = mainVM.selectedDialer!.value + passCode + "#"
-                                mainVM.dial()
+//                                mainVM.selectedCode = mainVM.selectedDialer!.value + passCode + "#"
+//                                mainVM.dial()
                                 showPinView = false
                                
                             }

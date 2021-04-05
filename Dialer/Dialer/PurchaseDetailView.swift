@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PurchaseDetailView: View {
-    @ObservedObject var data: PurchaseViewModel
+    @ObservedObject var data: MainViewModel
     private enum Field {
         case amount, code, none
     }
@@ -98,7 +98,7 @@ struct PurchaseDetailView_Previews: PreviewProvider {
         ZStack(alignment: .bottom) {
             Spacer()
                 .background(Color.red)
-            PurchaseDetailView(data: PurchaseViewModel())
+            PurchaseDetailView(data: MainViewModel())
         }
     }
 }

@@ -72,8 +72,8 @@ struct CallsThirdView: View {
             ScrollView {
                 ForEach(0..<options.count, id:\.self) { index  in
                     DialerRow(title: options[index]) {
-                        mainVM.selectedCode = "*140*1*2*\(index+1)#"
-                        mainVM.dial()
+//                        mainVM.selectedCode = "*140*1*2*\(index+1)#"
+//                        mainVM.dial()
                     }
                 }
             }
