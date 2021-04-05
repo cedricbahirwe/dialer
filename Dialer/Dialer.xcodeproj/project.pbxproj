@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B3261A3C94007D6892 /* DashBoardView.swift */; };
+		8201D9BA261A4134007D6892 /* DashBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B9261A4134007D6892 /* DashBoardExtension.swift */; };
+		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		826BC40625D9772200A45C7B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40525D9772200A45C7B /* Models.swift */; };
 		826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40825D9774400A45C7B /* PassCodeView.swift */; };
-		826BC41325D9952A00A45C7B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC41225D9952A00A45C7B /* HeaderView.swift */; };
-		827F2CEE25D95BD900C7C40A /* CallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CED25D95BD900C7C40A /* CallsView.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
-		827F2CF625D9653500C7C40A /* DialerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF525D9653500C7C40A /* DialerRow.swift */; };
-		827F2CFE25D96B2F00C7C40A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CFD25D96B2F00C7C40A /* HomeView.swift */; };
 		82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB625D1C1FE00551D22 /* AppDelegate.swift */; };
 		82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */; };
 		82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FBA25D1C1FE00551D22 /* ContentView.swift */; };
@@ -21,16 +20,16 @@
 		82D41FC025D1C1FF00551D22 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */; };
 		82D41FC325D1C1FF00551D22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */; };
 		82D41FCE25D1C78E00551D22 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FCD25D1C78E00551D22 /* Helpers.swift */; };
+		82FBCBFD261BB27500F00FAE /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FBCBFC261BB27500F00FAE /* CustomViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
+		8201D9B9261A4134007D6892 /* DashBoardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardExtension.swift; sourceTree = "<group>"; };
+		823FA768261A556200ABE045 /* PurchaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailView.swift; sourceTree = "<group>"; };
 		826BC40525D9772200A45C7B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		826BC40825D9774400A45C7B /* PassCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeView.swift; sourceTree = "<group>"; };
-		826BC41225D9952A00A45C7B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		827F2CED25D95BD900C7C40A /* CallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsView.swift; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		827F2CF525D9653500C7C40A /* DialerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerRow.swift; sourceTree = "<group>"; };
-		827F2CFD25D96B2F00C7C40A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D41FB625D1C1FE00551D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		82D41FC225D1C1FF00551D22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82D41FC425D1C1FF00551D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82D41FCD25D1C78E00551D22 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		82FBCBFC261BB27500F00FAE /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,14 +75,10 @@
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
-				827F2CED25D95BD900C7C40A /* CallsView.swift */,
-				827F2CFD25D96B2F00C7C40A /* HomeView.swift */,
-				826BC40825D9774400A45C7B /* PassCodeView.swift */,
-				826BC40525D9772200A45C7B /* Models.swift */,
-				826BC41225D9952A00A45C7B /* HeaderView.swift */,
-				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
-				827F2CF525D9653500C7C40A /* DialerRow.swift */,
-				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
+				82FBCC05261BB2F400F00FAE /* Views */,
+				82FBCC07261BB30D00F00FAE /* View Models */,
+				82FBCC04261BB2EE00F00FAE /* Models */,
+				82FBCC06261BB2FA00F00FAE /* Utilities */,
 				82D41FBC25D1C1FF00551D22 /* Assets.xcassets */,
 				82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */,
 				82D41FC425D1C1FF00551D22 /* Info.plist */,
@@ -97,6 +93,42 @@
 				82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		82FBCC04261BB2EE00F00FAE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				826BC40525D9772200A45C7B /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		82FBCC05261BB2F400F00FAE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
+				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		82FBCC06261BB2FA00F00FAE /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8201D9B9261A4134007D6892 /* DashBoardExtension.swift */,
+				826BC40825D9774400A45C7B /* PassCodeView.swift */,
+				82FBCBFC261BB27500F00FAE /* CustomViews.swift */,
+				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		82FBCC07261BB30D00F00FAE /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,16 +201,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				827F2CFE25D96B2F00C7C40A /* HomeView.swift in Sources */,
+				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
-				827F2CEE25D95BD900C7C40A /* CallsView.swift in Sources */,
+				82FBCBFD261BB27500F00FAE /* CustomViews.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
-				827F2CF625D9653500C7C40A /* DialerRow.swift in Sources */,
-				826BC41325D9952A00A45C7B /* HeaderView.swift in Sources */,
 				82D41FCE25D1C78E00551D22 /* Helpers.swift in Sources */,
+				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
+				8201D9BA261A4134007D6892 /* DashBoardExtension.swift in Sources */,
 				826BC40625D9772200A45C7B /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,7 +280,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -303,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
