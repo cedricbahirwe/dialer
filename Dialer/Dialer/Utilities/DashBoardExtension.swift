@@ -93,9 +93,15 @@ extension DashBoardView {
                         }
                         .contextMenu(ContextMenu(menuItems: {
                             Button {
-                                
+                                data.deleteRecentCode(code: recentCode)
                             } label: {
                                 Label("Delete", systemImage: "trash")
+                            }
+                            
+                            Button {
+                                data.performQuickDial(for: recentCode.code)
+                            } label: {
+                                Label("Dial", systemImage: "phone.circle")
                             }
                         }))
                         

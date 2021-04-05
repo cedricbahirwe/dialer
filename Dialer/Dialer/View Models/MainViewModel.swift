@@ -73,8 +73,16 @@ class MainViewModel: ObservableObject {
         
         dialCode(url: purchaseDetail.fullCode, completion: { result in
             switch result {
-            case .success(let message):
-                print("Message is", message)
+            case .success(_): break
+            case .failure(let error):
+                print(error.message)
+            }
+        })
+    }
+    public func performQuickDial(for code: String) {
+        dialCode(url: code, completion: { result in
+            switch result {
+            case .success(_): break
             case .failure(let error):
                 print(error.message)
             }
@@ -90,8 +98,7 @@ class MainViewModel: ObservableObject {
         composedCode = "*345*5#"
         dialCode(url: composedCode, completion: { result in
             switch result {
-            case .success(let message):
-                print("Message is", message)
+            case .success(_):break
             case .failure(let error):
                 print(error.message)
             }
@@ -104,7 +111,6 @@ class MainViewModel: ObservableObject {
         if let telUrl = URL(string: "tel://\(url)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { hasOpened in
-                print(hasOpened)
                 self.storeCode(code: url)
                 completion(.success("Successfully Dialed"))
             })
