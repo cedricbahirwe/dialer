@@ -63,7 +63,7 @@ extension DashBoardView {
             Section(header:
                         HStack(spacing:0) {
                             
-                            Text("My Lists")
+                            Text("History")
                                 .foregroundColor(Color(.label))
                                 .font(Font.system(size: 22, weight: .semibold, design: .rounded))
                                 .textCase(.lowercase)
@@ -74,22 +74,30 @@ extension DashBoardView {
                             ProgressView()
                         }
             ) {
-                ForEach(0..<3) { i in
+                ForEach(data.recentCodes!) { recentCode in
                     NavigationLink(destination:Text("Destination"))
                     {
                         HStack {
-                            Image(systemName: "list.bullet")
+                            Image(systemName: "chevron.left.slash.chevron.right")
                                 .imageScale(.small)
                                 .frame(width: 30, height: 30)
                                 .background(Color.black)
                                 .clipShape(Circle())
                                 .foregroundColor(.white)
-                            Text("The line \(i)")
+                            Text(recentCode.code)
                                 .foregroundColor(Color(.label))
+                                .fontWeight(.semibold)
                             Spacer()
-                            Text("\(i+1)")
+                            Text(recentCode.count.description)
                                 .foregroundColor(.gray)
                         }
+                        .contextMenu(ContextMenu(menuItems: {
+                            Button {
+                                
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }))
                         
                     }
                 }

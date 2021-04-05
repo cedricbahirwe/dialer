@@ -16,6 +16,7 @@ struct PurchaseDetailView: View {
     
     @State private var fieldValue: String = ""
     
+
     private var validCode: Bool {
         !data.purchaseDetail.code.isEmpty
     }
@@ -23,6 +24,7 @@ struct PurchaseDetailView: View {
     private var validAmount: Bool {
         !data.purchaseDetail.amount.isEmpty
     }
+    
     var body: some View {
             VStack(spacing: 8) {
                 VStack(spacing: 15) {

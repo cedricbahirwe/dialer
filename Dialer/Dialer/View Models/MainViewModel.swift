@@ -9,6 +9,19 @@ import Foundation
 import SwiftUI
 
 class MainViewModel: ObservableObject {
+    struct RecentCode: Identifiable, Codable {
+        var id = UUID()
+        var code: String
+        var count: Int = 1
+    }
+    struct PurchaseDetailModel {
+        var amount: String = ""
+        var code: String = ""
+        
+        var fullCode: String {
+            "*182*2*1*1*1*\(amount)*\(code)#"
+        }
+    }
     
     enum DialingError: Error {
         case canNotDial, other
@@ -29,16 +42,34 @@ class MainViewModel: ObservableObject {
     
     @Published var showbottomSheet: Bool = false
     
-    struct PurchaseDetailModel {
-        var amount: String = ""
-        var code: String = ""
-        
-        var fullCode: String {
-            "*182*2*1*1*1*\(amount)*\(code)#"
+    
+    @Published private(set) var recentCodes: [RecentCode]? = []
+    private func storeCode(code: String) {
+        if let index = recentCodes?.firstIndex(where: { $0.code == code }) {
+            recentCodes?[index].count += 1
+
+        } else {
+            recentCodes?.append(.init(code: code))
         }
     }
     
-    func confirmPurchase() {
+    public func saveLocally() {
+        if let encoded = try? JSONEncoder().encode(recentCodes){
+            UserDefaults.standard.set(encoded, forKey: "recentCodes")
+        } else {
+            print("Couldn't encode")
+        }
+    }
+    
+    public func retrieveCodes() {
+        guard let codes = UserDefaults.standard.object(forKey: "recentCodes") as? Data else {
+            return
+        }
+        recentCodes =  try? JSONDecoder().decode([RecentCode].self, from: codes)
+                
+    }
+    
+    public func confirmPurchase() {
         
         dialCode(url: purchaseDetail.fullCode, completion: { result in
             switch result {
@@ -50,7 +81,12 @@ class MainViewModel: ObservableObject {
         })
     }
     
-    func checkBalance() {
+    func deleteRecentCode(code: RecentCode) {
+        recentCodes?.removeAll(where: { $0.id == code.id })
+        
+    }
+    
+    public func checkBalance() {
         composedCode = "*345*5#"
         dialCode(url: composedCode, completion: { result in
             switch result {
@@ -62,12 +98,14 @@ class MainViewModel: ObservableObject {
         })
         
     }
+
     
     private func dialCode(url: String, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
-        if let url = URL(string: "tel://\(url)"),
-           UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: { hasOpened in
+        if let telUrl = URL(string: "tel://\(url)"),
+           UIApplication.shared.canOpenURL(telUrl) {
+            UIApplication.shared.open(telUrl, options: [:], completionHandler: { hasOpened in
                 print(hasOpened)
+                self.storeCode(code: url)
                 completion(.success("Successfully Dialed"))
             })
             UIApplication.shared.endEditing(true)
@@ -76,5 +114,19 @@ class MainViewModel: ObservableObject {
             // Can not dial this code
             completion(.failure(.canNotDial))
         }
+    }
+}
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
     }
 }

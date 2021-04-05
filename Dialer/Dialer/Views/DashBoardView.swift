@@ -13,16 +13,10 @@ fileprivate enum DragState {
     case dragging(position: CGFloat)
 }
 
-fileprivate enum Constants {
-    static let radius: CGFloat = 16
-    static let indicatorHeight: CGFloat = 6
-    static let indicatorWidth: CGFloat = 60
-    static let snapRatio: CGFloat = 0.25
-    static let minHeightRatio: CGFloat = 0.3
-}
 struct DashBoardView: View {
     @State var isSearching = false
-    @StateObject var data = MainViewModel()
+    @EnvironmentObject var data: MainViewModel
+    @Environment(\.scenePhase) var scenePhase
 
     @State private var dragState: DragState = .closed
 
@@ -31,7 +25,7 @@ struct DashBoardView: View {
             let position = value.startLocation.y + value.translation.height
             self.dragState = .dragging(position: position)
         }.onEnded { value in
-            let snapDistance = 600 * 0.25
+            let snapDistance = 600 * CGFloat(0.25)
             self.data.showbottomSheet = value.translation.height < snapDistance
             self.dragState = self.data.showbottomSheet ? .open : .closed
         }
@@ -65,14 +59,19 @@ struct DashBoardView: View {
                             
                             DashItemView(
                                 title: "Check Intenet Balance",
-                                icon: "calendar.circle.fill"
+                                icon: "lock.shield"
                             )
                             .onTapGesture(perform: data.checkBalance)
                         }
                     }
                     .padding()
                     
-                    Spacer()
+                    if let codes = data.recentCodes, !codes.isEmpty  {
+                        bottomSectionView
+
+                    } else {
+                        Spacer()
+                    }
                     bottomBarView
 
                 }
@@ -93,6 +92,7 @@ struct DashBoardView: View {
 struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
         DashBoardView()
+            .environmentObject(MainViewModel())
     }
 }
 
