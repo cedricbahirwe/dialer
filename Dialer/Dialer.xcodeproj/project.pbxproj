@@ -12,7 +12,6 @@
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		826BC40625D9772200A45C7B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40525D9772200A45C7B /* Models.swift */; };
 		826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40825D9774400A45C7B /* PassCodeView.swift */; };
-		826BC41325D9952A00A45C7B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC41225D9952A00A45C7B /* HeaderView.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
 		82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB625D1C1FE00551D22 /* AppDelegate.swift */; };
 		82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */; };
@@ -30,7 +29,6 @@
 		823FA768261A556200ABE045 /* PurchaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailView.swift; sourceTree = "<group>"; };
 		826BC40525D9772200A45C7B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		826BC40825D9774400A45C7B /* PassCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeView.swift; sourceTree = "<group>"; };
-		826BC41225D9952A00A45C7B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D41FB625D1C1FE00551D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,15 +75,10 @@
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
-				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
-				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
-				8201D9B9261A4134007D6892 /* DashBoardExtension.swift */,
-				82FBCBFC261BB27500F00FAE /* CustomViews.swift */,
-				826BC40825D9774400A45C7B /* PassCodeView.swift */,
-				826BC40525D9772200A45C7B /* Models.swift */,
-				826BC41225D9952A00A45C7B /* HeaderView.swift */,
-				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
-				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
+				82FBCC05261BB2F400F00FAE /* Views */,
+				82FBCC07261BB30D00F00FAE /* View Models */,
+				82FBCC04261BB2EE00F00FAE /* Models */,
+				82FBCC06261BB2FA00F00FAE /* Utilities */,
 				82D41FBC25D1C1FF00551D22 /* Assets.xcassets */,
 				82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */,
 				82D41FC425D1C1FF00551D22 /* Info.plist */,
@@ -100,6 +93,42 @@
 				82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		82FBCC04261BB2EE00F00FAE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				826BC40525D9772200A45C7B /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		82FBCC05261BB2F400F00FAE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
+				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		82FBCC06261BB2FA00F00FAE /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8201D9B9261A4134007D6892 /* DashBoardExtension.swift */,
+				826BC40825D9774400A45C7B /* PassCodeView.swift */,
+				82FBCBFC261BB27500F00FAE /* CustomViews.swift */,
+				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		82FBCC07261BB30D00F00FAE /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,7 +207,6 @@
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
-				826BC41325D9952A00A45C7B /* HeaderView.swift in Sources */,
 				82D41FCE25D1C78E00551D22 /* Helpers.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,

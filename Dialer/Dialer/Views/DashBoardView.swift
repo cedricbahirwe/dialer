@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-
 fileprivate enum DragState {
     case open
     case closed
     case dragging(position: CGFloat)
 }
+
 fileprivate enum Constants {
     static let radius: CGFloat = 16
     static let indicatorHeight: CGFloat = 6
@@ -31,7 +31,7 @@ struct DashBoardView: View {
             let position = value.startLocation.y + value.translation.height
             self.dragState = .dragging(position: position)
         }.onEnded { value in
-            let snapDistance = 600 * Constants.snapRatio
+            let snapDistance = 600 * 0.25
             self.data.showbottomSheet = value.translation.height < snapDistance
             self.dragState = self.data.showbottomSheet ? .open : .closed
         }
@@ -67,9 +67,7 @@ struct DashBoardView: View {
                                 title: "Check Intenet Balance",
                                 icon: "calendar.circle.fill"
                             )
-                            .onTapGesture(perform: {
-                                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Code@*/ /*@END_MENU_TOKEN@*/
-                            })
+                            .onTapGesture(perform: data.checkBalance)
                         }
                     }
                     .padding()
@@ -83,14 +81,6 @@ struct DashBoardView: View {
                     .offset(y: data.showbottomSheet ? 0 : 605)
                     .gesture(self.dragGesture)
                     .animation(.interactiveSpring())
-            
-//                BottomSheetView(isOpen: $data.showbottomSheet, maxHeight: 600) {
-//                    PurchaseDetailView(data: data)
-//                        .offset(y: data.showbottomSheet ? 0 : 605)
-//                        .gesture(self.dragGesture)
-//                        .animation(.interactiveSpring())
-//                }
-//                .edgesIgnoringSafeArea(.all)
                 
             }
             .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
