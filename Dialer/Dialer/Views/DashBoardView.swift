@@ -75,7 +75,6 @@ struct DashBoardView: View {
                     .padding()
                     
                     bottomSectionView
-//                        .background(Color.red)
                     bottomBarView
 
                 }

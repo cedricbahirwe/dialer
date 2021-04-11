@@ -35,7 +35,7 @@ class MainViewModel: ObservableObject {
         }
     }
     private let elements = "0123456789*#"
-
+    
     @Published var composedCode: String = ""
     
     @Published var purchaseDetail = PurchaseDetailModel()
@@ -44,10 +44,11 @@ class MainViewModel: ObservableObject {
     
     
     @Published private(set) var recentCodes: [RecentCode]? = []
+    
     private func storeCode(code: String) {
         if let index = recentCodes?.firstIndex(where: { $0.code == code }) {
             recentCodes?[index].count += 1
-
+            
         } else {
             recentCodes?.append(.init(code: code))
         }
@@ -66,7 +67,7 @@ class MainViewModel: ObservableObject {
             return
         }
         recentCodes =  try? JSONDecoder().decode([RecentCode].self, from: codes)
-                
+        
     }
     
     public func confirmPurchase() {
@@ -91,6 +92,7 @@ class MainViewModel: ObservableObject {
     
     func deleteRecentCode(code: RecentCode) {
         recentCodes?.removeAll(where: { $0.id == code.id })
+        saveLocally()
         
     }
     
@@ -105,7 +107,7 @@ class MainViewModel: ObservableObject {
         })
         
     }
-
+    
     
     private func dialCode(url: String, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         if let telUrl = URL(string: "tel://\(url)"),
@@ -126,12 +128,12 @@ class MainViewModel: ObservableObject {
 extension Array where Element: Hashable {
     func removingDuplicates() -> [Element] {
         var addedDict = [Element: Bool]()
-
+        
         return filter {
             addedDict.updateValue(true, forKey: $0) == nil
         }
     }
-
+    
     mutating func removeDuplicates() {
         self = self.removingDuplicates()
     }

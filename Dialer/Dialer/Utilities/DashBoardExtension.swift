@@ -55,13 +55,13 @@ extension DashBoardView {
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
-        .background(Color.white.opacity(isSearching ? 1 : 0).ignoresSafeArea(.all, edges: .top))
+        .background(Color(.secondarySystemBackground).opacity(isSearching ? 1 : 0).ignoresSafeArea(.all, edges: .top))
     }
     
     var bottomSectionView: some View {
         Form {
-
-        if let codes = data.recentCodes, !codes.isEmpty  {
+            
+            if let recentCodes = data.recentCodes, !recentCodes.isEmpty  {
                 Section(header:
                             HStack(spacing:0) {
                                 
@@ -76,7 +76,7 @@ extension DashBoardView {
                                 ProgressView()
                             }
                 ) {
-                    ForEach(data.recentCodes!) { recentCode in
+                    ForEach(recentCodes) { recentCode in
                         NavigationLink(destination:Text("Destination"))
                         {
                             HStack {
@@ -114,10 +114,8 @@ extension DashBoardView {
                         }
                     }
                 }
-
-        } else {
-//            Spacer()
-        }
+                
+            }
         }
        
     }
