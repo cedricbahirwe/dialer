@@ -18,12 +18,12 @@ struct DashBoardView: View {
     @State var isSearching = false
     @EnvironmentObject var data: MainViewModel
     @Environment(\.scenePhase) var scenePhase
-
+    
     @State private var dragState: DragState = .closed
     var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
-
+    
     private var dragGesture: some Gesture {
         DragGesture().onChanged { value in
             let position = value.startLocation.y + value.translation.height
@@ -36,8 +36,8 @@ struct DashBoardView: View {
     }
     
     init(){
-            UITableView.appearance().backgroundColor = .clear
-        }
+        UITableView.appearance().backgroundColor = .clear
+    }
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
@@ -76,7 +76,7 @@ struct DashBoardView: View {
                     
                     bottomSectionView
                     bottomBarView
-
+                    
                 }
                 
                 PurchaseDetailView(data: data)
@@ -130,10 +130,12 @@ struct DashItemView: View {
         .padding(8)
         .frame(maxWidth: .infinity)
         .frame(height: 80)
-        .background(Color(.secondarySystemGroupedBackground))
+        .background(
+            Color(.secondarySystemGroupedBackground)
+        )
         .cornerRadius(12)
         .contentShape(Rectangle())
-
+        
     }
 }
 

@@ -12,11 +12,11 @@ struct PurchaseDetailView: View {
     private enum Field {
         case amount, code, none
     }
-    @State private var edition: Field = .none
+    @State private var edition: Field = .amount
     
     @State private var fieldValue: String = ""
     
-
+    
     private var validCode: Bool {
         !data.purchaseDetail.code.isEmpty
     }
@@ -26,68 +26,92 @@ struct PurchaseDetailView: View {
     }
     
     var body: some View {
-            VStack(spacing: 8) {
-                VStack(spacing: 15) {
-                    Text(validAmount ? data.purchaseDetail.amount.description : "Enter Amount")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 40)
-                        .background(Color.black.opacity(0.04))
-                        .background(
-                            Color.green.opacity(edition == .amount ? 0.04 : 0)
-                        )
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            withAnimation {
-                                edition = .amount
-                            }
-                    }
-                    Text(validCode ? data.purchaseDetail.code.description : "Enter Code")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 40)
-                        .background(Color.black.opacity(0.04))
-                        .background(
-                            Color.green.opacity(edition == .code ? 0.04 : 0)
-                        )
-                        .cornerRadius(8)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            withAnimation {
-                                edition = .code
-                            }
+        VStack(spacing: 8) {
+            VStack(spacing: 15) {
+                Text(validAmount ? data.purchaseDetail.amount.description : "Enter Amount")
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 40)
+                    .background(Color.primary.opacity(0.06))
+                    .background(
+                        Color.green.opacity(edition == .amount ? 0.04 : 0)
+                    )
+                    .cornerRadius(8)
+                    .onTapGesture {
+                        withAnimation {
+                            edition = .amount
                         }
-                    
-                    Button {
-                        edition = .none
-                        data.confirmPurchase()
-                        
-                    } label: {
-                        Text("Confirm")
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 45)
-                            .background(Color.black)
-                            .cornerRadius(8)
-                            .foregroundColor(.white)
                     }
-                    .disabled(!validCode && !validAmount)
+                
+                if data.pinCode != nil {
+                    HStack(spacing: 0) {
+                        Text(validCode ? data.purchaseDetail.code.description : "Enter Code")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 40)
+                            .offset(x: data.pinCode == nil ? 30 : 0)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation {
+                                    edition = .code
+                                }
+                            }
+                        Button(action: data.savePinCode, label: {
+                            Text("Save")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .frame(width: 60, height: 40)
+                                .background(Color.primary)
+                                .cornerRadius(8)
+                                .foregroundColor(Color(.systemBackground))
+                        })
+                        .disabled(data.purchaseDetail.code.count != 5)
+                        .opacity(data.purchaseDetail.code.count == 5 ? 1 : 0.4)
+                    }
+                    .background(Color.primary.opacity(0.06))
+                    .background(
+                        Color.green.opacity(edition == .code ? 0.04 : 0.0)
+                    )
+                    .cornerRadius(8)
+                } else {
+                    Text("We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾")
+                        .foregroundColor(.green)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.5)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 5)
                 }
                 
-                PinView(input: storeInput())
-                    .padding(.bottom, 20)
+                Button {
+                    edition = .none
+                    data.confirmPurchase()
+                    
+                } label: {
+                    Text("Confirm")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.primary)
+                        .cornerRadius(8)
+                        .foregroundColor(Color(.systemBackground))
+                }
+                .disabled(!validCode && !validAmount)
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .top)
-            .background(Color(.systemBackground))
-            .cornerRadius(15)
-            .shadow(radius: 05)
-            .offset(y: 15)
-            .font(.system(size: 18, weight: .semibold, design: .rounded))
+            
+            PinView(input: storeInput())
+                .padding(.bottom, 20)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .top)
+        .background(Color(.systemBackground))
+        .cornerRadius(15)
+        .shadow(radius: 5)
+        .offset(y: 15)
+        .font(.system(size: 18, weight: .semibold, design: .rounded))
     }
     
     private func storeInput() -> Binding<String>{
         switch edition {
         case .amount:
             return $data.purchaseDetail.amount
-            case .code:
+        case .code:
             return $data.purchaseDetail.code
         default:
             return .constant("")
@@ -97,10 +121,13 @@ struct PurchaseDetailView: View {
 
 struct PurchaseDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack(alignment: .bottom) {
+        VStack {
             Spacer()
-                .background(Color.red)
-            PurchaseDetailView(data: MainViewModel())
+            ZStack(alignment: .bottom) {
+                Spacer()
+                    .background(Color.red)
+                PurchaseDetailView(data: MainViewModel())
+            }
         }
     }
 }
@@ -108,7 +135,7 @@ struct PurchaseDetailView_Previews: PreviewProvider {
 struct PinView: View {
     private let buttons: [String] = [ "1","2","3","4","5","6","7","8","9","*","0","X"
     ]
-
+    
     @Binding var input: String // = ""
     var body: some View {
         LazyVGrid(columns: [
@@ -159,13 +186,13 @@ fileprivate enum DragState {
 
 struct BottomSheetView<Content: View>: View {
     @Binding var isOpen: Bool
-
+    
     let maxHeight: CGFloat
     let minHeight: CGFloat
     let content: Content
-
+    
     @State private var dragState: DragState = .closed
-
+    
     private var offsetY: CGFloat {
         switch dragState {
         case .open: return 0
@@ -174,16 +201,16 @@ struct BottomSheetView<Content: View>: View {
             return min(max(position, 0), maxHeight - minHeight)
         }
     }
-
+    
     private var indicator: some View {
         RoundedRectangle(cornerRadius: Constants.radius)
             .fill(Color.secondary)
             .frame(
                 width: Constants.indicatorWidth,
                 height: Constants.indicatorHeight
-        )
+            )
     }
-
+    
     private var dragGesture: some Gesture {
         DragGesture().onChanged { value in
             let position = value.startLocation.y + value.translation.height
@@ -194,7 +221,7 @@ struct BottomSheetView<Content: View>: View {
             self.dragState = self.isOpen ? .open : .closed
         }
     }
-
+    
     init(isOpen: Binding<Bool>, maxHeight: CGFloat, @ViewBuilder content: () -> Content) {
         self.minHeight = 0 //maxHeight * Constants.minHeightRatio
         self.maxHeight = maxHeight
@@ -202,7 +229,7 @@ struct BottomSheetView<Content: View>: View {
         self._isOpen = isOpen
         self.dragState = isOpen.wrappedValue ? .open : .closed
     }
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             Spacer()

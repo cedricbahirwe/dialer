@@ -9,11 +9,15 @@ import Foundation
 import SwiftUI
 
 class MainViewModel: ObservableObject {
+    
+    @Published var pinCode: String? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? String
+    
     struct RecentCode: Identifiable, Codable {
         var id = UUID()
         var code: String
         var count: Int = 1
     }
+    
     struct PurchaseDetailModel {
         var amount: String = ""
         var code: String = ""
@@ -71,7 +75,9 @@ class MainViewModel: ObservableObject {
     }
     
     public func confirmPurchase() {
-        
+        if let code = pinCode {
+            purchaseDetail.code = code
+        }
         dialCode(url: purchaseDetail.fullCode, completion: { result in
             switch result {
             case .success(_): break
@@ -81,6 +87,8 @@ class MainViewModel: ObservableObject {
         })
     }
     public func performQuickDial(for code: String) {
+        
+        UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
         dialCode(url: code, completion: { result in
             switch result {
             case .success(_): break
@@ -93,7 +101,6 @@ class MainViewModel: ObservableObject {
     func deleteRecentCode(code: RecentCode) {
         recentCodes?.removeAll(where: { $0.id == code.id })
         saveLocally()
-        
     }
     
     public func checkBalance() {
@@ -108,6 +115,12 @@ class MainViewModel: ObservableObject {
         
     }
     
+    public func savePinCode() {
+        pinCode = purchaseDetail.code
+        if let code = pinCode, code.count == 5 {
+            UserDefaults.standard.setValue(code, forKey: UserDefaults.Keys.PinCode)
+        }
+    }
     
     private func dialCode(url: String, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         if let telUrl = URL(string: "tel://\(url)"),
@@ -137,4 +150,12 @@ extension Array where Element: Hashable {
     mutating func removeDuplicates() {
         self = self.removingDuplicates()
     }
+}
+
+extension UserDefaults {
+    enum Keys {
+        static let RecentCodes = "recentCodes"
+        static let PinCode = "pinCode"
+    }
+
 }
