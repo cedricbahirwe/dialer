@@ -14,11 +14,15 @@ fileprivate enum DragState {
 }
 
 struct DashBoardView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State var isSearching = false
     @EnvironmentObject var data: MainViewModel
     @Environment(\.scenePhase) var scenePhase
 
     @State private var dragState: DragState = .closed
+    var bgColor: Color {
+        colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
+    }
 
     private var dragGesture: some Gesture {
         DragGesture().onChanged { value in
@@ -30,6 +34,10 @@ struct DashBoardView: View {
             self.dragState = self.data.showbottomSheet ? .open : .closed
         }
     }
+    
+    init(){
+            UITableView.appearance().backgroundColor = .clear
+        }
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
@@ -66,12 +74,8 @@ struct DashBoardView: View {
                     }
                     .padding()
                     
-                    if let codes = data.recentCodes, !codes.isEmpty  {
-                        bottomSectionView
-
-                    } else {
-                        Spacer()
-                    }
+                    bottomSectionView
+//                        .background(Color.red)
                     bottomBarView
 
                 }
@@ -82,7 +86,8 @@ struct DashBoardView: View {
                     .animation(.interactiveSpring())
                 
             }
-            .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
+            .background(
+                bgColor.edgesIgnoringSafeArea(.all))
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarHidden(true)
         }
@@ -108,7 +113,6 @@ struct DashItemView: View {
             HStack  {
                 Image(systemName: icon)
                     .resizable()
-                    .renderingMode(.original)
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                 Spacer()
@@ -127,7 +131,7 @@ struct DashItemView: View {
         .padding(8)
         .frame(maxWidth: .infinity)
         .frame(height: 80)
-        .background(Color(.tertiarySystemBackground))
+        .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(12)
         .contentShape(Rectangle())
 

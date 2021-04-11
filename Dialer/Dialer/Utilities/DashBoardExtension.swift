@@ -60,55 +60,66 @@ extension DashBoardView {
     
     var bottomSectionView: some View {
         Form {
-            Section(header:
-                        HStack(spacing:0) {
-                            
-                            Text("History")
-                                .foregroundColor(Color(.label))
-                                .font(Font.system(size: 22, weight: .semibold, design: .rounded))
-                                .textCase(.lowercase)
-                            
-                            
-                            
-                            Spacer()
-                            ProgressView()
-                        }
-            ) {
-                ForEach(data.recentCodes!) { recentCode in
-                    NavigationLink(destination:Text("Destination"))
-                    {
-                        HStack {
-                            Image(systemName: "chevron.left.slash.chevron.right")
-                                .imageScale(.small)
-                                .frame(width: 30, height: 30)
-                                .background(Color.black)
-                                .clipShape(Circle())
-                                .foregroundColor(.white)
-                            Text(recentCode.code)
-                                .foregroundColor(Color(.label))
-                                .fontWeight(.semibold)
-                            Spacer()
-                            Text(recentCode.count.description)
-                                .foregroundColor(.gray)
-                        }
-                        .contextMenu(ContextMenu(menuItems: {
-                            Button {
-                                data.deleteRecentCode(code: recentCode)
-                            } label: {
-                                Label("Delete", systemImage: "trash")
+
+        if let codes = data.recentCodes, !codes.isEmpty  {
+                Section(header:
+                            HStack(spacing:0) {
+                                
+                                Text("History")
+                                    .foregroundColor(Color(.label))
+                                    .font(Font.system(size: 22, weight: .semibold, design: .rounded))
+                                    .textCase(.lowercase)
+                                
+                                
+                                
+                                Spacer()
+                                ProgressView()
                             }
-                            
-                            Button {
+                ) {
+                    ForEach(data.recentCodes!) { recentCode in
+                        NavigationLink(destination:Text("Destination"))
+                        {
+                            HStack {
+                                Image(systemName: "chevron.left.slash.chevron.right")
+                                    .imageScale(.small)
+                                    .frame(width: 30, height: 30)
+                                    .background(Color.black)
+                                    .clipShape(Circle())
+                                    .foregroundColor(.white)
+                                Text(recentCode.code)
+                                    .foregroundColor(Color(.label))
+                                    .fontWeight(.semibold)
+                                Spacer()
+                                Text(recentCode.count.description)
+                                    .foregroundColor(.gray)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
                                 data.performQuickDial(for: recentCode.code)
-                            } label: {
-                                Label("Dial", systemImage: "phone.circle")
                             }
-                        }))
-                        
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button {
+                                    data.deleteRecentCode(code: recentCode)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                                
+                                Button {
+                                    data.performQuickDial(for: recentCode.code)
+                                } label: {
+                                    Label("Dial", systemImage: "phone.circle")
+                                }
+                            }))
+                            
+                        }
                     }
                 }
-            }
+
+        } else {
+//            Spacer()
         }
+        }
+       
     }
     
     var bottomBarView: some View {
