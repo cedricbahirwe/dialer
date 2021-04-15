@@ -88,7 +88,7 @@ class MainViewModel: ObservableObject {
     }
     public func performQuickDial(for code: String) {
         
-        UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
+//        UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
         dialCode(url: code, completion: { result in
             switch result {
             case .success(_): break

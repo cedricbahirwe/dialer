@@ -42,7 +42,7 @@ struct PurchaseDetailView: View {
                         }
                     }
                 
-                if data.pinCode != nil {
+                if data.pinCode == nil {
                     HStack(spacing: 0) {
                         Text(validCode ? data.purchaseDetail.code.description : "Enter Code")
                             .frame(maxWidth: .infinity)
