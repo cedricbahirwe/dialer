@@ -118,7 +118,7 @@ struct DashItemView: View {
                 Text(count.description)
                     .fontWeight(.bold)
                     .font(.system(.title, design: .rounded))
-                
+                    .hidden()
             }
             
             Text(title)
