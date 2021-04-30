@@ -11,11 +11,14 @@ import SwiftUI
 class MainViewModel: ObservableObject {
     
     @Published var pinCode: String? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? String
+    @Published var showHistorySheet: Bool = false
     
     struct RecentCode: Identifiable, Codable {
         var id = UUID()
         var code: String
         var count: Int = 1
+        
+        static let example = RecentCode(code: "*182#")
     }
     
     struct PurchaseDetailModel {

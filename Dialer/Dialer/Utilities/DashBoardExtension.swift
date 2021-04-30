@@ -131,7 +131,7 @@ extension DashBoardView {
             
             Spacer()
             Button {
-                
+                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
             } label: {
                 Text("Add Code")
                     .font(.callout)
