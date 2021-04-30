@@ -19,25 +19,15 @@ struct HistoryView: View {
                             .onTapGesture {
                                 data.performQuickDial(for: recentCode.code)
                             }
-                            .contextMenu(ContextMenu(menuItems: {
-                                Button {
-                                    data.deleteRecentCode(code: recentCode)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                                
-                                Button {
-                                    data.performQuickDial(for: recentCode.code)
-                                } label: {
-                                    Label("Dial", systemImage: "phone.circle")
-                                }
-                            }))
                     }
+                    .onDelete(perform: data.deleteRecentCode)
                 }
             }
             .navigationTitle("History")
         }
     }
+    
+    
 }
 
 struct HistoryView_Previews: PreviewProvider {
@@ -46,3 +36,18 @@ struct HistoryView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
+
+// Unused
+//.contextMenu(ContextMenu(menuItems: {
+//    Button {
+//        data.deleteRecentCode(code: recentCode)
+//    } label: {
+//        Label("Delete", systemImage: "trash")
+//    }
+//
+//    Button {
+//        data.performQuickDial(for: recentCode.code)
+//    } label: {
+//        Label("Dial", systemImage: "phone.circle")
+//    }
+//}))

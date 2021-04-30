@@ -52,6 +52,7 @@ class MainViewModel: ObservableObject {
     
     @Published private(set) var recentCodes: [RecentCode]? = []
     
+    
     private func storeCode(code: String) {
         if let index = recentCodes?.firstIndex(where: { $0.code == code }) {
             recentCodes?[index].count += 1
@@ -101,8 +102,13 @@ class MainViewModel: ObservableObject {
         })
     }
     
-    func deleteRecentCode(code: RecentCode) {
+    public func deleteRecentCode(code: RecentCode) {
         recentCodes?.removeAll(where: { $0.id == code.id })
+        saveLocally()
+    }
+    
+    public func deleteRecentCode(at offSets: IndexSet) {
+        recentCodes?.remove(atOffsets: offSets)
         saveLocally()
     }
     
@@ -160,5 +166,4 @@ extension UserDefaults {
         static let RecentCodes = "recentCodes"
         static let PinCode = "pinCode"
     }
-
 }

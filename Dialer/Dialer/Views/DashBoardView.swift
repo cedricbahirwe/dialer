@@ -78,7 +78,6 @@ struct DashBoardView: View {
                     .padding()
                     
                     Spacer()
-//                    bottomSectionView
                     bottomBarView
                     
                 }
