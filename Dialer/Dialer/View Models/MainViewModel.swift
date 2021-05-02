@@ -11,11 +11,14 @@ import SwiftUI
 class MainViewModel: ObservableObject {
     
     @Published var pinCode: String? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? String
+    @Published var showHistorySheet: Bool = false
     
     struct RecentCode: Identifiable, Codable {
         var id = UUID()
         var code: String
         var count: Int = 1
+        
+        static let example = RecentCode(code: "*182#")
     }
     
     struct PurchaseDetailModel {
@@ -48,6 +51,7 @@ class MainViewModel: ObservableObject {
     
     
     @Published private(set) var recentCodes: [RecentCode]? = []
+    
     
     private func storeCode(code: String) {
         if let index = recentCodes?.firstIndex(where: { $0.code == code }) {
@@ -98,8 +102,13 @@ class MainViewModel: ObservableObject {
         })
     }
     
-    func deleteRecentCode(code: RecentCode) {
+    public func deleteRecentCode(code: RecentCode) {
         recentCodes?.removeAll(where: { $0.id == code.id })
+        saveLocally()
+    }
+    
+    public func deleteRecentCode(at offSets: IndexSet) {
+        recentCodes?.remove(atOffsets: offSets)
         saveLocally()
     }
     
@@ -157,5 +166,4 @@ extension UserDefaults {
         static let RecentCodes = "recentCodes"
         static let PinCode = "pinCode"
     }
-
 }

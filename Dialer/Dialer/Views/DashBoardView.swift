@@ -61,9 +61,12 @@ struct DashBoardView: View {
                         
                         HStack(spacing: 15) {
                             DashItemView(
-                                title: "All Options",
-                                icon: "archivebox.circle.fill"
+                                title: "History",
+                                icon: "timelapse"
                             )
+                            .onTapGesture {
+                                data.showHistorySheet.toggle()
+                            }
                             
                             DashItemView(
                                 title: "Check Intenet Balance",
@@ -74,7 +77,7 @@ struct DashBoardView: View {
                     }
                     .padding()
                     
-                    bottomSectionView
+                    Spacer()
                     bottomBarView
                     
                 }
@@ -84,6 +87,9 @@ struct DashBoardView: View {
                     .gesture(self.dragGesture)
                     .animation(.interactiveSpring())
                 
+            }
+            .sheet(isPresented: $data.showHistorySheet) {
+                HistoryView()
             }
             .background(
                 bgColor.edgesIgnoringSafeArea(.all))
