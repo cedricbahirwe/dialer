@@ -18,7 +18,7 @@ struct HistoryRow: View {
                     .background(Color.black)
                     .clipShape(Circle())
                     .foregroundColor(.white)
-                Text(recentCode.detail.fullCode)
+                Text(recentCode.code)
                     .foregroundColor(Color(.label))
                     .fontWeight(.semibold)
                 Spacer()
