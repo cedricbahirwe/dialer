@@ -106,8 +106,6 @@ struct DashBoardView_Previews: PreviewProvider {
     }
 }
 
-
-
 struct DashItemView: View {
     let title: String
     let count: Int = 0

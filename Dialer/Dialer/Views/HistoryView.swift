@@ -21,6 +21,11 @@ struct HistoryView: View {
                             }
                     }
                     .onDelete(perform: data.deleteRecentCode)
+                    
+                    HStack {
+                        Text("Total:")
+                        Text("Total:")
+                    }
                 }
             }
             .navigationTitle("History")
