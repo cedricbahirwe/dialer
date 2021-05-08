@@ -83,6 +83,9 @@ struct DashBoardView: View {
                 }
                 
                 PurchaseDetailView(data: data)
+                    .offset(y: data.showbottomSheet ? 0 : 605)
+                    .gesture(self.dragGesture)
+                    .animation(.interactiveSpring())
                 
             }
             .sheet(isPresented: $data.showHistorySheet) {
@@ -102,6 +105,8 @@ struct DashBoardView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
+
+
 
 struct DashItemView: View {
     let title: String
