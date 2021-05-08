@@ -17,15 +17,18 @@ struct HistoryView: View {
                     ForEach(recentCodes) { recentCode in
                         HistoryRow(recentCode: recentCode)
                             .onTapGesture {
-                                data.performQuickDial(for: recentCode.code)
+                                data.performQuickDial(for: recentCode.detail.fullCode)
                             }
                     }
                     .onDelete(perform: data.deleteRecentCode)
                     
                     HStack {
                         Text("Total:")
-                        Text("Total:")
+                        Spacer()
+                        Text(data.estimatedTotalPurchasesPirce.description)
                     }
+                    .font(.system(size: 30, weight: .bold, design: .monospaced))
+                    .opacity(0.9)
                 }
             }
             .navigationTitle("History")

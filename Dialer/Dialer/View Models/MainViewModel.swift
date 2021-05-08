@@ -13,15 +13,28 @@ class MainViewModel: ObservableObject {
     @Published var pinCode: Int? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? Int
     @Published var showHistorySheet: Bool = false
     
+    var estimatedTotalPurchasesPirce: Int {
+        recentCodes?.map(\.detail).map(\.amount).reduce(0, +) ?? 0
+    }
     enum CodeType: String, Codable {
         case momo, call, message, other
     }
     struct RecentCode: Identifiable, Codable {
-        var id = UUID()
-        var detail: PurchaseDetailModel = .example
-        var count: Int = 0
+        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 0) {
+            self.id = id
+            self.detail = detail
+            self.count = count
+        }
         
-        static let example = RecentCode()
+        private(set) var id = UUID()
+        public var detail: PurchaseDetailModel
+        private(set) var count: Int = 0
+        
+        public mutating func increaseCount() {
+            count += 1
+        }
+        
+        static let example = RecentCode(detail: .example)
     }
     
     struct PurchaseDetailModel: Codable {
@@ -60,8 +73,7 @@ class MainViewModel: ObservableObject {
     
     private func storeCode(code: RecentCode) {
         if let index = recentCodes?.firstIndex(where: { $0.id == code.id }) {
-            recentCodes?[index].count += 1
-            
+            recentCodes?[index].increaseCount()
         } else {
             recentCodes?.append(code)
         }
@@ -92,7 +104,10 @@ class MainViewModel: ObservableObject {
     public func confirmPurchase() {
         dialCode(url: purchaseDetail, completion: { result in
             switch result {
-            case .success(_): break
+            case .success(_):
+                self.purchaseDetail = PurchaseDetailModel()
+                
+                break;
             case .failure(let error):
                 print(error.message)
             }
@@ -125,14 +140,13 @@ class MainViewModel: ObservableObject {
     private func dialCode(url: PurchaseDetailModel, type: CodeType = .momo, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         guard let code = pinCode else { return }
         let newUrl = url.fullCode.replacingOccurrences(of: "PIN", with: String(code))
-        if url.fullCode.allSatisfy({ elements.contains($0)}) {
             if let telUrl = URL(string: "tel://\(newUrl)"),
                UIApplication.shared.canOpenURL(telUrl) {
                 UIApplication.shared.open(telUrl, options: [:], completionHandler: { hasOpened in
                     if !hasOpened {
                         print("The thing did not open")
                     }
-                    self.storeCode(code: RecentCode(detail: PurchaseDetailModel(amount: <#T##Int#>, type: type), count: 1))
+                    self.storeCode(code: RecentCode(detail: url))
                     completion(.success("Successfully Dialed"))
                 })
                 UIApplication.shared.endEditing(true)
@@ -141,7 +155,6 @@ class MainViewModel: ObservableObject {
                 // Can not dial this code
                 completion(.failure(.canNotDial))
             }
-        }
     }
     
     public func performQuickDial(for code: String) {

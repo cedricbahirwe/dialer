@@ -15,20 +15,29 @@ struct PurchaseDetailView: View {
     @State private var edition: Field = .amount
     
     @State private var fieldValue: String = ""
-    
+    @State private var codepin: String = ""
     
     private var validCode: Bool {
-        !data.purchaseDetail.code.isEmpty
+        if let pin = data.pinCode {
+            return String(pin).count == 5
+        }
+        return false
+    }
+    
+    private var hasStorePin: Bool {
+        return UserDefaults.standard.integer(forKey: UserDefaults.Keys.PinCode) != 0
     }
     
     private var validAmount: Bool {
-        !data.purchaseDetail.amount.isEmpty
+        data.purchaseDetail.amount > 0
     }
     
     var body: some View {
         VStack(spacing: 8) {
             VStack(spacing: 15) {
+                
                 Text(validAmount ? data.purchaseDetail.amount.description : "Enter Amount")
+                    .opacity(validAmount ? 1 : 0.6)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
@@ -42,35 +51,39 @@ struct PurchaseDetailView: View {
                         }
                     }
                 
-                if data.pinCode == nil {
-                    HStack(spacing: 0) {
-                        Text(validCode ? data.purchaseDetail.code.description : "Enter Code")
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 40)
-                            .offset(x: data.pinCode == nil ? 30 : 0)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                withAnimation {
-                                    edition = .code
-                                }
+                if !hasStorePin {
+                    Text(data.pinCode != nil ? data.pinCode!.description : "Enter Code")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 40)
+                        .background(Color.primary.opacity(0.06))
+                        .background(
+                            Color.green.opacity(edition == .code ? 0.04 : 0.0)
+                        )
+                        .cornerRadius(8)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation {
+                                edition = .code
                             }
-                        Button(action: data.savePinCode, label: {
-                            Text("Save")
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .frame(width: 60, height: 40)
-                                .background(Color.primary)
-                                .cornerRadius(8)
-                                .foregroundColor(Color(.systemBackground))
-                        })
-                        .disabled(data.purchaseDetail.code.count != 5)
-                        .opacity(data.purchaseDetail.code.count == 5 ? 1 : 0.4)
-                    }
-                    .background(Color.primary.opacity(0.06))
-                    .background(
-                        Color.green.opacity(edition == .code ? 0.04 : 0.0)
-                    )
-                    .cornerRadius(8)
+                        }
+                        .overlay(
+                            Button(action: {
+                                data.savePinCode(value: Int(codepin)!)
+                            }){
+                                Text("Save")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .frame(width: 60, height: 40)
+                                    .background(Color.primary)
+                                    .cornerRadius(8)
+                                    .foregroundColor(Color(.systemBackground))
+                            }
+                            .disabled(!validCode)
+                            .opacity(validCode ? 1 : 0.4)
+                            , alignment: .trailing
+                        )
+                    
+                    
                 } else {
                     Text("We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾")
                         .foregroundColor(.green)
@@ -105,14 +118,21 @@ struct PurchaseDetailView: View {
         .shadow(radius: 5)
         .offset(y: 15)
         .font(.system(size: 18, weight: .semibold, design: .rounded))
+        .onChange(of: codepin) { value in
+            if value.count <= 5 {
+                data.pinCode =  Int(value)
+            } else {
+                codepin = String(data.pinCode!)
+            }
+        }
     }
     
     private func storeInput() -> Binding<String>{
         switch edition {
         case .amount:
-            return $data.purchaseDetail.amount
+            return $data.purchaseDetail.amount.stringBind
         case .code:
-            return $data.purchaseDetail.code
+            return $codepin
         default:
             return .constant("")
         }
@@ -248,6 +268,14 @@ struct BottomSheetView<Content: View>: View {
     }
 }
 
+extension Int {
+    /// Returns a `Binding Boolean` value of an Int value
+    var stringBind: String {
+        get { String(self) }
+        set(value) { self = Int(value) ?? 0 }
+    }
+}
+
 //struct BottomSheetView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BottomSheetView(isOpen: .constant(true), maxHeight: 600) {
@@ -255,3 +283,4 @@ struct BottomSheetView<Content: View>: View {
 //        }.edgesIgnoringSafeArea(.all)
 //    }
 //}
+
