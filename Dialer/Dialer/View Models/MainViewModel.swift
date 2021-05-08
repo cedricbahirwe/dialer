@@ -20,15 +20,16 @@ class MainViewModel: ObservableObject {
         case momo, call, message, other
     }
     struct RecentCode: Identifiable, Codable {
-        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 0) {
+        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 1) {
             self.id = id
             self.detail = detail
             self.count = count
         }
         
-        private(set) var id = UUID()
+        private(set) var id: UUID
+        
         public var detail: PurchaseDetailModel
-        private(set) var count: Int = 0
+        private(set) var count: Int
         
         public mutating func increaseCount() {
             count += 1
@@ -68,7 +69,7 @@ class MainViewModel: ObservableObject {
     @Published var showbottomSheet: Bool = false
     
     
-    @Published private(set) var recentCodes: [RecentCode]? = UserDefaults.standard.object(forKey: UserDefaults.Keys.RecentCodes) as? [RecentCode]
+    @Published private(set) var recentCodes: [RecentCode]? = []
     
     
     private func storeCode(code: RecentCode) {
@@ -77,6 +78,7 @@ class MainViewModel: ObservableObject {
         } else {
             recentCodes?.append(code)
         }
+        saveLocally()
     }
     
     public func saveLocally() {
@@ -95,6 +97,7 @@ class MainViewModel: ObservableObject {
             return
         }
         do {
+            print(codes)
             recentCodes =  try JSONDecoder().decode([RecentCode].self, from: codes)
         } catch let error {
             print("Couldn't decode")
@@ -103,9 +106,11 @@ class MainViewModel: ObservableObject {
     }
     
     public func confirmPurchase() {
+        let purchase = purchaseDetail
         dialCode(url: purchaseDetail, completion: { result in
             switch result {
             case .success(_):
+                self.storeCode(code: RecentCode(detail: purchase))
                 self.purchaseDetail = PurchaseDetailModel()
                 
                 break;
@@ -141,36 +146,41 @@ class MainViewModel: ObservableObject {
     private func dialCode(url: PurchaseDetailModel, type: CodeType = .momo, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         guard let code = pinCode else { return }
         let newUrl = url.fullCode.replacingOccurrences(of: "PIN", with: String(code))
-            if let telUrl = URL(string: "tel://\(newUrl)"),
-               UIApplication.shared.canOpenURL(telUrl) {
-                UIApplication.shared.open(telUrl, options: [:], completionHandler: { hasOpened in
-                    if !hasOpened {
-                        print("The thing did not open")
-                    }
-                    self.storeCode(code: RecentCode(detail: url))
-                    completion(.success("Successfully Dialed"))
-                })
-                UIApplication.shared.endEditing(true)
-                
-            } else {
-                // Can not dial this code
-                completion(.failure(.canNotDial))
-            }
+        if let telUrl = URL(string: "tel://\(newUrl)"),
+           UIApplication.shared.canOpenURL(telUrl) {
+            UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
+                completion(.success("Successfully Dialed"))
+            })
+            UIApplication.shared.endEditing(true)
+            
+        } else {
+            // Can not dial this code
+            completion(.failure(.canNotDial))
+        }
     }
     
     public func performQuickDial(for code: String) {
         if let telUrl = URL(string: "tel://\(code)"),
            UIApplication.shared.canOpenURL(telUrl) {
-            UIApplication.shared.open(telUrl, options: [:], completionHandler: { hasOpened in
-                if !hasOpened {
-                    print("The thing did not open")
-                }
+            UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
                 print("Successfully Dialed")
             })
             UIApplication.shared.endEditing(true)
             
         } else {
             print("Can not dial this code")
+        }
+    }
+    
+    public func performRecentDialing(for recentCode: RecentCode) {
+        let recent = recentCode
+        dialCode(url: recentCode.detail) { result in
+            switch result {
+            case .success(_):
+                self.storeCode(code: recent)
+            case .failure(let error):
+                print(error.message)
+            }
         }
     }
 }
