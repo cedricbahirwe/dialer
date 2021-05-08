@@ -68,7 +68,7 @@ class MainViewModel: ObservableObject {
     @Published var showbottomSheet: Bool = false
     
     
-    @Published private(set) var recentCodes: [RecentCode]? = []
+    @Published private(set) var recentCodes: [RecentCode]? = UserDefaults.standard.object(forKey: UserDefaults.Keys.RecentCodes) as? [RecentCode]
     
     
     private func storeCode(code: RecentCode) {
@@ -91,6 +91,7 @@ class MainViewModel: ObservableObject {
         guard let codes = UserDefaults
                 .standard
                 .object(forKey: UserDefaults.Keys.RecentCodes) as? Data else {
+            print("Cannot fins da")
             return
         }
         do {

@@ -32,6 +32,11 @@ struct PurchaseDetailView: View {
         data.purchaseDetail.amount > 0
     }
     
+    @State var show = false
+    @State var viewState = CGSize.zero
+    @State var bottomState = CGSize.zero
+    @State var showFull = false
+    
     var body: some View {
         VStack(spacing: 8) {
             VStack(spacing: 15) {
@@ -105,7 +110,7 @@ struct PurchaseDetailView: View {
                         .cornerRadius(8)
                         .foregroundColor(Color(.systemBackground))
                 }
-                .disabled(!validCode && !validAmount)
+                .disabled(!validCode || !validAmount)
             }
             
             PinView(input: storeInput())
@@ -118,6 +123,33 @@ struct PurchaseDetailView: View {
         .shadow(radius: 5)
         .offset(y: 15)
         .font(.system(size: 18, weight: .semibold, design: .rounded))
+        .offset(x: 0, y: data.showbottomSheet ? 0 : 1000)
+        .offset(y: bottomState.height)
+        .blur(radius: show ? 20 : 0)
+        .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
+        .gesture(
+            DragGesture().onChanged { value in
+                self.bottomState = value.translation
+                if self.showFull {
+                    self.bottomState.height += -300
+                }
+                if self.bottomState.height < -300 {
+                    self.bottomState.height = -300
+                }
+            }
+            .onEnded { value in
+                if self.bottomState.height > 50 {
+                    data.showbottomSheet = false
+                }
+                if (self.bottomState.height < -100 && !self.showFull) || (self.bottomState.height < -250 && self.showFull) {
+                    self.bottomState.height = -300
+                    self.showFull = true
+                } else {
+                    self.bottomState = .zero
+                    self.showFull = false
+                }
+            }
+        )
         .onChange(of: codepin) { value in
             if value.count <= 5 {
                 data.pinCode =  Int(value)
@@ -190,97 +222,10 @@ struct PinView: View {
     }
 }
 
-fileprivate enum Constants {
-    static let radius: CGFloat = 16
-    static let indicatorHeight: CGFloat = 6
-    static let indicatorWidth: CGFloat = 60
-    static let snapRatio: CGFloat = 0.25
-    static let minHeightRatio: CGFloat = 0.3
-}
-
-fileprivate enum DragState {
-    case open
-    case closed
-    case dragging(position: CGFloat)
-}
-
-struct BottomSheetView<Content: View>: View {
-    @Binding var isOpen: Bool
-    
-    let maxHeight: CGFloat
-    let minHeight: CGFloat
-    let content: Content
-    
-    @State private var dragState: DragState = .closed
-    
-    private var offsetY: CGFloat {
-        switch dragState {
-        case .open: return 0
-        case .closed: return maxHeight - minHeight
-        case let .dragging(position):
-            return min(max(position, 0), maxHeight - minHeight)
-        }
-    }
-    
-    private var indicator: some View {
-        RoundedRectangle(cornerRadius: Constants.radius)
-            .fill(Color.secondary)
-            .frame(
-                width: Constants.indicatorWidth,
-                height: Constants.indicatorHeight
-            )
-    }
-    
-    private var dragGesture: some Gesture {
-        DragGesture().onChanged { value in
-            let position = value.startLocation.y + value.translation.height
-            self.dragState = .dragging(position: position)
-        }.onEnded { value in
-            let snapDistance = self.maxHeight * Constants.snapRatio
-            self.isOpen = value.translation.height < snapDistance
-            self.dragState = self.isOpen ? .open : .closed
-        }
-    }
-    
-    init(isOpen: Binding<Bool>, maxHeight: CGFloat, @ViewBuilder content: () -> Content) {
-        self.minHeight = 0 //maxHeight * Constants.minHeightRatio
-        self.maxHeight = maxHeight
-        self.content = content()
-        self._isOpen = isOpen
-        self.dragState = isOpen.wrappedValue ? .open : .closed
-    }
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            Spacer()
-                .layoutPriority(1.0)
-            VStack(spacing: 0) {
-                self.indicator.padding()
-                self.content
-            }
-            .background(Color(.systemBackground))
-            .frame(height: self.maxHeight)
-            .cornerRadius(Constants.radius)
-            .offset(y: self.offsetY)
-            .gesture(self.dragGesture)
-            .animation(.interactiveSpring())
-        }
-    }
-}
 
 extension Int {
-    /// Returns a `Binding Boolean` value of an Int value
     var stringBind: String {
         get { String(self) }
         set(value) { self = Int(value) ?? 0 }
     }
 }
-
-//struct BottomSheetView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BottomSheetView(isOpen: .constant(true), maxHeight: 600) {
-//            PurchaseDetailView(data: PurchaseViewModel())
-//        }.edgesIgnoringSafeArea(.all)
-//    }
-//}
-

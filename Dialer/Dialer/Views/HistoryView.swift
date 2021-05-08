@@ -32,6 +32,9 @@ struct HistoryView: View {
                 }
             }
             .navigationTitle("History")
+            .onAppear() {
+                print(data.recentCodes)
+            }
         }
     }
     
