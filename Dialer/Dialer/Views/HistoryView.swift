@@ -12,18 +12,30 @@ struct HistoryView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
-                    ForEach(recentCodes) { recentCode in
-                        HistoryRow(recentCode: recentCode)
-                            .onTapGesture {
-                                data.performQuickDial(for: recentCode.code)
-                            }
+            VStack {
+                List {
+                    if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
+                        ForEach(recentCodes) { recentCode in
+                            HistoryRow(recentCode: recentCode)
+                                .onTapGesture {
+                                    data.performRecentDialing(for: recentCode)
+                                }
+                        }
+                        .onDelete(perform: data.deleteRecentCode)
+                    
                     }
-                    .onDelete(perform: data.deleteRecentCode)
                 }
+                .navigationTitle("History")
+                
+                HStack {
+                    Text("Total:")
+                    Spacer()
+                    Text(data.estimatedTotalPurchasesPirce.description)
+                }
+                .font(.system(size: 30, weight: .bold, design: .monospaced))
+                .opacity(0.9)
+                .padding(8)
             }
-            .navigationTitle("History")
         }
     }
     
