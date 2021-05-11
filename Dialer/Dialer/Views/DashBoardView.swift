@@ -15,9 +15,7 @@ fileprivate enum DragState {
 
 struct DashBoardView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State var isSearching = false
     @EnvironmentObject var data: MainViewModel
-    @Environment(\.scenePhase) var scenePhase
     
     @State private var dragState: DragState = .closed
     var bgColor: Color {
@@ -25,14 +23,16 @@ struct DashBoardView: View {
     }
     
     private var dragGesture: some Gesture {
-        DragGesture().onChanged { value in
-            let position = value.startLocation.y + value.translation.height
-            dragState = .dragging(position: position)
-        }.onEnded { value in
-            let snapDistance = 600 * CGFloat(0.25)
-            data.showbottomSheet = value.translation.height < snapDistance
-            dragState = data.showbottomSheet ? .open : .closed
-        }
+        DragGesture()
+            .onChanged { value in
+                let position = value.startLocation.y + value.translation.height
+                dragState = .dragging(position: position)
+            }
+            .onEnded { value in
+                let snapDistance = 600 * CGFloat(0.25)
+                data.showbottomSheet = value.translation.height < snapDistance
+                dragState = data.showbottomSheet ? .open : .closed
+            }
     }
     
     init(){
@@ -82,7 +82,6 @@ struct DashBoardView: View {
                 }
                 
                 PurchaseDetailView(data: data)
-                
             }
             .sheet(isPresented: $data.showHistorySheet) {
                 HistoryView()

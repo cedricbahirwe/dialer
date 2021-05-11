@@ -66,7 +66,6 @@ class MainViewModel: ObservableObject {
     
     @Published var showbottomSheet: Bool = false
     
-    
     @Published private(set) var recentCodes: [RecentCode]? = []
     
     
@@ -184,20 +183,6 @@ class MainViewModel: ObservableObject {
                 print(error.message)
             }
         }
-    }
-}
-
-extension Array where Element: Hashable {
-    func removingDuplicates() -> [Element] {
-        var addedDict = [Element: Bool]()
-        
-        return filter {
-            addedDict.updateValue(true, forKey: $0) == nil
-        }
-    }
-    
-    mutating func removeDuplicates() {
-        self = self.removingDuplicates()
     }
 }
 
