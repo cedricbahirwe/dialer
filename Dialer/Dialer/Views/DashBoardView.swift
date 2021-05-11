@@ -15,26 +15,26 @@ fileprivate enum DragState {
 
 struct DashBoardView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State var isSearching = false
     @EnvironmentObject var data: MainViewModel
-    @Environment(\.scenePhase) var scenePhase
-    
+
     @State private var dragState: DragState = .closed
     var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
-    
+
     private var dragGesture: some Gesture {
-        DragGesture().onChanged { value in
-            let position = value.startLocation.y + value.translation.height
-            self.dragState = .dragging(position: position)
-        }.onEnded { value in
-            let snapDistance = 600 * CGFloat(0.25)
-            self.data.showbottomSheet = value.translation.height < snapDistance
-            self.dragState = self.data.showbottomSheet ? .open : .closed
-        }
+        DragGesture()
+            .onChanged { value in
+                let position = value.startLocation.y + value.translation.height
+                dragState = .dragging(position: position)
+            }
+            .onEnded { value in
+                let snapDistance = 600 * CGFloat(0.25)
+                data.showbottomSheet = value.translation.height < snapDistance
+                dragState = data.showbottomSheet ? .open : .closed
+            }
     }
-    
+
     init(){
         UITableView.appearance().backgroundColor = .clear
     }
@@ -42,7 +42,6 @@ struct DashBoardView: View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 VStack {
-                    headerView
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
                             DashItemView(
@@ -52,13 +51,13 @@ struct DashBoardView: View {
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
-                            
+
                             DashItemView(
                                 title: "Buy Directly",
                                 icon: "speedometer"
                             )
                         }
-                        
+
                         HStack(spacing: 15) {
                             DashItemView(
                                 title: "History",
@@ -67,7 +66,7 @@ struct DashBoardView: View {
                             .onTapGesture {
                                 data.showHistorySheet.toggle()
                             }
-                            
+
                             DashItemView(
                                 title: "Check Intenet Balance",
                                 icon: "lock.shield"
@@ -76,25 +75,27 @@ struct DashBoardView: View {
                         }
                     }
                     .padding()
-                    
+
                     Spacer()
                     bottomBarView
-                    
+
                 }
-                
+
                 PurchaseDetailView(data: data)
-                    .offset(y: data.showbottomSheet ? 0 : 605)
-                    .gesture(self.dragGesture)
-                    .animation(.interactiveSpring())
-                
             }
             .sheet(isPresented: $data.showHistorySheet) {
-                HistoryView()
+                HistoryView(data: data)
             }
-            .background(
-                bgColor.edgesIgnoringSafeArea(.all))
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationBarHidden(true)
+            .background(bgColor.ignoresSafeArea())
+            .navigationTitle("Dialer")
+            .toolbar {
+
+                if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {
+                    Text("Delete Pin")
+                        .foregroundColor(.red)
+                        .onTapGesture (perform: data.removePin)
+                }
+            }
         }
     }
 }
@@ -112,7 +113,7 @@ struct DashItemView: View {
     let title: String
     let count: Int = 0
     let icon: String
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack  {
@@ -126,7 +127,7 @@ struct DashItemView: View {
                     .font(.system(.title, design: .rounded))
                     .hidden()
             }
-            
+
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundColor(.gray)
@@ -141,8 +142,6 @@ struct DashItemView: View {
         )
         .cornerRadius(12)
         .contentShape(Rectangle())
-        
+
     }
 }
-
-
