@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct HistoryView: View {
-    @EnvironmentObject var data: MainViewModel
-    
+    @ObservedObject var data: MainViewModel
     var body: some View {
         NavigationView {
             VStack {
@@ -22,10 +21,9 @@ struct HistoryView: View {
                                 }
                         }
                         .onDelete(perform: data.deleteRecentCode)
-                    
+                        
                     }
                 }
-                .navigationTitle("History")
                 
                 HStack {
                     Text("Total:")
@@ -36,30 +34,20 @@ struct HistoryView: View {
                 .opacity(0.9)
                 .padding(8)
             }
+            .navigationTitle("History")
+            .toolbar(content: {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Close") {
+                        data.showHistorySheet.toggle()
+                    }
+                }
+            })
         }
     }
-    
-    
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView()
-            .environmentObject(MainViewModel())
+        HistoryView(data: MainViewModel())
     }
 }
-
-// Unused
-//.contextMenu(ContextMenu(menuItems: {
-//    Button {
-//        data.deleteRecentCode(code: recentCode)
-//    } label: {
-//        Label("Delete", systemImage: "trash")
-//    }
-//
-//    Button {
-//        data.performQuickDial(for: recentCode.code)
-//    } label: {
-//        Label("Dial", systemImage: "phone.circle")
-//    }
-//}))

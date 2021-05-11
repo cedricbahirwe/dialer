@@ -84,7 +84,7 @@ struct DashBoardView: View {
                 PurchaseDetailView(data: data)
             }
             .sheet(isPresented: $data.showHistorySheet) {
-                HistoryView()
+                HistoryView(data: data)
             }
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
