@@ -27,11 +27,11 @@ struct DashBoardView: View {
     private var dragGesture: some Gesture {
         DragGesture().onChanged { value in
             let position = value.startLocation.y + value.translation.height
-            self.dragState = .dragging(position: position)
+            dragState = .dragging(position: position)
         }.onEnded { value in
             let snapDistance = 600 * CGFloat(0.25)
-            self.data.showbottomSheet = value.translation.height < snapDistance
-            self.dragState = self.data.showbottomSheet ? .open : .closed
+            data.showbottomSheet = value.translation.height < snapDistance
+            dragState = data.showbottomSheet ? .open : .closed
         }
     }
     
@@ -42,7 +42,6 @@ struct DashBoardView: View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 VStack {
-                    headerView
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
                             DashItemView(
@@ -90,8 +89,15 @@ struct DashBoardView: View {
             }
             .background(
                 bgColor.edgesIgnoringSafeArea(.all))
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationBarHidden(true)
+            .navigationTitle("Dialer")
+            .toolbar {
+                Button(action: {
+                    print("Pressed")
+                }) {
+                    Text("Delete Pin")
+                        .foregroundColor(.red)
+                }
+            }
         }
     }
 }

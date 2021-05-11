@@ -61,9 +61,7 @@ class MainViewModel: ObservableObject {
         }
     }
     private let elements = "0123456789*#"
-    
-    @Published var composedCode: String = ""
-    
+        
     @Published var purchaseDetail = PurchaseDetailModel()
     
     @Published var showbottomSheet: Bool = false
@@ -87,6 +85,10 @@ class MainViewModel: ObservableObject {
         } else {
             print("Couldn't encode")
         }
+    }
+    public func removePin() {
+        UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
+        pinCode = nil
     }
     
     public func retrieveCodes() {
