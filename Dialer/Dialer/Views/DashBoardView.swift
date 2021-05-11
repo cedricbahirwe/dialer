@@ -91,9 +91,9 @@ struct DashBoardView: View {
             .toolbar {
                 
                 if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {
-                        Text("Delete Pin")
-                            .foregroundColor(.red)
-                            .onTapGesture (perform: data.removePin)
+                    Text("Delete Pin")
+                        .foregroundColor(.red)
+                        .onTapGesture (perform: data.removePin)
                 }
             }
         }

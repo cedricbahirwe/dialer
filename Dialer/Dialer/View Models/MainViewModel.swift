@@ -36,6 +36,7 @@ class MainViewModel: ObservableObject {
         }
         
         static let example = RecentCode(detail: .example)
+        
     }
     
     struct PurchaseDetailModel: Codable {
@@ -48,18 +49,21 @@ class MainViewModel: ObservableObject {
     }
     
     enum DialingError: Error {
-        case canNotDial, unknownFormat(String),  other
+        case canNotDial, emptyPin, unknownFormat(String),  other
         var message: String {
             switch self {
             case .canNotDial:
                 return "Can not dial this code"
             case .unknownFormat(let format):
                 return "Can not decode this format: \(format)"
+            case .emptyPin:
+                return "Pin Code not found, configure pin and try again"
             default:
                 return "Unknown error occured"
             }
         }
     }
+    
     private let elements = "0123456789*#"
         
     @Published var purchaseDetail = PurchaseDetailModel()
@@ -143,7 +147,10 @@ class MainViewModel: ObservableObject {
     }
     
     private func dialCode(url: PurchaseDetailModel, type: CodeType = .momo, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
-        guard let code = pinCode else { return }
+        guard let code = pinCode else {
+            completion(.failure(.emptyPin))
+            return
+        }
         let newUrl = url.fullCode.replacingOccurrences(of: "PIN", with: String(code))
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {

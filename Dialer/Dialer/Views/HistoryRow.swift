@@ -12,18 +12,18 @@ struct HistoryRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "chevron.left.slash.chevron.right")
-                    .imageScale(.small)
-                    .frame(width: 30, height: 30)
-                    .background(Color.black)
-                    .clipShape(Circle())
-                    .foregroundColor(.white)
                 Text(recentCode.detail.fullCode)
-                    .foregroundColor(Color(.label))
+                    .font(.title3)
                     .fontWeight(.semibold)
                 Spacer()
-                Text(recentCode.count.description)
-                    .foregroundColor(.gray)
+                Image(systemName:
+                        recentCode.count > 50 ?
+                        "flame.fill" :
+                        "\(recentCode.count).circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
+                    .foregroundColor(recentCode.count > 50 ? .red : .primary)
             }
             .contentShape(Rectangle())
         }
