@@ -43,7 +43,7 @@ class MainViewModel: ObservableObject {
         var amount: Int = 0
         var type: CodeType = .momo
         var fullCode: String {
-            "*1832*2*1*1*1*\(amount)*PIN#" // Need to check for the type to specify the prefix
+            "*182*2*1*1*1*\(amount)*PIN#" // Need to check for the type to specify the prefix
         }
         static let example = PurchaseDetailModel()
     }

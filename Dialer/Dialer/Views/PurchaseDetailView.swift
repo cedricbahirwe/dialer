@@ -121,7 +121,7 @@ struct PurchaseDetailView: View {
         .background(Color(.systemBackground))
         .cornerRadius(15)
         .shadow(radius: 5)
-        .offset(y: 15)
+        .offset(y: 0 + UIApplication.shared.windows.first!.safeAreaInsets.top)
         .font(.system(size: 18, weight: .semibold, design: .rounded))
         .offset(x: 0, y: data.showbottomSheet ? 0 : 1000)
         .offset(y: bottomState.height)
