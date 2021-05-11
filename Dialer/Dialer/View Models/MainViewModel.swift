@@ -94,11 +94,9 @@ class MainViewModel: ObservableObject {
         guard let codes = UserDefaults
                 .standard
                 .object(forKey: UserDefaults.Keys.RecentCodes) as? Data else {
-            print("Cannot fins da")
             return
         }
         do {
-            print(codes)
             recentCodes =  try JSONDecoder().decode([RecentCode].self, from: codes)
         } catch let error {
             print("Couldn't decode")

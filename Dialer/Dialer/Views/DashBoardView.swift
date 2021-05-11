@@ -86,15 +86,14 @@ struct DashBoardView: View {
             .sheet(isPresented: $data.showHistorySheet) {
                 HistoryView()
             }
-            .background(
-                bgColor.edgesIgnoringSafeArea(.all))
+            .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
             .toolbar {
-                Button(action: {
-                    print("Pressed")
-                }) {
-                    Text("Delete Pin")
-                        .foregroundColor(.red)
+                
+                if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {
+                        Text("Delete Pin")
+                            .foregroundColor(.red)
+                            .onTapGesture (perform: data.removePin)
                 }
             }
         }
