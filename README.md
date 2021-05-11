@@ -10,7 +10,7 @@
 ### Improved Layout wiht dark mode support.
 ### Add History View to Track Past events.
 
-<img alt="Pin Detail View" height="890" width="414" src="pin.light.png">&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Pin Detail View" height="890" src="pin.dark.png">
+<img alt="Pin Detail View" height="890" width="414" src="light.png">&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Pin Detail View" height="890" src="dark.png">
 
 ## ✨ Upcoming features:
 
