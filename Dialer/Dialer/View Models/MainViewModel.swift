@@ -13,7 +13,7 @@ class MainViewModel: ObservableObject {
     @Published var pinCode: Int? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? Int
     @Published var showHistorySheet: Bool = false
 
-    var estimatedTotalPurchasesPirce: Int {
+    var estimatedTotalPrice: Int {
         recentCodes?.map(\.detail).map(\.amount).reduce(0, +) ?? 0
     }
     enum CodeType: String, Codable {
@@ -74,7 +74,7 @@ class MainViewModel: ObservableObject {
 
 
     private func storeCode(code: RecentCode) {
-        if let index = recentCodes?.firstIndex(where: { $0.id == code.id }) {
+        if let index = recentCodes?.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
             recentCodes?[index].increaseCount()
         } else {
             recentCodes?.append(code)
