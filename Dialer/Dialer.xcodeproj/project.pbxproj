@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B3261A3C94007D6892 /* DashBoardView.swift */; };
-		8201D9BA261A4134007D6892 /* DashBoardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B9261A4134007D6892 /* DashBoardExtension.swift */; };
 		821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821C0733264DD78F00DBD545 /* NewDialingView.swift */; };
 		821C0738264DDFFB00DBD545 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821C0737264DDFFB00DBD545 /* PinView.swift */; };
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
@@ -29,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
-		8201D9B9261A4134007D6892 /* DashBoardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardExtension.swift; sourceTree = "<group>"; };
 		821C0733264DD78F00DBD545 /* NewDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDialingView.swift; sourceTree = "<group>"; };
 		821C0737264DDFFB00DBD545 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		823FA768261A556200ABE045 /* PurchaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailView.swift; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 		82FBCC06261BB2FA00F00FAE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				8201D9B9261A4134007D6892 /* DashBoardExtension.swift */,
 				826BC40825D9774400A45C7B /* PassCodeView.swift */,
 				82FBCBFC261BB27500F00FAE /* CustomViews.swift */,
 				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
@@ -228,7 +225,6 @@
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
-				8201D9BA261A4134007D6892 /* DashBoardExtension.swift in Sources */,
 				826BC40625D9772200A45C7B /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

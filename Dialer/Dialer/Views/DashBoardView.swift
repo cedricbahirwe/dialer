@@ -18,6 +18,7 @@ struct DashBoardView: View {
     @EnvironmentObject var data: MainViewModel
 
     @State private var dragState: DragState = .closed
+    @State private var presentNewDial: Bool = false
     var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -83,8 +84,12 @@ struct DashBoardView: View {
 
                 PurchaseDetailView(data: data)
             }
-            .sheet(isPresented: $data.showHistorySheet) {
-                HistoryView(data: data)
+            .sheet(isPresented:presentNewDial ? $presentNewDial : $data.showHistorySheet) {
+                if presentNewDial {
+                    NewDialingView()
+                } else {
+                    HistoryView(data: data)
+                }
             }
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
@@ -99,6 +104,24 @@ struct DashBoardView: View {
         }
     }
 }
+
+extension DashBoardView {
+    var bottomBarView: some View {
+        HStack {
+            Button {
+                presentNewDial.toggle()
+            } label: {
+                Label("New Dial", systemImage: "plus.circle.fill")
+                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+            }
+            
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.bottom,8)
+    }
+}
+
 
 struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
