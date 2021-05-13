@@ -17,6 +17,6 @@
 
 ### - Good Local Storage (Core Data)
 ### - Siri Commands Support (Intents and IntentsUI)
-### - Better Pin Code UI with advanced functionalities (dial custom codes, etc).
+### -  Home Screen Quick Actions
 
 
