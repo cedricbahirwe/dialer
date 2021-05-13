@@ -114,6 +114,8 @@ struct PurchaseDetailView: View {
             }
             
             PinView(input: storeInput())
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+
                 .padding(.bottom, 20)
         }
         .padding()
@@ -121,7 +123,7 @@ struct PurchaseDetailView: View {
         .background(Color(.systemBackground))
         .cornerRadius(15)
         .shadow(radius: 5)
-        .offset(y: 0 + UIApplication.shared.windows.first!.safeAreaInsets.top)
+        .offset(y: 0 + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
         .font(.system(size: 18, weight: .semibold, design: .rounded))
         .offset(x: 0, y: data.showbottomSheet ? 0 : 1000)
         .offset(y: bottomState.height)
@@ -184,48 +186,3 @@ struct PurchaseDetailView_Previews: PreviewProvider {
     }
 }
 
-struct PinView: View {
-    private let buttons: [String] = [ "1","2","3","4","5","6","7","8","9","*","0","X"
-    ]
-    
-    @Binding var input: String // = ""
-    var body: some View {
-        LazyVGrid(columns: [
-            GridItem(.fixed(90)),
-            GridItem(.fixed(90)),
-            GridItem(.fixed(90)),
-        ], spacing: 10) {
-            ForEach(buttons, id: \.self) { button in
-                Button {
-                    if button == "X" {
-                        if !input.isEmpty {
-                            input.removeLast()
-                        }
-                    } else {
-                        input.append(button)
-                    }
-                } label: {
-                    Text(button)
-                        .frame(width: 60, height: 60)
-                        .background(Color.gray.opacity(0.2))
-                        .clipShape(Circle())
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                }
-                .foregroundColor(
-                    button == "X" ?
-                        Color.red :
-                        Color(.label)
-                )
-                
-            }
-        }
-    }
-}
-
-
-extension Int {
-    var stringBind: String {
-        get { String(self) }
-        set(value) { self = Int(value) ?? 0 }
-    }
-}
