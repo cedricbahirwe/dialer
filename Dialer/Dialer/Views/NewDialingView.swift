@@ -7,19 +7,34 @@
 
 import SwiftUI
 
+func drawImage() -> UIImage {
+    let renderer = UIGraphicsImageRenderer(size: CGSize(width: 60, height: 40))
+    return renderer.image { _ in
+        // Draw image in circle
+        let image = UIImage(named: "abclogo")!
+        let size = CGSize(width: 55, height: 35)
+        let rect = CGRect(x: 0, y: 5, width: size.width, height: size.height)
+        image.draw(in: rect)
+    }
+}
+
 struct NewDialingView: View {
     @State private var composedCode: String = ""
     @State private var showInValidMsg: Bool = false
     var body: some View {
-        NavigationView {
+        VStack(spacing: 10) {
+            Text("Incognito Mode by \(Image(uiImage: drawImage()))")
+                .font(Font.largeTitle.bold())
+                .scaleEffect(0.95)
+                .padding(.top)
             VStack(spacing: 10) {
                 Group {
-                    
                     Text("Invalid code. Check it and try again.")
                         .font(.system(size: 16))
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
                         .opacity(showInValidMsg ? 1 : 0)
+                        
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
                         .frame(height: 28)
                         .mask(Text(composedCode))
@@ -34,7 +49,7 @@ struct NewDialingView: View {
                 PinView(input: $composedCode.animation(), fullMode: true, btnSize: .init(width: 80, height: 80))
                     .font(Font.title.bold())
                     .padding(.vertical, 10)
-
+                
                 Button(action: {
                     dial(composedCode)
                 }, label: {
@@ -62,9 +77,9 @@ struct NewDialingView: View {
                     .opacity(composedCode.isEmpty ? 0 : 1)
                     ,alignment: .trailing
                 )
+                Spacer()
             }
-            .padding(.vertical, 15)
-            .navigationTitle("Incognito Mode👨🏽‍💻𒆂")
+            
         }
     }
     
