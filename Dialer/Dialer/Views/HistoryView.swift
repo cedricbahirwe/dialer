@@ -28,7 +28,7 @@ struct HistoryView: View {
                 HStack {
                     Text("Total:")
                     Spacer()
-                    Text(data.estimatedTotalPurchasesPirce.description)
+                    Text("\(data.estimatedTotalPrice) RWF")
                 }
                 .font(.system(size: 30, weight: .bold, design: .monospaced))
                 .opacity(0.9)
