@@ -43,7 +43,7 @@ class MainViewModel: ObservableObject {
         var amount: Int = 0
         var type: CodeType = .momo
         var fullCode: String {
-            "*182*2*1*1*1*\(amount)*PIN#" // Need to check for the type to specify the prefix
+            "*182*2*1*1*1*\(amount)*PIN#"
         }
         static let example = PurchaseDetailModel()
     }
@@ -73,8 +73,8 @@ class MainViewModel: ObservableObject {
     @Published private(set) var recentCodes: [RecentCode]? = []
     
     
-    /// <#Description#>
-    /// - Parameter code: <#code description#>
+    /// Store a given  recent code locally.
+    /// - Parameter code: the code to be added.
     private func storeCode(code: RecentCode) {
         if let index = recentCodes?.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
             recentCodes?[index].increaseCount()
@@ -84,7 +84,7 @@ class MainViewModel: ObservableObject {
         saveLocally()
     }
     
-    /// <#Description#>
+    /// Save code(s) locally.
     public func saveLocally() {
         if let encoded = try? JSONEncoder().encode(recentCodes){
             UserDefaults.standard.set(encoded, forKey: UserDefaults.Keys.RecentCodes)
@@ -92,14 +92,14 @@ class MainViewModel: ObservableObject {
             print("Couldn't encode")
         }
     }
-    
-    /// <#Description#>
+        
+    ///  Delete locally the Pin Code.
     public func removePin() {
         UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
         pinCode = nil
     }
     
-    /// <#Description#>
+    /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
         guard let codes = UserDefaults
                 .standard
@@ -114,10 +114,10 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    /// <#Description#>
+    /// Confirm and Purchase an entered Code.
     public func confirmPurchase() {
         let purchase = purchaseDetail
-        dialCode(url: purchaseDetail, completion: { result in
+        dialCode(from: purchaseDetail, completion: { result in
             switch result {
             case .success(_):
                 self.storeCode(code: RecentCode(detail: purchase))
@@ -131,27 +131,20 @@ class MainViewModel: ObservableObject {
         
     }
     
-    /// <#Description#>
-    /// - Parameter code: <#code description#>
-    public func deleteRecentCode(code: RecentCode) {
-        recentCodes?.removeAll(where: { $0.id == code.id })
-        saveLocally()
-    }
-    
-    /// <#Description#>
-    /// - Parameter offSets: <#offSets description#>
+    /// Delete locally the recent Code(s).
+    /// - Parameter offSets: the offsets to be deleted
     public func deleteRecentCode(at offSets: IndexSet) {
         recentCodes?.remove(atOffsets: offSets)
         saveLocally()
     }
     
-    /// <#Description#>
-    public func checkBalance() {
+    /// Check internet balance.
+    public func checkInternetBalance() {
         performQuickDial(for: "*345*5#")
     }
     
-    /// <#Description#>
-    /// - Parameter value: <#value description#>
+    /// Save locally the Pin Code
+    /// - Parameter value: the pin value to be saved.
     public func savePinCode(value: Int) {
         if String(value).count == 5 {
             pinCode = value
@@ -161,18 +154,16 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    
-    /// <#Description#>
+    /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
-    ///   - url: <#url description#>
-    ///   - type: <#type description#>
-    ///   - completion: <#completion description#>
-    private func dialCode(url: PurchaseDetailModel, type: CodeType = .momo, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
+    ///   - purchase: the purchase to take the fullCode from.
+    ///   - completion: closue to return a success message or a error of type   `DialingError`.
+    private func dialCode(from purchase: PurchaseDetailModel, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         guard let code = pinCode else {
             completion(.failure(.emptyPin))
             return
         }
-        let newUrl = url.fullCode.replacingOccurrences(of: "PIN", with: String(code))
+        let newUrl = purchase.fullCode.replacingOccurrences(of: "PIN", with: String(code))
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
@@ -185,9 +176,8 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    
-    /// <#Description#>
-    /// - Parameter code: <#code description#>
+    /// Perform an independent dial, without storing or tracking.
+    /// - Parameter code: the `string` code to be dialed.
     public func performQuickDial(for code: String) {
         if let telUrl = URL(string: "tel://\(code)"),
            UIApplication.shared.canOpenURL(telUrl) {
@@ -200,12 +190,11 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    
-    /// <#Description#>
-    /// - Parameter recentCode: <#recentCode description#>
+    /// Perfom a quick dialing from the `History View Row.`
+    /// - Parameter recentCode: the row code to be performed.
     public func performRecentDialing(for recentCode: RecentCode) {
         let recent = recentCode
-        dialCode(url: recentCode.detail) { result in
+        dialCode(from: recentCode.detail) { result in
             switch result {
             case .success(_):
                 self.storeCode(code: recent)
@@ -217,6 +206,8 @@ class MainViewModel: ObservableObject {
 }
 
 extension UserDefaults {
+    
+    /// Storing the used UserDefaults keys for safety.
     enum Keys {
         static let RecentCodes = "recentCodes"
         static let PinCode = "pinCode"

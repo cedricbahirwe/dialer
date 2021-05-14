@@ -88,7 +88,7 @@ struct DashBoardView: View {
                                 title: "Check Intenet Balance",
                                 icon: "lock.shield"
                             )
-                            .onTapGesture(perform: data.checkBalance)
+                            .onTapGesture(perform: data.checkInternetBalance)
                         }
                     }
                     .padding()
