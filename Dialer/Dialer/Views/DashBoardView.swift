@@ -19,6 +19,7 @@ struct DashBoardView: View {
 
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
+    @State private var offset: CGSize = .zero
     var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -42,6 +43,19 @@ struct DashBoardView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
+                Image("water")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color.primary.opacity(0.2))
+                    .gesture(DragGesture()
+                                .onChanged({ offset = $0.translation })
+                                .onEnded({ _ in offset = .zero })
+                    )
+                    .offset(offset)
+                    .animation(.interpolatingSpring(stiffness: 1, damping: 0.1))
+                    .offset(x: 20)
+
                 VStack {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
@@ -52,13 +66,13 @@ struct DashBoardView: View {
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
-
+                            
                             DashItemView(
                                 title: "Buy Directly",
                                 icon: "speedometer"
                             )
                         }
-
+                        
                         HStack(spacing: 15) {
                             DashItemView(
                                 title: "History",
@@ -67,7 +81,7 @@ struct DashBoardView: View {
                             .onTapGesture {
                                 data.showHistorySheet.toggle()
                             }
-
+                            
                             DashItemView(
                                 title: "Check Intenet Balance",
                                 icon: "lock.shield"
@@ -76,12 +90,10 @@ struct DashBoardView: View {
                         }
                     }
                     .padding()
-
                     Spacer()
                     bottomBarView
-
                 }
-
+                
                 PurchaseDetailView(data: data)
             }
             .sheet(isPresented:presentNewDial ? $presentNewDial : $data.showHistorySheet) {
