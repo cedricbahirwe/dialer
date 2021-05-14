@@ -14,7 +14,6 @@ struct PurchaseDetailView: View {
     }
     @State private var edition: Field = .amount
     
-    @State private var fieldValue: String = ""
     @State private var codepin: String = ""
     
     private var validCode: Bool {
@@ -25,7 +24,7 @@ struct PurchaseDetailView: View {
     }
     
     private var hasStorePin: Bool {
-        return UserDefaults.standard.integer(forKey: UserDefaults.Keys.PinCode) != 0
+        UserDefaults.standard.integer(forKey: UserDefaults.Keys.PinCode) != 0
     }
     
     private var validAmount: Bool {
@@ -33,7 +32,6 @@ struct PurchaseDetailView: View {
     }
     
     @State var show = false
-    @State var viewState = CGSize.zero
     @State var bottomState = CGSize.zero
     @State var showFull = false
     
@@ -115,7 +113,7 @@ struct PurchaseDetailView: View {
             
             PinView(input: storeInput())
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
-
+                
                 .padding(.bottom, 20)
         }
         .padding()

@@ -16,14 +16,14 @@ fileprivate enum DragState {
 struct DashBoardView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: MainViewModel
-
+    
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
     @State private var offset: CGSize = .zero
     var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
-
+    
     private var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
@@ -36,7 +36,7 @@ struct DashBoardView: View {
                 dragState = data.showbottomSheet ? .open : .closed
             }
     }
-
+    
     init(){
         UITableView.appearance().backgroundColor = .clear
     }
@@ -48,14 +48,16 @@ struct DashBoardView: View {
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(Color.primary.opacity(0.2))
-                    .gesture(DragGesture()
-                                .onChanged({ offset = $0.translation })
-                                .onEnded({ _ in offset = .zero })
+                    .gesture(
+                        DragGesture()
+                            .onChanged({ offset = $0.translation })
+                            .onEnded({ _ in offset = .zero })
                     )
                     .offset(offset)
                     .animation(.interpolatingSpring(stiffness: 1, damping: 0.1))
                     .offset(x: 20)
-
+                    .frame(maxHeight: .infinity)
+                
                 VStack {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
@@ -96,6 +98,7 @@ struct DashBoardView: View {
                 
                 PurchaseDetailView(data: data)
             }
+            
             .sheet(isPresented:presentNewDial ? $presentNewDial : $data.showHistorySheet) {
                 if presentNewDial {
                     NewDialingView()
@@ -106,7 +109,7 @@ struct DashBoardView: View {
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
             .toolbar {
-
+                
                 if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {
                     Text("Delete Pin")
                         .foregroundColor(.red)
@@ -148,7 +151,7 @@ struct DashItemView: View {
     let title: String
     let count: Int = 0
     let icon: String
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack  {
@@ -162,7 +165,7 @@ struct DashItemView: View {
                     .font(.system(.title, design: .rounded))
                     .hidden()
             }
-
+            
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundColor(.gray)
@@ -177,6 +180,7 @@ struct DashItemView: View {
         )
         .cornerRadius(12)
         .contentShape(Rectangle())
-
+        
+        
     }
 }

@@ -18,6 +18,7 @@ struct PinView: View {
         return defaults
     }
     var btnSize: CGSize = CGSize(width: 60, height: 60)
+    
     var body: some View {
         LazyVGrid(columns: [
             GridItem(.flexible()),
@@ -58,7 +59,7 @@ extension Int {
         set(value) { self = Int(value) ?? 0 }
     }
 }
-    
+
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {

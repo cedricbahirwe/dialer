@@ -13,8 +13,6 @@
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
 		8255017D263B489F00CB1BC2 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255017C263B489F00CB1BC2 /* HistoryView.swift */; };
-		826BC40625D9772200A45C7B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40525D9772200A45C7B /* Models.swift */; };
-		826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826BC40825D9774400A45C7B /* PassCodeView.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
 		82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB625D1C1FE00551D22 /* AppDelegate.swift */; };
 		82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */; };
@@ -22,8 +20,6 @@
 		82D41FBD25D1C1FF00551D22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FBC25D1C1FF00551D22 /* Assets.xcassets */; };
 		82D41FC025D1C1FF00551D22 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */; };
 		82D41FC325D1C1FF00551D22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */; };
-		82D41FCE25D1C78E00551D22 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FCD25D1C78E00551D22 /* Helpers.swift */; };
-		82FBCBFD261BB27500F00FAE /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FBCBFC261BB27500F00FAE /* CustomViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +30,6 @@
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		8255017C263B489F00CB1BC2 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		826BC40525D9772200A45C7B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		826BC40825D9774400A45C7B /* PassCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeView.swift; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D41FB625D1C1FE00551D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,8 +39,6 @@
 		82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		82D41FC225D1C1FF00551D22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82D41FC425D1C1FF00551D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82D41FCD25D1C78E00551D22 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		82FBCBFC261BB27500F00FAE /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +77,6 @@
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
-				82FBCC04261BB2EE00F00FAE /* Models */,
-				82FBCC06261BB2FA00F00FAE /* Utilities */,
 				82D41FBC25D1C1FF00551D22 /* Assets.xcassets */,
 				82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */,
 				82D41FC425D1C1FF00551D22 /* Info.plist */,
@@ -103,14 +93,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		82FBCC04261BB2EE00F00FAE /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				826BC40525D9772200A45C7B /* Models.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		82FBCC05261BB2F400F00FAE /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,16 +104,6 @@
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		82FBCC06261BB2FA00F00FAE /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				826BC40825D9774400A45C7B /* PassCodeView.swift */,
-				82FBCBFC261BB27500F00FAE /* CustomViews.swift */,
-				82D41FCD25D1C78E00551D22 /* Helpers.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		82FBCC07261BB30D00F00FAE /* View Models */ = {
@@ -214,18 +186,14 @@
 			files = (
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
-				82FBCBFD261BB27500F00FAE /* CustomViews.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				8255017D263B489F00CB1BC2 /* HistoryView.swift in Sources */,
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
-				826BC40925D9774400A45C7B /* PassCodeView.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
-				82D41FCE25D1C78E00551D22 /* Helpers.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
-				826BC40625D9772200A45C7B /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
