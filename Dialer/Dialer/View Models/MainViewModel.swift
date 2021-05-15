@@ -14,7 +14,7 @@ class MainViewModel: ObservableObject {
     @Published var showHistorySheet: Bool = false
     
     var estimatedTotalPrice: Int {
-        recentCodes?.map(\.detail).map(\.amount).reduce(0, +) ?? 0
+        recentCodes?.map(\.totalPrice).reduce(0, +) ?? 0
     }
     enum CodeType: String, Codable {
         case momo, call, message, other
@@ -30,7 +30,9 @@ class MainViewModel: ObservableObject {
         
         public var detail: PurchaseDetailModel
         private(set) var count: Int
-        
+        var totalPrice: Int {
+            detail.amount * count
+        }
         public mutating func increaseCount() {
             count += 1
         }
