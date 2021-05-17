@@ -89,10 +89,9 @@ struct NewDialingView: View {
         if code.contains("*") && code.contains("#") && code.count >= 5 {
             if let telUrl = URL(string: "tel://\(code)"), UIApplication.shared.canOpenURL(telUrl) {
                 UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
-                    print("Finishinga")
+                    print("Finished")
                     
                 })
-//                UIApplication.shared.endEditing(true)
 
             } else {
                 // Can not dial this code

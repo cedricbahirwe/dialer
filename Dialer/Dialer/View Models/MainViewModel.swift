@@ -19,7 +19,11 @@ class MainViewModel: ObservableObject {
     enum CodeType: String, Codable {
         case momo, call, message, other
     }
-    struct RecentCode: Identifiable, Codable {
+    struct RecentCode: Identifiable, Hashable, Codable {
+        static func == (lhs: MainViewModel.RecentCode, rhs: MainViewModel.RecentCode) -> Bool {
+            lhs.id == rhs.id
+        }
+        
         public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 1) {
             self.id = id
             self.detail = detail
@@ -41,7 +45,9 @@ class MainViewModel: ObservableObject {
         
     }
     
-    struct PurchaseDetailModel: Codable {
+    
+    
+    struct PurchaseDetailModel: Hashable, Codable {
         var amount: Int = 0
         var type: CodeType = .momo
         var fullCode: String {
@@ -94,7 +100,7 @@ class MainViewModel: ObservableObject {
             print("Couldn't encode")
         }
     }
-        
+    
     ///  Delete locally the Pin Code.
     public func removePin() {
         UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
@@ -178,6 +184,12 @@ class MainViewModel: ObservableObject {
         }
     }
     
+    /// Returns a Recent Code that matches the input identifier.
+    func rencentCode(_ identifier: String) -> RecentCode? {
+        let foundCode = recentCodes?.first(where: { $0.id.uuidString == identifier})
+        return foundCode
+    }
+    
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: the `string` code to be dialed.
     public func performQuickDial(for code: String) {
@@ -215,4 +227,18 @@ extension UserDefaults {
         static let PinCode = "pinCode"
         static let PurchaseDetails = "purchaseDetails"
     }
+}
+
+extension MainViewModel.RecentCode {
+    
+    /// - Tag: QuickActionUserInfo
+    var quickActionUserInfo: [String: NSSecureCoding] {
+        /** Encode the name of the contact into the userInfo dictionary so it can be passed
+         back when a quick action is triggered. Note: In the real world, it's more appropriate
+         to encode a unique identifier for the contact than for the name.
+         */
+        return [ SceneDelegate.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
+    }
+    
+    
 }

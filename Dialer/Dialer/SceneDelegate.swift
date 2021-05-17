@@ -64,7 +64,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     */
     /// - Tag: PerformAction
     func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        print("I'm called")
         let handled = handleShortCutItem(shortcutItem: shortcutItem)
         completionHandler(handled)
     }
@@ -80,6 +79,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneWillResignActive(_ scene: UIScene) {
         // Transform most used command into a UIApplicationShortcutItem.
+        let application = UIApplication.shared
+        
+        guard let codes = viewModel.recentCodes?.filter({ $0.count >= 6}) else { return }
+        
+        application.shortcutItems = codes.map({ code -> UIApplicationShortcutItem in
+            return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue, localizedTitle: "Buy for \(code.detail.amount)", localizedSubtitle: "\(code.detail.fullCode)", icon: UIApplicationShortcutIcon(systemImageName: "phone.fill"), userInfo: code.quickActionUserInfo)
+            
+        })
+        
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
@@ -111,8 +119,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // Go to that particular code shortcut.
                 if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
                     // Find the code from the userInfo identifier.
-                    print(codeIdentifier)
+                    if let foundRecentCode = viewModel.rencentCode(codeIdentifier) {
+                        viewModel.performRecentDialing(for: foundRecentCode)
+                    }
                 }
+                
             }
         }
         return true
