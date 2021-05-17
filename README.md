@@ -10,13 +10,12 @@
 ### - Beautiful UI with Light/Dark Mode support
 ###  - Add History View to Track Past dialings.
 ### - New Pin Interface for custom incognito dialings (No track will be stored).
+### -  Home Screen Quick Actions
 
 <img alt="Pin Detail View" height="890" width="410" src="light.png">&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Pin Detail View" height="890" src="dark.png">
 
 ## ✨ Upcoming features:
 
-### - Good Local Storage (Core Data)
+### - Good Local Storage (Core Data) & Something else
 ### - Siri Commands Support (Intents and IntentsUI)
-### -  Home Screen Quick Actions
-
 
