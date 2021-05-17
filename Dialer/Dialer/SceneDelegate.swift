@@ -8,15 +8,37 @@
 import UIKit
 import SwiftUI
 
+var shortcutItemToProcess: UIApplicationShortcutItem?
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
+    // List of known shortcut actions.
+    enum ActionType: String {
+        case balanceAction = "BalanceAction"
+        case dialAction = "DialAction"
+    }
+    
+    static let codeIdentifierInfoKey = "CodeIdentifier"
+
 
     var window: UIWindow?
-
+    var savedShortCutItem: UIApplicationShortcutItem!
+    
     var viewModel = MainViewModel()
+    
+    /// - Tag: willConnectTo
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        /** Process the quick action if the user selected one to launch the app.
+            Grab a reference to the shortcutItem to use in the scene.
+        */
+        if let shortcutItem = connectionOptions.shortcutItem {
+            // Save it off for later when we become active.
+            savedShortCutItem = shortcutItem
+        }
+        
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView().environmentObject(viewModel)
@@ -36,13 +58,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
     }
+    
+    /** Called when the user activates your application by selecting a shortcut on the Home Screen,
+        and the window scene is already connected.
+    */
+    /// - Tag: PerformAction
+    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        print("I'm called")
+        let handled = handleShortCutItem(shortcutItem: shortcutItem)
+        completionHandler(handled)
+    }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
+        if savedShortCutItem != nil {
+            _ = handleShortCutItem(shortcutItem: savedShortCutItem)
+        }
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
     }
 
+    
     func sceneWillResignActive(_ scene: UIScene) {
+        // Transform most used command into a UIApplicationShortcutItem.
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
@@ -60,7 +97,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         viewModel.saveLocally()
 
     }
-
+    
+    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        /** In this sample an alert is being shown to indicate that the action has been triggered,
+            but in real code the functionality for the quick action would be triggered.
+        */
+        if let actionTypeValue = ActionType(rawValue: shortcutItem.type) {
+            switch actionTypeValue {
+            case .balanceAction:
+                viewModel.checkInternetBalance()
+                
+            case .dialAction:
+                // Go to that particular code shortcut.
+                if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
+                    // Find the code from the userInfo identifier.
+                    print(codeIdentifier)
+                }
+            }
+        }
+        return true
+    }
 
 }
 

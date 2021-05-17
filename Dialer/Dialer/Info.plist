@@ -56,5 +56,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>UIApplicationShortcutItems</key>
+    <array>
+        <dict>
+            <key>UIApplicationShortcutItemType</key>
+            <string>BalanceAction</string>
+            <key>UIApplicationShortcutItemIconType</key>
+            <string>UIApplicationShortcutIconTypeCompose</string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>Check Balance</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string>Check your bundle balance</string>
+        </dict>
+    </array>
 </dict>
 </plist>
