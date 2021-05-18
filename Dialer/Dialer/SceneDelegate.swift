@@ -72,8 +72,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if savedShortCutItem != nil {
             _ = handleShortCutItem(shortcutItem: savedShortCutItem)
         }
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
     }
 
     
@@ -81,7 +79,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Transform most used command into a UIApplicationShortcutItem.
         let application = UIApplication.shared
         
-        guard let codes = viewModel.recentCodes?.filter({ $0.count >= 6}) else { return }
+        guard let codes = viewModel.recentCodes?.filter({ $0.count >= 10 }) else { return }
         
         application.shortcutItems = codes.map({ code -> UIApplicationShortcutItem in
             return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue, localizedTitle: "Buy for \(code.detail.amount)", localizedSubtitle: "\(code.detail.fullCode)", icon: UIApplicationShortcutIcon(systemImageName: "phone.fill"), userInfo: code.quickActionUserInfo)
