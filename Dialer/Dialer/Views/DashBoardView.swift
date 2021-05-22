@@ -114,6 +114,22 @@ struct DashBoardView: View {
                 }
             }
         }
+        .onAppear(perform: setupAppearance)
+    }
+    private func setupAppearance() {
+        
+        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
+        let descriptor2 = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
+        
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            NSAttributedString.Key.font:UIFont.init(descriptor: descriptor2!, size: 34),
+            NSAttributedString.Key.foregroundColor: UIColor.label
+        ]
+        
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedString.Key.font:UIFont.init(descriptor: descriptor!, size: 17),
+            NSAttributedString.Key.foregroundColor: UIColor.label
+        ]
     }
 }
 
