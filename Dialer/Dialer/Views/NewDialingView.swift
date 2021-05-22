@@ -24,7 +24,7 @@ struct NewDialingView: View {
     var body: some View {
         VStack(spacing: 10) {
             Text("Incognito Mode by \(Image(uiImage: drawImage()))")
-                .font(Font.largeTitle.bold())
+                .font(.system(size: 34, weight: .bold, design: .rounded))
                 .scaleEffect(0.95)
                 .padding(.top)
             VStack(spacing: 10) {
