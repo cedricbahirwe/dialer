@@ -14,13 +14,12 @@ fileprivate enum DragState {
 }
 
 struct DashBoardView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var data: MainViewModel
-    
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
     @State private var offset: CGSize = .zero
-    var bgColor: Color {
+    private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
     
@@ -37,9 +36,6 @@ struct DashBoardView: View {
             }
     }
     
-    init(){
-        UITableView.appearance().backgroundColor = .clear
-    }
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
@@ -55,8 +51,9 @@ struct DashBoardView: View {
                     )
                     .offset(offset)
                     .animation(.interpolatingSpring(stiffness: 1, damping: 0.1))
-                    .offset(x: 20)
+                    .offset(x: 160, y: 200)
                     .frame(maxHeight: .infinity)
+                
                 
                 VStack {
                     VStack(spacing: 15) {
@@ -145,8 +142,6 @@ struct DashBoardView_Previews: PreviewProvider {
     }
 }
 
-
-
 struct DashItemView: View {
     let title: String
     let count: Int = 0
@@ -180,7 +175,5 @@ struct DashItemView: View {
         )
         .cornerRadius(12)
         .contentShape(Rectangle())
-        
-        
     }
 }
