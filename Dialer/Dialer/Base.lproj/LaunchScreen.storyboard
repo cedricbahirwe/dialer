@@ -24,12 +24,32 @@
                                     <constraint firstAttribute="height" constant="200" id="ZRi-7e-A4K"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="nPT-1Z-e4Y">
+                                <rect key="frame" x="118.5" y="732" width="177" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WfO-df-KBr">
+                                        <rect key="frame" x="0.0" y="3.5" width="117" height="26.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="abclogo" translatesAutoresizingMaskIntoConstraints="NO" id="NAA-sZ-I83">
+                                        <rect key="frame" x="117" y="0.0" width="60" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="1TX-IT-IRv"/>
+                                            <constraint firstAttribute="height" constant="30" id="Oyo-p2-BEa"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="QHD-if-1kA" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4Vg-dV-gox"/>
                             <constraint firstItem="QHD-if-1kA" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UL9-YY-Hdj"/>
+                            <constraint firstItem="nPT-1Z-e4Y" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hPv-eg-Fqt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nPT-1Z-e4Y" secondAttribute="bottom" constant="100" id="k9i-bs-2TM"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,6 +59,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="abclogo" width="1000" height="561"/>
         <image name="dialer" width="460" height="460"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
