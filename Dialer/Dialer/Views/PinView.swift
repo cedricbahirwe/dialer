@@ -10,14 +10,15 @@ import SwiftUI
 struct PinView: View {
     
     @Binding var input: String
-    var fullMode: Bool = false
+    public var fullMode: Bool = false
+    public var btnSize: CGSize = CGSize(width: 60, height: 60)
+
     private var buttons: [String] {
         var defaults = ["1","2","3","4","5","6","7","8","9","*","0"]
         
         defaults += fullMode ? ["#"] : ["X"]
         return defaults
     }
-    var btnSize: CGSize = CGSize(width: 60, height: 60)
     
     var body: some View {
         LazyVGrid(columns: [

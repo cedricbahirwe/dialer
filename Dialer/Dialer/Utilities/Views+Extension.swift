@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct MTNDisabling: ViewModifier {
     func body(content: Content) -> some View {
         content
