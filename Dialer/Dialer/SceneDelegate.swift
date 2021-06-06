@@ -86,6 +86,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         })
         
+        // Only take the four first shortcuts
+//        if let shortcutCount = application.shortcutItems?.count, shortcutCount > 4 {
+//            application.shortcutItems = Array(application.shortcutItems!.prefix(4))
+//        }
+        
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }

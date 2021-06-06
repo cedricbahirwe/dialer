@@ -20,7 +20,6 @@
 		82D41FBD25D1C1FF00551D22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FBC25D1C1FF00551D22 /* Assets.xcassets */; };
 		82D41FC025D1C1FF00551D22 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */; };
 		82D41FC325D1C1FF00551D22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */; };
-		82D7C18E266D12CB003E0E0E /* Testingview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7C18D266D12CB003E0E0E /* Testingview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +39,6 @@
 		82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		82D41FC225D1C1FF00551D22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82D41FC425D1C1FF00551D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82D7C18D266D12CB003E0E0E /* Testingview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testingview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +75,6 @@
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
-				82D7C18D266D12CB003E0E0E /* Testingview.swift */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
 				82D41FBC25D1C1FF00551D22 /* Assets.xcassets */,
@@ -188,7 +185,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
-				82D7C18E266D12CB003E0E0E /* Testingview.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				8255017D263B489F00CB1BC2 /* HistoryView.swift in Sources */,
