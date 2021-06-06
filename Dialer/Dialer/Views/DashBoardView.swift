@@ -18,6 +18,8 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
+    
+    private let checkCellularProvider = CTCarrierDetector.shared.checkCellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -62,6 +64,9 @@ struct DashBoardView: View {
                                 title: "Buy Directly",
                                 icon: "speedometer"
                             )
+                            .onTapGesture {
+                                presentNewDial.toggle()
+                            }
                         }
                         
                         HStack(spacing: 15) {
@@ -92,8 +97,7 @@ struct DashBoardView: View {
                 if presentNewDial {
                     NewDialingView()
                 } else {
-                    Testingview()
-//                    HistoryView(data: data)
+                    HistoryView(data: data)
                 }
             }
             .background(bgColor.ignoresSafeArea())
@@ -137,6 +141,16 @@ extension DashBoardView {
             }
             
             Spacer()
+            
+            HStack {
+                Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
+                Text(checkCellularProvider.message)
+            }
+            .foregroundColor(checkCellularProvider.status ? .green : .red)
+            .padding(.horizontal, 10)
+            .frame(height: 33)
+            .background(Color.primary)
+            .cornerRadius(5)
         }
         .padding(.horizontal)
         .padding(.bottom,8)
