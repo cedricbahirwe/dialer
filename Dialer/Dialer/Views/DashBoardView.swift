@@ -23,7 +23,7 @@ struct DashBoardView: View {
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
-    
+
     private var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
@@ -59,6 +59,7 @@ struct DashBoardView: View {
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
+                            .momoDisability()
                             
                             DashItemView(
                                 title: "Buy Directly",
@@ -84,6 +85,7 @@ struct DashBoardView: View {
                             )
                             .onTapGesture(perform: data.checkInternetBalance)
                         }
+                        .momoDisability()
                     }
                     .padding()
                     Spacer()
@@ -92,7 +94,6 @@ struct DashBoardView: View {
                 
                 PurchaseDetailView(data: data)
             }
-            
             .sheet(isPresented:presentNewDial ? $presentNewDial : $data.showHistorySheet) {
                 if presentNewDial {
                     NewDialingView()
@@ -139,16 +140,18 @@ extension DashBoardView {
                 Label("New Dial", systemImage: "plus.circle.fill")
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
             }
+            .momoDisability()
             
             Spacer()
             
-            HStack {
+            HStack(spacing: 1) {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
+
                 Text(checkCellularProvider.message)
             }
             .foregroundColor(checkCellularProvider.status ? .green : .red)
             .padding(.horizontal, 10)
-            .frame(height: 33)
+            .frame(height: 32)
             .background(Color.primary)
             .cornerRadius(5)
         }
