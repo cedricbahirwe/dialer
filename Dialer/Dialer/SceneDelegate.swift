@@ -39,7 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             savedShortCutItem = shortcutItem
         }
         
-
+        
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView().environmentObject(viewModel)
 

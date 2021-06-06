@@ -18,7 +18,6 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
-    @State private var offset: CGSize = .zero
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -44,13 +43,6 @@ struct DashBoardView: View {
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(Color.primary.opacity(0.2))
-                    .gesture(
-                        DragGesture()
-                            .onChanged({ offset = $0.translation })
-                            .onEnded({ _ in offset = .zero })
-                    )
-                    .offset(offset)
-                    .animation(.interpolatingSpring(stiffness: 1, damping: 0.1))
                     .offset(x: 160, y: 200)
                     .frame(maxHeight: .infinity)
                 
@@ -100,7 +92,8 @@ struct DashBoardView: View {
                 if presentNewDial {
                     NewDialingView()
                 } else {
-                    HistoryView(data: data)
+                    Testingview()
+//                    HistoryView(data: data)
                 }
             }
             .background(bgColor.ignoresSafeArea())
