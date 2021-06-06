@@ -55,37 +55,42 @@ struct PurchaseDetailView: View {
                     }
                 
                 if !hasStorePin {
-                    Text(data.pinCode != nil ? data.pinCode!.description : "Enter Code")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 40)
-                        .background(Color.primary.opacity(0.06))
-                        .background(
-                            Color.green.opacity(edition == .code ? 0.04 : 0.0)
-                        )
-                        .cornerRadius(8)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            withAnimation {
-                                edition = .code
+                    VStack(spacing: 2) {
+                        Text(data.pinCode != nil ? data.pinCode!.description : "Enter Pin")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 40)
+                            .background(Color.primary.opacity(0.06))
+                            .background(
+                                Color.green.opacity(edition == .code ? 0.04 : 0.0)
+                            )
+                            .cornerRadius(8)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation {
+                                    edition = .code
+                                }
                             }
-                        }
-                        .overlay(
-                            Button(action: {
-                                data.savePinCode(value: Int(codepin)!)
-                            }){
-                                Text("Save")
-                                    .font(.caption)
-                                    .fontWeight(.semibold)
-                                    .frame(width: 60, height: 40)
-                                    .background(Color.primary)
-                                    .cornerRadius(8)
-                                    .foregroundColor(Color(.systemBackground))
-                            }
-                            .disabled(!validCode)
-                            .opacity(validCode ? 1 : 0.4)
-                            , alignment: .trailing
+                            .overlay(
+                                Button(action: {
+                                    data.savePinCode(value: Int(codepin)!)
+                                }){
+                                    Text("Save")
+                                        .font(.caption)
+                                        .fontWeight(.semibold)
+                                        .frame(width: 60, height: 40)
+                                        .background(Color.primary)
+                                        .cornerRadius(8)
+                                        .foregroundColor(Color(.systemBackground))
+                                }
+                                .disabled(!validCode)
+                                .opacity(validCode ? 1 : 0.4)
+                                , alignment: .trailing
                         )
-                    
+                        
+                        Text("Your pin will not be saved unless you personally save it.")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
                     
                 } else {
                     Text("We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾")

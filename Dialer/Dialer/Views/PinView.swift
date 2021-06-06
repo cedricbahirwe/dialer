@@ -27,6 +27,7 @@ struct PinView: View {
             GridItem(.flexible()),
         ], spacing: 10) {
             ForEach(buttons, id: \.self) { button in
+//                if (!fullMode && but)
                 Button {
                     if button == "X" {
                         if !input.isEmpty {
@@ -47,6 +48,7 @@ struct PinView: View {
                         Color.red :
                         Color(.label)
                 )
+                .opacity(!fullMode && button == "*" ? 0 : 1)
                 
             }
         }
