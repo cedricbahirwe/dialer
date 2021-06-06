@@ -16,6 +16,6 @@
 
 ## ✨ Upcoming features:
 
-### - Good Local Storage (Core Data) & Something else
+### - Good Local Storage (Core Data)
 ### - Siri Commands Support (Intents and IntentsUI)
 
