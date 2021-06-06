@@ -140,7 +140,6 @@ extension DashBoardView {
                 Label("New Dial", systemImage: "plus.circle.fill")
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
             }
-            .momoDisability()
             
             Spacer()
             
