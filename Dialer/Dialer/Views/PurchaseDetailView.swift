@@ -102,7 +102,6 @@ struct PurchaseDetailView: View {
                 }
                 
                 Button {
-                    edition = .none
                     data.confirmPurchase()
                     
                 } label: {
