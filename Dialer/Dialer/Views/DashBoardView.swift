@@ -61,12 +61,13 @@ struct DashBoardView: View {
                             }
                             .momoDisability()
                             
-                            DashItemView(
-                                title: "Send with Momo",
-                                icon: "paperplane.circle"
-                            )
-                            .onTapGesture {
-                                presentNewDial.toggle()
+                            NavigationLink(
+                                destination: SendingView()) {
+                                DashItemView(
+                                    title: "Send with Momo",
+                                    icon: "paperplane.circle"
+                                )
+                                
                             }
                         }
                         
