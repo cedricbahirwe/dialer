@@ -51,7 +51,7 @@ struct PurchaseDetailView: View {
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.green, lineWidth:edition == .amount ? 1 : 0)
+                            .stroke(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing),  lineWidth:edition == .amount ? 1 : 0)
                     )
                     .onTapGesture {
                         withAnimation {
@@ -72,7 +72,7 @@ struct PurchaseDetailView: View {
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.green, lineWidth:edition == .code ? 1 : 0)
+                                    .stroke(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing),  lineWidth:edition == .code ? 1 : 0)
                             )
                             .contentShape(Rectangle())
                             .onTapGesture {
@@ -137,8 +137,8 @@ struct PurchaseDetailView: View {
         .shadow(radius: 5)
         .offset(y: 0 + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
         .font(.system(size: 18, weight: .semibold, design: .rounded))
-        .offset(x: 0, y: data.showbottomSheet ? 0 : 1000)
-        .offset(y: bottomState.height)
+//        .offset(x: 0, y: data.showbottomSheet ? 0 : 1000)
+        .offset(y: max(0, bottomState.height))
         .blur(radius: show ? 20 : 0)
         .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
         .gesture(

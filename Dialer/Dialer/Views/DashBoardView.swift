@@ -192,7 +192,7 @@ struct DashItemView: View {
             
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         }
