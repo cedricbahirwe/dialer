@@ -23,7 +23,7 @@ struct DashBoardView: View {
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
-
+    
     private var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
@@ -61,12 +61,13 @@ struct DashBoardView: View {
                             }
                             .momoDisability()
                             
-                            DashItemView(
-                                title: "Send with Momo",
-                                icon: "speedometer"
-                            )
-                            .onTapGesture {
-                                presentNewDial.toggle()
+                            NavigationLink(
+                                destination: SendingView()) {
+                                DashItemView(
+                                    title: "Send with Momo",
+                                    icon: "paperplane.circle"
+                                )
+                                
                             }
                         }
                         
@@ -145,7 +146,7 @@ extension DashBoardView {
             
             HStack(spacing: 1) {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
-
+                
                 Text(checkCellularProvider.message)
             }
             .foregroundColor(checkCellularProvider.status ? .green : .red)
@@ -175,11 +176,15 @@ struct DashItemView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack  {
-                Image(systemName: icon)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
                     .frame(width: 25, height: 25)
+                    .mask(
+                        Image(systemName: icon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    )
                 Spacer()
+                
                 Text(count.description)
                     .fontWeight(.bold)
                     .font(.system(.title, design: .rounded))
@@ -188,7 +193,7 @@ struct DashItemView: View {
             
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         }

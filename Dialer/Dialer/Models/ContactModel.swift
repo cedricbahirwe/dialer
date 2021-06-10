@@ -13,7 +13,7 @@ enum ContactsFilter {
     case message
 }
 
-struct Contact: Identifiable {
+struct Contact: Identifiable, Equatable {
     var id = UUID()
     var names: String
     var phoneNumbers: [String]
