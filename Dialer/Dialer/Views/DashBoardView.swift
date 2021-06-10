@@ -62,7 +62,7 @@ struct DashBoardView: View {
                             .momoDisability()
                             
                             DashItemView(
-                                title: "Buy Directly",
+                                title: "Send with Momo",
                                 icon: "speedometer"
                             )
                             .onTapGesture {

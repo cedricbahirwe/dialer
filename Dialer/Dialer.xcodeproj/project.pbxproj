@@ -13,6 +13,10 @@
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
 		8255017D263B489F00CB1BC2 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255017C263B489F00CB1BC2 /* HistoryView.swift */; };
+		825F996326720AE6009E4A7B /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996226720AE6009E4A7B /* SendingView.swift */; };
+		825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996526720B46009E4A7B /* ContactsFetcher.swift */; };
+		825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996926720B7E009E4A7B /* ContactModel.swift */; };
+		825F996E26720C14009E4A7B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996D26720C14009E4A7B /* Extensions.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
 		82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB625D1C1FE00551D22 /* AppDelegate.swift */; };
 		82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */; };
@@ -32,6 +36,10 @@
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		8255017C263B489F00CB1BC2 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		825F996226720AE6009E4A7B /* SendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingView.swift; sourceTree = "<group>"; };
+		825F996526720B46009E4A7B /* ContactsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFetcher.swift; sourceTree = "<group>"; };
+		825F996926720B7E009E4A7B /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		825F996D26720C14009E4A7B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D41FB625D1C1FE00551D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		825F996826720B75009E4A7B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				825F996926720B7E009E4A7B /* ContactModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		82D41FAA25D1C1FE00551D22 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +95,7 @@
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
+				825F996826720B75009E4A7B /* Models */,
 				82D7C1A1266D26D4003E0E0E /* Utilities */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
@@ -103,6 +120,8 @@
 			children = (
 				82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */,
 				82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */,
+				825F996526720B46009E4A7B /* ContactsFetcher.swift */,
+				825F996D26720C14009E4A7B /* Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -116,6 +135,7 @@
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 				8255017C263B489F00CB1BC2 /* HistoryView.swift */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
+				825F996226720AE6009E4A7B /* SendingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,14 +222,18 @@
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
+				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				8255017D263B489F00CB1BC2 /* HistoryView.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
+				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
+				825F996E26720C14009E4A7B /* Extensions.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
+				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
