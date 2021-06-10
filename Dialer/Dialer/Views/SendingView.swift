@@ -9,9 +9,13 @@ import SwiftUI
 
 struct Transaction: Identifiable {
     let id = UUID()
-    var amount: Double
+    var amount: String
     var phoneNumber: String
     var date: Date { Date() }
+    
+    var trailingCode: String { // Need strategy to deal with country code
+        phoneNumber.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
+    }
 }
 struct SendingView: View {
     
@@ -19,12 +23,12 @@ struct SendingView: View {
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .init(names: "", phoneNumbers: [])
     
-    @State private var transaction: Transaction = Transaction(amount: 0, phoneNumber: "")
+    @State private var transaction: Transaction = Transaction(amount: "", phoneNumber: "")
     
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                TextField("Enter Amount", value: $transaction.amount, formatter: NumberFormatter())
+                TextField("Enter Amount", text: $transaction.amount)
                     .keyboardType(.decimalPad)
                     .foregroundColor(.primary)
                     .padding()
@@ -35,7 +39,7 @@ struct SendingView: View {
                                 .stroke(Color.primary, lineWidth: 0.5))
                     .font(.callout)
                 
-                TextField("Enter Mobile Number", text: $selectedContact.phoneNumbers.firstElement)
+                TextField("Enter Receiver's number", text: $transaction.phoneNumber)
                     .keyboardType(.numberPad)
                     .textContentType(.telephoneNumber)
                     .foregroundColor(.primary)
@@ -67,9 +71,7 @@ struct SendingView: View {
                 }
                 
                 
-                Button(action: {
-                    
-                }) {
+                Button(action: transferMoney) {
                     Text("Submit")
                         .font(Font.footnote.bold())
                         .frame(maxWidth: .infinity)
@@ -85,9 +87,22 @@ struct SendingView: View {
             
             
         }
+        .onChange(of: selectedContact) {
+            transaction.phoneNumber = $0.phoneNumbers.firstElement
+        }
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
         .navigationTitle("Transfer Money")
+    }
+    
+    private func transferMoney() {
+        hideKeyboard()
+        
+        print("The phone", transaction.phoneNumber.trimmingCharacters(in: .whitespaces))
+        
+        let defaultMomo = "*182*1*1*\(transaction.trailingCode)#"
+        
+        MainViewModel().performQuickDial(for: defaultMomo)
     }
 }
 extension View {
