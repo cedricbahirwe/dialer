@@ -7,13 +7,23 @@
 
 import SwiftUI
 
+enum Transactiontype {
+    case client, merchant
+    
+    mutating func toggle() {
+        self = self == .client ? .merchant : .client
+    }
+}
+
 struct Transaction: Identifiable {
     let id = UUID()
     var amount: String
     var phoneNumber: String
+    var type: Transactiontype
     var date: Date { Date() }
     
-    var trailingCode: String { // Need strategy to deal with country code
+    var trailingCode: String {
+        // Need strategy to deal with country code
         phoneNumber.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
     }
 }
@@ -23,7 +33,7 @@ struct SendingView: View {
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .init(names: "", phoneNumbers: [])
     
-    @State private var transaction: Transaction = Transaction(amount: "", phoneNumber: "")
+    @State private var transaction: Transaction = Transaction(amount: "", phoneNumber: "", type: .client)
     
     var body: some View {
         VStack {
@@ -39,7 +49,11 @@ struct SendingView: View {
                                 .stroke(Color.primary, lineWidth: 0.5))
                     .font(.callout)
                 
-                TextField("Enter Receiver's number", text: $transaction.phoneNumber)
+                TextField(
+                    transaction.type == .client ?
+                        "Enter Receiver's number" :
+                        "Enter Merchant Code"
+                    , text: $transaction.phoneNumber)
                     .keyboardType(.numberPad)
                     .textContentType(.telephoneNumber)
                     .foregroundColor(.primary)
@@ -51,23 +65,25 @@ struct SendingView: View {
                                 .stroke(Color.primary, lineWidth: 0.5))
                     .font(.callout)
                 
-                Button(action: {
-                    allContacts = phoneNumberWithContryCode()
-                    showContactPicker.toggle()
-                }) {
-                    HStack {
-                        Image(systemName: "person.fill")
-                        Text("Pick a Contact").bold().font(.footnote)
+                if transaction.type == .client {
+                    Button(action: {
+                        allContacts = phoneNumberWithContryCode()
+                        showContactPicker.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "person.fill")
+                            Text("Pick a Contact").bold().font(.footnote)
+                        }
+                        .font(Font.footnote.bold())
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.primary)
+                        .cornerRadius(8)
+                        .foregroundColor(Color(.systemBackground))
                     }
-                    .font(Font.footnote.bold())
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 45)
-                    .background(Color.primary)
-                    .cornerRadius(8)
-                    .foregroundColor(Color(.systemBackground))
-                }
-                .sheet(isPresented: $showContactPicker) {
-                    ContactsList(allContacts: $allContacts, selectedContact: $selectedContact)
+                    .sheet(isPresented: $showContactPicker) {
+                        ContactsList(allContacts: $allContacts, selectedContact: $selectedContact)
+                    }
                 }
                 
                 
@@ -93,6 +109,16 @@ struct SendingView: View {
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
         .navigationTitle("Transfer Money")
+        .toolbar {
+            Text(transaction.type == .client ? "Merchant pay" : "Send Money")
+                .font(Font.system(size: 18, design: .rounded))
+                .foregroundColor(.blue)
+                .onTapGesture  {
+                    withAnimation {
+                        transaction.type.toggle()
+                    }
+                }
+        }
     }
     
     private func transferMoney() {
@@ -107,27 +133,27 @@ struct SendingView: View {
 }
 extension View {
     func phoneNumberWithContryCode() -> [Contact] {
-          var resultingContacts: [Contact] = []
-          let contacts = PhoneContacts.getContacts()
-          for contact in contacts {
-              if contact.phoneNumbers.count > 0  {
-                  let contactPhoneNumbers = contact.phoneNumbers
-                  let mtnNumbers = contactPhoneNumbers.filter {
-                      //                    $0.label != "" ||
-                      $0.value.stringValue.hasPrefix("078") ||
-                          $0.value.stringValue.hasPrefix("+250") ||
-                          $0.value.stringValue.hasPrefix("250")
-                  }
-                  
-                  let numbers = mtnNumbers.compactMap { $0.value.value(forKey: "digits") as? String }
-                  if mtnNumbers.isEmpty == false {
-                      let newContact = Contact(names:contact.givenName + " " +  contact.familyName,phoneNumbers: numbers)
-                      resultingContacts.append(newContact)
-                  }
-              }
-          }
-          return resultingContacts
-      }
+        var resultingContacts: [Contact] = []
+        let contacts = PhoneContacts.getContacts()
+        for contact in contacts {
+            if contact.phoneNumbers.count > 0  {
+                let contactPhoneNumbers = contact.phoneNumbers
+                let mtnNumbers = contactPhoneNumbers.filter {
+                    //                    $0.label != "" ||
+                    $0.value.stringValue.hasPrefix("078") ||
+                        $0.value.stringValue.hasPrefix("+250") ||
+                        $0.value.stringValue.hasPrefix("250")
+                }
+                
+                let numbers = mtnNumbers.compactMap { $0.value.value(forKey: "digits") as? String }
+                if mtnNumbers.isEmpty == false {
+                    let newContact = Contact(names:contact.givenName + " " +  contact.familyName,phoneNumbers: numbers)
+                    resultingContacts.append(newContact)
+                }
+            }
+        }
+        return resultingContacts
+    }
 }
 
 
@@ -158,9 +184,9 @@ struct SendingView_Previews: PreviewProvider {
                 SendingView()
             }
             
-//            ContactsList(allContacts: .constant(Contact.example), selectedContact: .constant(Contact.example[0]))
-//            ContactRowView(contact: Contact.example[0])
-//                .previewLayout(.fixed(width: 400, height: 100))
+            //            ContactsList(allContacts: .constant(Contact.example), selectedContact: .constant(Contact.example[0]))
+            //            ContactRowView(contact: Contact.example[0])
+            //                .previewLayout(.fixed(width: 400, height: 100))
         }
     }
 }
@@ -189,6 +215,6 @@ struct ContactRowView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
-
+        
     }
 }
