@@ -44,10 +44,15 @@ struct PurchaseDetailView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
+                    
                     .background(
                         Color.green.opacity(edition == .amount ? 0.04 : 0)
                     )
                     .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.green, lineWidth:edition == .amount ? 1 : 0)
+                    )
                     .onTapGesture {
                         withAnimation {
                             edition = .amount
@@ -60,10 +65,15 @@ struct PurchaseDetailView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 40)
                             .background(Color.primary.opacity(0.06))
+                            
                             .background(
                                 Color.green.opacity(edition == .code ? 0.04 : 0.0)
                             )
                             .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.green, lineWidth:edition == .code ? 1 : 0)
+                            )
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 withAnimation {
