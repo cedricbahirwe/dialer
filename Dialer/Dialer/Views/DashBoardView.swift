@@ -99,7 +99,7 @@ struct DashBoardView: View {
                 if presentNewDial {
                     NewDialingView()
                 } else {
-                    HistoryView(data: data)
+                    DialingsHistoryView(data: data)
                 }
             }
             .background(bgColor.ignoresSafeArea())

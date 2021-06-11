@@ -24,7 +24,7 @@ extension String {
 
 extension Array where Element == String  {
     var firstElement: String {
-        get { return self.first ?? "" }
+        get { return first ?? "" }
         set(value) {
             if isEmpty {
                 self = []
