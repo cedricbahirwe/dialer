@@ -20,4 +20,5 @@
 ### - Good Local Storage (Core Data)
 ### - Siri Commands Support (Intents and IntentsUI)
 ### - Contacts Filtering
+### -  Transaction History
 

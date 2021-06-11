@@ -10,11 +10,15 @@ import SwiftUI
 
 extension String {
     var isMtnNumber: Bool {
+        // Check for the validity of the mtn number (078 && 079)
         return
-            self.trimmingCharacters(in: .whitespaces).hasPrefix("+25078") ||
-                self.trimmingCharacters(in: .whitespaces).hasPrefix("25078") ||
-                self.trimmingCharacters(in: .whitespaces).hasPrefix("078") ||
-                self.hasPrefix("")
+            trimmingCharacters(in: .whitespaces).hasPrefix("+25078") ||
+        trimmingCharacters(in: .whitespaces).hasPrefix("25078") ||
+        trimmingCharacters(in: .whitespaces).hasPrefix("078") ||
+        hasPrefix("") ||
+        trimmingCharacters(in: .whitespaces).hasPrefix("+25079") ||
+        trimmingCharacters(in: .whitespaces).hasPrefix("25079") ||
+        trimmingCharacters(in: .whitespaces).hasPrefix("079")
     }
 }
 
@@ -23,7 +27,7 @@ extension Array where Element == String  {
         get { return self.first ?? "" }
         set(value) {
             if isEmpty {
-               self = []
+                self = []
             } else {
                 self[0] = value
             }
