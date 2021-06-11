@@ -1,13 +1,13 @@
 //
-//  HistoryView.swift
+//  DialingsHistoryView.swift
 //  Dialer
 //
-//  Created by Cédric Bahirwe on 29/04/2021.
+//  Created by Cédric Bahirwe on 11/06/2021.
 //
 
 import SwiftUI
 
-struct HistoryView: View {
+struct DialingsHistoryView: View {
     @ObservedObject var data: MainViewModel
     var body: some View {
         NavigationView {
@@ -46,8 +46,8 @@ struct HistoryView: View {
     }
 }
 
-struct HistoryView_Previews: PreviewProvider {
+struct DialingsHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView(data: MainViewModel())
+        DialingsHistoryView(data: MainViewModel())
     }
 }
