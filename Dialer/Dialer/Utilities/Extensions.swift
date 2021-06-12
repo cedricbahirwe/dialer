@@ -15,7 +15,6 @@ extension String {
             trimmingCharacters(in: .whitespaces).hasPrefix("+25078") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("25078") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("078") ||
-        hasPrefix("") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("+25079") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("25079") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("079")
