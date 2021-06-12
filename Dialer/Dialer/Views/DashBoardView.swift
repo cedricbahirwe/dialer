@@ -56,10 +56,10 @@ struct DashBoardView: View {
                                 title: "Buy with Momo",
                                 icon: "wallet.pass"
                             )
+                            .momoDisability()
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
-                            .momoDisability()
                             
                             NavigationLink(
                                 destination: SendingView()) {
@@ -69,6 +69,7 @@ struct DashBoardView: View {
                                 )
                                 
                             }
+//                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {
