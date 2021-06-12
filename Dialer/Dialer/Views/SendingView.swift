@@ -26,6 +26,16 @@ struct Transaction: Identifiable {
         // Need strategy to deal with country code
         phoneNumber.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
     }
+    
+    
+    
+    var fullCode: String {
+        if type == .client {
+            return "*182*1*1*\(trailingCode)#"
+        } else {
+            return "*182*8*1*\(trailingCode)#"
+        }
+    }
 }
 struct SendingView: View {
     
@@ -123,12 +133,7 @@ struct SendingView: View {
     
     private func transferMoney() {
         hideKeyboard()
-        
-        print("The phone", transaction.phoneNumber.trimmingCharacters(in: .whitespaces))
-        
-        let defaultMomo = "*182*1*1*\(transaction.trailingCode)#"
-        
-        MainViewModel().performQuickDial(for: defaultMomo)
+        MainViewModel().performQuickDial(for: transaction.fullCode)
     }
 }
 extension View {
@@ -138,12 +143,7 @@ extension View {
         for contact in contacts {
             if contact.phoneNumbers.count > 0  {
                 let contactPhoneNumbers = contact.phoneNumbers
-                let mtnNumbers = contactPhoneNumbers.filter {
-                    //                    $0.label != "" ||
-                    $0.value.stringValue.hasPrefix("078") ||
-                        $0.value.stringValue.hasPrefix("+250") ||
-                        $0.value.stringValue.hasPrefix("250")
-                }
+                let mtnNumbers = contactPhoneNumbers.filter { $0.value.stringValue.isMtnNumber }
                 
                 let numbers = mtnNumbers.compactMap { $0.value.value(forKey: "digits") as? String }
                 if mtnNumbers.isEmpty == false {
@@ -155,7 +155,6 @@ extension View {
         return resultingContacts
     }
 }
-
 
 struct ContactsList: View {
     @Binding var allContacts: [Contact]

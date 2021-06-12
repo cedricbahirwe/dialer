@@ -233,9 +233,8 @@ extension MainViewModel.RecentCode {
     
     /// - Tag: QuickActionUserInfo
     var quickActionUserInfo: [String: NSSecureCoding] {
-        /** Encode the name of the contact into the userInfo dictionary so it can be passed
-         back when a quick action is triggered. Note: In the real world, it's more appropriate
-         to encode a unique identifier for the contact than for the name.
+        /** Encode the id of the recent code into the userInfo dictionary so it can be passed
+         back when a quick action is triggered.
          */
         return [ SceneDelegate.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
     }
