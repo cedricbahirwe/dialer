@@ -26,6 +26,7 @@
 		82D41FC325D1C1FF00551D22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */; };
 		82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */; };
 		82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */; };
+		82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		82D41FC425D1C1FF00551D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCarrierDetector.swift; sourceTree = "<group>"; };
 		82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views+Extension.swift"; sourceTree = "<group>"; };
+		82E8E63A2676A7B300AB1723 /* ContactsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 				825F996226720AE6009E4A7B /* SendingView.swift */,
+				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
+				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,

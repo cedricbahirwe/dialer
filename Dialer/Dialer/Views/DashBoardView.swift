@@ -69,7 +69,7 @@ struct DashBoardView: View {
                                 )
                                 
                             }
-//                            .momoDisability()
+                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {
