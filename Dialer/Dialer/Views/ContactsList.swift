@@ -14,14 +14,19 @@ struct ContactsList: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack(spacing: 8) {
-            Text("Contacts List")
-                .font(.largeTitle).bold().padding(.top, 10)
+            if isEditing == false {
+                Text("Contacts List")
+                    .font(.largeTitle)
+                    .bold()
+                    .transition(.move(edge: .top))
+                
+            }
             HStack {
                 
-                TextField("Search ...", text: $searchQuery)
+                TextField("Search by name or phone ", text: $searchQuery)
                     .padding(7)
                     .padding(.horizontal, 25)
-                    .background(Color(.systemGray6))
+                    .background(Color(.tertiarySystemGroupedBackground))
                     .cornerRadius(8)
                     .overlay(
                         HStack {
@@ -29,7 +34,7 @@ struct ContactsList: View {
                                 .foregroundColor(.gray)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 8)
-                     
+                            
                             if isEditing {
                                 Button(action: {
                                     searchQuery = ""
@@ -41,27 +46,30 @@ struct ContactsList: View {
                             }
                         }
                     )
-                    .padding(.horizontal, 10)
                     .onTapGesture {
-                        self.isEditing = true
+                        withAnimation {
+                            isEditing = true
+                        }
                     }
                 
                 if isEditing {
                     Button(action: {
-                        isEditing = false
-                        searchQuery = ""
-                        hideKeyboard()
+                        withAnimation {
+                            isEditing = false
+                            searchQuery = ""
+                            hideKeyboard()
+                        }
                         
                     }) {
                         Text("Cancel")
                     }
                     .padding(.trailing, 10)
-                    .transition(.move(edge: .trailing))
                     .animation(.default)
                 }
             }
+            .padding(.horizontal, 10)
             
-            List(allContacts.sorted(by: { $0.names < $1.names })) { contact in
+            List(resultedContacts) { contact in
                 ContactRowView(contact: contact)
                     .onTapGesture {
                         selectedContact = contact
@@ -69,9 +77,10 @@ struct ContactsList: View {
                     }
             }
         }
+        .padding(.top, 10)
     }
     
-    var resulsts: [Contact] {
+    var resultedContacts: [Contact] {
         let contacts = allContacts.sorted(by: { $0.names < $1.names })
         if searchQuery.isEmpty {
             return contacts
