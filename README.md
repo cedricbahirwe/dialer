@@ -8,10 +8,11 @@
 
 ## Features:
 ### - Beautiful UI with Light/Dark Mode support
-###  - Add History View to Track Past dialings.
+### - Add History View to Track Past dialings.
 ### - New Pin Interface for custom incognito dialings (No track will be stored).
-### -  Home Screen Quick Actions
+### - Home Screen Quick Actions
 ### - Quick Momo Money transfer (Client and Merchant) Support
+### - Contacts Filtering
 
 <img alt="Pin Detail View" height="890" width="410" src="light.png">&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Pin Detail View" height="890" src="dark.png">
 
@@ -19,6 +20,5 @@
 
 ### - Good Local Storage (Core Data)
 ### - Siri Commands Support (Intents and IntentsUI)
-### - Contacts Filtering
 ### -  Transaction History
 

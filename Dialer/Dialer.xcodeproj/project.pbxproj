@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B3261A3C94007D6892 /* DashBoardView.swift */; };
+		8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8207FA9426776AB600412AE1 /* TransactionModel.swift */; };
 		821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821C0733264DD78F00DBD545 /* NewDialingView.swift */; };
 		821C0738264DDFFB00DBD545 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821C0737264DDFFB00DBD545 /* PinView.swift */; };
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
+		8207FA9426776AB600412AE1 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		821C0733264DD78F00DBD545 /* NewDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDialingView.swift; sourceTree = "<group>"; };
 		821C0737264DDFFB00DBD545 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		823FA768261A556200ABE045 /* PurchaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				825F996926720B7E009E4A7B /* ContactModel.swift */,
+				8207FA9426776AB600412AE1 /* TransactionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,

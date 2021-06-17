@@ -10,7 +10,7 @@ import SwiftUI
 
 class MainViewModel: ObservableObject {
     
-    @Published var pinCode: Int? = UserDefaults.standard.integer(forKey: UserDefaults.Keys.PinCode)
+    @Published var pinCode: Int? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? Int
     @Published var showHistorySheet: Bool = false
     
     var estimatedTotalPrice: Int {
@@ -52,6 +52,14 @@ class MainViewModel: ObservableObject {
         var type: CodeType = .momo
         var fullCode: String {
             "*182*2*1*1*1*\(amount)*PIN#"
+        }
+        
+        func getDialCode(pin: String) -> String {
+            if pin.isEmpty {
+                return "*182*2*1*1*1*\(amount)#"
+            } else {
+                return "*182*2*1*1*1*\(amount)*\(pin)#"
+            }
         }
         static let example = PurchaseDetailModel()
     }
@@ -167,11 +175,15 @@ class MainViewModel: ObservableObject {
     ///   - purchase: the purchase to take the fullCode from.
     ///   - completion: closue to return a success message or a error of type   `DialingError`.
     private func dialCode(from purchase: PurchaseDetailModel, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
-        guard let code = pinCode else {
-            completion(.failure(.emptyPin))
-            return
+        
+        let code: String
+        if let _ = pinCode, String(pinCode!).count >= 5 {
+            code = String(pinCode!)
+        } else {
+            code = ""
         }
-        let newUrl = purchase.fullCode.replacingOccurrences(of: "PIN", with: String(code))
+        
+        let newUrl = purchase.getDialCode(pin: code)
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in

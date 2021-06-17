@@ -7,42 +7,11 @@
 
 import SwiftUI
 
-enum Transactiontype {
-    case client, merchant
-    
-    mutating func toggle() {
-        self = self == .client ? .merchant : .client
-    }
-}
-
-struct Transaction: Identifiable {
-    let id = UUID()
-    var amount: String
-    var phoneNumber: String
-    var type: Transactiontype
-    var date: Date { Date() }
-    
-    var trailingCode: String {
-        // Need strategy to deal with country code
-        phoneNumber.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
-    }
-    
-    
-    
-    var fullCode: String {
-        if type == .client {
-            return "*182*1*1*\(trailingCode)#"
-        } else {
-            return "*182*8*1*\(trailingCode)#"
-        }
-    }
-}
 struct SendingView: View {
     
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .init(names: "", phoneNumbers: [])
-    
     @State private var transaction: Transaction = Transaction(amount: "", phoneNumber: "", type: .client)
     
     var body: some View {
@@ -58,26 +27,34 @@ struct SendingView: View {
                     .overlay(RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.primary, lineWidth: 0.5))
                     .font(.callout)
-                
-                TextField(
-                    transaction.type == .client ?
-                        "Enter Receiver's number" :
-                        "Enter Merchant Code"
-                    , text: $transaction.phoneNumber)
-                    .keyboardType(.numberPad)
-                    .textContentType(.telephoneNumber)
-                    .foregroundColor(.primary)
-                    .padding()
-                    .frame(height: 45)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.primary, lineWidth: 0.5))
-                    .font(.callout)
+                VStack(spacing: 3) {
+                    TextField(
+                        transaction.type == .client ?
+                            "Enter Receiver's number" :
+                            "Enter Merchant Code"
+                        , text: $transaction.phoneNumber)
+                        .keyboardType(.numberPad)
+                        .textContentType(.telephoneNumber)
+                        .foregroundColor(.primary)
+                        .padding()
+                        .frame(height: 45)
+                        .background(Color(.systemBackground))
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.primary, lineWidth: 0.5))
+                        .font(.callout)
+                        .onChange(of: transaction.phoneNumber, perform: manageNumber)
+                    
+                    if transaction.type == .merchant {
+                        Text("The code should be a 6-digits number")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
                 
                 if transaction.type == .client {
                     Button(action: {
-                        allContacts = phoneNumberWithContryCode()
+                        allContacts = PhoneContacts.getMtnContacts()
                         showContactPicker.toggle()
                     }) {
                         HStack {
@@ -135,27 +112,17 @@ struct SendingView: View {
         hideKeyboard()
         MainViewModel().performQuickDial(for: transaction.fullCode)
     }
-}
-extension View {
-    func phoneNumberWithContryCode() -> [Contact] {
-        var resultingContacts: [Contact] = []
-        let contacts = PhoneContacts.getContacts()
-        for contact in contacts {
-            if contact.phoneNumbers.count > 0  {
-                let contactPhoneNumbers = contact.phoneNumbers
-                let mtnNumbers = contactPhoneNumbers.filter { $0.value.stringValue.isMtnNumber }
-                
-                let numbers = mtnNumbers.compactMap { $0.value.value(forKey: "digits") as? String }
-                if mtnNumbers.isEmpty == false {
-                    let newContact = Contact(names:contact.givenName + " " +  contact.familyName,phoneNumbers: numbers)
-                    resultingContacts.append(newContact)
-                }
-            }
+    
+    /// Create a validation of the Phone Number
+    /// - Parameter value: the validated data
+    private func manageNumber(_ value: String) {
+        if transaction.type == .merchant{
+            transaction.phoneNumber = String(value.prefix(6))
+        } else {
+            
         }
-        return resultingContacts
     }
 }
-
 
 #if DEBUG
 struct SendingView_Previews: PreviewProvider {
