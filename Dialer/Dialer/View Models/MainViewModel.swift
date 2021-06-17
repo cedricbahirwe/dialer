@@ -176,7 +176,12 @@ class MainViewModel: ObservableObject {
     ///   - completion: closue to return a success message or a error of type   `DialingError`.
     private func dialCode(from purchase: PurchaseDetailModel, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
         
-        let code = pinCode == nil ? "" : String(pinCode!)
+        let code: String
+        if let _ = pinCode, String(pinCode!).count >= 5 {
+            code = String(pinCode!)
+        } else {
+            code = ""
+        }
         
         let newUrl = purchase.getDialCode(pin: code)
         if let telUrl = URL(string: "tel://\(newUrl)"),
