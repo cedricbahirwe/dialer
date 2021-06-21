@@ -11,7 +11,18 @@ struct ContactsList: View {
     @Binding var selectedContact: Contact
     @State private var searchQuery: String = ""
     @State private var isEditing = false
-    @Environment(\.presentationMode) var presentationMode
+    @State private var showNumberSelection: Bool = false
+    @Environment(\.presentationMode) private var presentationMode
+    
+    private var resultedContacts: [Contact] {
+        let contacts = allContacts.sorted(by: { $0.names < $1.names })
+        if searchQuery.isEmpty {
+            return contacts
+        } else {
+            return contacts.filter({ $0.names.lowercased().contains(searchQuery.lowercased())})
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 8) {
             if isEditing == false {
@@ -19,10 +30,9 @@ struct ContactsList: View {
                     .font(.largeTitle)
                     .bold()
                     .transition(.move(edge: .top))
-                
             }
+            
             HStack {
-                
                 TextField("Search by name or phone ", text: $searchQuery)
                     .padding(7)
                     .padding(.horizontal, 25)
@@ -72,21 +82,37 @@ struct ContactsList: View {
             List(resultedContacts) { contact in
                 ContactRowView(contact: contact)
                     .onTapGesture {
-                        selectedContact = contact
-                        presentationMode.wrappedValue.dismiss()
+                        manageContact(contact)
+                        
                     }
             }
         }
         .padding(.top, 10)
+        .actionSheet(isPresented: $showNumberSelection) {
+            ActionSheet(title: Text("Phone Number."),
+                        message: Text("Select one phone number to transfer"),
+                        buttons: alertButtons)
+        }
+    }
+    private var alertButtons: [ActionSheet.Button] {
+        var buttons: [ActionSheet.Button] = selectedContact.phoneNumbers.map({ phoneNumber in
+            .default(Text(phoneNumber)) { managePhoneNumber(phoneNumber) }
+        })
+        buttons.append(.cancel())
+        return buttons
+    }
+    private func manageContact(_ contact: Contact) {
+        selectedContact = contact
+        if contact.phoneNumbers.count == 1 {
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            showNumberSelection.toggle()
+        }
     }
     
-    var resultedContacts: [Contact] {
-        let contacts = allContacts.sorted(by: { $0.names < $1.names })
-        if searchQuery.isEmpty {
-            return contacts
-        } else {
-            return contacts.filter({ $0.names.lowercased().contains(searchQuery.lowercased())})
-        }
+    private func managePhoneNumber(_ phone: String) {
+        selectedContact.phoneNumbers  = [phone]
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
