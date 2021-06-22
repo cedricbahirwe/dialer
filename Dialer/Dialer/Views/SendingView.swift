@@ -88,11 +88,8 @@ struct SendingView: View {
             }
             .padding()
             
-            
         }
-        .onChange(of: selectedContact) {
-            transaction.phoneNumber = $0.phoneNumbers.firstElement
-        }
+        .onChange(of: selectedContact, perform: cleanPhoneNumber)
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
         .navigationTitle("Transfer Money")
@@ -106,6 +103,16 @@ struct SendingView: View {
                     }
                 }
         }
+    }
+    
+    private func cleanPhoneNumber(_ value: Contact) {
+        var phone  = value.phoneNumbers.firstElement
+        if phone.hasPrefix("250") {
+            phone.removeFirst(3)
+        } else if phone.hasPrefix("+250") {
+            phone.removeFirst(4)
+        }
+        transaction.phoneNumber = phone
     }
     
     private func transferMoney() {
