@@ -107,10 +107,10 @@ struct SendingView: View {
     
     private func cleanPhoneNumber(_ value: Contact) {
         var phone  = value.phoneNumbers.firstElement
-        if phone.hasPrefix("250") {
+        if phone.hasPrefix("25") {
+            phone.removeFirst(2)
+        } else if phone.hasPrefix("+25") {
             phone.removeFirst(3)
-        } else if phone.hasPrefix("+250") {
-            phone.removeFirst(4)
         }
         transaction.phoneNumber = phone
     }
