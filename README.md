@@ -1,5 +1,5 @@
 # Dialer
-# Made with ❤️ and ``SwiftUI``.
+# Made with  `SwiftUI` and ❤️.
 
 ## Version 1.1:
 
