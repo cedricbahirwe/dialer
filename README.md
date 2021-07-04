@@ -14,8 +14,13 @@
 ### - Quick Momo Money transfer (Client and Merchant) Support
 ### - Contacts Filtering
 
-<img alt="Pin Detail View" height="890" width="410" src="light.png">&nbsp;&nbsp;&nbsp;&nbsp;<img alt="Pin Detail View" height="890" src="dark.png">
+Home Light                 |  Home Dark
+:-------------------------:|:-------------------------:
+![](light.png)  |  ![](dark.png)
 
+Tranfer                    |  Contacts
+:-------------------------:|:-------------------------:
+![](send.png)  |  ![](contacts.png)
 ## ✨ Upcoming features:
 
 ### - Good Local Storage (Core Data)
