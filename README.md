@@ -23,6 +23,6 @@ Tranfer                    |  Contacts
 ![](send.png)  |  ![](contacts.png)
 ## ✨ Upcoming features:
 
-* ### - Good Local Storage (Core Data)
-* ### - Siri Commands Support (Intents and IntentsUI)
-* ### -  Transaction History
+* ### Good Local Storage (Core Data)
+* ### Siri Commands Support (Intents and IntentsUI)
+* ###  Transaction History
