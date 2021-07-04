@@ -7,12 +7,12 @@
 ### Contains common MTN Rwanda USSD activation codes, which drastically simplifies the time to activate those packages. 
 
 ## Features:
-### - Beautiful UI with Light/Dark Mode support
-### - Add History View to Track Past dialings.
-### - New Pin Interface for custom incognito dialings (No track will be stored).
-### - Home Screen Quick Actions
-### - Quick Momo Money transfer (Client and Merchant) Support
-### - Contacts Filtering
+### - Beautiful UI with Light/Dark Mode support.
+### - History View to Track Past dialings.
+### - Pin Interface for custom incognito dialings (No track will be stored).
+### - Home Screen Quick Actions.
+### - Quick Momo Money transfer (Client and Merchant upport).
+### - Contacts Filtering.
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
