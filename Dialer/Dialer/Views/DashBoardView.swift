@@ -87,7 +87,7 @@ struct DashBoardView: View {
                             )
                             .onTapGesture(perform: data.checkInternetBalance)
                         }
-                        .momoDisability()
+//                        .momoDisability()
                     }
                     .padding()
                     Spacer()
