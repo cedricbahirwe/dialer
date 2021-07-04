@@ -56,7 +56,7 @@ struct DashBoardView: View {
                                 title: "Buy with Momo",
                                 icon: "wallet.pass"
                             )
-                            .momoDisability()
+//                            .momoDisability()
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
@@ -69,7 +69,7 @@ struct DashBoardView: View {
                                 )
                                 
                             }
-                            .momoDisability()
+//                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {
@@ -87,7 +87,7 @@ struct DashBoardView: View {
                             )
                             .onTapGesture(perform: data.checkInternetBalance)
                         }
-                        .momoDisability()
+//                        .momoDisability()
                     }
                     .padding()
                     Spacer()
