@@ -1,7 +1,7 @@
-# dialer
+# Dialer
 # Made with ❤️ and ``SwiftUI``.
 
-## Version 1.0:
+## Version 1.1:
 
 ### A intuitive USSD client to handle most of the common actions for you
 ### Contains common MTN Rwanda USSD activation codes, which drastically simplifies the time to activate those packages. 
