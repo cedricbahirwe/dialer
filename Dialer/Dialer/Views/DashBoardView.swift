@@ -56,7 +56,7 @@ struct DashBoardView: View {
                                 title: "Buy with Momo",
                                 icon: "wallet.pass"
                             )
-//                            .momoDisability()
+                            .momoDisability()
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
@@ -69,7 +69,7 @@ struct DashBoardView: View {
                                 )
                                 
                             }
-//                            .momoDisability()
+                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {
@@ -87,12 +87,13 @@ struct DashBoardView: View {
                             )
                             .onTapGesture(perform: data.checkInternetBalance)
                         }
-//                        .momoDisability()
+                        .momoDisability()
                     }
                     .padding()
                     Spacer()
                     bottomBarView
                 }
+                
                 
                 PurchaseDetailView(data: data)
             }
@@ -103,8 +104,11 @@ struct DashBoardView: View {
                     DialingsHistoryView(data: data)
                 }
             }
+            .fullScreenCover(isPresented: $data.hasReachSync) {
+                CongratulationsView()
+            }
             .background(bgColor.ignoresSafeArea())
-            .navigationTitle("Dialer")
+            .navigationTitle("Dialer\(data.hasReachSync.description)")
             .toolbar {
                 
                 if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {

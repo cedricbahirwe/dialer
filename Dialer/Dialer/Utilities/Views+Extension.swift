@@ -15,6 +15,9 @@ struct MTNDisabling: ViewModifier {
 }
 
 extension View {
+    
+    /// Disable access if `Mtn` sim card is not detected
+    /// - Returns: a disabled view if mtn card is not detected (no interaction).
     func momoDisability() -> some View {
         ModifiedContent(content: self, modifier: MTNDisabling())
     }
