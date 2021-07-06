@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PinView: View {
-    
     @Binding var input: String
     public var fullMode: Bool = false
     public var btnSize: CGSize = CGSize(width: 60, height: 60)
