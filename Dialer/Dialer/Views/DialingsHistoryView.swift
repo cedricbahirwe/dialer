@@ -21,10 +21,10 @@ struct DialingsHistoryView: View {
                                 }
                         }
                         .onDelete(perform: data.deleteRecentCode)
-
+                        
                     }
                 }
-
+                
                 HStack {
                     Text("Total:")
                     Spacer()

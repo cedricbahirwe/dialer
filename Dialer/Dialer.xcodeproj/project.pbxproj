@@ -14,6 +14,8 @@
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825022E52673676B007ABB56 /* DialingsHistoryView.swift */; };
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
+		8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E68D2693959800657EFB /* CongratulationsView.swift */; };
+		8255E691269395EE00657EFB /* CongratsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E690269395EE00657EFB /* CongratsViewController.swift */; };
 		825F996326720AE6009E4A7B /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996226720AE6009E4A7B /* SendingView.swift */; };
 		825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996526720B46009E4A7B /* ContactsFetcher.swift */; };
 		825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996926720B7E009E4A7B /* ContactModel.swift */; };
@@ -39,6 +41,8 @@
 		825022E52673676B007ABB56 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
+		8255E68D2693959800657EFB /* CongratulationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsView.swift; sourceTree = "<group>"; };
+		8255E690269395EE00657EFB /* CongratsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsViewController.swift; sourceTree = "<group>"; };
 		825F996226720AE6009E4A7B /* SendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingView.swift; sourceTree = "<group>"; };
 		825F996526720B46009E4A7B /* ContactsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFetcher.swift; sourceTree = "<group>"; };
 		825F996926720B7E009E4A7B /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
@@ -68,6 +72,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8218DBA72694644600E3C025 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				8255E690269395EE00657EFB /* CongratsViewController.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		825F996826720B75009E4A7B /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +154,8 @@
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 				825F996226720AE6009E4A7B /* SendingView.swift */,
 				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
+				8255E68D2693959800657EFB /* CongratulationsView.swift */,
+				8218DBA72694644600E3C025 /* SubViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,9 +253,11 @@
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				825F996E26720C14009E4A7B /* Extensions.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
+				8255E691269395EE00657EFB /* CongratsViewController.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
+				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

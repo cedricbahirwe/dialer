@@ -8,79 +8,22 @@
 import Foundation
 import SwiftUI
 
+
 class MainViewModel: ObservableObject {
     
     @Published var pinCode: Int? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? Int
+    @Published var hasReachSync: Bool = hasSyncDateExpired( UserDefaults.standard.value(forKey: UserDefaults.Keys.LastSyncDate) as? Date ?? Date()) {
+        didSet {
+            if !hasReachSync {
+                UserDefaults.standard.setValue(nil, forKey: UserDefaults.Keys.LastSyncDate)
+            }
+        }
+    }
     @Published var showHistorySheet: Bool = false
     
     var estimatedTotalPrice: Int {
         recentCodes?.map(\.totalPrice).reduce(0, +) ?? 0
     }
-    enum CodeType: String, Codable {
-        case momo, call, message, other
-    }
-    struct RecentCode: Identifiable, Hashable, Codable {
-        static func == (lhs: MainViewModel.RecentCode, rhs: MainViewModel.RecentCode) -> Bool {
-            lhs.id == rhs.id
-        }
-        
-        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 1) {
-            self.id = id
-            self.detail = detail
-            self.count = count
-        }
-        
-        private(set) var id: UUID
-        
-        public var detail: PurchaseDetailModel
-        private(set) var count: Int
-        var totalPrice: Int {
-            detail.amount * count
-        }
-        public mutating func increaseCount() {
-            count += 1
-        }
-        
-        static let example = RecentCode(detail: .example)
-        
-    }
-    
-    
-    
-    struct PurchaseDetailModel: Hashable, Codable {
-        var amount: Int = 0
-        var type: CodeType = .momo
-        var fullCode: String {
-            "*182*2*1*1*1*\(amount)*PIN#"
-        }
-        
-        func getDialCode(pin: String) -> String {
-            if pin.isEmpty {
-                return "*182*2*1*1*1*\(amount)#"
-            } else {
-                return "*182*2*1*1*1*\(amount)*\(pin)#"
-            }
-        }
-        static let example = PurchaseDetailModel()
-    }
-    
-    enum DialingError: Error {
-        case canNotDial, emptyPin, unknownFormat(String),  other
-        var message: String {
-            switch self {
-            case .canNotDial:
-                return "Can not dial this code"
-            case .unknownFormat(let format):
-                return "Can not decode this format: \(format)"
-            case .emptyPin:
-                return "Pin Code not found, configure pin and try again"
-            default:
-                return "Unknown error occured"
-            }
-        }
-    }
-    
-    private let elements = "0123456789*#"
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
@@ -231,15 +174,83 @@ class MainViewModel: ObservableObject {
     }
 }
 
-extension UserDefaults {
+extension MainViewModel {
+    /// Store the sync date if it is nil
+    static func storeSyncDate() {
+        let syncDateKey =  UserDefaults.Keys.LastSyncDate
+        if UserDefaults.standard.value(forKey: syncDateKey) != nil { return }
+        UserDefaults.standard.setValue(Date(), forKey: syncDateKey)
+    }
     
-    /// Storing the used UserDefaults keys for safety.
-    enum Keys {
-        static let RecentCodes = "recentCodes"
-        static let PinCode = "pinCode"
-        static let PurchaseDetails = "purchaseDetails"
+    /// Check whether 1 month period has been reached since last sync date
+    /// - Parameter date: the last sync date
+    /// - Returns: true is the sync date has been reached
+    static func hasSyncDateExpired(_ date: Date) -> Bool {
+        Date().timeIntervalSince(date) / 86400 > 30 // T0 check if 30 Days have passed
     }
 }
+
+extension MainViewModel {
+    
+    enum DialingError: Error {
+        case canNotDial, emptyPin, unknownFormat(String),  other
+        var message: String {
+            switch self {
+            case .canNotDial:
+                return "Can not dial this code"
+            case .unknownFormat(let format):
+                return "Can not decode this format: \(format)"
+            case .emptyPin:
+                return "Pin Code not found, configure pin and try again"
+            default:
+                return "Unknown error occured"
+            }
+        }
+    }
+    
+    enum CodeType: String, Codable {
+        case momo, call, message, other
+    }
+    struct RecentCode: Identifiable, Hashable, Codable {
+        static func == (lhs: MainViewModel.RecentCode, rhs: MainViewModel.RecentCode) -> Bool {
+            lhs.id == rhs.id
+        }
+        
+        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 1) {
+            self.id = id
+            self.detail = detail
+            self.count = count
+        }
+        
+        private(set) var id: UUID
+        private(set) var count: Int
+        var detail: PurchaseDetailModel
+        var totalPrice: Int { detail.amount * count }
+        
+        mutating func increaseCount() { count += 1 }
+        
+        static let example = RecentCode(detail: .example)
+        
+    }
+        
+    struct PurchaseDetailModel: Hashable, Codable {
+        var amount: Int = 0
+        var type: CodeType = .momo
+        var fullCode: String {
+            "*182*2*1*1*1*\(amount)*PIN#"
+        }
+        
+        func getDialCode(pin: String) -> String {
+            if pin.isEmpty {
+                return "*182*2*1*1*1*\(amount)#"
+            } else {
+                return "*182*2*1*1*1*\(amount)*\(pin)#"
+            }
+        }
+        static let example = PurchaseDetailModel()
+    }
+}
+
 
 extension MainViewModel.RecentCode {
     
@@ -250,6 +261,15 @@ extension MainViewModel.RecentCode {
          */
         return [ SceneDelegate.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
     }
+}
+
+extension UserDefaults {
     
-    
+    /// Storing the used UserDefaults keys for safety.
+    enum Keys {
+        static let RecentCodes = "recentCodes"
+        static let PinCode = "pinCode"
+        static let PurchaseDetails = "purchaseDetails"
+        static let LastSyncDate = "lastSyncDate"
+    }
 }

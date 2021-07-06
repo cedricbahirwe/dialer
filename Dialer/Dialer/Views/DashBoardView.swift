@@ -54,9 +54,8 @@ struct DashBoardView: View {
                         HStack(spacing: 15) {
                             DashItemView(
                                 title: "Buy with Momo",
-                                icon: "wallet.pass"
-                            )
-//                            .momoDisability()
+                                icon: "wallet.pass")
+                            .momoDisability()
                             .onTapGesture {
                                 data.showbottomSheet.toggle()
                             }
@@ -65,29 +64,25 @@ struct DashBoardView: View {
                                 destination: SendingView()) {
                                 DashItemView(
                                     title: "Send with Momo",
-                                    icon: "paperplane.circle"
-                                )
-                                
+                                    icon: "paperplane.circle")
                             }
-//                            .momoDisability()
+                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {
                             DashItemView(
                                 title: "History",
-                                icon: "timelapse"
-                            )
+                                icon: "timelapse")
                             .onTapGesture {
                                 data.showHistorySheet.toggle()
                             }
                             
                             DashItemView(
                                 title: "Check Intenet Balance",
-                                icon: "lock.shield"
-                            )
+                                icon: "lock.shield")
                             .onTapGesture(perform: data.checkInternetBalance)
                         }
-//                        .momoDisability()
+                        .momoDisability()
                     }
                     .padding()
                     Spacer()
