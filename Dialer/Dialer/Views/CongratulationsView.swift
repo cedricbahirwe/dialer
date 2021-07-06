@@ -11,12 +11,19 @@ struct CongratulationsView: View {
     @Binding var isPresented: Bool
     private let width = UIScreen.main.bounds.size.width
     private let email = "abc.incs.001@gmail.com"
-    private let currentDate = Date()
-    @State private var didCopyToClipBoard = false
+
+    @State private var didCopyToClipBoard = false    
+    @State private var timeRemaining = 71
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var isAppActive = true
+
     var body: some View {
         ZStack {
             Color(.secondarySystemBackground)
             CongratsView()
+                .opacity(timeRemaining <= 1 ? 0.3 : 1)
+                .blur(radius: timeRemaining <= 1 ? 3 : 0)
+                .animation(Animation.linear(duration: 0.5))
             VStack(spacing: 10) {
                 
                 Image("congrats")
@@ -48,12 +55,10 @@ struct CongratulationsView: View {
                     }
                     .animation(.default)
                 }
-                Group {
-                    Text("Remaining time: ")
-                    + Text(currentDate.addingTimeInterval(10), style: .relative)
-                }
-                .font(Font.callout.weight(.semibold))
-                .foregroundColor(Color.red.opacity(0.8))
+                Text("Remaining time: \(timeRemaining) seconds ")
+                    .font(.callout)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.red.opacity(0.8))
 
             }
             .padding(20)
@@ -64,21 +69,29 @@ struct CongratulationsView: View {
             .cornerRadius(10)
         }
         .ignoresSafeArea()
-        .onAppear() {
-            DispatchQueue.main.asyncAfter(deadline: .now()+9) {
-                withAnimation {
-                    isPresented = false
-                }
+        .onReceive(timer) { _ in
+            guard isAppActive else { return }
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            } else {
+                isPresented = false
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            isAppActive = false
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            isAppActive = true
         }
     }
     
     private func sendMail() {
 //        let googleUrlString = "googlegmail:///co?to=\(email)&subject=Dialer%20Monthly%20Award"
-        let mailUrlString = URL(string: "mailto:\(email)")!
         
-        if UIApplication.shared.canOpenURL(mailUrlString) {
-            UIApplication.shared.open(mailUrlString, options: [:], completionHandler: nil)
+        let mailUrl = URL(string: "mailto:\(email)?subject=Dialer%20Monthly%20Award!")!
+        
+        if UIApplication.shared.canOpenURL(mailUrl) {
+            UIApplication.shared.open(mailUrl, options: [:], completionHandler: nil)
         }
         copyToClipBoard()
     }
