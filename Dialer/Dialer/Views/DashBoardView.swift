@@ -98,11 +98,8 @@ struct DashBoardView: View {
                     DialingsHistoryView(data: data)
                 }
             }
-            .fullScreenCover(isPresented: $data.hasReachSync) {
-                CongratulationsView()
-            }
             .background(bgColor.ignoresSafeArea())
-            .navigationTitle("Dialer\(data.hasReachSync.description)")
+            .navigationTitle("Dialer")
             .toolbar {
                 
                 if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {

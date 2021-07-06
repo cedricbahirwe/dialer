@@ -9,25 +9,19 @@ import UIKit
 import SwiftUI
 
 
-struct CongratsView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UIViewController {
-        CongratsViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+extension CongratulationsView {
+    internal struct CongratsView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> UIViewController {
+            CongratsViewController()
+        }
         
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
     }
 }
 
-class CongratsViewController: UIViewController {
+fileprivate class CongratsViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         createParticles()
@@ -43,8 +37,9 @@ class CongratsViewController: UIViewController {
         let red = makeEmitterCell(color: UIColor.red)
         let green = makeEmitterCell(color: UIColor.yellow)
         let blue = makeEmitterCell(color: UIColor.green)
+        let dialer = makeEmitterCell(color: UIColor(named: "dialer")!)
         
-        particleEmitter.emitterCells = [red, green, blue]
+        particleEmitter.emitterCells = [red, green, blue, dialer]
         
         view.layer.addSublayer(particleEmitter)
     }

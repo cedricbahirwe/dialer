@@ -75,7 +75,6 @@
 		8218DBA72694644600E3C025 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				8255E68D2693959800657EFB /* CongratulationsView.swift */,
 				8255E690269395EE00657EFB /* CongratsViewController.swift */,
 			);
 			path = SubViews;
@@ -155,6 +154,7 @@
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 				825F996226720AE6009E4A7B /* SendingView.swift */,
 				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
+				8255E68D2693959800657EFB /* CongratulationsView.swift */,
 				8218DBA72694644600E3C025 /* SubViews */,
 			);
 			path = Views;

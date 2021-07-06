@@ -24,8 +24,6 @@ class MainViewModel: ObservableObject {
     var estimatedTotalPrice: Int {
         recentCodes?.map(\.totalPrice).reduce(0, +) ?? 0
     }
-
-    private let elements = "0123456789*#"
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
@@ -176,17 +174,24 @@ class MainViewModel: ObservableObject {
     }
 }
 
-
 extension MainViewModel {
-    
+    /// Store the sync date if it is nil
     static func storeSyncDate() {
         let syncDateKey =  UserDefaults.Keys.LastSyncDate
         if UserDefaults.standard.value(forKey: syncDateKey) != nil { return }
         UserDefaults.standard.setValue(Date(), forKey: syncDateKey)
     }
+    
+    /// Check whether 1 month period has been reached since last sync date
+    /// - Parameter date: the last sync date
+    /// - Returns: true is the sync date has been reached
     static func hasSyncDateExpired(_ date: Date) -> Bool {
-        return Date().timeIntervalSince(date) / 86400 > 30 // TO check if 30 Days have passed
+        Date().timeIntervalSince(date) / 86400 > 30 // T0 check if 30 Days have passed
     }
+}
+
+extension MainViewModel {
+    
     enum DialingError: Error {
         case canNotDial, emptyPin, unknownFormat(String),  other
         var message: String {
@@ -203,7 +208,6 @@ extension MainViewModel {
         }
     }
     
-    
     enum CodeType: String, Codable {
         case momo, call, message, other
     }
@@ -219,15 +223,11 @@ extension MainViewModel {
         }
         
         private(set) var id: UUID
-        
-        public var detail: PurchaseDetailModel
         private(set) var count: Int
-        var totalPrice: Int {
-            detail.amount * count
-        }
-        public mutating func increaseCount() {
-            count += 1
-        }
+        var detail: PurchaseDetailModel
+        var totalPrice: Int { detail.amount * count }
+        
+        mutating func increaseCount() { count += 1 }
         
         static let example = RecentCode(detail: .example)
         
