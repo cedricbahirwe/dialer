@@ -14,6 +14,11 @@
 * ### Quick Momo Money transfer (Client and Merchant upport).
 * ### Contacts Filtering.
 
+## TakeAways 🚀
+- **Deep Dive into Home Screen Quick Actions Actions**
+- **Respect of Apple Human Interface Guidelines**
+- **Management of Local Storage in SwiftUI**
+
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
 ![](light.png)  |  ![](dark.png)
