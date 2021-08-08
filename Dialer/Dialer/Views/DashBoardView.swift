@@ -40,15 +40,6 @@ struct DashBoardView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
-                Image("water")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(Color.primary.opacity(0.2))
-                    .offset(x: 160, y: 200)
-                    .frame(maxHeight: .infinity)
-                
-                
                 VStack {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {

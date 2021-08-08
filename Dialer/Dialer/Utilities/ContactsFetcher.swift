@@ -10,6 +10,8 @@ import Contacts
 
 class PhoneContacts {
     
+    private init() {}
+    
     class private func getContacts(filter: ContactsFilter = .none) -> [CNContact] {
         
         let contactStore = CNContactStore()
@@ -46,12 +48,14 @@ class PhoneContacts {
         let contacts = PhoneContacts.getContacts()
         for contact in contacts {
             if contact.phoneNumbers.count > 0  {
-                let contactPhoneNumbers = contact.phoneNumbers
-                let mtnNumbers = contactPhoneNumbers.filter { $0.value.stringValue.isMtnNumber }
+                let contactsPhoneNumbers = contact.phoneNumbers
+                let mtnNumbersFormat = contactsPhoneNumbers.filter { $0.value.stringValue.isMtnNumber }
                 
-                let numbers = mtnNumbers.compactMap { $0.value.value(forKey: "digits") as? String }
-                if mtnNumbers.isEmpty == false {
-                    let newContact = Contact(names:contact.givenName + " " +  contact.familyName,phoneNumbers: numbers)
+                var pureMtnNumbers = mtnNumbersFormat.compactMap { $0.value.value(forKey: "digits") as? String }
+                pureMtnNumbers = pureMtnNumbers.map { $0.asMtnNumber() }
+                if pureMtnNumbers.isEmpty == false {
+                    let newContact = Contact(names: contact.givenName + " " +  contact.familyName,
+                                             phoneNumbers: pureMtnNumbers)
                     resultingContacts.append(newContact)
                 }
             }

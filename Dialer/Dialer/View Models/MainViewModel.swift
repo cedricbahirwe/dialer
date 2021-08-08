@@ -99,7 +99,7 @@ class MainViewModel: ObservableObject {
     
     /// Check internet balance.
     public func checkInternetBalance() {
-        performQuickDial(for: "*345*5#")
+        Self.performQuickDial(for: "*345*5#")
     }
     
     /// Save locally the Pin Code
@@ -147,7 +147,7 @@ class MainViewModel: ObservableObject {
     
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: the `string` code to be dialed.
-    public func performQuickDial(for code: String) {
+    public static func performQuickDial(for code: String) {
         if let telUrl = URL(string: "tel://\(code)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in

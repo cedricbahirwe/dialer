@@ -13,6 +13,7 @@ struct ContactsList: View {
     @State private var isEditing = false
     @State private var showNumberSelection: Bool = false
     @Environment(\.presentationMode) private var presentationMode
+        
     
     private var resultedContacts: [Contact] {
         let contacts = allContacts.sorted(by: { $0.names < $1.names })
@@ -21,6 +22,11 @@ struct ContactsList: View {
         } else {
             return contacts.filter({ $0.names.lowercased().contains(searchQuery.lowercased())})
         }
+    }
+    
+    init(contacts: Binding<[Contact]>, selection: Binding<Contact>) {
+        _allContacts = contacts
+        _selectedContact = selection
     }
     
     var body: some View {
@@ -120,8 +126,8 @@ struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
-            ContactsList(allContacts: .constant(Contact.example), selectedContact: .constant(Contact.example[0]))
-            ContactRowView(contact: Contact.example[0])
+            ContactsList(contacts: .constant([.example]), selection: .constant(.example))
+            ContactRowView(contact: .example)
                 .previewLayout(.fixed(width: 400, height: 100))
         }
     }

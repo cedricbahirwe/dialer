@@ -19,22 +19,32 @@ extension String {
         trimmingCharacters(in: .whitespaces).hasPrefix("25079") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("079")
     }
-}
-
-extension Array where Element == String  {
-    var firstElement: String {
-        get { return first ?? "" }
-        set(value) {
-            if isEmpty {
-                self = []
-            } else {
-                self[0] = value
-            }
-            
+    
+    
+    /// Removes the `Rwanda` country code and return a pure  `MTN` number format
+    func asMtnNumber() -> String {
+        var mtnNumber = self
+        if mtnNumber.hasPrefix("25") {
+            mtnNumber.removeFirst(2)
+        } else if mtnNumber.hasPrefix("+25") {
+            mtnNumber.removeFirst(3)
         }
+        return mtnNumber
     }
 }
 
+
+extension Binding {
+    public func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        Binding(
+            get: { wrappedValue },
+            set: { newValue in
+                wrappedValue = newValue
+                handler(newValue )
+            }
+        )
+    }
+}
 
 // Dismiss keyboard
 #if canImport(UIKit)

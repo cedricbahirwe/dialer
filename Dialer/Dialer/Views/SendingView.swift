@@ -11,8 +11,8 @@ struct SendingView: View {
     
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
-    @State private var selectedContact: Contact = .init(names: "", phoneNumbers: [])
-    @State private var transaction: Transaction = Transaction(amount: "", phoneNumber: "", type: .client)
+    @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
+    @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
     
     var body: some View {
         VStack {
@@ -28,13 +28,19 @@ struct SendingView: View {
                                 .stroke(Color.primary, lineWidth: 0.5))
                     .font(.callout)
                 VStack(spacing: 3) {
+                    if transaction.type == .client {
+                        Text(selectedContact.names).font(.caption).foregroundColor(.red)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default)
+                    }
                     TextField(
                         transaction.type == .client ?
                             "Enter Receiver's number" :
                             "Enter Merchant Code"
-                        , text: $transaction.phoneNumber)
+                        , text: $transaction.number.onChange(handleNumberField))
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                         .keyboardType(.numberPad)
-                        .textContentType(.telephoneNumber)
                         .foregroundColor(.primary)
                         .padding()
                         .frame(height: 45)
@@ -43,10 +49,8 @@ struct SendingView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.primary, lineWidth: 0.5))
                         .font(.callout)
-                        .onChange(of: transaction.phoneNumber, perform: manageNumber)
-                    
                     if transaction.type == .merchant {
-                        Text("The code should be a 6-digits number")
+                        Text("The code should be a 5-6 digits number")
                             .font(.caption)
                             .foregroundColor(.red)
                     }
@@ -69,7 +73,7 @@ struct SendingView: View {
                         .foregroundColor(Color(.systemBackground))
                     }
                     .sheet(isPresented: $showContactPicker) {
-                        ContactsList(allContacts: $allContacts, selectedContact: $selectedContact)
+                        ContactsList(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
                     }
                 }
                 
@@ -79,19 +83,21 @@ struct SendingView: View {
                         .font(Font.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
-                        .background(Color.primary)
+                        .background(transaction.isValid ? Color.primary : .red)
                         .cornerRadius(8)
                         .foregroundColor(Color(.systemBackground))
                 }
+                .disabled(transaction.isValid == false)
+                .opacity(transaction.isValid ? 1 : 0.6)
                 
                 Spacer()
             }
             .padding()
             
         }
-        .onChange(of: selectedContact, perform: cleanPhoneNumber)
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
+        .onAppear(perform: requestContacts)
         .navigationTitle("Transfer Money")
         .toolbar {
             Text(transaction.type == .client ? "Merchant pay" : "Send Money")
@@ -99,34 +105,42 @@ struct SendingView: View {
                 .foregroundColor(.blue)
                 .onTapGesture  {
                     withAnimation {
+                        transaction.number = ""
                         transaction.type.toggle()
                     }
                 }
         }
     }
     
-    private func cleanPhoneNumber(_ value: Contact) {
-        var phone  = value.phoneNumbers.firstElement
-        if phone.hasPrefix("25") {
-            phone.removeFirst(2)
-        } else if phone.hasPrefix("+25") {
-            phone.removeFirst(3)
-        }
-        transaction.phoneNumber = phone
+    private func requestContacts() {
+        #if !DEBUG
+        allContacts = PhoneContacts.getMtnContacts()
+        #endif
+    }
+    
+    private func cleanPhoneNumber(_ value: Contact?) {
+        guard let contact = value else { return }
+        let firstNumber  = contact.phoneNumbers.first!
+        transaction.number = firstNumber
     }
     
     private func transferMoney() {
         hideKeyboard()
-        MainViewModel().performQuickDial(for: transaction.fullCode)
+        MainViewModel.performQuickDial(for: transaction.fullCode)
     }
     
-    /// Create a validation of the Phone Number
+    /// Create a validation for the  `Number` field value
     /// - Parameter value: the validated data
-    private func manageNumber(_ value: String) {
+    private func handleNumberField(_ value: String) {
         if transaction.type == .merchant{
-            transaction.phoneNumber = String(value.prefix(6))
+            transaction.number = String(value.prefix(6))
         } else {
-            
+            let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
+            if matchedContacts.isEmpty == false {
+                selectedContact = matchedContacts.first!
+            } else {
+                selectedContact = .init(names: "", phoneNumbers: [])
+            }
         }
     }
 }
