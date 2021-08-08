@@ -40,15 +40,6 @@ struct DashBoardView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
-                Image("water")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(Color.primary.opacity(0.2))
-                    .offset(x: 160, y: 200)
-                    .frame(maxHeight: .infinity)
-                
-                
                 VStack {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
@@ -144,11 +135,13 @@ extension DashBoardView {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
                 
                 Text(checkCellularProvider.message)
+                    .font(.system(.body, design: .rounded))
+                    .fontWeight(.medium)
             }
-            .foregroundColor(checkCellularProvider.status ? .green : .red)
-            .padding(.horizontal, 10)
-            .frame(height: 32)
-            .background(Color.primary)
+            .foregroundColor(checkCellularProvider.status ? .main : .red)
+            .padding(.horizontal, 12)
+            .frame(height: 35)
+            .background(Color.white)
             .cornerRadius(5)
         }
         .padding(.horizontal)

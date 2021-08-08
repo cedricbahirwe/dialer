@@ -11,7 +11,7 @@ func drawImage() -> UIImage {
     let renderer = UIGraphicsImageRenderer(size: CGSize(width: 60, height: 40))
     return renderer.image { _ in
         // Draw image in circle
-        let image = UIImage(named: "abclogo")!
+        let image = UIImage(named: "abc.logo")!
         let size = CGSize(width: 55, height: 35)
         let rect = CGRect(x: 0, y: 5, width: size.width, height: size.height)
         image.draw(in: rect)
@@ -49,6 +49,7 @@ struct NewDialingView: View {
                 PinView(input: $composedCode.animation(), fullMode: true, btnSize: .init(width: 80, height: 80))
                     .font(Font.title.bold())
                     .padding(.vertical, 10)
+                    .padding()
                 
                 Button(action: {
                     dial(composedCode)
@@ -81,6 +82,7 @@ struct NewDialingView: View {
             }
             
         }
+        
     }
     
     private func dial(_ code: String) {
