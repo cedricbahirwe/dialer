@@ -49,6 +49,7 @@ struct NewDialingView: View {
                 PinView(input: $composedCode.animation(), fullMode: true, btnSize: .init(width: 80, height: 80))
                     .font(Font.title.bold())
                     .padding(.vertical, 10)
+                    .padding()
                 
                 Button(action: {
                     dial(composedCode)
@@ -81,6 +82,7 @@ struct NewDialingView: View {
             }
             
         }
+        
     }
     
     private func dial(_ code: String) {

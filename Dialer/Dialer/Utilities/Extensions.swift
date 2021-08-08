@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+extension Color {
+    static let main = Color("main")
+}
+
 extension String {
     var isMtnNumber: Bool {
         // Check for the validity of the mtn number (078 && 079)

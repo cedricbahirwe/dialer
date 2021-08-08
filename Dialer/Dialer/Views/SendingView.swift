@@ -113,9 +113,7 @@ struct SendingView: View {
     }
     
     private func requestContacts() {
-        #if !DEBUG
         allContacts = PhoneContacts.getMtnContacts()
-        #endif
     }
     
     private func cleanPhoneNumber(_ value: Contact?) {

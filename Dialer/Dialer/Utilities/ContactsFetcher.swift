@@ -14,7 +14,12 @@ class PhoneContacts {
     
     class private func getContacts(filter: ContactsFilter = .none) -> [CNContact] {
         
+        switch CNContactStore.authorizationStatus(for: .contacts) {
+        case .authorized: break;
+        default: return []
+        }
         let contactStore = CNContactStore()
+        
         let keysToFetch = [
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
             CNContactPhoneNumbersKey,
