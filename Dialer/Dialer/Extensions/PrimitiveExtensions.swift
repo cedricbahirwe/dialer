@@ -1,20 +1,19 @@
 //
-//  Extensions.swift
+//  PrimitiveExtensions.swift
 //  Dialer
 //
-//  Created by Cédric Bahirwe on 10/06/2021.
+//  Created by Cédric Bahirwe on 09/08/2021.
 //
 
 import Foundation
 import SwiftUI
 
-extension Color {
-    static let main = Color("main")
-}
-
 extension String {
-    var isMtnNumber: Bool {
-        // Check for the validity of the mtn number (078 && 079)
+    
+    /// Check for the validity of the `MTN` number (078 && 079)
+    /// This is a agnostic approach, since it does not handle all the edge cases
+    public var isMtnNumber: Bool {
+        
         return
             trimmingCharacters(in: .whitespaces).hasPrefix("+25078") ||
         trimmingCharacters(in: .whitespaces).hasPrefix("25078") ||
@@ -26,7 +25,7 @@ extension String {
     
     
     /// Removes the `Rwanda` country code and return a pure  `MTN` number format
-    func asMtnNumber() -> String {
+    public func asMtnNumber() -> String {
         var mtnNumber = self
         if mtnNumber.hasPrefix("25") {
             mtnNumber.removeFirst(2)
@@ -50,13 +49,3 @@ extension Binding {
     }
 }
 
-extension UserDefaults {
-    
-    /// Storing the used UserDefaults keys for safety.
-    enum Keys {
-        static let RecentCodes = "recentCodes"
-        static let PinCode = "pinCode"
-        static let PurchaseDetails = "purchaseDetails"
-        static let LastSyncDate = "lastSyncDate"
-    }
-}

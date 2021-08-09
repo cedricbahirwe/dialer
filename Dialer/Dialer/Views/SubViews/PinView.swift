@@ -34,6 +34,7 @@ struct PinView: View {
                         Color(.label)
                 )
                 .opacity(!isFullMode && button == "*" ? 0 : 1)
+                .opacity(input.isEmpty && button == "X" ? 0 : 1)
                 
             }
         }

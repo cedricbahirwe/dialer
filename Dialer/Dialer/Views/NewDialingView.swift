@@ -69,7 +69,7 @@ struct NewDialingView: View {
         if code.contains("*") && code.contains("#") && code.count >= 5 {
             if let telUrl = URL(string: "tel://\(code)"), UIApplication.shared.canOpenURL(telUrl) {
                 UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
-                    print("Finished")
+//                    print("Finished")
                     
                 })
 
@@ -117,7 +117,7 @@ struct NewDialingView: View {
                     .frame(width: 55, height: 55)
             })
             .frame(width: 75, height: 75)
-            .opacity(!composedCode.isEmpty ? 0 : 1)
+            .opacity(composedCode.isEmpty ? 0 : 1)
         }
         .padding(.horizontal, 25)
         .foregroundColor(Color.red.opacity(0.8))

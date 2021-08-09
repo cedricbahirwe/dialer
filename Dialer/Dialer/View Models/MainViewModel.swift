@@ -8,17 +8,21 @@
 import Foundation
 import SwiftUI
 
-
 class MainViewModel: ObservableObject {
     
-    @Published var pinCode: Int? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? Int
-    @Published var hasReachSync: Bool = hasSyncDateExpired(UserDefaults.standard.value(forKey: UserDefaults.Keys.LastSyncDate) as? Date ?? Date()) {
-        didSet {
-            if !hasReachSync {
-                UserDefaults.standard.setValue(nil, forKey: UserDefaults.Keys.LastSyncDate)
+    @Published var pinCode: Int? = DialerStorage.shared.getPinCode()
+    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
+        didSet(newValue) {
+            if newValue == false {
+                DialerStorage.shared.clearSyncDate()
             }
         }
     }
+    
+    public var hasStoredPinCode: Bool {
+        DialerStorage.shared.hasPinCode()
+    }
+    
     @Published var showHistorySheet: Bool = false
     
     var estimatedTotalPrice: Int {
@@ -27,8 +31,10 @@ class MainViewModel: ObservableObject {
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
-    @Published var showbottomSheet: Bool = false
+    @Published var showPurchaseSheet: Bool = false
     
+    
+    // TODO: why is this optional!!
     @Published private(set) var recentCodes: [RecentCode]? = []
     
     
@@ -45,32 +51,22 @@ class MainViewModel: ObservableObject {
     
     /// Save code(s) locally.
     public func saveLocally() {
-        if let encoded = try? JSONEncoder().encode(recentCodes){
-            UserDefaults.standard.set(encoded, forKey: UserDefaults.Keys.RecentCodes)
-        } else {
-            print("Couldn't encode")
+        do {
+            try DialerStorage.shared.saveRecentCodes(recentCodes)
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
     ///  Delete locally the Pin Code.
     public func removePin() {
-        UserDefaults.standard.removeObject(forKey: UserDefaults.Keys.PinCode)
+        DialerStorage.shared.removePinCode()
         pinCode = nil
     }
     
     /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
-        guard let codes = UserDefaults
-                .standard
-                .object(forKey: UserDefaults.Keys.RecentCodes) as? Data else {
-            return
-        }
-        do {
-            recentCodes =  try JSONDecoder().decode([RecentCode].self, from: codes)
-        } catch let error {
-            print("Couldn't decode")
-            print(error.localizedDescription)
-        }
+        recentCodes = DialerStorage.shared.getRecentCodes()
     }
     
     /// Confirm and Purchase an entered Code.
@@ -107,7 +103,7 @@ class MainViewModel: ObservableObject {
     public func savePinCode(value: Int) {
         if String(value).count == 5 {
             pinCode = value
-            UserDefaults.standard.setValue(value, forKey: UserDefaults.Keys.PinCode)
+            DialerStorage.shared.savePinCode(value)
         } else {
             print("Well, we can't save that pin")
         }
@@ -235,6 +231,7 @@ extension MainViewModel {
 }
 
 
+// Extension used for Home Quick Actions
 extension MainViewModel.RecentCode {
     
     /// - Tag: QuickActionUserInfo
@@ -245,21 +242,3 @@ extension MainViewModel.RecentCode {
         return [ SceneDelegate.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
     }
 }
-
-
-extension MainViewModel {
-    /// Store the sync date if it is nil
-    static func storeSyncDate() {
-        let syncDateKey =  UserDefaults.Keys.LastSyncDate
-        if UserDefaults.standard.value(forKey: syncDateKey) != nil { return }
-        UserDefaults.standard.setValue(Date(), forKey: syncDateKey)
-    }
-    
-    /// Check whether 1 month period has been reached since last sync date
-    /// - Parameter date: the last sync date
-    /// - Returns: true is the sync date has been reached
-    static func hasSyncDateExpired(_ date: Date) -> Bool {
-        Date().timeIntervalSince(date) / 86400 > 30 // T0 check if 30 Days have passed
-    }
-}
-

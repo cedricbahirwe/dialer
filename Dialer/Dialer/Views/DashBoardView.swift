@@ -32,8 +32,8 @@ struct DashBoardView: View {
             }
             .onEnded { value in
                 let snapDistance = 600 * CGFloat(0.25)
-                data.showbottomSheet = value.translation.height < snapDistance
-                dragState = data.showbottomSheet ? .open : .closed
+                data.showPurchaseSheet = value.translation.height < snapDistance
+                dragState = data.showPurchaseSheet ? .open : .closed
             }
     }
     
@@ -48,7 +48,7 @@ struct DashBoardView: View {
                                 icon: "wallet.pass")
                             .momoDisability()
                             .onTapGesture {
-                                data.showbottomSheet.toggle()
+                                data.showPurchaseSheet.toggle()
                             }
                             
                             NavigationLink(
@@ -79,8 +79,8 @@ struct DashBoardView: View {
                     Spacer()
                     bottomBarView
                 }
-                .blur(radius: data.showbottomSheet ? 3 : 0)
-                .allowsHitTesting(!data.showbottomSheet)
+                .blur(radius: data.showPurchaseSheet ? 3 : 0)
+                .allowsHitTesting(!data.showPurchaseSheet)
                 
                 PurchaseDetailView(data: data)
             }
@@ -94,7 +94,7 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 
-                if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {
+                if data.hasStoredPinCode {
                     Text("Delete Pin")
                         .foregroundColor(.red)
                         .onTapGesture (perform: data.removePin)
