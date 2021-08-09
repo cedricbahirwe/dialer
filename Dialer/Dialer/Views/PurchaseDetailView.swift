@@ -10,7 +10,7 @@ import SwiftUI
 struct PurchaseDetailView: View {
     @ObservedObject var data: MainViewModel
     private enum Field {
-        case amount, code, none
+        case amount, code
     }
     @State private var edition: Field = .amount
     
@@ -141,7 +141,6 @@ struct PurchaseDetailView: View {
             
             PinView(input: storeInput())
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
-                
                 .padding(.bottom, 20)
         }
         .padding()
@@ -151,30 +150,30 @@ struct PurchaseDetailView: View {
         .shadow(radius: 5)
         .offset(y: 0 + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
         .font(.system(size: 18, weight: .semibold, design: .rounded))
-        .offset(x: 0, y: data.showbottomSheet ? 0 : 1000)
+        .offset(x: 0, y: data.showbottomSheet ? 0 : 800)
         .offset(y: max(0, bottomState.height))
         .blur(radius: show ? 20 : 0)
         .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
         .gesture(
             DragGesture().onChanged { value in
-                self.bottomState = value.translation
-                if self.showFull {
-                    self.bottomState.height += -300
+                bottomState = value.translation
+                if showFull {
+                    bottomState.height += -300
                 }
-                if self.bottomState.height < -300 {
-                    self.bottomState.height = -300
+                if bottomState.height < -300 {
+                    bottomState.height = -300
                 }
             }
             .onEnded { value in
-                if self.bottomState.height > 50 {
+                if bottomState.height > 50 {
                     data.showbottomSheet = false
                 }
-                if (self.bottomState.height < -100 && !self.showFull) || (self.bottomState.height < -250 && self.showFull) {
-                    self.bottomState.height = -300
-                    self.showFull = true
+                if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
+                    bottomState.height = -300
+                    showFull = true
                 } else {
-                    self.bottomState = .zero
-                    self.showFull = false
+                    bottomState = .zero
+                    showFull = false
                 }
             }
         )
@@ -193,10 +192,9 @@ struct PurchaseDetailView: View {
             return $data.purchaseDetail.amount.stringBind
         case .code:
             return $codepin
-        default:
-            return .constant("")
         }
     }
+    
 }
 
 struct PurchaseDetailView_Previews: PreviewProvider {

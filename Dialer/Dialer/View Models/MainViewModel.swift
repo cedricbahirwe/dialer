@@ -12,7 +12,7 @@ import SwiftUI
 class MainViewModel: ObservableObject {
     
     @Published var pinCode: Int? = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) as? Int
-    @Published var hasReachSync: Bool = hasSyncDateExpired( UserDefaults.standard.value(forKey: UserDefaults.Keys.LastSyncDate) as? Date ?? Date()) {
+    @Published var hasReachSync: Bool = hasSyncDateExpired(UserDefaults.standard.value(forKey: UserDefaults.Keys.LastSyncDate) as? Date ?? Date()) {
         didSet {
             if !hasReachSync {
                 UserDefaults.standard.setValue(nil, forKey: UserDefaults.Keys.LastSyncDate)
@@ -173,23 +173,6 @@ class MainViewModel: ObservableObject {
         }
     }
 }
-
-extension MainViewModel {
-    /// Store the sync date if it is nil
-    static func storeSyncDate() {
-        let syncDateKey =  UserDefaults.Keys.LastSyncDate
-        if UserDefaults.standard.value(forKey: syncDateKey) != nil { return }
-        UserDefaults.standard.setValue(Date(), forKey: syncDateKey)
-    }
-    
-    /// Check whether 1 month period has been reached since last sync date
-    /// - Parameter date: the last sync date
-    /// - Returns: true is the sync date has been reached
-    static func hasSyncDateExpired(_ date: Date) -> Bool {
-        Date().timeIntervalSince(date) / 86400 > 30 // T0 check if 30 Days have passed
-    }
-}
-
 extension MainViewModel {
     
     enum DialingError: Error {
@@ -263,13 +246,20 @@ extension MainViewModel.RecentCode {
     }
 }
 
-extension UserDefaults {
+
+extension MainViewModel {
+    /// Store the sync date if it is nil
+    static func storeSyncDate() {
+        let syncDateKey =  UserDefaults.Keys.LastSyncDate
+        if UserDefaults.standard.value(forKey: syncDateKey) != nil { return }
+        UserDefaults.standard.setValue(Date(), forKey: syncDateKey)
+    }
     
-    /// Storing the used UserDefaults keys for safety.
-    enum Keys {
-        static let RecentCodes = "recentCodes"
-        static let PinCode = "pinCode"
-        static let PurchaseDetails = "purchaseDetails"
-        static let LastSyncDate = "lastSyncDate"
+    /// Check whether 1 month period has been reached since last sync date
+    /// - Parameter date: the last sync date
+    /// - Returns: true is the sync date has been reached
+    static func hasSyncDateExpired(_ date: Date) -> Bool {
+        Date().timeIntervalSince(date) / 86400 > 30 // T0 check if 30 Days have passed
     }
 }
+

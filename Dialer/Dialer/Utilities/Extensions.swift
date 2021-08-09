@@ -50,11 +50,13 @@ extension Binding {
     }
 }
 
-// Dismiss keyboard
-#if canImport(UIKit)
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+extension UserDefaults {
+    
+    /// Storing the used UserDefaults keys for safety.
+    enum Keys {
+        static let RecentCodes = "recentCodes"
+        static let PinCode = "pinCode"
+        static let PurchaseDetails = "purchaseDetails"
+        static let LastSyncDate = "lastSyncDate"
     }
 }
-#endif

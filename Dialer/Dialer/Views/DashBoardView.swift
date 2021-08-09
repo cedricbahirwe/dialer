@@ -79,15 +79,16 @@ struct DashBoardView: View {
                     Spacer()
                     bottomBarView
                 }
+                .blur(radius: data.showbottomSheet ? 3 : 0)
+                .allowsHitTesting(!data.showbottomSheet)
                 
                 PurchaseDetailView(data: data)
             }
-            .sheet(isPresented:presentNewDial ? $presentNewDial : $data.showHistorySheet) {
-                if presentNewDial {
-                    NewDialingView()
-                } else {
+            .sheet(isPresented: $data.showHistorySheet) {
                     DialingsHistoryView(data: data)
-                }
+            }
+            .fullScreenCover(isPresented: $presentNewDial) {
+                NewDialingView()
             }
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")

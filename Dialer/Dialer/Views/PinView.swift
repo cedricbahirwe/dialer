@@ -9,13 +9,13 @@ import SwiftUI
 
 struct PinView: View {
     @Binding var input: String
-    public var fullMode: Bool = false
-    public var btnSize: CGSize = CGSize(width: 60, height: 60)
+    public var isFullMode: Bool = false
+    public var btnSize: CGFloat = 60
 
     private var buttons: [String] {
-        var defaults = ["1","2","3","4","5","6","7","8","9","*","0"]
+        var defaults: [String] = ["1","2","3","4","5","6","7","8","9","*","0"]
         
-        defaults += fullMode ? ["#"] : ["X"]
+        defaults += isFullMode ? ["#"] : ["X"]
         return defaults
     }
     
@@ -26,34 +26,29 @@ struct PinView: View {
             GridItem(.flexible()),
         ], spacing: 10) {
             ForEach(buttons, id: \.self) { button in
-//                if (!fullMode && but)
-                Button {
-                    if button == "X" {
-                        if !input.isEmpty {
-                            input.removeLast()
-                        }
-                    } else {
-                        input.append(button)
-                    }
-                } label: {
-                    Text(button)
-                        .frame(width: btnSize.width, height: btnSize.height)
-                        .background(Color.gray.opacity(0.2))
-                        .clipShape(Circle())
-                }
-                .frame(maxHeight: .infinity)
+                CircleButton(button, size: btnSize,
+                             action: { addKey(button)})
                 .foregroundColor(
                     button == "X" ?
                         Color.red :
                         Color(.label)
                 )
-                .opacity(!fullMode && button == "*" ? 0 : 1)
+                .opacity(!isFullMode && button == "*" ? 0 : 1)
                 
             }
         }
     }
+    
+    private func addKey(_ value: String) {
+        if value == "X" {
+            if !input.isEmpty {
+                input.removeLast()
+            }
+        } else {
+            input.append(value)
+        }
+    }
 }
-
 
 extension Int {
     var stringBind: String {
@@ -66,5 +61,28 @@ extension Int {
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
         PinView(input: .constant("*182#"))
+    }
+}
+
+struct CircleButton: View {
+    
+    let title: String
+    let size: CGFloat
+    let action: () -> Void
+
+    
+    init(_ title: String, size: CGFloat, action: @escaping () -> Void) {
+        self.title = title
+        self.size = size
+        self.action = action
+    }
+    
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .frame(width: size, height: size)
+                .background(Color.gray.opacity(0.2))
+                .clipShape(Circle())
+        }
     }
 }
