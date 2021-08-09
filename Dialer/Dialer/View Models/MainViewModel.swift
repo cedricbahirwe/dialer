@@ -19,6 +19,10 @@ class MainViewModel: ObservableObject {
             }
         }
     }
+    
+    public var hasStoredPinCode: Bool {
+        UserDefaults.standard.integer(forKey: UserDefaults.Keys.PinCode) != 0
+    }
     @Published var showHistorySheet: Bool = false
     
     var estimatedTotalPrice: Int {

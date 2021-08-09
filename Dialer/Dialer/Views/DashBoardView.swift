@@ -94,7 +94,7 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 
-                if let _  = UserDefaults.standard.value(forKey: UserDefaults.Keys.PinCode) {
+                if data.hasStoredPinCode {
                     Text("Delete Pin")
                         .foregroundColor(.red)
                         .onTapGesture (perform: data.removePin)

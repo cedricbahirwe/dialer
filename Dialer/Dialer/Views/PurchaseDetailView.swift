@@ -23,10 +23,6 @@ struct PurchaseDetailView: View {
         return false
     }
     
-    private var hasStorePin: Bool {
-        UserDefaults.standard.integer(forKey: UserDefaults.Keys.PinCode) != 0
-    }
-    
     private var validAmount: Bool {
         data.purchaseDetail.amount > 0
     }
@@ -70,7 +66,7 @@ struct PurchaseDetailView: View {
                         }
                     }
                 
-                if !hasStorePin {
+                if !data.hasStoredPinCode {
                     VStack(spacing: 2) {
                         Text(data.pinCode != nil ? data.pinCode!.description : "Enter Pin")
                             .frame(maxWidth: .infinity)
@@ -97,6 +93,7 @@ struct PurchaseDetailView: View {
                             .overlay(
                                 Button(action: {
                                     data.savePinCode(value: Int(codepin)!)
+                                    codepin = ""
                                 }){
                                     Text("Save")
                                         .font(.caption)
@@ -177,13 +174,17 @@ struct PurchaseDetailView: View {
                 }
             }
         )
-        .onChange(of: codepin) { value in
-            if value.count <= 5 {
-                data.pinCode =  Int(value)
-            } else {
-                codepin = String(data.pinCode!)
-            }
-        }
+//        .onChange(of: codepin) { value in
+//            if value.count <= 5 {
+//                data.pinCode =  Int(value)
+//            } else {
+//                codepin = String(data.pinCode!)
+//            }
+//        }
+    }
+    private func filterPin(_ value: String) {
+        codepin = String(value.prefix(5))
+        data.pinCode = Int(codepin)
     }
     
     private func storeInput() -> Binding<String>{
@@ -191,7 +192,7 @@ struct PurchaseDetailView: View {
         case .amount:
             return $data.purchaseDetail.amount.stringBind
         case .code:
-            return $codepin
+            return $codepin.onChange(filterPin)
         }
     }
     

@@ -59,4 +59,3 @@ extension UserDefaults {
         static let LastSyncDate = "lastSyncDate"
     }
 }
-

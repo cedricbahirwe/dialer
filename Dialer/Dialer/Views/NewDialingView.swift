@@ -117,7 +117,7 @@ struct NewDialingView: View {
                     .frame(width: 55, height: 55)
             })
             .frame(width: 75, height: 75)
-            .opacity(!composedCode.isEmpty ? 0 : 1)
+            .opacity(composedCode.isEmpty ? 0 : 1)
         }
         .padding(.horizontal, 25)
         .foregroundColor(Color.red.opacity(0.8))
