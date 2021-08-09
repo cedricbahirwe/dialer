@@ -24,7 +24,7 @@ struct DialingsHistoryView: View {
                         
                     }
                 }
-                
+
                 HStack {
                     Text("Total:")
                     Spacer()

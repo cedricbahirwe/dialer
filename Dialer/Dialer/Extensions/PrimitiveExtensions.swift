@@ -49,13 +49,3 @@ extension Binding {
     }
 }
 
-extension UserDefaults {
-    
-    /// Storing the used UserDefaults keys for safety.
-    enum Keys {
-        static let RecentCodes = "recentCodes"
-        static let PinCode = "pinCode"
-        static let PurchaseDetails = "purchaseDetails"
-        static let LastSyncDate = "lastSyncDate"
-    }
-}

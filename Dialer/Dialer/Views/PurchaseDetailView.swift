@@ -147,7 +147,7 @@ struct PurchaseDetailView: View {
         .shadow(radius: 5)
         .offset(y: 0 + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
         .font(.system(size: 18, weight: .semibold, design: .rounded))
-        .offset(x: 0, y: data.showbottomSheet ? 0 : 800)
+        .offset(x: 0, y: data.showPurchaseSheet ? 0 : 800)
         .offset(y: max(0, bottomState.height))
         .blur(radius: show ? 20 : 0)
         .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
@@ -163,7 +163,7 @@ struct PurchaseDetailView: View {
             }
             .onEnded { value in
                 if bottomState.height > 50 {
-                    data.showbottomSheet = false
+                    data.showPurchaseSheet = false
                 }
                 if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
                     bottomState.height = -300
@@ -174,13 +174,6 @@ struct PurchaseDetailView: View {
                 }
             }
         )
-//        .onChange(of: codepin) { value in
-//            if value.count <= 5 {
-//                data.pinCode =  Int(value)
-//            } else {
-//                codepin = String(data.pinCode!)
-//            }
-//        }
     }
     private func filterPin(_ value: String) {
         codepin = String(value.prefix(5))
