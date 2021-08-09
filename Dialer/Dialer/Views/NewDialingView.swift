@@ -7,26 +7,17 @@
 
 import SwiftUI
 
-func drawImage() -> UIImage {
-    let renderer = UIGraphicsImageRenderer(size: CGSize(width: 60, height: 40))
-    return renderer.image { _ in
-        // Draw image in circle
-        let image = UIImage(named: "abc.logo")!
-        let size = CGSize(width: 55, height: 35)
-        let rect = CGRect(x: 0, y: 5, width: size.width, height: size.height)
-        image.draw(in: rect)
-    }
-}
-
 struct NewDialingView: View {
     @State private var composedCode: String = ""
     @State private var showInValidMsg: Bool = false
+    @Environment(\.presentationMode)
+    private var presentationMode
+    
     var body: some View {
         VStack(spacing: 10) {
-            Text("Incognito Mode by \(Image(uiImage: drawImage()))")
-                .font(.system(size: 34, weight: .bold, design: .rounded))
-                .scaleEffect(0.95)
-                .padding(.top)
+            Text("Incognito Mode by \(Image(uiImage: drawImage("abc.logo")))")
+                .font(.system(size: 32, weight: .bold, design: .rounded))
+            
             VStack(spacing: 10) {
                 Group {
                     Text("Invalid code. Check it and try again.")
@@ -41,12 +32,13 @@ struct NewDialingView: View {
                         .font(Font.title)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
-                        .padding(.horizontal, 20)
                         .truncationMode(.head)
+                        .padding(.horizontal, 20)
                         .opacity(composedCode.isEmpty ? 0 : 1)
                 }
                 
-                PinView(input: $composedCode.animation(), fullMode: true, btnSize: .init(width: 80, height: 80))
+                PinView(input: $composedCode.animation(),
+                        isFullMode: true, btnSize: 80)
                     .font(Font.title.bold())
                     .padding(.vertical, 10)
                     .padding()
@@ -57,31 +49,17 @@ struct NewDialingView: View {
                     Image(systemName: "phone.circle.fill")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 78, height: 78)
+                        .frame(width: 75, height: 75)
                         .clipShape(Circle())
-                        .foregroundColor(.primary)
+                        .foregroundColor(.accentColor)
                 })
                 .frame(maxWidth: .infinity)
-                .overlay(
-                    Button(action: {
-                        if !composedCode.isEmpty {
-                            composedCode.removeLast()
-                        }
-                    }, label: {
-                        Image(systemName: "delete.left.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 25, alignment: .trailing)
-                            .foregroundColor(Color.red.opacity(0.8))
-                    })
-                    .padding(30)
-                    .opacity(composedCode.isEmpty ? 0 : 1)
-                    ,alignment: .trailing
-                )
+                .overlay(bottomNavigationView)
                 Spacer()
             }
             
         }
+        .preferredColorScheme(.dark)
         
     }
     
@@ -111,6 +89,38 @@ struct NewDialingView: View {
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             showInValidMsg = false
         }
+    }
+    
+    private var bottomNavigationView: some View {
+        HStack {
+            
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Image(systemName: "arrow.backward.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(10)
+                    .frame(width: 55, height: 55)
+            })
+            .frame(width: 75, height: 75)
+            Spacer()
+            Button(action: {
+                if !composedCode.isEmpty {
+                    composedCode.removeLast()
+                }
+            }, label: {
+                Image(systemName: "delete.left.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(10)
+                    .frame(width: 55, height: 55)
+            })
+            .frame(width: 75, height: 75)
+            .opacity(!composedCode.isEmpty ? 0 : 1)
+        }
+        .padding(.horizontal, 25)
+        .foregroundColor(Color.red.opacity(0.8))
     }
 }
 
