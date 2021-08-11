@@ -9,15 +9,16 @@
 ## Features:
 * ### Beautiful UI with Light/Dark Mode support.
 * ### History View to Track Past dialings.
-* ### Pin Interface for custom incognito dialings (No track will be stored).
+* ### Incognito mode for dialings (No track will be stored).
 * ### Home Screen Quick Actions.
-* ### Quick Momo Money transfer (Client and Merchant upport).
+* ### Quick MTN Momo transfer (Client and Merchant support).
 * ### Contacts Filtering.
 
 ## TakeAways 🚀
 - **Deep Dive into Home Screen Quick Actions Actions**
 - **Respect of Apple Human Interface Guidelines**
 - **Management of Local Storage in SwiftUI**
+- **Light / Dark Mode Support**
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
@@ -30,4 +31,5 @@ Tranfer                    |  Contacts
 
 * ### Good Local Storage (Core Data)
 * ### Siri Commands Support (Intents and IntentsUI)
-* ###  Transaction History
+* ### Transaction History
+* ### Settings
