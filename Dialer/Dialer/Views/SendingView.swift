@@ -14,19 +14,40 @@ struct SendingView: View {
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
     
+    
+    private var feeHintView: some View {
+        Group {
+            let fee = transaction.estimatedFee
+            if fee == -1 {
+                Text("We can not estimate fee for this amount.")
+            } else {
+                Text("Estimated fee : \(fee) RWF.")
+            }
+        }
+        .font(.caption).foregroundColor(.red)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .animation(.default)
+    }
+    
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                TextField("Enter Amount", text: $transaction.amount)
-                    .keyboardType(.decimalPad)
-                    .foregroundColor(.primary)
-                    .padding()
-                    .frame(height: 45)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.primary, lineWidth: 0.5))
-                    .font(.callout)
+                
+                VStack(spacing: 3) {
+                    if transaction.type == .client && !transaction.amount.isEmpty  {
+                        feeHintView
+                    }
+                    TextField("Enter Amount", text: $transaction.amount.animation())
+                        .keyboardType(.decimalPad)
+                        .foregroundColor(.primary)
+                        .padding()
+                        .frame(height: 45)
+                        .background(Color(.systemBackground))
+                        .cornerRadius(8)
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.primary, lineWidth: 0.5))
+                        .font(.callout)
+                }
                 VStack(spacing: 3) {
                     if transaction.type == .client {
                         Text(selectedContact.names).font(.caption).foregroundColor(.red)
@@ -37,7 +58,7 @@ struct SendingView: View {
                         transaction.type == .client ?
                             "Enter Receiver's number" :
                             "Enter Merchant Code"
-                        , text: $transaction.number.onChange(handleNumberField))
+                        , text: $transaction.number.onChange(handleNumberField).animation())
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .keyboardType(.numberPad)

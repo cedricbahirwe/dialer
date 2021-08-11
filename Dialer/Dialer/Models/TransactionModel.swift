@@ -32,6 +32,22 @@ struct Transaction: Identifiable {
     var doubleAmount: Double {
         Double(amount) ?? 0
     }
+    
+    var estimatedFee: Int {
+        if type == .client {
+            for range in Self.transactionFees {
+                if range.key.contains(Int(doubleAmount)) {
+                    return range.value
+                }
+            }
+            return -1
+        } else {
+            return 0
+        }
+    }
+    
+    
+    
     var fullCode: String {
         if type == .client {
             return "*182*1*1*\(trailingCode)#"
@@ -51,4 +67,7 @@ struct Transaction: Identifiable {
             return doubleAmount > 0 && (5...6).contains(number.count)
         }
     }
+    
+    
+    static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
 }
