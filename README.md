@@ -15,10 +15,15 @@
 * ### Contacts Filtering.
 
 ## TakeAways 🚀
+
 - **Deep Dive into Home Screen Quick Actions Actions**
 - **Respect of Apple Human Interface Guidelines**
 - **Management of Local Storage in SwiftUI**
 - **Light / Dark Mode Support**
+
+## Special Thanks to:
+
+1. [Esther Carelle](https://github.com/esthcarelle) for her wonderful feedback✨.
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
