@@ -16,9 +16,11 @@
 
 ## TakeAways 🚀
 
+- **Understand what makes a great app**
+- **Understand the SDLC (Software Development Life Cycle)**
+- **Following Apple Human Interface Guidelines**
 - **Deep Dive into Home Screen Quick Actions Actions**
-- **Respect of Apple Human Interface Guidelines**
-- **Management of Local Storage in SwiftUI**
+- **Management of Local DataBase in SwiftUI**
 - **Light / Dark Mode Support**
 
 ## Special Thanks to:
