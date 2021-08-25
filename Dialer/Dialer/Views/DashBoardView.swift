@@ -46,10 +46,10 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "Buy with Momo",
                                 icon: "wallet.pass")
-                            .momoDisability()
-                            .onTapGesture {
-                                data.showPurchaseSheet.toggle()
-                            }
+                                .momoDisability()
+                                .onTapGesture {
+                                    data.showPurchaseSheet.toggle()
+                                }
                             
                             NavigationLink(
                                 destination: SendingView()) {
@@ -64,14 +64,14 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "History",
                                 icon: "timelapse")
-                            .onTapGesture {
-                                data.showHistorySheet.toggle()
-                            }
+                                .onTapGesture {
+                                    data.showHistorySheet.toggle()
+                                }
                             
                             DashItemView(
                                 title: "Check Intenet Balance",
                                 icon: "lock.shield")
-                            .onTapGesture(perform: data.checkInternetBalance)
+                                .onTapGesture(perform: data.checkInternetBalance)
                         }
                         .momoDisability()
                     }

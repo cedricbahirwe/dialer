@@ -86,7 +86,6 @@ struct CongratulationsView: View {
     }
     
     private func sendMail() {
-//        let googleUrlString = "googlegmail:///co?to=\(email)&subject=Dialer%20Monthly%20Award"
         
         let mailUrl = URL(string: "mailto:\(email)?subject=Dialer%20Monthly%20Award!")!
         
