@@ -63,14 +63,14 @@ struct DashBoardView: View {
                         HStack(spacing: 15) {
                             DashItemView(
                                 title: "History",
-                                icon: "timelapse")
+                                icon: "clock.arrow.circlepath")
                                 .onTapGesture {
                                     data.showHistorySheet.toggle()
                                 }
                             
                             DashItemView(
-                                title: "Check Intenet Balance",
-                                icon: "lock.shield")
+                                title: "Insights",
+                                icon: ["perspective", "speedometer"].randomElement()!)
                                 .onTapGesture(perform: data.checkInternetBalance)
                         }
                         .momoDisability()
@@ -97,14 +97,24 @@ struct DashBoardView: View {
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
             .toolbar {
-                Image(systemName: "gear")
-                    .foregroundColor(.accentColor)
+                settingsButton
+                
                     .onTapGesture  {
                         data.showSettingsSheet.toggle()
                     }
             }
         }
         .onAppear(perform: setupAppearance)
+    }
+    
+    private var settingsButton: some View {
+        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .frame(width: 25, height: 25)
+            .mask(
+                Image(systemName: "gear")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            )
     }
     private func setupAppearance() {
         

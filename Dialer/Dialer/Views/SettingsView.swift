@@ -41,7 +41,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     
                     Section(header:
                                 sectionHeader("General settings")
@@ -94,23 +94,28 @@ struct SettingsView: View {
                 .foregroundColor(.primary.opacity(0.8))
                 
                 
-                Text("By using Dialer, you accept our")
-                
-                HStack(spacing: 0) {
-                    Link("Terms & Conditions", destination: URL(string: "www.google.com")!)
-                    Text(" and ")
-                    Link("Privacy Policy", destination: URL(string: "www.google.com")!)
+                Group {
+                    Text("By using Dialer, you accept our")
+                    
+                    HStack(spacing: 0) {
+                        Link("Terms & Conditions", destination: URL(string: "www.google.com")!)
+                        Text(" and ")
+                        Link("Privacy Policy", destination: URL(string: "www.google.com")!)
+                    }
+                    .padding(.bottom, 20)
                 }
-                
-                
+                .font(.subheadline)
             }
+            .navigationTitle("Help & More")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Text("Done")
                     .bold()
                     .foregroundColor(.blue)
+                    .onTapGesture {
+                        presentationMode.wrappedValue.dismiss()
+                    }
             }
-            .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
@@ -150,6 +155,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
+            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {
@@ -167,6 +173,12 @@ extension SettingsView {
             item.isSystemImage ? Image(systemName: item.icon) :Image(item.icon)
         }
         var body: some View {
+            Button(action: {}, label: {
+                contenView
+            })
+        }
+        
+        var contenView: some View {
             HStack {
                 icon
                     .resizable()
@@ -181,7 +193,7 @@ extension SettingsView {
                     Text(item.title)
                         .font(.callout)
                     Text(item.subtitle)
-                        .font(.caption)
+                        .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
                 Spacer()
