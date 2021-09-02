@@ -18,9 +18,9 @@ Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
 ![](light.png)  |  ![](dark.png)
 
-Tranfer                    |  Contacts
+Tranfer                    |  Settings
 :-------------------------:|:-------------------------:
-![](send.png)  |  ![](contacts.png)
+![](send.png)  |  ![](settings.png)
 ## ✨ Upcoming features:
 
 * ### Good Local Storage (Core Data)
