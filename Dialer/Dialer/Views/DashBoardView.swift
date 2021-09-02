@@ -18,7 +18,7 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
-    
+        
     private let checkCellularProvider = CTCarrierDetector.shared.checkCellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
@@ -46,10 +46,10 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "Buy with Momo",
                                 icon: "wallet.pass")
-                            .momoDisability()
-                            .onTapGesture {
-                                data.showPurchaseSheet.toggle()
-                            }
+                                .momoDisability()
+                                .onTapGesture {
+                                    data.showPurchaseSheet.toggle()
+                                }
                             
                             NavigationLink(
                                 destination: SendingView()) {
@@ -63,15 +63,15 @@ struct DashBoardView: View {
                         HStack(spacing: 15) {
                             DashItemView(
                                 title: "History",
-                                icon: "timelapse")
-                            .onTapGesture {
-                                data.showHistorySheet.toggle()
-                            }
+                                icon: "clock.arrow.circlepath")
+                                .onTapGesture {
+                                    data.showHistorySheet.toggle()
+                                }
                             
                             DashItemView(
-                                title: "Check Intenet Balance",
-                                icon: "lock.shield")
-                            .onTapGesture(perform: data.checkInternetBalance)
+                                title: "Insights",
+                                icon: ["perspective", "speedometer"].randomElement()!)
+                                .onTapGesture(perform: data.checkInternetBalance)
                         }
                         .momoDisability()
                     }
@@ -84,8 +84,12 @@ struct DashBoardView: View {
                 
                 PurchaseDetailView(data: data)
             }
-            .sheet(isPresented: $data.showHistorySheet) {
+            .sheet(isPresented: data.showSettingsSheet ? $data.showSettingsSheet : $data.showHistorySheet) {
+                if data.showSettingsSheet {
+                    SettingsView()
+                } else {
                     DialingsHistoryView(data: data)
+                }
             }
             .fullScreenCover(isPresented: $presentNewDial) {
                 NewDialingView()
@@ -93,15 +97,24 @@ struct DashBoardView: View {
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
             .toolbar {
+                settingsButton
                 
-                if data.hasStoredPinCode {
-                    Text("Delete Pin")
-                        .foregroundColor(.red)
-                        .onTapGesture (perform: data.removePin)
-                }
+                    .onTapGesture  {
+                        data.showSettingsSheet.toggle()
+                    }
             }
         }
         .onAppear(perform: setupAppearance)
+    }
+    
+    private var settingsButton: some View {
+        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .frame(width: 25, height: 25)
+            .mask(
+                Image(systemName: "gear")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            )
     }
     private func setupAppearance() {
         

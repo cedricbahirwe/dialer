@@ -15,18 +15,13 @@ struct SendingView: View {
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
     
     
-    private var feeHintView: some View {
-        Group {
-            let fee = transaction.estimatedFee
-            if fee == -1 {
-                Text("We can not estimate fee for this amount.")
-            } else {
-                Text("Estimated fee : \(fee) RWF.")
-            }
+    private var feeHintView: Text {
+        let fee = transaction.estimatedFee
+        if fee == -1 {
+            return Text("We can not estimate fee for this amount.")
+        } else {
+            return Text("Estimated fee : \(fee) RWF.")
         }
-        .font(.caption).foregroundColor(.red)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .animation(.default)
     }
     
     var body: some View {
@@ -36,6 +31,9 @@ struct SendingView: View {
                 VStack(spacing: 3) {
                     if transaction.type == .client && !transaction.amount.isEmpty  {
                         feeHintView
+                            .font(.caption).foregroundColor(.red)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default)
                     }
                     TextField("Enter Amount", text: $transaction.amount.animation())
                         .keyboardType(.decimalPad)
