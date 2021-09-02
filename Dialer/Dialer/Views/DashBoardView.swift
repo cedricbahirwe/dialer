@@ -85,7 +85,7 @@ struct DashBoardView: View {
                 PurchaseDetailView(data: data)
             }
             .sheet(isPresented: $data.showHistorySheet) {
-                    DialingsHistoryView(data: data)
+                DialingsHistoryView(data: data)
             }
             .fullScreenCover(isPresented: $presentNewDial) {
                 NewDialingView()
@@ -94,7 +94,7 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 
-                if data.hasStoredPinCode {
+                if !data.hasStoredPinCode {
                     Text("Delete Pin")
                         .foregroundColor(.red)
                         .onTapGesture (perform: data.removePin)
