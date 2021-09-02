@@ -106,6 +106,7 @@ struct SettingsView: View {
                 }
                 .font(.subheadline)
             }
+//            .font(.system(.largeTitle, design: .monospaced))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -122,7 +123,7 @@ struct SettingsView: View {
     
     private func sectionHeader(_ title: String) -> Text {
         Text(title)
-            .font(.headline.weight(.semibold))
+            .font(.system(.headline, design: .rounded))
     }
     
     struct SettingsItem: Hashable {
@@ -190,9 +191,9 @@ extension SettingsView {
                 
                 VStack(alignment: .leading) {
                     Text(item.title)
-                        .font(.callout)
+                        .font(.system(.callout, design: .rounded))
                     Text(item.subtitle)
-                        .font(.subheadline)
+                        .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.secondary)
                 }
                 Spacer()
