@@ -142,11 +142,10 @@ struct SettingsView: View {
             isSystemImage = true
         }
         
-        var icon: String
-        var color: Color
-        var title: String
-        var subtitle: String
-        
+        let icon: String
+        let color: Color
+        let title: String
+        let subtitle: String
         let isSystemImage: Bool
     }
 }
@@ -155,7 +154,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
-            .preferredColorScheme(.dark)
+//            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {
