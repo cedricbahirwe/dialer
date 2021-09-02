@@ -23,7 +23,11 @@ class MainViewModel: ObservableObject {
         DialerStorage.shared.hasPinCode()
     }
     
+    // Present a sheet contains all dialed code
     @Published var showHistorySheet: Bool = false
+    
+    // Present a sheet contains settings of the app
+    @Published var showSettingsSheet: Bool = false
     
     var estimatedTotalPrice: Int {
         recentCodes?.map(\.totalPrice).reduce(0, +) ?? 0

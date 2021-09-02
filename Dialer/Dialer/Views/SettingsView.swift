@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject private var data: MainViewModel
     @Environment(\.presentationMode)
     private var presentationMode
     private let colophonItems: [SettingsItem] = [
@@ -20,7 +21,7 @@ struct SettingsView: View {
         .init(sysIcon: "bubble.left.and.bubble.right.fill", color: .pink, title: "Contact Us", subtitle: "Get help or ask a question."),
         .init(icon: "twitter", color: Color("twitter"), title: "Tweet Us", subtitle: "Stay up to date."),
         
-            .init(icon: "translation", color: .blue, title: "Translation Suggestion", subtitle: "Improve our localization.")
+        .init(icon: "translation", color: .blue, title: "Translation Suggestion", subtitle: "Improve our localization.")
     ]
     
     private let tipsAndGuidesItems: [SettingsItem] = [
@@ -37,10 +38,6 @@ struct SettingsView: View {
               subtitle: "Choose the right fit for you.")
     ]
     
-    
-    
-    
-    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -50,11 +47,14 @@ struct SettingsView: View {
                                 sectionHeader("General settings")
                                 .font(.headline.weight(.semibold))
                     ) {
-                        
-                        ForEach(generalItems, id:\.self) { item in
-                            SettingsRow(item, action: {})
+                        VStack {
+                            if data.hasStoredPinCode {
+                                ForEach(generalItems, id:\.self) { item in
+                                    SettingsRow(item, action: data.removePin)
+                                }
+                            }
                         }
-                        
+                        .padding(.bottom, 20)
                     }
                     
                     
@@ -62,34 +62,37 @@ struct SettingsView: View {
                                 sectionHeader("Tips and Guides")
                                 .font(.headline.weight(.semibold))
                     ) {
-                        
-                        ForEach(tipsAndGuidesItems, id:\.self) { item in
-                            SettingsRow(item, action: {})
+                        VStack {
+                            ForEach(tipsAndGuidesItems, id:\.self) { item in
+                                SettingsRow(item, action: {})
+                            }
                         }
-                        
+                        .padding(.bottom, 20)
                     }
                     
                     Section(header:
                                 sectionHeader("Reach Out")
                                 .font(.headline.weight(.semibold))
                     ) {
-                        
-                        ForEach(reachoutItems, id:\.self) { item in
-                            SettingsRow(item, action: {})
+                        VStack {
+                            ForEach(reachoutItems, id:\.self) { item in
+                                SettingsRow(item, action: {})
+                            }
                         }
-                        
+                        .padding(.bottom, 20)
                     }
                     Section(header: sectionHeader("Colophon")) {
-                        
-                        ForEach(colophonItems, id:\.self) { item in
-                            SettingsRow(item, action: {})
+                        VStack {
+                            ForEach(colophonItems, id:\.self) { item in
+                                SettingsRow(item, action: {})
+                            }
                         }
-                        
+                        .padding(.bottom, 20)
                     }
                 }
                 .padding(10)
                 .foregroundColor(.primary.opacity(0.8))
-
+                
                 
                 Text("By using Dialer, you accept our")
                 
@@ -146,6 +149,7 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .environmentObject(MainViewModel())
     }
 }
 extension SettingsView {
@@ -168,7 +172,7 @@ extension SettingsView {
                     .resizable()
                     .scaledToFit()
                     .padding(6)
-                    .frame(width: 30, height: 30)
+                    .frame(width: 30, height:30)
                     .background(item.color)
                     .cornerRadius(6)
                     .foregroundColor(.white)

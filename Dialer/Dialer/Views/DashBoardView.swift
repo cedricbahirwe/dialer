@@ -18,7 +18,7 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
-    
+        
     private let checkCellularProvider = CTCarrierDetector.shared.checkCellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
@@ -84,8 +84,12 @@ struct DashBoardView: View {
                 
                 PurchaseDetailView(data: data)
             }
-            .sheet(isPresented: $data.showHistorySheet) {
-                DialingsHistoryView(data: data)
+            .sheet(isPresented: data.showSettingsSheet ? $data.showSettingsSheet : $data.showHistorySheet) {
+                if data.showSettingsSheet {
+                    SettingsView()
+                } else {
+                    DialingsHistoryView(data: data)
+                }
             }
             .fullScreenCover(isPresented: $presentNewDial) {
                 NewDialingView()
@@ -93,12 +97,11 @@ struct DashBoardView: View {
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
             .toolbar {
-                
-                if !data.hasStoredPinCode {
-                    Text("Delete Pin")
-                        .foregroundColor(.red)
-                        .onTapGesture (perform: data.removePin)
-                }
+                Image(systemName: "gear")
+                    .foregroundColor(.accentColor)
+                    .onTapGesture  {
+                        data.showSettingsSheet.toggle()
+                    }
             }
         }
         .onAppear(perform: setupAppearance)
