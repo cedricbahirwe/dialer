@@ -87,6 +87,7 @@ struct DashBoardView: View {
             .sheet(isPresented: data.showSettingsSheet ? $data.showSettingsSheet : $data.showHistorySheet) {
                 if data.showSettingsSheet {
                     SettingsView()
+                        .environmentObject(data)
                 } else {
                     DialingsHistoryView(data: data)
                 }
