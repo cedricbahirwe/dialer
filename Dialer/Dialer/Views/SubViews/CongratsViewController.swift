@@ -37,7 +37,7 @@ fileprivate class CongratsViewController: UIViewController {
         let red = makeEmitterCell(color: UIColor.red)
         let green = makeEmitterCell(color: UIColor.yellow)
         let blue = makeEmitterCell(color: UIColor.green)
-        let dialer = makeEmitterCell(color: UIColor(named: "dialer")!)
+        let dialer = makeEmitterCell(color: UIColor.mainColor)
         
         particleEmitter.emitterCells = [red, green, blue, dialer]
         
