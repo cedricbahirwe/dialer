@@ -18,7 +18,8 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
     @State private var presentNewDial: Bool = false
-        
+    @State private var showPurchaseSheet: Bool = false
+    
     private let checkCellularProvider = CTCarrierDetector.shared.checkCellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
@@ -32,8 +33,8 @@ struct DashBoardView: View {
             }
             .onEnded { value in
                 let snapDistance = 600 * CGFloat(0.25)
-                data.showPurchaseSheet = value.translation.height < snapDistance
-                dragState = data.showPurchaseSheet ? .open : .closed
+                showPurchaseSheet = value.translation.height < snapDistance
+                dragState = showPurchaseSheet ? .open : .closed
             }
     }
     
@@ -48,7 +49,8 @@ struct DashBoardView: View {
                                 icon: "wallet.pass")
                                 .momoDisability()
                                 .onTapGesture {
-                                    data.showPurchaseSheet.toggle()
+                                    print("Craz")
+                                    showPurchaseSheet.toggle()
                                 }
                             
                             NavigationLink(
@@ -79,10 +81,19 @@ struct DashBoardView: View {
                     Spacer()
                     bottomBarView
                 }
-                .blur(radius: data.showPurchaseSheet ? 3 : 0)
-                .allowsHitTesting(!data.showPurchaseSheet)
+                .blur(radius: showPurchaseSheet ? 3 : 0)
+                .allowsHitTesting(!showPurchaseSheet)
                 
-                PurchaseDetailView(data: data)
+                if showPurchaseSheet {
+                    Color.black.opacity(0.001)
+                        .onTapGesture {
+                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                                showPurchaseSheet = false
+                            }
+                        }
+                }
+                PurchaseDetailView(isPresented: $showPurchaseSheet,
+                                   data: data)
             }
             .sheet(isPresented: data.showSettingsSheet ? $data.showSettingsSheet : $data.showHistorySheet) {
                 if data.showSettingsSheet {
@@ -99,7 +110,6 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 settingsButton
-                
                     .onTapGesture  {
                         data.showSettingsSheet.toggle()
                     }

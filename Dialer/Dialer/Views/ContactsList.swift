@@ -117,7 +117,7 @@ struct ContactsList: View {
     }
     
     private func managePhoneNumber(_ phone: String) {
-        selectedContact.phoneNumbers  = [phone]
+        selectedContact.updatePhones([phone])
         presentationMode.wrappedValue.dismiss()
     }
 }

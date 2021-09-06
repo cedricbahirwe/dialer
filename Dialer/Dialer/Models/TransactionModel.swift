@@ -7,15 +7,6 @@
 
 import Foundation
 
-
-enum Transactiontype {
-    case client, merchant
-    
-    mutating func toggle() {
-        self = self == .client ? .merchant : .client
-    }
-}
-
 struct Transaction: Identifiable {
     let id = UUID()
     var amount: String
@@ -68,6 +59,13 @@ struct Transaction: Identifiable {
         }
     }
     
+    enum Transactiontype {
+        case client, merchant
+        
+        mutating func toggle() {
+            self = self == .client ? .merchant : .client
+        }
+    }
     
     static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
 }

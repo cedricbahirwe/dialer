@@ -12,7 +12,7 @@ class PhoneContacts {
     
     private init() {}
     
-    class private func getContacts(filter: ContactsFilter = .none) -> [CNContact] {
+    class private func getContacts() -> [CNContact] {
         
         switch CNContactStore.authorizationStatus(for: .contacts) {
         case .authorized: break;
@@ -48,7 +48,7 @@ class PhoneContacts {
         return results
     }
     
-    class func getMtnContacts() -> [Contact] {
+    class public func getMtnContacts() -> [Contact] {
         var resultingContacts: [Contact] = []
         let contacts = PhoneContacts.getContacts()
         for contact in contacts {

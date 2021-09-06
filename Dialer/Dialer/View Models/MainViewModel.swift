@@ -35,8 +35,6 @@ class MainViewModel: ObservableObject {
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
-    @Published var showPurchaseSheet: Bool = false
-    
     
     // TODO: why is this optional!!
     @Published private(set) var recentCodes: [RecentCode]? = []
