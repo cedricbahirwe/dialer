@@ -8,6 +8,12 @@
 import SwiftUI
 import Foundation
 
+
+//if let currentVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+//    print(currentVersion)
+//}
+
+
 struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
     var body: some View {
