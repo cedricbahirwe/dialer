@@ -21,7 +21,6 @@ struct DialingsHistoryView: View {
                                 }
                         }
                         .onDelete(perform: data.deleteRecentCode)
-                        
                     }
                 }
 
@@ -33,15 +32,19 @@ struct DialingsHistoryView: View {
                 .font(.system(size: 30, weight: .bold, design: .monospaced))
                 .opacity(0.9)
                 .padding(8)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .truncationMode(.middle)
+
             }
             .navigationTitle("History")
-            .toolbar(content: {
+            .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Close") {
+                    Button("Done") {
                         data.showHistorySheet.toggle()
                     }
                 }
-            })
+            }
         }
     }
 }
