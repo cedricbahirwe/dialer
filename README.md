@@ -40,3 +40,5 @@ Tranfer                    |  Settings
 * ### Siri Commands Support (Intents and IntentsUI)
 * ### Transaction History
 * ### Settings
+* ### Transaction Amount Limit 
+
