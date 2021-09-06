@@ -20,7 +20,7 @@ struct DashBoardView: View {
     @State private var presentNewDial: Bool = false
     @State private var showPurchaseSheet: Bool = false
     
-    private let checkCellularProvider = CTCarrierDetector.shared.checkCellularProvider()
+    private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -49,7 +49,6 @@ struct DashBoardView: View {
                                 icon: "wallet.pass")
                                 .momoDisability()
                                 .onTapGesture {
-                                    print("Craz")
                                     showPurchaseSheet.toggle()
                                 }
                             

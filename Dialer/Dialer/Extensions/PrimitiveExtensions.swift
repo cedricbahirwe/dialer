@@ -36,7 +36,6 @@ extension String {
     }
 }
 
-
 extension Binding {
     public func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
         Binding(
@@ -48,4 +47,3 @@ extension Binding {
         )
     }
 }
-

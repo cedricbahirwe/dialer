@@ -11,7 +11,7 @@ import CoreTelephony
 class CTCarrierDetector: NSObject {
     static let shared = CTCarrierDetector()
     
-    func checkCellularProvider() -> (status: Bool, message: String) {
+    func cellularProvider() -> (status: Bool, message: String) {
         let providers = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders
         
         if let providers = providers?
