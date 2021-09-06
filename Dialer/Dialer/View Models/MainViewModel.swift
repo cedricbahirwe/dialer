@@ -20,7 +20,7 @@ class MainViewModel: ObservableObject {
     }
     
     public var hasStoredPinCode: Bool {
-        DialerStorage.shared.hasPinCode()
+        DialerStorage.shared.hasPinCode
     }
     
     // Present a sheet contains all dialed code

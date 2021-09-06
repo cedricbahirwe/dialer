@@ -106,17 +106,8 @@ struct SettingsView: View {
                 }
                 .font(.subheadline)
             }
-//            .font(.system(.largeTitle, design: .monospaced))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
-//            .toolbar {
-//                Text("Done")
-//                    .bold()
-//                    .foregroundColor(.blue)
-//                    .onTapGesture {
-//                        presentationMode.wrappedValue.dismiss()
-//                    }
-//            }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {

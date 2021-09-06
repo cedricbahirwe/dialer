@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 
-
 extension CongratulationsView {
     internal struct CongratsView: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> UIViewController {

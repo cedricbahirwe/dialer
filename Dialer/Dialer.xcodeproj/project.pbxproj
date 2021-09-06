@@ -143,7 +143,6 @@
 				82550129263B3BDF00CB1BC2 /* Dialer.entitlements */,
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
-				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				825F996826720B75009E4A7B /* Models */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
@@ -196,6 +195,7 @@
 		82FBCC05261BB2F400F00FAE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,

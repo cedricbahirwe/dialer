@@ -64,7 +64,7 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "History",
                                 icon: "clock.arrow.circlepath")
-                                .onTapGesture {
+                                .onTapGesture { 
                                     data.showHistorySheet.toggle()
                                 }
                             
