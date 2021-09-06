@@ -70,7 +70,7 @@ struct DashBoardView: View {
                             
                             DashItemView(
                                 title: "Insights",
-                                icon: ["perspective", "speedometer"].randomElement()!)
+                                icon: "lightbulb.fill")
                                 .onTapGesture(perform: data.checkInternetBalance)
                         }
                         .momoDisability()
