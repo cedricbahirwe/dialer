@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PurchaseDetailView: View {
+    @Binding var isPresented: Bool
     @ObservedObject var data: MainViewModel
     private enum Field {
         case amount, code
@@ -147,7 +148,7 @@ struct PurchaseDetailView: View {
         .shadow(radius: 5)
         .offset(y: 0 + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
         .font(.system(size: 18, weight: .semibold, design: .rounded))
-        .offset(x: 0, y: data.showPurchaseSheet ? 0 : 800)
+        .offset(x: 0, y: isPresented ? 0 : 800)
         .offset(y: max(0, bottomState.height))
         .blur(radius: show ? 20 : 0)
         .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
@@ -163,7 +164,7 @@ struct PurchaseDetailView: View {
             }
             .onEnded { value in
                 if bottomState.height > 50 {
-                    data.showPurchaseSheet = false
+                    isPresented = false
                 }
                 if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
                     bottomState.height = -300
@@ -198,7 +199,7 @@ struct PurchaseDetailView_Previews: PreviewProvider {
             ZStack(alignment: .bottom) {
                 Spacer()
                     .background(Color.red)
-                PurchaseDetailView(data: MainViewModel())
+                PurchaseDetailView(isPresented: .constant(false), data: MainViewModel())
             }
         }
     }

@@ -19,7 +19,7 @@ private extension UserDefaults {
 }
 
 
-class DialerStorage {
+final class DialerStorage {
     typealias RecentCodes = [MainViewModel.RecentCode]
     private let LocalKeys = UserDefaults.Keys.self
     
@@ -30,7 +30,7 @@ class DialerStorage {
     static let shared = DialerStorage()
     
     
-    func hasPinCode() -> Bool {
+    var hasPinCode: Bool {
         userDefaults.integer(forKey: LocalKeys.PinCode) != 0
     }
     
@@ -49,12 +49,10 @@ class DialerStorage {
     
     /// Store the Last Sync date if it does not exist
     func storeSyncDate() {
-        
         let syncDateKey = LocalKeys.LastSyncDate
         if userDefaults.value(forKey: syncDateKey) != nil { return }
         userDefaults.setValue(Date(), forKey: syncDateKey)
     }
-    
     
     /// Remove the existing last sync date, so it can be stored on the next app launch
     func clearSyncDate() {
@@ -95,11 +93,9 @@ class DialerStorage {
 }
 
 
-extension  DialerStorage {
+private extension  DialerStorage {
     
-
-    
-    func encodeCustomData<V>(_ value: V) throws -> Data where V: Codable {
+    func encodeCustomData<T>(_ value: T) throws -> Data where T: Codable {
         return try JSONEncoder().encode(value)
     }
 }

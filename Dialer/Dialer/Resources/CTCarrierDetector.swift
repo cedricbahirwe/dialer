@@ -11,10 +11,14 @@ import CoreTelephony
 class CTCarrierDetector: NSObject {
     static let shared = CTCarrierDetector()
     
-    func checkCellularProvider() -> (status: Bool, message: String) {
+    func cellularProvider() -> (status: Bool, message: String) {
         let providers = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders
         
-        if let providers = providers?.compactMapValues({ $0.carrierName }),  !providers.isEmpty {
+        if let providers = providers?
+            .filter({  $0.value.mobileCountryCode != nil })
+            .compactMapValues(\.carrierName),
+           providers.isEmpty == false
+        {
             let provider = providers.first!.value
             return (true, provider)
         }

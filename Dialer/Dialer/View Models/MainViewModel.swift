@@ -20,7 +20,7 @@ class MainViewModel: ObservableObject {
     }
     
     public var hasStoredPinCode: Bool {
-        DialerStorage.shared.hasPinCode()
+        DialerStorage.shared.hasPinCode
     }
     
     // Present a sheet contains all dialed code
@@ -34,8 +34,6 @@ class MainViewModel: ObservableObject {
     }
     
     @Published var purchaseDetail = PurchaseDetailModel()
-    
-    @Published var showPurchaseSheet: Bool = false
     
     
     // TODO: why is this optional!!
