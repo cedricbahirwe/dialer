@@ -14,10 +14,6 @@ struct MTNDisabling: ViewModifier {
     }
 }
 
-extension Color {
-    static let main = Color("main")
-}
-
 extension View {
     
     /// Disable access if `Mtn` sim card is not detected

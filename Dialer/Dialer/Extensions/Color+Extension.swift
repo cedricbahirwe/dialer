@@ -11,3 +11,8 @@ import SwiftUI
 extension UIColor {
     static let mainColor = UIColor(named: "main")!
 }
+
+extension Color {
+    static let main = Color("main")
+}
+
