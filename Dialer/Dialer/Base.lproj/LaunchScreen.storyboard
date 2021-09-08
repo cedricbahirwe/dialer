@@ -12,18 +12,12 @@
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dialer" translatesAutoresizingMaskIntoConstraints="NO" id="QHD-if-1kA">
-                                <rect key="frame" x="107" y="348" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="TCc-fO-4X9"/>
-                                    <constraint firstAttribute="height" constant="200" id="ZRi-7e-A4K"/>
-                                </constraints>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="nPT-1Z-e4Y">
                                 <rect key="frame" x="118.5" y="732" width="177" height="30"/>
                                 <subviews>
@@ -42,25 +36,31 @@
                                     </imageView>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dialer.applogo" translatesAutoresizingMaskIntoConstraints="NO" id="r28-hQ-DJI">
+                                <rect key="frame" x="107" y="353" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="r28-hQ-DJI" secondAttribute="height" id="PDu-FA-QC5"/>
+                                    <constraint firstAttribute="width" constant="200" id="SoC-5z-lnO"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="QHD-if-1kA" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4Vg-dV-gox"/>
-                            <constraint firstItem="QHD-if-1kA" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UL9-YY-Hdj"/>
+                            <constraint firstItem="r28-hQ-DJI" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="DWR-rz-eH6"/>
                             <constraint firstItem="nPT-1Z-e4Y" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hPv-eg-Fqt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nPT-1Z-e4Y" secondAttribute="bottom" constant="100" id="k9i-bs-2TM"/>
+                            <constraint firstItem="r28-hQ-DJI" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="rqe-6y-wnL"/>
                         </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
     <resources>
         <image name="abc.logo" width="1000" height="561"/>
-        <image name="dialer" width="460" height="460"/>
+        <image name="dialer.applogo" width="1024" height="1024"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
