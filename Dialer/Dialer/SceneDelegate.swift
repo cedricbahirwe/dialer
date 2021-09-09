@@ -79,10 +79,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Transform most used command into a UIApplicationShortcutItem.
         let application = UIApplication.shared
         
-        guard let codes = viewModel.recentCodes?.filter({ $0.count >= 10 }) else { return }
+        let codes = viewModel.recentCodes.filter({ $0.count >= 10 })
         
         application.shortcutItems = codes.map({ code -> UIApplicationShortcutItem in
-            return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue, localizedTitle: "Buy for \(code.detail.amount)", localizedSubtitle: "\(code.detail.fullCode)", icon: UIApplicationShortcutIcon(systemImageName: "phone.fill"), userInfo: code.quickActionUserInfo)
+            return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue,
+                                             localizedTitle: "Buy for \(code.detail.amount)",
+                                             localizedSubtitle: "\(code.detail.fullCode)",
+                                             icon: UIApplicationShortcutIcon(systemImageName: "phone.fill"),
+                                             userInfo: code.quickActionUserInfo)
             
         })
         
@@ -103,6 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
+//        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.

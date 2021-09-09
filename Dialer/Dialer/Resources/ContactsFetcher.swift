@@ -42,7 +42,7 @@ class PhoneContacts {
                 let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
                 results.append(contentsOf: containerResults)
             } catch {
-                print("Error fetching containers")
+                print("Error fetching unified containers")
             }
         }
         return results

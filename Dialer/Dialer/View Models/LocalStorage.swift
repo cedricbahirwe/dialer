@@ -66,28 +66,29 @@ final class DialerStorage {
         
         if let lastSyncDate = userDefaults.value(forKey: LocalKeys.LastSyncDate) as? Date {
             // To check if 30 Days have passed
-            return Date().timeIntervalSince(lastSyncDate) / 86400 > 0.0001
+            return Date().timeIntervalSince(lastSyncDate) / 86400 > 30
         }
         
         return false
     }
     
-    func saveRecentCodes(_ values: RecentCodes?) throws {
+    func saveRecentCodes(_ values: RecentCodes) throws {
         let data = try encodeCustomData(values)
         userDefaults.setValue(data, forKey: LocalKeys.RecentCodes)
     }
     
-    func getRecentCodes() -> RecentCodes? {
+    func getRecentCodes() -> RecentCodes {
         guard let codes = userDefaults.object(forKey: LocalKeys.RecentCodes) as? Data else {
-            return nil
+            return []
         }
+        
+        print("The data", codes.count)
         do {
             return  try JSONDecoder().decode(RecentCodes.self, from: codes)
         } catch let error {
-            print("Couldn't decode the recent codes")
-            print(error.localizedDescription)
+            print("Couldn't decode the recent codes: " ,error.localizedDescription)
         }
-        return nil
+        return []
     }
     
 }

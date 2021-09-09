@@ -171,7 +171,7 @@ extension SettingsView {
             item.isSystemImage ? Image(systemName: item.icon) :Image(item.icon)
         }
         var body: some View {
-            Button(action: {}, label: {
+            Button(action: action, label: {
                 contenView
             })
         }
