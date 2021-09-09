@@ -20,6 +20,7 @@ struct CongratulationsView: View {
     var body: some View {
         ZStack {
             Color(.secondarySystemBackground)
+                .ignoresSafeArea()
             CongratsView()
                 .opacity(timeRemaining <= 1 ? 0.3 : 1)
                 .blur(radius: timeRemaining <= 1 ? 3 : 0)
@@ -68,7 +69,20 @@ struct CongratulationsView: View {
             )
             .cornerRadius(10)
         }
-        .ignoresSafeArea()
+        .overlay(
+            Button(action: {
+                isPresented = false
+            }, label: {
+                Image(systemName: "multiply.circle.fill")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                    .foregroundColor(Color.red)
+                    
+            })
+            .padding(5)
+            , alignment: .topLeading
+        )
+        
         .onReceive(timer) { _ in
             guard isAppActive else { return }
             if timeRemaining > 0 {

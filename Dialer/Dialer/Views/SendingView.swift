@@ -102,12 +102,11 @@ struct SendingView: View {
                         .font(Font.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
-                        .background(transaction.isValid ? Color.primary : .red)
+                        .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
                         .cornerRadius(8)
-                        .foregroundColor(Color(.systemBackground))
+                        .foregroundColor(Color.white)
                 }
                 .disabled(transaction.isValid == false)
-                .opacity(transaction.isValid ? 1 : 0.6)
                 
                 Spacer()
             }
