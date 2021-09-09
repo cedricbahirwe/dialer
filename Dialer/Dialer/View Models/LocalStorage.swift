@@ -65,8 +65,8 @@ final class DialerStorage {
     func isSyncDateReached() -> Bool {
         
         if let lastSyncDate = userDefaults.value(forKey: LocalKeys.LastSyncDate) as? Date {
-            // T0 check if 30 Days have passed
-           return Date().timeIntervalSince(lastSyncDate) / 86400 > 30
+            // To check if 30 Days have passed
+            return Date().timeIntervalSince(lastSyncDate) / 86400 > 0.0001
         }
         
         return false
