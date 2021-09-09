@@ -30,23 +30,23 @@ class MainViewModel: ObservableObject {
     @Published var showSettingsSheet: Bool = false
     
     var estimatedTotalPrice: Int {
-        recentCodes?.map(\.totalPrice).reduce(0, +) ?? 0
+        recentCodes.map(\.totalPrice).reduce(0, +)
     }
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
     
     // TODO: why is this optional!!
-    @Published private(set) var recentCodes: [RecentCode]? = []
+    @Published private(set) var recentCodes: [RecentCode] = []
     
     
     /// Store a given  recent code locally.
     /// - Parameter code: the code to be added.
     private func storeCode(code: RecentCode) {
-        if let index = recentCodes?.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
-            recentCodes?[index].increaseCount()
+        if let index = recentCodes.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
+            recentCodes[index].increaseCount()
         } else {
-            recentCodes?.append(code)
+            recentCodes.append(code)
         }
         saveLocally()
     }
@@ -56,7 +56,7 @@ class MainViewModel: ObservableObject {
         do {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
-            print(error.localizedDescription)
+            print("Could not save locally: ", error.localizedDescription)
         }
     }
     
@@ -91,7 +91,7 @@ class MainViewModel: ObservableObject {
     /// Delete locally the recent Code(s).
     /// - Parameter offSets: the offsets to be deleted
     public func deleteRecentCode(at offSets: IndexSet) {
-        recentCodes?.remove(atOffsets: offSets)
+        recentCodes.remove(atOffsets: offSets)
         saveLocally()
     }
     
@@ -139,7 +139,7 @@ class MainViewModel: ObservableObject {
     
     /// Returns a Recent Code that matches the input identifier.
     func rencentCode(_ identifier: String) -> RecentCode? {
-        let foundCode = recentCodes?.first(where: { $0.id.uuidString == identifier})
+        let foundCode = recentCodes.first(where: { $0.id.uuidString == identifier})
         return foundCode
     }
     
