@@ -51,7 +51,7 @@ struct SettingsView: View {
                     ) {
                         VStack {
                             if dataStore.hasStoredPinCode {
-                                ForEach(generalItems, id:\.self) { item in
+                                ForEach(generalItems) { item in
                                     SettingsRow(item, action: dataStore.removePin)
                                 }
                             }
@@ -65,7 +65,7 @@ struct SettingsView: View {
                                 .font(.headline.weight(.semibold))
                     ) {
                         VStack {
-                            ForEach(tipsAndGuidesItems, id:\.self) { item in
+                            ForEach(tipsAndGuidesItems) { item in
                                 SettingsRow(item, action: {})
                             }
                         }
@@ -77,7 +77,7 @@ struct SettingsView: View {
                                 .font(.headline.weight(.semibold))
                     ) {
                         VStack {
-                            ForEach(reachoutItems, id:\.self) { item in
+                            ForEach(reachoutItems) { item in
                                 SettingsRow(item, action: {})
                             }
                         }
@@ -86,7 +86,7 @@ struct SettingsView: View {
                     Section(header: sectionHeader("Colophon")) {
                         
                         VStack {
-                            ForEach(colophonItems, id:\.self) { item in
+                            ForEach(colophonItems) { item in
                                 NavigationLink(destination: AboutView()) {
                                     SettingsRow(item)
                                 }
@@ -129,28 +129,27 @@ struct SettingsView: View {
             .padding(.vertical)
     }
     
-    struct SettingsItem: Hashable {
+    struct SettingsItem: Identifiable {
         init(icon: String, color: Color, title: String, subtitle: String) {
-            self.icon = icon
+            self.icon = Image(icon)
             self.color = color
             self.title = title
             self.subtitle = subtitle
-            isSystemImage = false
         }
         
         init(sysIcon: String, color: Color, title: String, subtitle: String) {
-            self.icon = sysIcon
+            self.icon = Image(systemName: sysIcon)
             self.color = color
             self.title = title
             self.subtitle = subtitle
             isSystemImage = true
         }
         
-        let icon: String
+        let id = UUID()
+        let icon: Image
         let color: Color
         let title: String
         let subtitle: String
-        let isSystemImage: Bool
     }
 }
 
@@ -176,10 +175,6 @@ extension SettingsView {
         let item: SettingsItem
         let action: (() -> Void)?
         
-        
-        private var icon: Image {
-            item.isSystemImage ? Image(systemName: item.icon) :Image(item.icon)
-        }
         var body: some View {
             if let action = action {
                 Button(action: action, label: {
@@ -192,7 +187,7 @@ extension SettingsView {
         
         var contenView: some View {
             HStack {
-                icon
+                item.icon
                     .resizable()
                     .scaledToFit()
                     .padding(6)
