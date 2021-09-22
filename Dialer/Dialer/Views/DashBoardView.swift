@@ -94,7 +94,7 @@ struct DashBoardView: View {
                 PurchaseDetailView(isPresented: $showPurchaseSheet,
                                    data: data)
             }
-            .sheet(isPresented: data.showSettingsSheet ? $data.showSettingsSheet : $data.showHistorySheet) {
+            .sheet(isPresented: data.defaultSheetBinding()) {
                 if data.showSettingsSheet {
                     SettingsView()
                         .environmentObject(data)
@@ -110,7 +110,7 @@ struct DashBoardView: View {
             .toolbar {
                 settingsButton
                     .onTapGesture  {
-                        data.showSettingsSheet.toggle()
+                        data.showSettingsView()
                     }
             }
         }

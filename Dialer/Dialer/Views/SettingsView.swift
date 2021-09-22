@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject private var data: MainViewModel
+    @EnvironmentObject
+    private var dataStore: MainViewModel
+    
     @Environment(\.presentationMode)
     private var presentationMode
     private let colophonItems: [SettingsItem] = [
@@ -48,9 +50,9 @@ struct SettingsView: View {
                                 .font(.headline.weight(.semibold))
                     ) {
                         VStack {
-                            if data.hasStoredPinCode {
+                            if dataStore.hasStoredPinCode {
                                 ForEach(generalItems, id:\.self) { item in
-                                    SettingsRow(item, action: data.removePin)
+                                    SettingsRow(item, action: dataStore.removePin)
                                 }
                             }
                         }
@@ -82,9 +84,12 @@ struct SettingsView: View {
                         .padding(.bottom, 20)
                     }
                     Section(header: sectionHeader("Colophon")) {
+                        
                         VStack {
                             ForEach(colophonItems, id:\.self) { item in
-                                SettingsRow(item, action: {})
+                                NavigationLink(destination: AboutView()) {
+                                    SettingsRow(item)
+                                }
                             }
                         }
                         .padding(.bottom, 20)
@@ -109,19 +114,21 @@ struct SettingsView: View {
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                        dataStore.showSettingsView()
+//                        presentationMode.wrappedValue.dismiss()
+                    }.font(.body.bold())
                 }
             }
         }
     }
     
     
-    private func sectionHeader(_ title: String) -> Text {
+    private func sectionHeader(_ title: String) -> some View {
         Text(title)
             .font(.system(.headline, design: .rounded))
+            .padding(.vertical)
     }
     
     struct SettingsItem: Hashable {
@@ -163,17 +170,26 @@ extension SettingsView {
             self.item = item
             self.action = action
         }
+        init(_ item: SettingsItem) {
+            self.item = item
+            self.action = nil
+        }
+        
         let item: SettingsItem
-        let action: () -> Void
+        let action: (() -> Void)?
         
         
         private var icon: Image {
             item.isSystemImage ? Image(systemName: item.icon) :Image(item.icon)
         }
         var body: some View {
-            Button(action: action, label: {
+            if let action = action {
+                Button(action: action, label: {
+                    contenView
+                })
+            } else {
                 contenView
-            })
+            }
         }
         
         var contenView: some View {
