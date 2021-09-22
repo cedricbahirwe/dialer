@@ -116,14 +116,12 @@ struct SettingsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        dataStore.showSettingsView()
-//                        presentationMode.wrappedValue.dismiss()
+                        dataStore.dismissSettingsView()
                     }.font(.body.bold())
                 }
             }
         }
     }
-    
     
     private func sectionHeader(_ title: String) -> some View {
         Text(title)
