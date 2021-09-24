@@ -9,11 +9,12 @@ import SwiftUI
 struct ContactsList: View {
     @Binding var allContacts: [Contact]
     @Binding var selectedContact: Contact
+    
     @State private var searchQuery: String = ""
     @State private var isEditing = false
     @State private var showNumberSelection: Bool = false
-    @Environment(\.presentationMode) private var presentationMode
-        
+    @Environment(\.presentationMode)
+    private var presentationMode
     
     private var resultedContacts: [Contact] {
         let contacts = allContacts.sorted(by: { $0.names < $1.names })
@@ -80,7 +81,6 @@ struct ContactsList: View {
                         Text("Cancel")
                     }
                     .padding(.trailing, 10)
-                    .animation(.default)
                 }
             }
             .padding(.horizontal, 10)
@@ -126,7 +126,8 @@ struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
-            ContactsList(contacts: .constant([.example]), selection: .constant(.example))
+            ContactsList(contacts: .constant([.example]),
+                         selection: .constant(.example))
             ContactRowView(contact: .example)
                 .previewLayout(.fixed(width: 400, height: 100))
         }

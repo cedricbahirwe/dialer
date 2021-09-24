@@ -33,8 +33,9 @@ struct SendingView: View {
                         feeHintView
                             .font(.caption).foregroundColor(.red)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .animation(.default)
+                            .animation(.default, value: transaction.estimatedFee)
                     }
+                    
                     TextField("Enter Amount", text: $transaction.amount.animation())
                         .keyboardType(.decimalPad)
                         .foregroundColor(.primary)
@@ -50,8 +51,9 @@ struct SendingView: View {
                     if transaction.type == .client {
                         Text(selectedContact.names).font(.caption).foregroundColor(.red)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .animation(.default)
+                            .animation(.default, value: transaction.type)
                     }
+                    
                     TextField(
                         transaction.type == .client ?
                             "Enter Receiver's number" :
@@ -77,7 +79,6 @@ struct SendingView: View {
                 
                 if transaction.type == .client {
                     Button(action: {
-                        allContacts = PhoneContacts.getMtnContacts()
                         showContactPicker.toggle()
                     }) {
                         HStack {
@@ -90,9 +91,6 @@ struct SendingView: View {
                         .background(Color.primary)
                         .cornerRadius(8)
                         .foregroundColor(Color(.systemBackground))
-                    }
-                    .sheet(isPresented: $showContactPicker) {
-                        ContactsList(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
                     }
                 }
                 
@@ -113,6 +111,9 @@ struct SendingView: View {
             .padding()
             
         }
+        .sheet(isPresented: $showContactPicker) {
+            ContactsList(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+        }
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
         .onAppear(perform: requestContacts)
@@ -130,9 +131,16 @@ struct SendingView: View {
         }
     }
     
+ 
     private func requestContacts() {
-        allContacts = PhoneContacts.getMtnContacts()
-    }
+            Task {
+                do {
+                    allContacts = try await PhoneContacts.getMtnContacts()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     
     private func cleanPhoneNumber(_ value: Contact?) {
         guard let contact = value else { return }

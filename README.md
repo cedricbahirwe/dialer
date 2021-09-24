@@ -11,6 +11,8 @@
 * ### Home Screen Quick Actions.
 * ### Quick MTN Momo transfer (Client and Merchant support).
 * ### Contacts Filtering.
+* ### Settings
+* ### Transaction Amount Limit 
 
 ## TakeAways 🚀
 
@@ -37,6 +39,3 @@ Tranfer                    |  Settings
 * ### Good Local Storage (Core Data)
 * ### Siri Commands Support (Intents and IntentsUI)
 * ### Transaction History
-* ### Settings
-* ### Transaction Amount Limit 
-

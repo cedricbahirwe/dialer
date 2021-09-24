@@ -8,15 +8,21 @@
 import Foundation
 import Contacts
 
+private enum PhonePermission: Error {
+    case notDetermined, emptyContacts, containerError
+}
+
 class PhoneContacts {
     
     private init() {}
     
-    class private func getContacts() -> [CNContact] {
-        
+    class private func getContacts() async throws -> [CNContact] {
         switch CNContactStore.authorizationStatus(for: .contacts) {
         case .authorized: break;
-        default: return []
+        case .notDetermined:
+            try await CNContactStore().requestAccess(for: .contacts)
+        default:
+            return []
         }
         let contactStore = CNContactStore()
         
@@ -31,6 +37,7 @@ class PhoneContacts {
             allContainers = try contactStore.containers(matching: nil)
         } catch {
             print("Error fetching containers")
+            throw PhonePermission.containerError
         }
         
         var results: [CNContact] = []
@@ -43,14 +50,24 @@ class PhoneContacts {
                 results.append(contentsOf: containerResults)
             } catch {
                 print("Error fetching unified containers")
+                throw PhonePermission.emptyContacts
             }
         }
+    
         return results
     }
     
-    class public func getMtnContacts() -> [Contact] {
+    class public func getMtnContacts() async throws -> [Contact] {
+        var contacts: [CNContact] = []
+        do {
+            contacts = try await PhoneContacts.getContacts()
+        } catch {
+            print(error.localizedDescription)
+            throw PhonePermission.emptyContacts
+        }
+        
         var resultingContacts: [Contact] = []
-        let contacts = PhoneContacts.getContacts()
+
         for contact in contacts {
             if contact.phoneNumbers.count > 0  {
                 let contactsPhoneNumbers = contact.phoneNumbers
@@ -65,6 +82,7 @@ class PhoneContacts {
                 }
             }
         }
+        
         return resultingContacts
     }
 }

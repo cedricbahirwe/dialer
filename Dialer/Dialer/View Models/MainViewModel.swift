@@ -27,7 +27,8 @@ class MainViewModel: ObservableObject {
     @Published var showHistorySheet: Bool = false
     
     // Present a sheet contains settings of the app
-    @Published var showSettingsSheet: Bool = false
+    @Published
+    private(set) var showSettingsSheet: Bool = false
     
     var estimatedTotalPrice: Int {
         recentCodes.map(\.totalPrice).reduce(0, +)
@@ -115,7 +116,8 @@ class MainViewModel: ObservableObject {
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
     ///   - completion: closue to return a success message or a error of type   `DialingError`.
-    private func dialCode(from purchase: PurchaseDetailModel, completion: @escaping (Result<String, MainViewModel.DialingError>) -> Void) {
+    private func dialCode(from purchase: PurchaseDetailModel,
+                          completion: @escaping (Result<String, DialingError>) -> Void) {
         
         let code: String
         if let _ = pinCode, String(pinCode!).count >= 5 {
@@ -138,7 +140,7 @@ class MainViewModel: ObservableObject {
     }
     
     /// Returns a Recent Code that matches the input identifier.
-    func rencentCode(_ identifier: String) -> RecentCode? {
+    public func rencentCode(_ identifier: String) -> RecentCode? {
         let foundCode = recentCodes.first(where: { $0.id.uuidString == identifier})
         return foundCode
     }
@@ -169,6 +171,31 @@ class MainViewModel: ObservableObject {
                 print(error.message)
             }
         }
+    }
+    
+    
+    public func showSettingsView() {
+        showSettingsSheet = true
+    }
+    
+    public func dismissSettingsView() {
+        showSettingsSheet = false
+    }
+    
+    
+    public func defaultSheetBinding() -> Binding<Bool> {
+        let setter = { [weak self] (value: Bool) in
+            guard let strongSelf = self else { return }
+            if strongSelf.showSettingsSheet {
+                strongSelf.showSettingsSheet = value
+            } else {
+                strongSelf.showHistorySheet = value
+            }
+        }
+        let getter = showSettingsSheet ? showSettingsSheet : showHistorySheet
+        return Binding(
+            get: { getter },
+            set: { setter($0) })
     }
 }
 extension MainViewModel {

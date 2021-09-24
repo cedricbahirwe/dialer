@@ -78,13 +78,12 @@ final class DialerStorage {
     }
     
     func getRecentCodes() -> RecentCodes {
-        guard let codes = userDefaults.object(forKey: LocalKeys.RecentCodes) as? Data else {
+        guard let codesData = userDefaults.object(forKey: LocalKeys.RecentCodes) as? Data else {
             return []
         }
         
-        print("The data", codes.count)
         do {
-            return  try JSONDecoder().decode(RecentCodes.self, from: codes)
+            return  try JSONDecoder().decode(RecentCodes.self, from: codesData)
         } catch let error {
             print("Couldn't decode the recent codes: " ,error.localizedDescription)
         }

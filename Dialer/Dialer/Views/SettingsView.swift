@@ -6,146 +6,183 @@
 //
 
 import SwiftUI
+import MessageUI
 
 struct SettingsView: View {
-    @EnvironmentObject private var data: MainViewModel
-    @Environment(\.presentationMode)
-    private var presentationMode
-    private let colophonItems: [SettingsItem] = [
-        .init(sysIcon: "info", color: .orange, title: "About", subtitle: "Version information."),
-        .init(sysIcon: "heart.fill", color: .red, title: "Review Dialer", subtitle: "Let us know how we are doing."),
-        
-    ]
-    
-    private let reachoutItems: [SettingsItem] = [
-        .init(sysIcon: "bubble.left.and.bubble.right.fill", color: .pink, title: "Contact Us", subtitle: "Get help or ask a question."),
-        .init(icon: "twitter", color: Color("twitter"), title: "Tweet Us", subtitle: "Stay up to date."),
-        
-        .init(icon: "translation", color: .blue, title: "Translation Suggestion", subtitle: "Improve our localization.")
-    ]
-    
-    private let tipsAndGuidesItems: [SettingsItem] = [
-        .init(sysIcon: "lightbulb.fill", color: .blue, title: "Just getting started?", subtitle: "Read our quick start blog post."),
-    ]
-    
-    private let generalItems: [SettingsItem] = [
-        .init(sysIcon: "trash", color: .red, title: "Remove Momo Pin",
-              subtitle: "You'll need to re-enter it later.")
-    ]
+    @EnvironmentObject
+    private var dataStore: MainViewModel
     
     private let appearanceItems: [SettingsItem] = [
         .init(sysIcon: "trash", color: .red, title: "Change Icon",
               subtitle: "Choose the right fit for you.")
     ]
     
+    @State private
+    var showMailErrorAlert = false
+    
+    private let supportEmail = "abc.incs.001@gmail.com"
+    private let twitterLink = "https://twitter.com/TheDialerApp"
+    private let githubLink = "https://github.com/cedricbahirwe/dialer"
+    
+    @State var showMailView = false
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    Section(header:
-                                sectionHeader("General settings")
-                                .font(.headline.weight(.semibold))
-                    ) {
+                    Section(header: sectionHeader("General settings")) {
                         VStack {
-                            if data.hasStoredPinCode {
-                                ForEach(generalItems, id:\.self) { item in
-                                    SettingsRow(item, action: data.removePin)
+                            if dataStore.hasStoredPinCode {
+                                SettingsRow(.deletePin, action: dataStore.removePin)
+                            }
+                        }
+                        .padding(.bottom, 20)
+                    }
+                
+                    Section(header: sectionHeader("Tips and Guides")){
+                        VStack {
+                            SettingsRow(.getStarted, action: {})
+                        }
+                        .padding(.bottom, 20)
+                    }
+                    
+                    Section(header: sectionHeader("Reach Out")) {
+                        VStack {
+                            SettingsRow(.contactUs, action: openMail)
+                                .alert("No Email Client Found",
+                                       isPresented: $showMailErrorAlert) {
+                                    Button("OK", role: .cancel) { }
+                                    Button("Copy Support Email", action: copyEmail)
+                                    Button("Open Twitter", action: openTwitter)
+                                } message: {
+                                    Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to abc.incs.001@gmail.com as well.")
                                 }
+                            Link(destination: URL(string: twitterLink)!) {
+                                SettingsRow(.tweetUs)
                             }
-                        }
-                        .padding(.bottom, 20)
-                    }
-                    
-                    
-                    Section(header:
-                                sectionHeader("Tips and Guides")
-                                .font(.headline.weight(.semibold))
-                    ) {
-                        VStack {
-                            ForEach(tipsAndGuidesItems, id:\.self) { item in
-                                SettingsRow(item, action: {})
-                            }
-                        }
-                        .padding(.bottom, 20)
-                    }
-                    
-                    Section(header:
-                                sectionHeader("Reach Out")
-                                .font(.headline.weight(.semibold))
-                    ) {
-                        VStack {
-                            ForEach(reachoutItems, id:\.self) { item in
-                                SettingsRow(item, action: {})
-                            }
+                            
+                            SettingsRow(.translationSuggestion, action: openMail)
+                            
                         }
                         .padding(.bottom, 20)
                     }
                     Section(header: sectionHeader("Colophon")) {
+                        
                         VStack {
-                            ForEach(colophonItems, id:\.self) { item in
-                                SettingsRow(item, action: {})
+                            NavigationLink(destination: AboutView()) {
+                                SettingsRow(.about)
+                            }
+                            Link(destination: URL(string: githubLink)!) {
+                                SettingsRow(.review)
                             }
                         }
                         .padding(.bottom, 20)
                     }
                 }
-                .padding(10)
+                .padding(.horizontal, 10)
                 .foregroundColor(.primary.opacity(0.8))
-                
-                
-                Group {
-                    Text("By using Dialer, you accept our")
-                    
-                    HStack(spacing: 0) {
-                        Link("Terms & Conditions", destination: URL(string: "www.google.com")!)
-                        Text(" and ")
-                        Link("Privacy Policy", destination: URL(string: "www.google.com")!)
-                    }
-                    .padding(.bottom, 20)
-                }
-                .font(.subheadline)
             }
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showMailView) {
+                MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
+            }
+            .safeAreaInset(edge: .bottom, content: {
+                Text(" By using Dilaer, you accept our\n[Terms & Conditions](www.google.com) and [Privacy Policy](www.google.com).")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(.thinMaterial)
+            })
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                        dataStore.dismissSettingsView()
+                    }.font(.body.bold())
                 }
             }
         }
     }
     
     
-    private func sectionHeader(_ title: String) -> Text {
-        Text(title)
-            .font(.system(.headline, design: .rounded))
+    private func getEmailBody() -> String {
+        var body = "\n\n\n\n\n\n\n\n"
+        
+        let deviceName = UIDevice.current.localizedModel
+        body.append(contentsOf: deviceName)
+        
+        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
+        body.append(iosVersion)
+        
+        if let appVersion  = UIApplication.appVersion {
+            body.append("\nDialer Version: \(appVersion)")
+        }
+        if let buildVersion = UIApplication.buildVersion {
+            body.append("\nDialer Build: \(buildVersion)")
+        }
+        return body
+    }
+    private func copyEmail() {
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = "https://twitter.com/TheDialerApp"
     }
     
-    struct SettingsItem: Hashable {
-        init(icon: String, color: Color, title: String, subtitle: String) {
-            self.icon = icon
-            self.color = color
-            self.title = title
-            self.subtitle = subtitle
-            isSystemImage = false
+    private func sectionHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.title3.weight(.semibold))
+            .padding(.vertical)
+    }
+    
+    
+    private func openTwitter() {
+        
+        guard let url = URL(string: twitterLink) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    private func openMail() {
+        
+        if MFMailComposeViewController.canSendMail() {
+            showMailView.toggle()
+        } else {
+            showMailErrorAlert = true
+        }
+    }
+}
+
+struct MailView: UIViewControllerRepresentable {
+    let recipientEmail: String
+    let bodyMessage: String
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        let mail = MFMailComposeViewController()
+        mail.navigationBar.prefersLargeTitles = false
+        mail.mailComposeDelegate = context.coordinator
+        mail.setToRecipients([recipientEmail])
+        mail.setSubject("Dialer Question")
+        
+        mail.setMessageBody(bodyMessage, isHTML: false)
+        return mail
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+        let parent: MailView
+        
+        init(_ parent: MailView) {
+            self.parent = parent
+        }
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            controller.dismiss(animated: true)
         }
         
-        init(sysIcon: String, color: Color, title: String, subtitle: String) {
-            self.icon = sysIcon
-            self.color = color
-            self.title = title
-            self.subtitle = subtitle
-            isSystemImage = true
-        }
-        
-        let icon: String
-        let color: Color
-        let title: String
-        let subtitle: String
-        let isSystemImage: Bool
     }
 }
 
@@ -153,32 +190,38 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
-//            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {
+    
     struct SettingsRow: View {
-        init(_ item: SettingsItem,
+        
+        init(_ option: SettingsOption,
              action: @escaping () -> Void) {
-            self.item = item
+            self.item = option.getItem()
             self.action = action
         }
-        let item: SettingsItem
-        let action: () -> Void
-        
-        
-        private var icon: Image {
-            item.isSystemImage ? Image(systemName: item.icon) :Image(item.icon)
+        init(_ option: SettingsOption) {
+            self.item = option.getItem()
+            self.action = nil
         }
+        
+        let item: SettingsItem
+        let action: (() -> Void)?
+        
         var body: some View {
-            Button(action: action, label: {
+            if let action = action {
+                Button(action: action, label: {
+                    contenView
+                })
+            } else {
                 contenView
-            })
+            }
         }
         
         var contenView: some View {
-            HStack {
-                icon
+            HStack(spacing: 15) {
+                item.icon
                     .resizable()
                     .scaledToFit()
                     .padding(6)
