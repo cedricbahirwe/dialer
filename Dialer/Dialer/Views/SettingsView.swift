@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import MessageUI
 
 struct SettingsView: View {
     @EnvironmentObject
@@ -17,15 +17,18 @@ struct SettingsView: View {
               subtitle: "Choose the right fit for you.")
     ]
     
+    @State private
+    var showMailErrorAlert = false
+    
+    private let supportEmail = "abc.incs.001@gmail.com"
+    private let twitterLink = "https://twitter.com/TheDialerApp"
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    Section(header:
-                                sectionHeader("General settings")
-                                .font(.headline.weight(.semibold))
-                    ) {
+                    Section(header: sectionHeader("General settings")) {
                         VStack {
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, action: dataStore.removePin)
@@ -35,22 +38,25 @@ struct SettingsView: View {
                     }
                     
                     
-                    Section(header:
-                                sectionHeader("Tips and Guides")
-                                .font(.headline.weight(.semibold))
-                    ) {
+                    Section(header:sectionHeader("Tips and Guides")){
                         VStack {
                             SettingsRow(.getStarted, action: {})
                         }
                         .padding(.bottom, 20)
                     }
                     
-                    Section(header:
-                                sectionHeader("Reach Out")
-                    ) {
+                    Section(header: sectionHeader("Reach Out")) {
                         VStack {
-                            SettingsRow(.contactUs, action: {})
-                            Link(destination: URL(string: "https://twitter.com/TheDialerApp")!) {
+                            SettingsRow(.contactUs, action: openMail)
+                                .alert("No Email Client Found",
+                                       isPresented: $showMailErrorAlert) {
+                                    Button("OK", role: .cancel) { }
+                                    Button("Copy Support Email", action: copyEmail)
+                                    Button("Open Twitter", action: openTwitter)
+                                } message: {
+                                    Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email at abc.incs.001@gmail.com as well.")
+                                }
+                            Link(destination: URL(string: twitterLink)!) {
                                 SettingsRow(.tweetUs)
                             }
                             
@@ -98,10 +104,47 @@ struct SettingsView: View {
     }
     
     
+    
+    private func copyEmail() {
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = "https://twitter.com/TheDialerApp"
+    }
+    
     private func sectionHeader(_ title: String) -> some View {
         Text(title)
             .font(.title3.weight(.semibold))
             .padding(.vertical)
+    }
+    
+    
+    private func openTwitter() {
+        
+        guard let url = URL(string: twitterLink) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    private func openMail() {
+        let email = "abc.incs.001@gmail.com"
+        
+        if MFMailComposeViewController.canSendMail() {
+            print("I can send to \(email)")
+        } else {
+            print("Nope")
+            showMailErrorAlert = true
+        }
+//        if let url = URL(string: "mailto:\(email)") {
+//
+//            if UIApplication.shared.canOpenURL(url) {
+//                UIApplication.shared.openURL(url)
+//            } else {
+//                showMailErrorAlert = true
+//            }
+//          if #available(iOS 10.0, *) {
+//
+//          } else {
+//            UIApplication.shared.openURL(url)
+//          }
+//        }
     }
 }
 
