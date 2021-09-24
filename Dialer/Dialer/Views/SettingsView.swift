@@ -23,6 +23,7 @@ struct SettingsView: View {
     private let supportEmail = "abc.incs.001@gmail.com"
     private let twitterLink = "https://twitter.com/TheDialerApp"
     
+    @State var showMail = false
     var body: some View {
         NavigationView {
             ScrollView {
@@ -79,6 +80,9 @@ struct SettingsView: View {
             }
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showMail, onDismiss: nil, content: {
+                MailView(recipientEmail: supportEmail)
+            })
             .safeAreaInset(edge: .bottom, content: {
                 Text(" By using Dilaer, you accept our\n[Terms & Conditions](www.google.com) and [Privacy Policy](www.google.com).")
                     .font(.subheadline)
@@ -121,6 +125,7 @@ struct SettingsView: View {
         
         if MFMailComposeViewController.canSendMail() {
             print("I can send to \(supportEmail)")
+            showMail.toggle()
 //            let mail = MFMailComposeViewController()
 ////            mail.mailComposeDelegate = self
 //            mail.setToRecipients([recipientEmail])
@@ -131,6 +136,55 @@ struct SettingsView: View {
         } else {
             showMailErrorAlert = true
         }
+    }
+}
+
+struct MailView: UIViewControllerRepresentable {
+    let recipientEmail: String
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        let mail = MFMailComposeViewController()
+        mail.navigationBar.prefersLargeTitles = false
+        mail.mailComposeDelegate = context.coordinator
+        mail.setToRecipients([recipientEmail])
+        mail.setSubject("Dialer Question")
+        
+        var body = "\n\n\n\n\n\n\n\n"
+        
+        let deviceName = UIDevice.current.localizedModel
+        body.append(contentsOf: deviceName)
+        
+        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
+        body.append(iosVersion)
+        
+        if let appVersion  = UIApplication.appVersion {
+            body.append("\nDialer Version: \(appVersion)")
+        }
+        if let buildVersion = UIApplication.buildVersion {
+            body.append("\nDialer Build: \(buildVersion)")
+        }
+    
+        mail.setMessageBody(body, isHTML: false)
+        return mail
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+        let parent: MailView
+        
+        init(_ parent: MailView) {
+            self.parent = parent
+        }
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            controller.dismiss(animated: true)
+        }
+        
     }
 }
 

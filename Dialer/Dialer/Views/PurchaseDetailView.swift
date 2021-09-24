@@ -40,6 +40,7 @@ struct PurchaseDetailView: View {
             .matchedGeometryEffect(id: "border", in: animation)
     }
     
+    
     var body: some View {
         VStack(spacing: 8) {
             VStack(spacing: 15) {
@@ -146,34 +147,37 @@ struct PurchaseDetailView: View {
         .background(Color(.systemBackground))
         .cornerRadius(15)
         .shadow(radius: 5)
-        .offset(y: 0 + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
+        .offset(y: 0 + (keyWindow?.safeAreaInsets.top ?? 0))
         .font(.system(size: 18, weight: .semibold, design: .rounded))
         .offset(x: 0, y: isPresented ? 0 : 800)
         .offset(y: max(0, bottomState.height))
         .blur(radius: show ? 20 : 0)
-        .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
+
         .gesture(
-            DragGesture().onChanged { value in
-                bottomState = value.translation
-                if showFull {
-                    bottomState.height += -300
+            DragGesture()
+                .onChanged { value in
+                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                        bottomState = value.translation
+                        if showFull {
+                            bottomState.height += -300
+                        }
+                        if bottomState.height < -300 {
+                            bottomState.height = -300
+                        }
+                    }
                 }
-                if bottomState.height < -300 {
-                    bottomState.height = -300
+                .onEnded { value in
+                    if bottomState.height > 50 {
+                        isPresented = false
+                    }
+                    if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
+                        bottomState.height = -300
+                        showFull = true
+                    } else {
+                        bottomState = .zero
+                        showFull = false
+                    }
                 }
-            }
-            .onEnded { value in
-                if bottomState.height > 50 {
-                    isPresented = false
-                }
-                if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
-                    bottomState.height = -300
-                    showFull = true
-                } else {
-                    bottomState = .zero
-                    showFull = false
-                }
-            }
         )
     }
     private func filterPin(_ value: String) {
@@ -205,3 +209,15 @@ struct PurchaseDetailView_Previews: PreviewProvider {
     }
 }
 
+
+
+extension PurchaseDetailView {
+    var keyWindow: UIWindow? {
+        UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .map({$0 as? UIWindowScene})
+                .compactMap({$0})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first
+    }
+}
