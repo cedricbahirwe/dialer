@@ -36,9 +36,8 @@ struct SettingsView: View {
                         }
                         .padding(.bottom, 20)
                     }
-                    
-                    
-                    Section(header:sectionHeader("Tips and Guides")){
+                
+                    Section(header: sectionHeader("Tips and Guides")){
                         VStack {
                             SettingsRow(.getStarted, action: {})
                         }
@@ -54,7 +53,7 @@ struct SettingsView: View {
                                     Button("Copy Support Email", action: copyEmail)
                                     Button("Open Twitter", action: openTwitter)
                                 } message: {
-                                    Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email at abc.incs.001@gmail.com as well.")
+                                    Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to abc.incs.001@gmail.com as well.")
                                 }
                             Link(destination: URL(string: twitterLink)!) {
                                 SettingsRow(.tweetUs)
@@ -75,24 +74,19 @@ struct SettingsView: View {
                         .padding(.bottom, 20)
                     }
                 }
-                .padding(10)
+                .padding(.horizontal, 10)
                 .foregroundColor(.primary.opacity(0.8))
-                
-                
-                Group {
-                    Text("By using Dialer, you accept our")
-                    
-                    HStack(spacing: 0) {
-                        Link("Terms & Conditions", destination: URL(string: "www.google.com")!)
-                        Text(" and ")
-                        Link("Privacy Policy", destination: URL(string: "www.google.com")!)
-                    }
-                    .padding(.bottom, 20)
-                }
-                .font(.subheadline)
             }
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom, content: {
+                Text(" By using Dilaer, you accept our\n[Terms & Conditions](www.google.com) and [Privacy Policy](www.google.com).")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(.thinMaterial)
+            })
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
@@ -124,27 +118,19 @@ struct SettingsView: View {
     }
     
     private func openMail() {
-        let email = "abc.incs.001@gmail.com"
         
         if MFMailComposeViewController.canSendMail() {
-            print("I can send to \(email)")
+            print("I can send to \(supportEmail)")
+//            let mail = MFMailComposeViewController()
+////            mail.mailComposeDelegate = self
+//            mail.setToRecipients([recipientEmail])
+//            mail.setSubject(subject)
+//            mail.setMessageBody(body, isHTML: false)
+//
+//            present(mail, animated: true)
         } else {
-            print("Nope")
             showMailErrorAlert = true
         }
-//        if let url = URL(string: "mailto:\(email)") {
-//
-//            if UIApplication.shared.canOpenURL(url) {
-//                UIApplication.shared.openURL(url)
-//            } else {
-//                showMailErrorAlert = true
-//            }
-//          if #available(iOS 10.0, *) {
-//
-//          } else {
-//            UIApplication.shared.openURL(url)
-//          }
-//        }
     }
 }
 

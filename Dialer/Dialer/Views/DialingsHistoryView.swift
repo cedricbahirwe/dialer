@@ -23,7 +23,9 @@ struct DialingsHistoryView: View {
                         .onDelete(perform: data.deleteRecentCode)
                     }
                 }
-
+            }
+            .navigationTitle("History")
+            .safeAreaInset(edge: .bottom) {
                 HStack {
                     Text("Total:")
                     Spacer()
@@ -35,9 +37,10 @@ struct DialingsHistoryView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
                 .truncationMode(.middle)
-
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(.ultraThickMaterial)
             }
-            .navigationTitle("History")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
