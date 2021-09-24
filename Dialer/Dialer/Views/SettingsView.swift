@@ -22,8 +22,9 @@ struct SettingsView: View {
     
     private let supportEmail = "abc.incs.001@gmail.com"
     private let twitterLink = "https://twitter.com/TheDialerApp"
+    private let githubLink = "https://github.com/cedricbahirwe/dialer"
     
-    @State var showMail = false
+    @State var showMailView = false
     var body: some View {
         NavigationView {
             ScrollView {
@@ -60,7 +61,8 @@ struct SettingsView: View {
                                 SettingsRow(.tweetUs)
                             }
                             
-                            SettingsRow(.translationSuggestion, action: {})
+                            SettingsRow(.translationSuggestion, action: openMail)
+                            
                         }
                         .padding(.bottom, 20)
                     }
@@ -70,7 +72,9 @@ struct SettingsView: View {
                             NavigationLink(destination: AboutView()) {
                                 SettingsRow(.about)
                             }
-                            SettingsRow(.review, action: {})
+                            Link(destination: URL(string: githubLink)!) {
+                                SettingsRow(.review)
+                            }
                         }
                         .padding(.bottom, 20)
                     }
@@ -80,9 +84,9 @@ struct SettingsView: View {
             }
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $showMail, onDismiss: nil, content: {
-                MailView(recipientEmail: supportEmail)
-            })
+            .sheet(isPresented: $showMailView) {
+                MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
+            }
             .safeAreaInset(edge: .bottom, content: {
                 Text(" By using Dilaer, you accept our\n[Terms & Conditions](www.google.com) and [Privacy Policy](www.google.com).")
                     .font(.subheadline)
@@ -102,7 +106,23 @@ struct SettingsView: View {
     }
     
     
-    
+    private func getEmailBody() -> String {
+        var body = "\n\n\n\n\n\n\n\n"
+        
+        let deviceName = UIDevice.current.localizedModel
+        body.append(contentsOf: deviceName)
+        
+        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
+        body.append(iosVersion)
+        
+        if let appVersion  = UIApplication.appVersion {
+            body.append("\nDialer Version: \(appVersion)")
+        }
+        if let buildVersion = UIApplication.buildVersion {
+            body.append("\nDialer Build: \(buildVersion)")
+        }
+        return body
+    }
     private func copyEmail() {
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = "https://twitter.com/TheDialerApp"
@@ -124,15 +144,7 @@ struct SettingsView: View {
     private func openMail() {
         
         if MFMailComposeViewController.canSendMail() {
-            print("I can send to \(supportEmail)")
-            showMail.toggle()
-//            let mail = MFMailComposeViewController()
-////            mail.mailComposeDelegate = self
-//            mail.setToRecipients([recipientEmail])
-//            mail.setSubject(subject)
-//            mail.setMessageBody(body, isHTML: false)
-//
-//            present(mail, animated: true)
+            showMailView.toggle()
         } else {
             showMailErrorAlert = true
         }
@@ -141,6 +153,7 @@ struct SettingsView: View {
 
 struct MailView: UIViewControllerRepresentable {
     let recipientEmail: String
+    let bodyMessage: String
     
     func makeUIViewController(context: Context) -> UIViewController {
         let mail = MFMailComposeViewController()
@@ -149,22 +162,7 @@ struct MailView: UIViewControllerRepresentable {
         mail.setToRecipients([recipientEmail])
         mail.setSubject("Dialer Question")
         
-        var body = "\n\n\n\n\n\n\n\n"
-        
-        let deviceName = UIDevice.current.localizedModel
-        body.append(contentsOf: deviceName)
-        
-        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
-        body.append(iosVersion)
-        
-        if let appVersion  = UIApplication.appVersion {
-            body.append("\nDialer Version: \(appVersion)")
-        }
-        if let buildVersion = UIApplication.buildVersion {
-            body.append("\nDialer Build: \(buildVersion)")
-        }
-    
-        mail.setMessageBody(body, isHTML: false)
+        mail.setMessageBody(bodyMessage, isHTML: false)
         return mail
     }
     
