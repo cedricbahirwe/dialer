@@ -53,7 +53,11 @@ struct SettingsView: View {
                                     Button("Copy Support Email", action: copyEmail)
                                     Button("Open Twitter", action: openTwitter)
                                 } message: {
-                                    Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to \(supportEmail) as well.")
+                                    Text(String(format:
+                                                    NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
+                                                supportEmail
+                                                )
+                                         )
                                 }
                             Link(destination: URL(string: twitterLink)!) {
                                 SettingsRow(.tweetUs)
