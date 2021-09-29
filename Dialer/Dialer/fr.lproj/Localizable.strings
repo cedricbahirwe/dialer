@@ -6,6 +6,7 @@
   
 */
 
+// 1. DashBoardView
 "Buy with Momo" = "Achéter avec Momo";
 "Send with Momo" = "Envoyer avec Momo";
 "History" = "Historique";
@@ -13,9 +14,17 @@
 "New Dial" = "Composer";
 "No SIM found" = "Carte SIM non detecté";
 
+// 2. Send View
 "Transfer Money" = "Envoyer de l'argent";
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
+
+
+// 3. History View
+"Done" = "Terminé";
+
+// 4. NewDialingView
+"Invalid code. Check it and try again." = "Code Invalide. Vérifiez-le et réessayez.";
 
 // Fields
 "Enter Amount" = "Entrer un montant";
