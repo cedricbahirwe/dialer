@@ -32,6 +32,9 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("General settings")) {
                         VStack {
+                            SettingsRow(.changeLanguage) {
+                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                            }
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, action: dataStore.removePin)
                             }

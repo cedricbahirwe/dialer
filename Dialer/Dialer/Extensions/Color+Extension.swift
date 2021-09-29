@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 extension UIColor {
     static let mainColor = UIColor(named: "main")!
 }

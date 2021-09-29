@@ -58,7 +58,7 @@ struct DashBoardView: View {
                                     title: "Send with Momo",
                                     icon: "paperplane.circle")
                             }
-                            .momoDisability()
+//                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {

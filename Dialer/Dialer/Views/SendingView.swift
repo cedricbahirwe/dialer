@@ -18,9 +18,9 @@ struct SendingView: View {
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
-            return Text("We can not estimate fee for this amount.")
+            return Text("We can not estimate the fee for this amount.")
         } else {
-            return Text("Estimated fee : \(fee) RWF.")
+            return Text(String(format: NSLocalizedString("Estimated fee: amount RWF", comment: ""), fee))
         }
     }
     
