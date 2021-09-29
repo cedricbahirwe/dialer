@@ -235,7 +235,9 @@ extension SettingsView {
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.secondary)
                 }
-                Spacer()
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                Spacer(minLength: 1)
                 
                 Image(systemName: "chevron.right")
                     .foregroundColor(.secondary)

@@ -80,3 +80,27 @@
 "Help & More" = "Aide & Plus";
 
 "By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer)." = "En utilisant Dialer, vous acceptez nos\n[Conditions générales](https://github.com/cedricbahirwe/dialer) et notre [Politique de confidentialité](https://github.com/cedricbahirwe/dialer).";
+
+
+// Parameters Options
+"Change Language" = "Changer de langue";
+"Select your desired language." = "Selectionez votre langue préferée.";
+
+"Remove Momo Pin" = "Supprimer le code Momo";
+"You'll need to re-enter it later." = "Vous devrez l'entrer à nouveau.";
+
+"Just getting started?" = "Nouveau sur Dialer?";
+"Read our quick start blog post." = "Lisez notre article sur Dialer.";
+
+"Contact Us" = "Nous contacter";
+"Get help or ask a question." = "Obtenir de l'aide ou poser une question.";
+
+"Tweetez-nous" = "Tweet Us";
+"Stay up to date." = "Restez à jour à propos de Dialer.";
+
+"Translation Suggestion" = "Suggestion sur la traduction";
+"Improve our localization." = "Améliorez notre traduction de language.";
+"Version information." = "Information sur la version.";
+
+"Let us know how we are doing." = "Dites-nous comment nous faisons.";
+
