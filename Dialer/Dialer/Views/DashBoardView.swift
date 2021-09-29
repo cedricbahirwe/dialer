@@ -182,7 +182,7 @@ struct DashBoardView_Previews: PreviewProvider {
 }
 
 struct DashItemView: View {
-    let title: String
+    let title: LocalizedStringKey
     let icon: String
     
     var body: some View {
@@ -195,7 +195,7 @@ struct DashItemView: View {
                         .aspectRatio(contentMode: .fit)
                 )
             
-            Text(NSLocalizedString(title, comment: ""))
+            Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundColor(.secondary)
                 .lineLimit(1)
