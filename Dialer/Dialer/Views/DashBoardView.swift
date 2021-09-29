@@ -158,7 +158,7 @@ extension DashBoardView {
             HStack(spacing: 1) {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
                 
-                Text(checkCellularProvider.message)
+                Text(NSLocalizedString(checkCellularProvider.message, comment: ""))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
             }
@@ -204,7 +204,7 @@ struct DashItemView: View {
                     .hidden()
             }
             
-            Text(title)
+            Text(NSLocalizedString(title, comment: ""))            
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundColor(.secondary)
                 .lineLimit(1)

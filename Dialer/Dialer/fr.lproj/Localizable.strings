@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Dialer
+
+  Created by Cédric Bahirwe on 29/09/2021.
+  
+*/
+
+"Buy with Momo" = "Achéter avec Momo";
+"Send with Momo" = "Envoyer avec Momo";
+"History" = "Historique";
+"Insights" = "Aperçus";
+"New Dial" = "Composer";
+"No SIM found" = "Carte SIM non detecté";
