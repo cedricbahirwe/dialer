@@ -14,7 +14,7 @@
 "New Dial" = "Composer";
 "No SIM found" = "Carte SIM non detecté";
 
-// 2. Send View
+// 2. Sending View
 "Transfer Money" = "Envoyer de l'argent";
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
@@ -53,3 +53,8 @@
 "Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
 
 
+// 8. Congratulations View
+
+"Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
+"Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense."
+"Remaining time: timeRemaining seconds" = "Remaining time: %d seconds"

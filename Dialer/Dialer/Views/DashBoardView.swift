@@ -183,35 +183,26 @@ struct DashBoardView_Previews: PreviewProvider {
 
 struct DashItemView: View {
     let title: String
-    let count: Int = 0
     let icon: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack  {
-                LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
-                    .frame(width: 25, height: 25)
-                    .mask(
-                        Image(systemName: icon)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    )
-                Spacer()
-                
-                Text(count.description)
-                    .fontWeight(.bold)
-                    .font(.system(.title, design: .rounded))
-                    .hidden()
-            }
+            LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+                .frame(width: 25, height: 25)
+                .mask(
+                    Image(systemName: icon)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                )
             
-            Text(NSLocalizedString(title, comment: ""))            
+            Text(NSLocalizedString(title, comment: ""))
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundColor(.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         }
         .padding(8)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 80)
         .background(
             Color(.secondarySystemGroupedBackground)

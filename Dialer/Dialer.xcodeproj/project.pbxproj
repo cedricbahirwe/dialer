@@ -219,12 +219,12 @@
 			children = (
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
-				828D79D626E1029800439F9A /* SettingsView.swift */,
 				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 				825F996226720AE6009E4A7B /* SendingView.swift */,
 				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
 				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
+				828D79D626E1029800439F9A /* SettingsView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
 				8218DBA72694644600E3C025 /* SubViews */,
 			);
