@@ -33,6 +33,23 @@
 "Confirm" = "Confirmer";
 
 "We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾" = "Nous nous souvenons de vous🎉\n Entrez le montant et nous nous occupons du reste✌🏾";
-// Fields
+
+// 6. Sending View
 "Enter Amount" = "Entrer le montant";
+"Enter Receiver's number" = "Entrez le numéro du destinataire";
+"Enter Merchant's Code" = "Entrez le Code du Vendeur";
+"The code should be a 5-6 digits number" = "Le code doit être un nombre à 5 ou 6 chiffres";
+"Pick a contact" = "Choisissez un contact";
+"Submit" = "Soumettre";
+"Merchant pay" = "Payer le vendeur";
+"Send Money" = "Envoyer de l'argent";
+
+
+// 7. Contacts List View
+"Contacts List" = "Liste de contacts";
+"Search by name or phone" = "Rechercher par nom ou par téléphone";
+"Cancel" = "Annuler";
+"Phone Number." = "Numéro de téléphone.";
+"Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
+
 

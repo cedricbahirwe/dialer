@@ -83,7 +83,7 @@ struct SendingView: View {
                     }) {
                         HStack {
                             Image(systemName: "person.fill")
-                            Text("Pick a Contact").bold().font(.footnote)
+                            Text("Pick a contact").bold().font(.footnote)
                         }
                         .font(Font.footnote.bold())
                         .frame(maxWidth: .infinity)
@@ -176,7 +176,6 @@ struct SendingView_Previews: PreviewProvider {
             NavigationView {
                 SendingView()
             }
-            
         }
     }
 }
