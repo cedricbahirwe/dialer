@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Dialer
+
+  Created by Cédric Bahirwe on 29/09/2021.
+  
+*/
+
+"Buy with Momo" = "Buy with Momo";
+"Send with Momo" = "Send with Momo";
+"History" = "History";
+"Insights" = "Insights";
+"New Dial" = "Dial";
+"No SIM found" = "No SIM found";
+
+"Transfer Money" = "Transfer Money";
+"Estimated fee: amount RWF" = "Estimated fee: %d RWF";
+"We can not estimate the fee for this amount." = "We can not estimate the fee for this amount.";
+
+// Fields
+"Enter Amount" = "Enter Amount";

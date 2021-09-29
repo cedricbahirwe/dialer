@@ -40,7 +40,7 @@ struct ContactsList: View {
             }
             
             HStack {
-                TextField("Search by name or phone ", text: $searchQuery)
+                TextField("Search by name or phone", text: $searchQuery)
                     .padding(7)
                     .padding(.horizontal, 25)
                     .background(Color(.tertiarySystemGroupedBackground))
@@ -96,7 +96,7 @@ struct ContactsList: View {
         .padding(.top, 10)
         .actionSheet(isPresented: $showNumberSelection) {
             ActionSheet(title: Text("Phone Number."),
-                        message: Text("Select one phone number to transfer"),
+                        message: Text("Select a phone number to send to"),
                         buttons: alertButtons)
         }
     }

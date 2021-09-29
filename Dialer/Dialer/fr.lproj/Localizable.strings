@@ -1,0 +1,106 @@
+/* 
+  Localizable.strings
+  Dialer
+
+  Created by Cédric Bahirwe on 29/09/2021.
+  
+*/
+
+// 1. DashBoardView
+"Buy with Momo" = "Achéter avec Momo";
+"Send with Momo" = "Envoyer avec Momo";
+"History" = "Historique";
+"Insights" = "Aperçus";
+"New Dial" = "Composer";
+"No SIM found" = "Carte SIM non detecté";
+
+// 2. Sending View
+"Transfer Money" = "Envoyer de l'argent";
+"Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
+"We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
+
+
+// 3. History View
+"Done" = "Terminé";
+
+// 4. NewDialingView
+"Invalid code. Check it and try again." = "Code Invalide. Vérifiez-le et réessayez.";
+
+// 5. PurchaseDetailView
+"Enter Pin" = "Entrer le Pin";
+"Save" = "Enregister";
+"Your pin will not be saved unless you personally save it." = "Votre PIN ne sera pas enregistré automatiquement.";
+"Confirm" = "Confirmer";
+
+"We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾" = "Nous nous souvenons de vous🎉\n Entrez le montant et nous nous occupons du reste✌🏾";
+
+// 6. Sending View
+"Enter Amount" = "Entrer le montant";
+"Enter Receiver's number" = "Entrez le numéro du destinataire";
+"Enter Merchant's Code" = "Entrez le Code du Vendeur";
+"The code should be a 5-6 digits number" = "Le code doit être un nombre à 5 ou 6 chiffres";
+"Pick a contact" = "Choisissez un contact";
+"Submit" = "Soumettre";
+"Merchant pay" = "Payer le vendeur";
+"Send Money" = "Envoyer de l'argent";
+
+
+// 7. Contacts List View
+"Contacts List" = "Liste de contacts";
+"Search by name or phone" = "Rechercher par nom ou par téléphone";
+"Cancel" = "Annuler";
+"Phone Number." = "Numéro de téléphone.";
+"Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
+
+
+// 8. Congratulations View
+
+"Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
+"Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense.";
+"Remaining time: timeRemaining seconds" = "Remaining time: %d seconds";
+
+// 9. About View
+"Designed and developed by\nCédric Bahirwe from ABC Incs." = "Conçu et développé par\nCédric Bahirwe de ABC Incs.";
+"About" = "A propos";
+
+// 10. Settings View
+
+"General settings" = "Paramètres généraux";
+"Tips and Guides" = "Conseils et guides";
+"Reach Out" = "Nous tenir au courant";
+"No Email Client Found" = "Aucun client de messagerie trouvé";
+
+"Copy Support Email" = "Copier l'e-mail d'assistance";
+
+"Open Twitter" = "Ouvrir Twitter";
+
+"We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well." = "Nous n'avons pas pu détecter un service de messagerie par défaut sur votre appareil.\n\n Vous pouvez nous joindre sur Twitter ou nous envoyer un e-mail à %@ également.";
+"Colophon" = "Colophon";
+
+"Help & More" = "Aide & Plus";
+
+"By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer)." = "En utilisant Dialer, vous acceptez nos\n[Conditions générales](https://github.com/cedricbahirwe/dialer) et notre [Politique de confidentialité](https://github.com/cedricbahirwe/dialer).";
+
+
+// Parameters Options
+"Change Language" = "Changer de langue";
+"Select your desired language." = "Selectionez votre langue préferée.";
+
+"Remove Momo Pin" = "Supprimer le code Momo";
+"You'll need to re-enter it later." = "Vous devrez l'entrer à nouveau.";
+
+"Just getting started?" = "Nouveau sur Dialer?";
+"Read our quick start blog post." = "Lisez notre article sur Dialer.";
+
+"Contact Us" = "Nous contacter";
+"Get help or ask a question." = "Obtenir de l'aide ou poser une question.";
+
+"Tweetez-nous" = "Tweet Us";
+"Stay up to date." = "Restez à jour à propos de Dialer.";
+
+"Translation Suggestion" = "Suggestion sur la traduction";
+"Improve our localization." = "Améliorez notre traduction de language.";
+"Version information." = "Information sur la version.";
+
+"Let us know how we are doing." = "Dites-nous comment nous faisons.";
+

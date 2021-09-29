@@ -18,9 +18,9 @@ struct SendingView: View {
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
-            return Text("We can not estimate fee for this amount.")
+            return Text("We can not estimate the fee for this amount.")
         } else {
-            return Text("Estimated fee : \(fee) RWF.")
+            return Text(String(format: NSLocalizedString("Estimated fee: amount RWF", comment: ""), fee))
         }
     }
     
@@ -83,7 +83,7 @@ struct SendingView: View {
                     }) {
                         HStack {
                             Image(systemName: "person.fill")
-                            Text("Pick a Contact").bold().font(.footnote)
+                            Text("Pick a contact").bold().font(.footnote)
                         }
                         .font(Font.footnote.bold())
                         .frame(maxWidth: .infinity)
@@ -176,7 +176,6 @@ struct SendingView_Previews: PreviewProvider {
             NavigationView {
                 SendingView()
             }
-            
         }
     }
 }

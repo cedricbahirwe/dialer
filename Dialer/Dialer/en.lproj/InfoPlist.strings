@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Dialer
+
+  Created by Cédric Bahirwe on 29/09/2021.
+  
+*/
+
+"NSContactsUsageDescription" = "Dialer need access to your contacts list to provide better user experience.";

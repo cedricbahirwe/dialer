@@ -45,7 +45,7 @@ struct PurchaseDetailView: View {
         VStack(spacing: 8) {
             VStack(spacing: 15) {
                 
-                Text(validAmount ? data.purchaseDetail.amount.description : "Enter Amount")
+                Text(validAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
                     .opacity(validAmount ? 1 : 0.6)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
@@ -70,7 +70,10 @@ struct PurchaseDetailView: View {
                 
                 if !data.hasStoredPinCode {
                     VStack(spacing: 2) {
-                        Text(data.pinCode != nil ? data.pinCode!.description : "Enter Pin")
+                        Text(
+                            NSLocalizedString(data.pinCode != nil ? data.pinCode!.description : "Enter Pin",
+                                              comment: "")
+                            )
                             .frame(maxWidth: .infinity)
                             .frame(height: 40)
                             .background(Color.primary.opacity(0.06))
@@ -100,7 +103,8 @@ struct PurchaseDetailView: View {
                                     Text("Save")
                                         .font(.caption)
                                         .fontWeight(.semibold)
-                                        .frame(width: 60, height: 40)
+                                        .padding(.horizontal, 10)
+                                        .frame(height: 40)
                                         .background(Color.primary)
                                         .cornerRadius(8)
                                         .foregroundColor(Color(.systemBackground))
@@ -113,6 +117,8 @@ struct PurchaseDetailView: View {
                         Text("Your pin will not be saved unless you personally save it.")
                             .font(.caption)
                             .foregroundColor(.red)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
                     }
                     
                 } else {

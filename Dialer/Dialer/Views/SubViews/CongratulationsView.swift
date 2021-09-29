@@ -55,11 +55,10 @@ struct CongratulationsView: View {
                         }
                     }
                 }
-                Text("Remaining time: \(timeRemaining) seconds ")
+                Text(String(format: NSLocalizedString("Remaining time: timeRemaining seconds", comment: ""), timeRemaining))
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red.opacity(0.8))
-
             }
             .padding(20)
             .frame(width: width-20)
@@ -103,7 +102,7 @@ struct CongratulationsView: View {
         let mailUrl = URL(string: "mailto:\(email)?subject=Dialer%20Monthly%20Award!")!
         
         if UIApplication.shared.canOpenURL(mailUrl) {
-            UIApplication.shared.open(mailUrl, options: [:], completionHandler: nil)
+            UIApplication.shared.open(mailUrl)
         }
         copyToClipBoard()
     }
@@ -114,7 +113,6 @@ struct CongratulationsView: View {
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
             didCopyToClipBoard = false
         }
-        
     }
 }
 

@@ -12,11 +12,6 @@ struct SettingsView: View {
     @EnvironmentObject
     private var dataStore: MainViewModel
     
-    private let appearanceItems: [SettingsItem] = [
-        .init(sysIcon: "trash", color: .red, title: "Change Icon",
-              subtitle: "Choose the right fit for you.")
-    ]
-    
     @State private
     var showMailErrorAlert = false
     
@@ -32,6 +27,9 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("General settings")) {
                         VStack {
+                            SettingsRow(.changeLanguage) {
+                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                            }
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, action: dataStore.removePin)
                             }
@@ -55,7 +53,11 @@ struct SettingsView: View {
                                     Button("Copy Support Email", action: copyEmail)
                                     Button("Open Twitter", action: openTwitter)
                                 } message: {
-                                    Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to abc.incs.001@gmail.com as well.")
+                                    Text(String(format:
+                                                    NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
+                                                supportEmail
+                                                )
+                                         )
                                 }
                             Link(destination: URL(string: twitterLink)!) {
                                 SettingsRow(.tweetUs)
@@ -88,7 +90,7 @@ struct SettingsView: View {
                 MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
             }
             .safeAreaInset(edge: .bottom, content: {
-                Text(" By using Dilaer, you accept our\n[Terms & Conditions](www.google.com) and [Privacy Policy](www.google.com).")
+                Text("By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer).")
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
                     .padding()
@@ -128,7 +130,7 @@ struct SettingsView: View {
         pasteBoard.string = "https://twitter.com/TheDialerApp"
     }
     
-    private func sectionHeader(_ title: String) -> some View {
+    private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.title3.weight(.semibold))
             .padding(.vertical)
@@ -237,7 +239,9 @@ extension SettingsView {
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.secondary)
                 }
-                Spacer()
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                Spacer(minLength: 1)
                 
                 Image(systemName: "chevron.right")
                     .foregroundColor(.secondary)

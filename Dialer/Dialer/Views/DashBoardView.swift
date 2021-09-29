@@ -58,7 +58,7 @@ struct DashBoardView: View {
                                     title: "Send with Momo",
                                     icon: "paperplane.circle")
                             }
-                            .momoDisability()
+//                            .momoDisability()
                         }
                         
                         HStack(spacing: 15) {
@@ -158,7 +158,7 @@ extension DashBoardView {
             HStack(spacing: 1) {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
                 
-                Text(checkCellularProvider.message)
+                Text(NSLocalizedString(checkCellularProvider.message, comment: ""))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
             }
@@ -182,27 +182,18 @@ struct DashBoardView_Previews: PreviewProvider {
 }
 
 struct DashItemView: View {
-    let title: String
-    let count: Int = 0
+    let title: LocalizedStringKey
     let icon: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack  {
-                LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
-                    .frame(width: 25, height: 25)
-                    .mask(
-                        Image(systemName: icon)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    )
-                Spacer()
-                
-                Text(count.description)
-                    .fontWeight(.bold)
-                    .font(.system(.title, design: .rounded))
-                    .hidden()
-            }
+            LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+                .frame(width: 25, height: 25)
+                .mask(
+                    Image(systemName: icon)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                )
             
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
@@ -211,7 +202,7 @@ struct DashItemView: View {
                 .minimumScaleFactor(0.6)
         }
         .padding(8)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 80)
         .background(
             Color(.secondarySystemGroupedBackground)
