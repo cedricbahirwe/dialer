@@ -24,6 +24,7 @@ struct NewDialingView: View {
                         .font(.system(size: 16))
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
                         .opacity(showInValidMsg ? 1 : 0)
                         
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
