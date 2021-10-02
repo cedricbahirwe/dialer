@@ -19,7 +19,6 @@
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
 
-
 // 3. History View
 "Done" = "Terminé";
 
@@ -52,9 +51,7 @@
 "Phone Number." = "Numéro de téléphone.";
 "Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
 
-
 // 8. Congratulations View
-
 "Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense.";
 "Remaining time: timeRemaining seconds" = "Remaining time: %d seconds";
@@ -64,7 +61,6 @@
 "About" = "A propos";
 
 // 10. Settings View
-
 "General settings" = "Paramètres généraux";
 "Tips and Guides" = "Conseils et guides";
 "Reach Out" = "Nous tenir au courant";

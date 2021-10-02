@@ -1,0 +1,101 @@
+/* 
+  Localizable.strings
+  Dialer
+
+  Created by Cédric Bahirwe on 29/09/2021.
+  
+*/
+
+// 1. DashBoardView
+"Buy with Momo" = "Kugura na Momo";
+"Send with Momo" = "Kohereza na Momo";
+"History" = "Ibyashize";
+"Insights" = "Ubushishozi";
+"New Dial" = "Gukanda bundi bushya";
+"No SIM found" = "Nta SIMUKADI";
+ 
+// 2. Sending View
+"Transfer Money" = "Kohereza Amafaranga";
+"Estimated fee: amount RWF" = "Ikiguzi cyo kohereza: %d RWF";
+"We can not estimate the fee for this amount." = "Ntidushobora kugereranya ikiguzi kuri uwo mubare w’ amafaranga.";
+ 
+// 3. History View
+"Done" = "Byarangiye";
+ 
+// 4. NewDialingView
+"Invalid code. Check it and try again." = "kode ntiyemewe. Ongera muyisuzume mwongere mugeraze.";
+"Confirm" = "Emeza";
+// 5. PurchaseDetailView
+"Enter Pin" = "Injiza umubare w’ ibanga";
+"Save" = "Bika";
+"Your pin will not be saved unless you personally save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
+ 
+ 
+"We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾" = "Turacyabibuka🎉\n Mwinjize umubare w’ amafaranga ibisigaye tugiye kubyitaho✌🏾";
+ 
+// 6. Sending View
+"Enter Amount" = "Injiza umubare w’amafaranga";
+"Enter Receiver's number" = "Injiza nimero y’uwuri buyakire";
+"Enter Merchant's Code" = "Injiza kode y’umucuruzi";
+"The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
+"Pick a contact" = "Hitamo nimero ya terefone ";
+"Submit" = "Kohereza";
+"Merchant pay" = "Kwishyura umucuruzi";
+"Send Money" = "Kohereza amafaranga";
+ 
+ 
+// 7. Contacts List View
+"Contacts List" = "Urutonde rwa nimero za terefone";
+"Search by name or phone" = "Gushakisha ugendeye kw’izina cyangwa terefone";
+"Cancel" = "Kuburizamo";
+"Phone Number." = "Nimero ya Terefone.";
+"Select a phone number to send to" = "Hitamo nimero ya terefone muri bwoherezeho";
+ 
+// 8. Congratulations View
+"Thanks for using Dialer for the past month!" = "Mwarakoze gukoresha Dialer mu kwezi gushize !";
+"Please take a screenshot of this screen and send it to the following email to receive your award." = "Turabasaba ngo mufate amashusho ya bino mukoresheje screenshot muhite muyohereza kuri imeyiri ikurikira kugira ngo muhabwe impano yanyu.";
+"Remaining time: timeRemaining seconds" = "Igihe gisigaye: %d seconds";
+ 
+// 9. About View
+"Designed and developed by\nCédric Bahirwe from ABC Incs." = "Byahanzwe bihinyanyurwa na\nCédric Bahirwe wo muri ABC Incs.";
+"About" = "Ibyerekeye";
+ 
+// 10. Settings View
+"General settings" = "Icungamimerere rusange";
+"Tips and Guides" = "Inama n’ amabwiriza";
+"Reach Out" = "Kutumenyesha";
+"No Email Client Found" = "Nta mukiriya wa Imeyiri wabonetse";
+ 
+"Copy Support Email" = "Koporora imeyiri y’ ubwunganizi";
+ 
+"Open Twitter" = "Gufungura Twitter";
+ 
+"We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well." = "Ntitwabashije kubona imeyiri isanzwe yemejwe ku gikoresho cyanyu.\n\n Mwadusanga kuri Twitter kandi mushobora no kutwohereza imeyiri kuri %@ .";
+"Colophon" = "Colophon";
+ 
+"Help & More" = "Ubufasha & Ibindi";
+ 
+"By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer)." = "Mugukoresha Dialer, mwemeye  \n[Ibisabwa n’ ingamba](https://github.com/cedricbahirwe/dialer) hamwe na [Politiki y’ubuzima bwite](https://github.com/cedricbahirwe/dialer).";
+ 
+ 
+// Parameters Options
+"Change Language" = "Guhindura ururimi";
+"Select your desired language." = "Hitamo ururimi mukunda gukoresha.";
+ 
+"Remove Momo Pin" = "Gusiba umubare w’ ibanga wa Momo";
+"You'll need to re-enter it later." = "Muraza gukenera kongera kuwinjiza nyuma.";
+ 
+"Just getting started?" = "Muri bashya kuri Dialer?";
+"Read our quick start blog post." = "Musome itangazo rigufi ryo gutangira twashizeho.";
+ 
+"Contact Us" = "Kuduhamagara";
+"Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";
+ 
+"Twandikire kuri Twitter" = "Tweet Us";
+"Stay up to date." = "Mujyane n’ ibigezweho muri Dialer.";
+ 
+"Translation Suggestion" = "Inama ku ivunura";
+"Improve our localization." = "Guteza imbere aho duherereye.";
+"Version information." = "Amakuru kuri verisiyo.";
+ 
+"Let us know how we are doing." = "Mutumenyeshe uburyo dukora.";

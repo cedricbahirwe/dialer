@@ -222,7 +222,7 @@ extension SettingsView {
         }
         
         var contenView: some View {
-            HStack(spacing: 15) {
+            HStack(spacing: 0) {
                 item.icon
                     .resizable()
                     .scaledToFit()
@@ -240,7 +240,9 @@ extension SettingsView {
                         .foregroundColor(.secondary)
                 }
                 .lineLimit(1)
-                .minimumScaleFactor(0.85)
+                .minimumScaleFactor(0.8)
+                .padding(.leading, 15)
+                
                 Spacer(minLength: 1)
                 
                 Image(systemName: "chevron.right")
