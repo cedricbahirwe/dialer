@@ -90,8 +90,9 @@ struct SettingsView: View {
                 MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
             }
             .safeAreaInset(edge: .bottom, content: {
-                Text("By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer).")
-                    .font(.subheadline)
+                Text("Dialer Version \(UIApplication.appVersion ?? "1.0")")
+//                Text("By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer).")
+                    .font(.subheadline.bold())
                     .multilineTextAlignment(.center)
                     .padding()
                     .frame(maxWidth: .infinity)

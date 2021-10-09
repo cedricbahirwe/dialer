@@ -12,8 +12,8 @@ struct DialingsHistoryView: View {
     var body: some View {
         NavigationView {
             VStack {
-                List {
-                    if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
+                if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
+                    List {
                         ForEach(recentCodes) { recentCode in
                             HistoryRow(recentCode: recentCode)
                                 .onTapGesture {
@@ -22,7 +22,18 @@ struct DialingsHistoryView: View {
                         }
                         .onDelete(perform: data.deleteRecentCode)
                     }
+                } else {
+                    
+                    Spacer()
+                    Text("No History Yet")
+                        .font(.system(.largeTitle, design: .rounded))
+                        .bold()
+                    Text("Come back later.")
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundColor(Color.main)
+                    Spacer()
                 }
+
             }
             .navigationTitle("History")
             .safeAreaInset(edge: .bottom) {
