@@ -90,7 +90,6 @@ struct DashBoardView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(.ultraThickMaterial)
-                        .hidden()
                     }
                     bottomBarView
                 }
