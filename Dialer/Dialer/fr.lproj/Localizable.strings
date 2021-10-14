@@ -7,8 +7,8 @@
 */
 
 // 1. DashBoardView
-"Buy with Momo" = "Achéter avec Momo";
-"Send with Momo" = "Envoyer avec Momo";
+"Buy" = "Achéter";
+"Send" = "Envoyer";
 "History" = "Historique";
 "Insights" = "Aperçus";
 "New Dial" = "Composer";
@@ -82,7 +82,7 @@
 "Change Language" = "Changer de langue";
 "Select your desired language." = "Selectionez votre langue préferée.";
 
-"Remove Momo Pin" = "Supprimer le code Momo";
+"Remove Pin" = "Supprimer le pin";
 "You'll need to re-enter it later." = "Vous devrez l'entrer à nouveau.";
 
 "Just getting started?" = "Nouveau sur Dialer?";

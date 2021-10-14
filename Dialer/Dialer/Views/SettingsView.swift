@@ -18,6 +18,7 @@ struct SettingsView: View {
     private let supportEmail = "abc.incs.001@gmail.com"
     private let twitterLink = "https://twitter.com/TheDialerApp"
     private let githubLink = "https://github.com/cedricbahirwe/dialer"
+    private let appstoreLink = "https://apps.apple.com/us/app/dial-it/id1589599545"
     
     @State var showMailView = false
     var body: some View {
@@ -74,7 +75,7 @@ struct SettingsView: View {
                             NavigationLink(destination: AboutView()) {
                                 SettingsRow(.about)
                             }
-                            Link(destination: URL(string: githubLink)!) {
+                            Link(destination: URL(string: appstoreLink)!) {
                                 SettingsRow(.review)
                             }
                         }

@@ -45,7 +45,7 @@ struct DashBoardView: View {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
                             DashItemView(
-                                title: "Buy with Momo",
+                                title: "Buy",
                                 icon: "wallet.pass")
                                 .momoDisability()
                                 .onTapGesture {
@@ -55,7 +55,7 @@ struct DashBoardView: View {
                             NavigationLink(
                                 destination: SendingView()) {
                                 DashItemView(
-                                    title: "Send with Momo",
+                                    title: "Send",
                                     icon: "paperplane.circle")
                             }
 //                            .momoDisability()
@@ -70,7 +70,7 @@ struct DashBoardView: View {
                                 }
                             
                             DashItemView(
-                                title: "Insights",
+                                title: "Balance",
                                 icon: "lightbulb")
                                 .onTapGesture(perform: data.checkInternetBalance)
                         }
@@ -78,6 +78,20 @@ struct DashBoardView: View {
                     }
                     .padding()
                     Spacer()
+                    
+                    if checkCellularProvider.status == false {
+                        HStack {
+                            Text("MTN Sim Card is required to unlock all the features. ")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                .foregroundColor(.red)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.6)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(.ultraThickMaterial)
+                        .hidden()
+                    }
                     bottomBarView
                 }
                 .blur(radius: showPurchaseSheet ? 3 : 0)

@@ -7,8 +7,8 @@
 */
 
 // 1. DashBoardView
-"Buy with Momo" = "Kugura na Momo";
-"Send with Momo" = "Kohereza na Momo";
+"Buy" = "Kugura";
+"Send" = "Kohereza";
 "History" = "Ibyashize";
 "Insights" = "Ubushishozi";
 "New Dial" = "Gukanda bundi bushya";
@@ -82,7 +82,7 @@
 "Change Language" = "Guhindura ururimi";
 "Select your desired language." = "Hitamo ururimi mukunda gukoresha.";
  
-"Remove Momo Pin" = "Gusiba umubare w’ ibanga wa Momo";
+"Remove Pin" = "Gusiba umubare w’ ibanga";
 "You'll need to re-enter it later." = "Muraza gukenera kongera kuwinjiza nyuma.";
  
 "Just getting started?" = "Muri bashya kuri Dialer?";

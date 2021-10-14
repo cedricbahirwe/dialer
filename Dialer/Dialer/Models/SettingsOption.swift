@@ -21,7 +21,7 @@ enum SettingsOption: Int {
     
     static var items: [SettingsItem] = [
         .init(icon: "language", color: .main.opacity(0.7), title: "Change Language", subtitle: "Select your desired language."),
-        .init(sysIcon: "trash", color: .red, title: "Remove Momo Pin", subtitle: "You'll need to re-enter it later."),
+        .init(sysIcon: "trash", color: .red, title: "Remove Pin", subtitle: "You'll need to re-enter it later."),
         .init(sysIcon: "lightbulb.fill", color: .blue, title: "Just getting started?", subtitle: "Read our quick start blog post."),
         .init(sysIcon: "bubble.left.and.bubble.right.fill", color: .pink, title: "Contact Us", subtitle: "Get help or ask a question."),
         .init(icon: "twitter", color: Color("twitter"), title: "Tweet Us", subtitle: "Stay up to date."),
