@@ -19,6 +19,7 @@ struct SettingsView: View {
     private let twitterLink = "https://twitter.com/TheDialerApp"
     private let githubLink = "https://github.com/cedricbahirwe/dialer"
     private let appstoreLink = "https://apps.apple.com/us/app/dial-it/id1589599545"
+    private let privacyLink  = "https://cedricbahirwe.github.io/html/privacy.html"
     
     @State var showMailView = false
     var body: some View {
@@ -91,8 +92,8 @@ struct SettingsView: View {
                 MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
             }
             .safeAreaInset(edge: .bottom, content: {
-                Text("Dialer Version \(UIApplication.appVersion ?? "1.0")")
-//                Text("By using Dialer, you accept our\n[Terms & Conditions](https://github.com/cedricbahirwe/dialer) and [Privacy Policy](https://github.com/cedricbahirwe/dialer).")
+                
+                Text("By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html).")
                     .font(.subheadline.bold())
                     .multilineTextAlignment(.center)
                     .padding()
