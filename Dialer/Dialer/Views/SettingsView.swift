@@ -41,7 +41,10 @@ struct SettingsView: View {
                 
                     Section(header: sectionHeader("Tips and Guides")){
                         VStack {
-                            SettingsRow(.getStarted, action: {})
+                            HStack(spacing: 0) {
+                                SettingsRow(.getStarted, exists: false)
+                                
+                            }
                         }
                         .padding(.bottom, 20)
                     }
@@ -202,17 +205,21 @@ extension SettingsView {
     struct SettingsRow: View {
         
         init(_ option: SettingsOption,
+             exists: Bool = true,
              action: @escaping () -> Void) {
             self.item = option.getItem()
+            self.exists = exists
             self.action = action
         }
-        init(_ option: SettingsOption) {
+        init(_ option: SettingsOption, exists: Bool = true) {
             self.item = option.getItem()
+            self.exists = exists
             self.action = nil
         }
         
-        let item: SettingsItem
-        let action: (() -> Void)?
+        private let item: SettingsItem
+        private let exists: Bool
+        private let action: (() -> Void)?
         
         var body: some View {
             if let action = action {
@@ -248,8 +255,19 @@ extension SettingsView {
                 
                 Spacer(minLength: 1)
                 
+                if exists {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.secondary)
+                } else {
+                    Text("Coming soon")
+                        .font(.caption)
+                        .padding(8)
+                        .frame(height: 30)
+                        .background(Color.red.opacity(0.1))
+                        .background(Color(.systemBackground))
+                        .clipShape(Capsule())
+                        .foregroundColor(.red)
+                }
             }
             .padding(.vertical, 5)
         }
