@@ -101,6 +101,11 @@ class MainViewModel: ObservableObject {
         Self.performQuickDial(for: "*345*5#")
     }
     
+    /// Check Mobile Balance
+    public func checkMobileBalance() {
+        Self.performQuickDial(for: "*182*6*1#")
+    }
+    
     /// Save locally the Pin Code
     /// - Parameter value: the pin value to be saved.
     public func savePinCode(value: Int) {

@@ -177,7 +177,7 @@ extension String {
                 return ""
             } else {
                 if let name = names.first {
-                    return name.isEmpty ? "" : name.first!
+                    return name.isEmpty ? "" : String(name.first!)
 
                 } else {
                     return ""
