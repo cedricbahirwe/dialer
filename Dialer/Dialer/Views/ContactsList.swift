@@ -168,13 +168,20 @@ extension String {
             return self
         } else {
             let names = split(separator: " ")
-            if names.count > 1 {
+            if names.isEmpty {
                 let first = names[0].first!
                 let second = names[1].first!
                 
                 return String(first) + String(second)
+            } else if names.count > 1  {
+                return ""
             } else {
-                return String(names.first!.first!)
+                if let name = names.first {
+                    return name.isEmpty ? "" : name.first!
+
+                } else {
+                    return ""
+                }
             }
         }
     }
