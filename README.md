@@ -25,7 +25,7 @@
 
 ## Special Thanks to:
 
-1. [Esther Carelle](https://github.com/esthcarelle) for her wonderful feedback✨.
+1. [Esther Carelle](https://github.com/esthcarelle) for her feedback✨.
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
