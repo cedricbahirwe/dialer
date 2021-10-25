@@ -142,7 +142,7 @@ struct ContactRowView: View {
                 .frame(width: 70, height: 70)
                 .clipShape(Circle())
                 .overlay(
-                    Text(String(contact.names.initials))
+                    Text(String(contact.initials))
                         .textCase(.uppercase)
                         .foregroundColor(Color(.systemBackground))
                         .font(.system(size: 28, weight: .bold, design: .rounded))
@@ -159,30 +159,5 @@ struct ContactRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
         
-    }
-}
-
-extension String {
-    var initials: String {
-        if isEmpty {
-            return self
-        } else {
-            let names = split(separator: " ")
-            if names.isEmpty {
-                let first = names[0].first!
-                let second = names[1].first!
-                
-                return String(first) + String(second)
-            } else if names.count > 1  {
-                return ""
-            } else {
-                if let name = names.first {
-                    return name.isEmpty ? "" : String(name.first!)
-
-                } else {
-                    return ""
-                }
-            }
-        }
     }
 }

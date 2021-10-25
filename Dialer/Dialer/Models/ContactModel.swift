@@ -34,3 +34,30 @@ struct Contact: Identifiable, Equatable {
                                  phoneNumbers: ["(555) 564-8583", "(415) 555-3695"])
 }
 
+
+
+extension Contact {
+    var initials: String {
+        if names.isEmpty {
+            return "···"
+        } else {
+            let names = names.split(separator: " ")
+            if names.count >= 2 {
+                let first = names[0].first!
+                let second = names[1].first!
+                
+                return String(first) + String(second)
+            } else if names.count == 1  {
+                return names[0].count >= 1 ? String(names[0].first!) :  "···"
+            } else {
+                if let name = names.first {
+                    return name.isEmpty ? "" : String(name.first!)
+                    
+                } else {
+                    return "···"
+                }
+            }
+        }
+    }
+
+}
