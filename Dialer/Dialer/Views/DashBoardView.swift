@@ -45,7 +45,7 @@ struct DashBoardView: View {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
                             DashItemView(
-                                title: "Buy",
+                                title: "Buy airtime",
                                 icon: "wallet.pass")
                                 .momoDisability()
                                 .onTapGesture {
@@ -55,7 +55,7 @@ struct DashBoardView: View {
                             NavigationLink(
                                 destination: SendingView()) {
                                 DashItemView(
-                                    title: "Send",
+                                    title: "Send/Pay",
                                     icon: "paperplane.circle")
                             }
 //                            .momoDisability()

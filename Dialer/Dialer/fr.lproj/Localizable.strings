@@ -7,8 +7,8 @@
 */
 
 // 1. DashBoardView
-"Buy" = "Achéter";
-"Send" = "Envoyer";
+"Buy airtime" = "Achéter des unités";
+"Send/Pay" = "Envoyer/Payer";
 "History" = "Historique";
 "Insights" = "Aperçus";
 "New Dial" = "Composer";

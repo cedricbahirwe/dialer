@@ -79,7 +79,7 @@ struct SettingsView: View {
                             NavigationLink(destination: AboutView()) {
                                 SettingsRow(.about)
                             }
-                            Link(destination: URL(string: appstoreLink)!) {
+                            Link(destination: URL(string: githubLink)!) {
                                 SettingsRow(.review)
                             }
                         }
