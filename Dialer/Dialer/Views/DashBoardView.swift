@@ -70,8 +70,8 @@ struct DashBoardView: View {
                                 }
                             
                             DashItemView(
-                                title: "Balance",
-                                icon: "lightbulb")
+                                title: "Utilities",
+                                icon: "wrench.and.screwdriver")
                                 .onTapGesture(perform: data.checkMobileBalance)
                         }
                         .momoDisability()
