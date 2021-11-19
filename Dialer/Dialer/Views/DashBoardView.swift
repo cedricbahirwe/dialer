@@ -68,11 +68,12 @@ struct DashBoardView: View {
                                 .onTapGesture { 
                                     data.showHistorySheet.toggle()
                                 }
-                            
-                            DashItemView(
-                                title: "Utilities",
-                                icon: "wrench.and.screwdriver")
-                                .onTapGesture(perform: data.checkMobileBalance)
+                            NavigationLink(
+                                destination: UtilitiesView()) {
+                                    DashItemView(
+                                        title: "Utilities",
+                                        icon: "wrench.and.screwdriver")
+                                }
                         }
                         .momoDisability()
                     }
