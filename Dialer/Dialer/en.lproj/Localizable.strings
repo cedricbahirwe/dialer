@@ -6,10 +6,10 @@
   
 */
 
-"Buy" = "Buy";
-"Send" = "Send";
+"Buy airtime" = "Buy airtime";
+"Send/Pay" = "Send/Pay";
 "History" = "History";
-"Insights" = "Insights";
+"Utilities" = "Utilities";
 "New Dial" = "Dial";
 "No SIM found" = "No SIM found";
 
@@ -20,3 +20,5 @@
 
 // Fields
 "Enter Amount" = "Enter Amount";
+
+"Remaining time: timeRemaining seconds" = "Remaining time: %d seconds";

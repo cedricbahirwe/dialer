@@ -45,7 +45,7 @@ struct DashBoardView: View {
                     VStack(spacing: 15) {
                         HStack(spacing: 15) {
                             DashItemView(
-                                title: "Buy",
+                                title: "Buy airtime",
                                 icon: "wallet.pass")
                                 .momoDisability()
                                 .onTapGesture {
@@ -55,7 +55,7 @@ struct DashBoardView: View {
                             NavigationLink(
                                 destination: SendingView()) {
                                 DashItemView(
-                                    title: "Send",
+                                    title: "Send/Pay",
                                     icon: "paperplane.circle")
                             }
 //                            .momoDisability()
@@ -68,11 +68,12 @@ struct DashBoardView: View {
                                 .onTapGesture { 
                                     data.showHistorySheet.toggle()
                                 }
-                            
-                            DashItemView(
-                                title: "Balance",
-                                icon: "lightbulb")
-                                .onTapGesture(perform: data.checkMobileBalance)
+                            NavigationLink(
+                                destination: UtilitiesView()) {
+                                    DashItemView(
+                                        title: "Utilities",
+                                        icon: "wrench.and.screwdriver")
+                                }
                         }
                         .momoDisability()
                     }

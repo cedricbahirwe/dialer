@@ -37,43 +37,47 @@ struct ContactsList: View {
                     .font(.largeTitle)
                     .bold()
                     .transition(.move(edge: .top))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .padding(.horizontal, 20)
             }
             
             HStack {
-                TextField("Search by name or phone", text: $searchQuery)
-                    .padding(7)
-                    .padding(.horizontal, 25)
-                    .background(Color(.tertiarySystemGroupedBackground))
-                    .cornerRadius(8)
-                    .overlay(
-                        HStack {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.gray)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 8)
-                            
-                            if isEditing {
-                                Button(action: {
-                                    searchQuery = ""
-                                }) {
-                                    Image(systemName: "multiply.circle.fill")
-                                        .foregroundColor(.gray)
-                                        .padding(.trailing, 8)
-                                }
+                
+                TextField("Search by name or phone", text: $searchQuery) { isEditing in
+                    withAnimation {
+                        self.isEditing = isEditing
+                    }
+                }
+                .padding(7)
+                .padding(.leading, 25)
+                .padding(.trailing, 4)
+                .background(Color(.tertiarySystemGroupedBackground))
+                .cornerRadius(8)
+                .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 8)
+                        
+                        if isEditing {
+                            Button(action: {
+                                searchQuery = ""
+                            }) {
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 8)
                             }
                         }
-                    )
-                    .onTapGesture {
-                        withAnimation {
-                            isEditing = true
-                        }
                     }
+                )
                 
                 if isEditing {
                     Button(action: {
                         withAnimation {
-                            isEditing = false
                             searchQuery = ""
+                            isEditing = false
                             hideKeyboard()
                         }
                         
@@ -102,7 +106,7 @@ struct ContactsList: View {
     }
     private var alertButtons: [ActionSheet.Button] {
         var buttons: [ActionSheet.Button] = selectedContact.phoneNumbers.map({ phoneNumber in
-            .default(Text(phoneNumber)) { managePhoneNumber(phoneNumber) }
+                .default(Text(phoneNumber)) { managePhoneNumber(phoneNumber) }
         })
         buttons.append(.cancel())
         return buttons
@@ -138,7 +142,7 @@ struct ContactRowView: View {
     let contact: Contact
     var body: some View {
         HStack {
-            LinearGradient(gradient: Gradient(colors: [Color.primary, Color.secondary]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color.main, Color.primary, Color.secondary]), startPoint: .top, endPoint: .bottom)
                 .frame(width: 70, height: 70)
                 .clipShape(Circle())
                 .overlay(

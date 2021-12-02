@@ -8,9 +8,9 @@
 
 // 1. DashBoardView
 "Buy" = "Kugura";
-"Send" = "Kohereza";
+"Send/Pay" = "Kohereza/Kwishyura";
 "History" = "Ibyashize";
-"Insights" = "Ubushishozi";
+"Utilities" = "Ibikorwa";
 "New Dial" = "Gukanda bundi bushya";
 "No SIM found" = "Nta SIMUKADI";
  

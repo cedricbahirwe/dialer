@@ -13,7 +13,7 @@ struct CongratulationsView: View {
     private let email = "abc.incs.001@gmail.com"
 
     @State private var didCopyToClipBoard = false    
-    @State private var timeRemaining = 71
+    @State private var timeRemaining: Int = 71
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var isAppActive = true
 
@@ -119,6 +119,7 @@ struct CongratulationsView: View {
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
         CongratulationsView(isPresented: .constant(true))
+            .environment(\.locale, .init(identifier: "en"))
     }
 }
 
