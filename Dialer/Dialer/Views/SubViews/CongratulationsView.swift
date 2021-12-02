@@ -119,7 +119,7 @@ struct CongratulationsView: View {
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
         CongratulationsView(isPresented: .constant(true))
-            .environment(\.locale, .init(identifier: "rw"))
+            .environment(\.locale, .init(identifier: "en"))
     }
 }
 
