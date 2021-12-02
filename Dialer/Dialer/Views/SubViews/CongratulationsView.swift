@@ -21,10 +21,10 @@ struct CongratulationsView: View {
         ZStack {
             Color(.secondarySystemBackground)
                 .ignoresSafeArea()
-//            CongratsView()
-//                .opacity(timeRemaining <= 1 ? 0.3 : 1)
-//                .blur(radius: timeRemaining <= 1 ? 3 : 0)
-//                .animation(.linear(duration: 0.5), value: timeRemaining)
+            CongratsView()
+                .opacity(timeRemaining <= 1 ? 0.3 : 1)
+                .blur(radius: timeRemaining <= 1 ? 3 : 0)
+                .animation(.linear(duration: 0.5), value: timeRemaining)
             VStack(spacing: 10) {
                 
                 Image("congrats")
