@@ -13,7 +13,7 @@ struct CongratulationsView: View {
     private let email = "abc.incs.001@gmail.com"
 
     @State private var didCopyToClipBoard = false    
-    @State private var timeRemaining = 71
+    @State private var timeRemaining: Int = 71
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var isAppActive = true
 
@@ -21,10 +21,10 @@ struct CongratulationsView: View {
         ZStack {
             Color(.secondarySystemBackground)
                 .ignoresSafeArea()
-            CongratsView()
-                .opacity(timeRemaining <= 1 ? 0.3 : 1)
-                .blur(radius: timeRemaining <= 1 ? 3 : 0)
-                .animation(.linear(duration: 0.5), value: timeRemaining)
+//            CongratsView()
+//                .opacity(timeRemaining <= 1 ? 0.3 : 1)
+//                .blur(radius: timeRemaining <= 1 ? 3 : 0)
+//                .animation(.linear(duration: 0.5), value: timeRemaining)
             VStack(spacing: 10) {
                 
                 Image("congrats")
@@ -119,6 +119,7 @@ struct CongratulationsView: View {
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
         CongratulationsView(isPresented: .constant(true))
+            .environment(\.locale, .init(identifier: "rw"))
     }
 }
 

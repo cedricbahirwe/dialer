@@ -54,7 +54,7 @@
 // 8. Congratulations View
 "Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense.";
-"Remaining time: timeRemaining seconds" = "Remaining time: %d seconds";
+"Remaining time: timeRemaining seconds" = "Temps restant: %d seconds";
 
 // 9. About View
 "Designed and developed by\nCédric Bahirwe from ABC Incs." = "Conçu et développé par\nCédric Bahirwe de ABC Incs.";

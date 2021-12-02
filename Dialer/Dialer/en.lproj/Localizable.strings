@@ -20,3 +20,5 @@
 
 // Fields
 "Enter Amount" = "Enter Amount";
+
+"Remaining time: timeRemaining seconds" = "Remaining time: %d seconds";
