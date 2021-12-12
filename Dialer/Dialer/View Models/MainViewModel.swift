@@ -12,7 +12,7 @@ enum DialerQuickCode {
     case internetBalance, airtimeBalance
     case voicePackBalance, mobileNumber
     case mobileWalletBalance(code: Int?)
-    case electricity(meter: String, code: Int?)
+    case electricity(meter: String, amount: Int, code: Int?)
     
     var ussd: String {
         switch self {
@@ -22,8 +22,8 @@ enum DialerQuickCode {
         case .mobileNumber: return "*135*8#"
         case .mobileWalletBalance(let code):
             return "*182*6*1\(codeSuffix(code))"
-        case .electricity(let meterNumber, let code):
-            return "*182*2*2*1*\(meterNumber)\(codeSuffix(code))"
+        case .electricity(let meterNumber, let amount, let code):
+            return "*182*2*2*1*1*\(meterNumber)*\(amount)\(codeSuffix(code))"
         }
     }
     
@@ -255,9 +255,9 @@ extension MainViewModel {
         performQuickDial(for: .mobileNumber)
     }
     
-    public func getElectricity(for meterNumber: String) {
+    public func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
-        performQuickDial(for: .electricity(meter: number, code: pinCode))
+        performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
     }
     
 }

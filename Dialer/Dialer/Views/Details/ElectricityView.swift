@@ -12,14 +12,36 @@ struct ElectricityView: View {
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var meterNumber: String = ""
+    @State private var amount: String = ""
     
     @EnvironmentObject private var store: MainViewModel
     private var isValidMeter: Bool { meterNumber.count >= 11  }
+    private var isValidAmount: Bool { (Int(amount) != nil) }
+    private var isValidTransaction: Bool {
+        isValidMeter && isValidAmount
+    }
     
+    private var amountHintView: Text {
+        if let amount = Int(amount) {
+            return Text(amount >= 500 ? "" : "The amount must be greater or equal to 500 RWF")
+        } else {
+            return Text("You have entered an invalid amount.")
+        }
+    }
     
     var body: some View {
         VStack {
             VStack(spacing: 20) {
+                VStack(spacing: 5) {
+                    if !amount.isEmpty {
+                        amountHintView
+                            .font(.caption).foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: amount)
+                    }
+                    
+                    NumberField("Enter Amount", text: $amount.animation())
+                }
                 
                 VStack(spacing: 5) {
                     HStack {
@@ -48,7 +70,7 @@ struct ElectricityView: View {
                 
                 Button(action: {
                     hideKeyboard()
-                    store.getElectricity(for: meterNumber)
+                    store.getElectricity(for: meterNumber, amount: Int(amount)!)
                 }) {
                     Text("Buy electricity")
                         .font(.footnote.bold())
@@ -58,7 +80,7 @@ struct ElectricityView: View {
                         .cornerRadius(8)
                         .foregroundColor(Color.white)
                 }
-                .disabled(meterNumber.isEmpty)
+                .disabled(isValidTransaction == false)
                 
                 Spacer()
             }

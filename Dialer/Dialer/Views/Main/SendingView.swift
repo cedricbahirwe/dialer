@@ -13,8 +13,7 @@ struct SendingView: View {
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
-    
-    
+        
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
