@@ -23,7 +23,7 @@ struct ElectricityView: View {
     
     private var amountHintView: Text {
         if let amount = Int(amount) {
-            return Text(amount >= 500 ? "" : "The amount must be greater or equal to 500 RWF")
+            return Text(amount >= 600 ? "" : "The amount must be greater or equal to 600 RWF")
         } else {
             return Text("You have entered an invalid amount.")
         }
