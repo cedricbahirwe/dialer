@@ -31,49 +31,26 @@ struct SendingView: View {
                 VStack(spacing: 3) {
                     if transaction.type == .client && !transaction.amount.isEmpty  {
                         feeHintView
-                            .font(.caption).foregroundColor(.red)
+                            .font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.estimatedFee)
                     }
                     
-                    TextField("Enter Amount", text: $transaction.amount.animation())
-                        .keyboardType(.decimalPad)
-                        .foregroundColor(.primary)
-                        .padding()
-                        .frame(height: 45)
-                        .background(Color(.systemBackground))
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.primary, lineWidth: 0.5))
-                        .font(.callout)
+                    NumberField("Enter Amount", text: $transaction.amount.animation())
                 }
                 VStack(spacing: 3) {
                     if transaction.type == .client {
-                        Text(selectedContact.names).font(.caption).foregroundColor(.red)
+                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.type)
                     }
-                    
-                    TextField(
-                        transaction.type == .client ?
-                            "Enter Receiver's number" :
-                            "Enter Merchant Code"
-                        , text: $transaction.number.onChange(handleNumberField).animation())
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .keyboardType(.numberPad)
-                        .foregroundColor(.primary)
-                        .padding()
-                        .frame(height: 45)
-                        .background(Color(.systemBackground))
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.primary, lineWidth: 0.5))
-                        .font(.callout)
+                    NumberField(transaction.type == .client ?
+                                "Enter Receiver's number" :
+                                "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
+            
                     if transaction.type == .merchant {
                         Text("The code should be a 5-6 digits number")
-                            .font(.caption)
-                            .foregroundColor(.red)
+                            .font(.caption).foregroundColor(.blue)
                     }
                 }
                 
@@ -180,4 +157,3 @@ struct SendingView_Previews: PreviewProvider {
     }
 }
 #endif
-

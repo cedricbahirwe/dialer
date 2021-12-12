@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B3261A3C94007D6892 /* DashBoardView.swift */; };
 		8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8207FA9426776AB600412AE1 /* TransactionModel.swift */; };
+		820C108A2766A31400A7CADE /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820C10892766A31400A7CADE /* NumberField.swift */; };
+		820C108E2766A52C00A7CADE /* ElectricityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820C108D2766A52C00A7CADE /* ElectricityView.swift */; };
+		820C10902766A56300A7CADE /* VoicePacksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820C108F2766A56300A7CADE /* VoicePacksView.swift */; };
 		8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8211528526E4EB1B00BA7BA2 /* Color+Extension.swift */; };
 		821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821BE13226FB19F200A3CA02 /* AboutView.swift */; };
 		821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821BE13426FB28CB00A3CA02 /* AppVersioning.swift */; };
@@ -57,6 +60,9 @@
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
 		8207FA9426776AB600412AE1 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		820C10892766A31400A7CADE /* NumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberField.swift; sourceTree = "<group>"; };
+		820C108D2766A52C00A7CADE /* ElectricityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectricityView.swift; sourceTree = "<group>"; };
+		820C108F2766A56300A7CADE /* VoicePacksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoicePacksView.swift; sourceTree = "<group>"; };
 		8211528526E4EB1B00BA7BA2 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		821BE13226FB19F200A3CA02 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		821BE13426FB28CB00A3CA02 /* AppVersioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersioning.swift; sourceTree = "<group>"; };
@@ -121,12 +127,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		820C108B2766A4D400A7CADE /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+				825F996226720AE6009E4A7B /* SendingView.swift */,
+				824B80E027483E6F004041AA /* UtilitiesView.swift */,
+				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		820C108C2766A51000A7CADE /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				820C108D2766A52C00A7CADE /* ElectricityView.swift */,
+				820C108F2766A56300A7CADE /* VoicePacksView.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
 		8218DBA72694644600E3C025 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
 				8255E68D2693959800657EFB /* CongratulationsView.swift */,
 				8255E690269395EE00657EFB /* CongratsViewController.swift */,
 				821C0737264DDFFB00DBD545 /* PinView.swift */,
+				820C10892766A31400A7CADE /* NumberField.swift */,
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 			);
 			path = SubViews;
@@ -223,13 +250,11 @@
 			isa = PBXGroup;
 			children = (
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
+				820C108B2766A4D400A7CADE /* Main */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
-				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+				820C108C2766A51000A7CADE /* Details */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
-				825F996226720AE6009E4A7B /* SendingView.swift */,
 				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
-				824B80E027483E6F004041AA /* UtilitiesView.swift */,
-				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
 				8218DBA72694644600E3C025 /* SubViews */,
@@ -356,6 +381,7 @@
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
+				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
@@ -365,8 +391,10 @@
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
 				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
+				820C108E2766A52C00A7CADE /* ElectricityView.swift in Sources */,
 				8248440926FDBAF900DB0643 /* SettingsManager.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
+				820C10902766A56300A7CADE /* VoicePacksView.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */,

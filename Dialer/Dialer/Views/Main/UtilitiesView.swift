@@ -15,7 +15,7 @@ struct UtilitiesView: View {
             
             Section("Primary") {
                 NavigationLink {
-                    Text("Electricity")
+                    ElectricityView()
                 } label: {
                     Text("Buy Electricity")
                 }
@@ -31,7 +31,7 @@ struct UtilitiesView: View {
                 
                 
                 NavigationLink {
-                    Text("Voice")
+                    VoicePacksView()
                 } label: {
                     Text("Buy Voice Packs")
                 }
