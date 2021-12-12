@@ -75,14 +75,14 @@ struct DashBoardView: View {
                                         icon: "wrench.and.screwdriver")
                                 }
                         }
-                        .momoDisability()
+//                        .momoDisability()
                     }
                     .padding()
                     Spacer()
                     
                     if checkCellularProvider.status == false {
                         HStack {
-                            Text("Sim Card is required to unlock all the features.")
+                            Text("Sim card is required to unlock all the features.")
                                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                                 .foregroundColor(.red)
                                 .lineLimit(1)

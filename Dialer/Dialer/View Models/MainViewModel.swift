@@ -8,6 +8,24 @@
 import Foundation
 import SwiftUI
 
+enum DialerQuickCode {
+    case internetBalance, airtimeBalance
+    case voicePackBalance, mobileNumber
+    case mobileWalletBalance(code: Int?)
+    
+    var ussd: String {
+        switch self {
+        case .internetBalance: return "*345*5#"
+        case .airtimeBalance: return "*131#"
+        case .voicePackBalance: return "*140*5#"
+        case .mobileNumber: return "*135*8#"
+        case .mobileWalletBalance(let code):
+            return code == nil ? "*182*6*1#" : "*182*6*1*\(code!)#"
+        }
+    }
+    
+}
+
 class MainViewModel: ObservableObject {
     
     @Published var pinCode: Int? = DialerStorage.shared.getPinCode()
@@ -34,10 +52,8 @@ class MainViewModel: ObservableObject {
         recentCodes.map(\.totalPrice).reduce(0, +)
     }
     
-    @Published var purchaseDetail = PurchaseDetailModel()
+    @Published public var purchaseDetail = PurchaseDetailModel()
     
-    
-    // TODO: why is this optional!!
     @Published private(set) var recentCodes: [RecentCode] = []
     
     
@@ -96,16 +112,6 @@ class MainViewModel: ObservableObject {
         saveLocally()
     }
     
-    /// Check internet balance.
-    public func checkInternetBalance() {
-        Self.performQuickDial(for: "*345*5#")
-    }
-    
-    /// Check Mobile Balance
-    public func checkMobileBalance() {
-        Self.performQuickDial(for: "*182*6*1#")
-    }
-    
     /// Save locally the Pin Code
     /// - Parameter value: the pin value to be saved.
     public func savePinCode(value: Int) {
@@ -152,8 +158,23 @@ class MainViewModel: ObservableObject {
     
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: the `string` code to be dialed.
+    @available(*, deprecated, message: "This method now accepts a built-in param of type DialerQuickCode")
     public static func performQuickDial(for code: String) {
         if let telUrl = URL(string: "tel://\(code)"),
+           UIApplication.shared.canOpenURL(telUrl) {
+            UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
+                print("Successfully Dialed")
+            })
+            
+        } else {
+            print("Can not dial this code")
+        }
+    }
+    
+    /// Perform an independent dial, without storing or tracking.
+    /// - Parameter code: a `DialerQuickCode`  code to be dialed.
+    public static func performQuickDial(for code: DialerQuickCode) {
+        if let telUrl = URL(string: "tel://\(code.ussd)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
                 print("Successfully Dialed")
@@ -178,7 +199,6 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    
     public func showSettingsView() {
         showSettingsSheet = true
     }
@@ -186,7 +206,6 @@ class MainViewModel: ObservableObject {
     public func dismissSettingsView() {
         showSettingsSheet = false
     }
-    
     
     public func defaultSheetBinding() -> Binding<Bool> {
         let setter = { [weak self] (value: Bool) in
@@ -198,13 +217,41 @@ class MainViewModel: ObservableObject {
             }
         }
         let getter = showSettingsSheet ? showSettingsSheet : showHistorySheet
+        
         return Binding(
             get: { getter },
             set: { setter($0) })
     }
 }
+
+// MARK: - Extension used for Quick USSD actions.
 extension MainViewModel {
+    private func performQuickDial(for quickCode: DialerQuickCode) {
+        Self.performQuickDial(for: quickCode)
+    }
+    public func checkInternetBalance() {
+        performQuickDial(for: .internetBalance)
+    }
+    public func checkAirtimeBalance() {
+        performQuickDial(for: .airtimeBalance)
+    }
     
+    public func checkVoicePackBalance() {
+        performQuickDial(for: .voicePackBalance)
+    }
+
+    public func checkMobileWalletBalance() {
+        performQuickDial(for: .mobileWalletBalance(code: pinCode))
+    }
+    
+    public func checkSimNumber() {
+        performQuickDial(for: .mobileNumber)
+    }
+    
+}
+
+// MARK: - Extension used for Error, Models, etc
+extension MainViewModel {
     enum DialingError: Error {
         case canNotDial, emptyPin, unknownFormat(String),  other
         var message: String {
@@ -265,7 +312,7 @@ extension MainViewModel {
 }
 
 
-// Extension used for Home Quick Actions
+// MARK: - Extension used for Home Quick Actions
 extension MainViewModel.RecentCode {
     
     /// - Tag: QuickActionUserInfo
