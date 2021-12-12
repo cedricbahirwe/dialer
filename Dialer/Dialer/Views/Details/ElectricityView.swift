@@ -14,7 +14,7 @@ struct ElectricityView: View {
     @State private var meterNumber: String = ""
     
     @EnvironmentObject private var store: MainViewModel
-    private var isValidMeter: Bool { meterNumber.count >= 14  }
+    private var isValidMeter: Bool { meterNumber.count >= 11  }
     
     
     var body: some View {
@@ -47,6 +47,7 @@ struct ElectricityView: View {
                                 
                 
                 Button(action: {
+                    hideKeyboard()
                     store.getElectricity(for: meterNumber)
                 }) {
                     Text("Buy electricity")

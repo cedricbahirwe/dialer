@@ -21,10 +21,14 @@ enum DialerQuickCode {
         case .voicePackBalance: return "*140*5#"
         case .mobileNumber: return "*135*8#"
         case .mobileWalletBalance(let code):
-            return "*182*6*1\(code == nil ? "#" : "*\(code!)")"
+            return "*182*6*1\(codeSuffix(code))"
         case .electricity(let meterNumber, let code):
-            return "*182*2*2*1*\(meterNumber)\(code == nil ? "#" : "*\(code!)")"
+            return "*182*2*2*1*\(meterNumber)\(codeSuffix(code))"
         }
+    }
+    
+    private func codeSuffix(_ code: Int?) -> String {
+        return code == nil ? "#" : "*\(code!)#"
     }
     
 }
@@ -252,7 +256,8 @@ extension MainViewModel {
     }
     
     public func getElectricity(for meterNumber: String) {
-        performQuickDial(for: .electricity(meter: meterNumber, code: pinCode))
+        let number = meterNumber.replacingOccurrences(of: " ", with: "")
+        performQuickDial(for: .electricity(meter: number, code: pinCode))
     }
     
 }
