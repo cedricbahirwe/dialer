@@ -126,7 +126,7 @@ struct SendingView: View {
     
     private func transferMoney() {
         hideKeyboard()
-        MainViewModel.performQuickDial(for: transaction.fullCode)
+        MainViewModel.performQuickDial(for: .other(transaction.fullCode))
     }
     
     /// Create a validation for the  `Number` field value

@@ -13,6 +13,7 @@ enum DialerQuickCode {
     case voicePackBalance, mobileNumber
     case mobileWalletBalance(code: Int?)
     case electricity(meter: String, amount: Int, code: Int?)
+    case other(String)
     
     var ussd: String {
         switch self {
@@ -24,6 +25,8 @@ enum DialerQuickCode {
             return "*182*6*1\(codeSuffix(code))"
         case .electricity(let meterNumber, let amount, let code):
             return "*182*2*2*1*1*\(meterNumber)*\(amount)\(codeSuffix(code))"
+        case .other(let fullCode):
+            return fullCode
         }
     }
     
