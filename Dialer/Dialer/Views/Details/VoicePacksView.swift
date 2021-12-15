@@ -10,7 +10,7 @@ import SwiftUI
 struct VoicePacksView: View {
     var body: some View {
         VStack {
-            Text("Allo!")
+            ComingSoonLabel()
         }
     }
 }

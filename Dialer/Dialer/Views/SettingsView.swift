@@ -259,14 +259,7 @@ extension SettingsView {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.secondary)
                 } else {
-                    Text("Coming soon")
-                        .font(.caption)
-                        .padding(8)
-                        .frame(height: 30)
-                        .background(Color.red.opacity(0.1))
-                        .background(Color(.systemBackground))
-                        .clipShape(Capsule())
-                        .foregroundColor(.red)
+                    ComingSoonLabel()
                 }
             }
             .padding(.vertical, 5)

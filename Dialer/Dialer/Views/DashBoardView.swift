@@ -123,9 +123,7 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 settingsButton
-                    .onTapGesture  {
-                        data.showSettingsView()
-                    }
+                    .onTapGesture(perform: data.showSettingsView)
             }
         }
         .onAppear(perform: setupAppearance)
@@ -133,7 +131,7 @@ struct DashBoardView: View {
     
     private var settingsButton: some View {
         LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            .frame(width: 25, height: 25)
+            .frame(width: 30, height: 30)
             .mask(
                 Image(systemName: "gear")
                     .resizable()
