@@ -57,9 +57,7 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "Send/Pay",
                                 icon: "paperplane.circle")
-                                .onChangeBiometrics(isEvaluate: $presentSendingView)
-//                                .addBiometrics { presentSendingView = true
-//                                }
+                                .onChangeBiometrics(isActive: $presentSendingView)
                         }
                         
                         HStack(spacing: 15) {

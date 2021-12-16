@@ -27,7 +27,7 @@ class BiometricAuthenticator: ObservableObject {
         //  policy evaluation callback (for example, don't put next line in the state's didSet
         //  method, which is triggered as a result of the state change made in the callback),
         //  because that might result in deadlock.
-        context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+        context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
         
         
         // Set the initial app state. This impacts the initial state of the UI as well.
@@ -54,10 +54,10 @@ class BiometricAuthenticator: ObservableObject {
             
             // First check if we have the needed hardware support.
             var error: NSError?
-            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
                 
-                let reason = "Log in to access this feature."
-                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
+                let reason = "Authenticate to access this feature."
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason ) { success, error in
                     
                     if success {
                         
