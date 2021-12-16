@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UtilitiesView: View {
     @EnvironmentObject private var store: MainViewModel
-    
+        
     var body: some View {
         List {
             
@@ -32,9 +32,13 @@ struct UtilitiesView: View {
                 
                 NavigationLink {
                     VoicePacksView()
+                        
                 } label: {
                     Text("Buy Voice Packs")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .overlay(ComingSoonLabel(), alignment: .trailing)
                 }
+                .disabled(true)
                 
                 TappeableText("Check Voice Packs Balance", onTap: store.checkVoicePackBalance)
                 

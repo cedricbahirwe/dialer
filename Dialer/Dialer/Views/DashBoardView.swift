@@ -17,8 +17,9 @@ struct DashBoardView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
-    @State private var presentNewDial: Bool = false
-    @State private var showPurchaseSheet: Bool = false
+    @State private var presentNewDial = false
+    @State private var presentSendingView = false
+    @State private var showPurchaseSheet = false
     
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     private var bgColor: Color {
@@ -51,14 +52,14 @@ struct DashBoardView: View {
                                 .onTapGesture {
                                     showPurchaseSheet.toggle()
                                 }
-                            
                             NavigationLink(
-                                destination: SendingView()) {
-                                DashItemView(
-                                    title: "Send/Pay",
-                                    icon: "paperplane.circle")
-                            }
-//                            .momoDisability()
+                                destination: SendingView(), isActive: $presentSendingView) {}
+                            DashItemView(
+                                title: "Send/Pay",
+                                icon: "paperplane.circle")
+                                .onChangeBiometrics(isEvaluate: $presentSendingView)
+//                                .addBiometrics { presentSendingView = true
+//                                }
                         }
                         
                         HStack(spacing: 15) {
@@ -75,9 +76,9 @@ struct DashBoardView: View {
                                         icon: "wrench.and.screwdriver")
                                 }
                         }
-//                        .momoDisability()
                     }
                     .padding()
+                    
                     Spacer()
                     
                     if checkCellularProvider.status == false {

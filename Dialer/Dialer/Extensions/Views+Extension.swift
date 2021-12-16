@@ -14,7 +14,25 @@ struct MTNDisabling: ViewModifier {
     }
 }
 
+struct BiometricsAccessibility: ViewModifier {
+    @StateObject private var biometrics = BiometricAuthenticator.shared
+    @Binding var isEvaluated: Bool
+    func body(content: Content) -> some View {
+        content
+            .onTapGesture(perform: biometrics.changeLoginState)
+            .onChange(of: biometrics.state, perform: setState)
+    }
+    
+    private func setState(state: BiometricAuthenticator.AuthenticationState) {
+        isEvaluated = state == .loggedin
+    }
+}
+
 extension View {
+    
+    func onChangeBiometrics(isActive: Binding<Bool>) -> some View {
+        ModifiedContent(content: self, modifier: BiometricsAccessibility(isEvaluated: isActive))
+    }
     
     /// Disable access if `Mtn` sim card is not detected
     /// - Returns: a disabled view if mtn card is not detected (no interaction).
