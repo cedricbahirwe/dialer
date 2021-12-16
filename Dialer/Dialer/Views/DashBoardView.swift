@@ -52,8 +52,7 @@ struct DashBoardView: View {
                                 .onTapGesture {
                                     showPurchaseSheet.toggle()
                                 }
-                            NavigationLink(
-                                destination: SendingView(), isActive: $presentSendingView) {}
+                      
                             DashItemView(
                                 title: "Send/Pay",
                                 icon: "paperplane.circle")
@@ -76,6 +75,9 @@ struct DashBoardView: View {
                         }
                     }
                     .padding()
+                    
+                    NavigationLink(
+                        destination: SendingView(), isActive: $presentSendingView) {}
                     
                     Spacer()
                     

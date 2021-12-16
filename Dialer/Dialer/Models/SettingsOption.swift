@@ -23,7 +23,7 @@ enum SettingsOption: Int {
         case .changeLanguage:
             return .init(icon: "language", color: .main.opacity(0.7), title: "Change Language", subtitle: "Select your desired language.")
         case .biometrics:
-            return .init(sysIcon: "lock.fill", color: .green, title: "Biometrics", subtitle: "Choose your own biometric authentication.")
+            return .init(sysIcon: "lock.fill", color: .green, title: "Biometric Authentication", subtitle: "For securing your activities on your app.")
         case .deletePin:
             return .init(sysIcon: "trash", color: .red, title: "Remove Pin", subtitle: "You'll need to re-enter it later.")
         case .getStarted:
