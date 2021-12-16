@@ -209,7 +209,7 @@ struct PurchaseDetailView_Previews: PreviewProvider {
             ZStack(alignment: .bottom) {
                 Spacer()
                     .background(Color.red)
-                PurchaseDetailView(isPresented: .constant(false), data: MainViewModel())
+                PurchaseDetailView(isPresented: .constant(true), data: MainViewModel())
             }
         }
     }

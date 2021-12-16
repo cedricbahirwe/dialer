@@ -17,8 +17,9 @@ struct DashBoardView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var data: MainViewModel
     @State private var dragState: DragState = .closed
-    @State private var presentNewDial: Bool = false
-    @State private var showPurchaseSheet: Bool = false
+    @State private var presentNewDial = false
+    @State private var presentSendingView = false
+    @State private var showPurchaseSheet = false
     
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     private var bgColor: Color {
@@ -51,14 +52,11 @@ struct DashBoardView: View {
                                 .onTapGesture {
                                     showPurchaseSheet.toggle()
                                 }
-                            
-                            NavigationLink(
-                                destination: SendingView()) {
-                                DashItemView(
-                                    title: "Send/Pay",
-                                    icon: "paperplane.circle")
-                            }
-//                            .momoDisability()
+                      
+                            DashItemView(
+                                title: "Send/Pay",
+                                icon: "paperplane.circle")
+                                .onChangeBiometrics(isActive: $presentSendingView)
                         }
                         
                         HStack(spacing: 15) {
@@ -75,14 +73,17 @@ struct DashBoardView: View {
                                         icon: "wrench.and.screwdriver")
                                 }
                         }
-                        .momoDisability()
                     }
                     .padding()
+                    
+                    NavigationLink(
+                        destination: SendingView(), isActive: $presentSendingView) {}
+                    
                     Spacer()
                     
                     if checkCellularProvider.status == false {
                         HStack {
-                            Text("Sim Card is required to unlock all the features.")
+                            Text("Sim card is required to unlock all the features.")
                                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                                 .foregroundColor(.red)
                                 .lineLimit(1)
@@ -123,9 +124,7 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 settingsButton
-                    .onTapGesture  {
-                        data.showSettingsView()
-                    }
+                    .onTapGesture(perform: data.showSettingsView)
             }
         }
         .onAppear(perform: setupAppearance)
@@ -133,7 +132,7 @@ struct DashBoardView: View {
     
     private var settingsButton: some View {
         LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            .frame(width: 25, height: 25)
+            .frame(width: 30, height: 30)
             .mask(
                 Image(systemName: "gear")
                     .resizable()

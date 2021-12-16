@@ -122,7 +122,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let actionTypeValue = ActionType(rawValue: shortcutItem.type) {
             switch actionTypeValue {
             case .balanceAction:
-                viewModel.checkMobileBalance()
+                viewModel.checkMobileWalletBalance()
                 
             case .dialAction:
                 // Go to that particular code shortcut.

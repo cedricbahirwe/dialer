@@ -32,8 +32,9 @@ struct SettingsView: View {
                             SettingsRow(.changeLanguage) {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
+                            SettingsRow(.biometrics)
                             if dataStore.hasStoredPinCode {
-                                SettingsRow(.deletePin, action: dataStore.removePin)
+                                SettingsRow(.deletePin, perform: dataStore.removePin)
                             }
                         }
                         .padding(.bottom, 20)
@@ -51,7 +52,7 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("Reach Out")) {
                         VStack {
-                            SettingsRow(.contactUs, action: openMail)
+                            SettingsRow(.contactUs, perform: openMail)
                                 .alert("No Email Client Found",
                                        isPresented: $showMailErrorAlert) {
                                     Button("OK", role: .cancel) { }
@@ -68,7 +69,7 @@ struct SettingsView: View {
                                 SettingsRow(.tweetUs)
                             }
                             
-                            SettingsRow(.translationSuggestion, action: openMail)
+                            SettingsRow(.translationSuggestion, perform: openMail)
                             
                         }
                         .padding(.bottom, 20)
@@ -206,13 +207,13 @@ extension SettingsView {
         
         init(_ option: SettingsOption,
              exists: Bool = true,
-             action: @escaping () -> Void) {
-            self.item = option.getItem()
+             perform action: @escaping () -> Void) {
+            self.item = option.getSettingsItem()
             self.exists = exists
             self.action = action
         }
         init(_ option: SettingsOption, exists: Bool = true) {
-            self.item = option.getItem()
+            self.item = option.getSettingsItem()
             self.exists = exists
             self.action = nil
         }
@@ -256,17 +257,10 @@ extension SettingsView {
                 Spacer(minLength: 1)
                 
                 if exists {
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.secondary)
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.secondary)
                 } else {
-                    Text("Coming soon")
-                        .font(.caption)
-                        .padding(8)
-                        .frame(height: 30)
-                        .background(Color.red.opacity(0.1))
-                        .background(Color(.systemBackground))
-                        .clipShape(Capsule())
-                        .foregroundColor(.red)
+                    ComingSoonLabel()
                 }
             }
             .padding(.vertical, 5)

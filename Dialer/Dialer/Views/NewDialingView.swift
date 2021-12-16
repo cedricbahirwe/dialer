@@ -30,7 +30,7 @@ struct NewDialingView: View {
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
                         .frame(height: 28)
                         .mask(Text(composedCode))
-                        .font(Font.title)
+                        .font(.title)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                         .truncationMode(.head)
@@ -40,7 +40,7 @@ struct NewDialingView: View {
                 
                 PinView(input: $composedCode.animation(),
                         isFullMode: true, btnSize: 80)
-                    .font(Font.title.bold())
+                    .font(.title.bold())
                     .padding(.vertical, 10)
                     .padding()
                 

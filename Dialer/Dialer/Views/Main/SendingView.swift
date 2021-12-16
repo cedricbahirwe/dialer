@@ -13,8 +13,7 @@ struct SendingView: View {
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
-    
-    
+        
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
@@ -31,49 +30,26 @@ struct SendingView: View {
                 VStack(spacing: 3) {
                     if transaction.type == .client && !transaction.amount.isEmpty  {
                         feeHintView
-                            .font(.caption).foregroundColor(.red)
+                            .font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.estimatedFee)
                     }
                     
-                    TextField("Enter Amount", text: $transaction.amount.animation())
-                        .keyboardType(.decimalPad)
-                        .foregroundColor(.primary)
-                        .padding()
-                        .frame(height: 45)
-                        .background(Color(.systemBackground))
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.primary, lineWidth: 0.5))
-                        .font(.callout)
+                    NumberField("Enter Amount", text: $transaction.amount.animation())
                 }
                 VStack(spacing: 3) {
                     if transaction.type == .client {
-                        Text(selectedContact.names).font(.caption).foregroundColor(.red)
+                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.type)
                     }
+                    NumberField(transaction.type == .client ?
+                                "Enter Receiver's number" :
+                                    "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
                     
-                    TextField(
-                        transaction.type == .client ?
-                            "Enter Receiver's number" :
-                            "Enter Merchant Code"
-                        , text: $transaction.number.onChange(handleNumberField).animation())
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .keyboardType(.numberPad)
-                        .foregroundColor(.primary)
-                        .padding()
-                        .frame(height: 45)
-                        .background(Color(.systemBackground))
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.primary, lineWidth: 0.5))
-                        .font(.callout)
                     if transaction.type == .merchant {
                         Text("The code should be a 5-6 digits number")
-                            .font(.caption)
-                            .foregroundColor(.red)
+                            .font(.caption).foregroundColor(.blue)
                     }
                 }
                 
@@ -85,7 +61,7 @@ struct SendingView: View {
                             Image(systemName: "person.fill")
                             Text("Pick a contact").bold().font(.footnote)
                         }
-                        .font(Font.footnote.bold())
+                        .font(.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
                         .background(Color.primary)
@@ -97,7 +73,7 @@ struct SendingView: View {
                 
                 Button(action: transferMoney) {
                     Text("Submit")
-                        .font(Font.footnote.bold())
+                        .font(.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
                         .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
@@ -120,7 +96,7 @@ struct SendingView: View {
         .navigationTitle("Transfer Money")
         .toolbar {
             Text(transaction.type == .client ? "Merchant pay" : "Send Money")
-                .font(Font.system(size: 18, design: .rounded))
+                .font(.system(size: 18, design: .rounded))
                 .foregroundColor(.blue)
                 .onTapGesture  {
                     withAnimation {
@@ -131,16 +107,16 @@ struct SendingView: View {
         }
     }
     
- 
+    
     private func requestContacts() {
-            Task {
-                do {
-                    allContacts = try await PhoneContacts.getMtnContacts()
-                } catch {
-                    print(error.localizedDescription)
-                }
+        Task {
+            do {
+                allContacts = try await PhoneContacts.getMtnContacts()
+            } catch {
+                print(error.localizedDescription)
             }
         }
+    }
     
     private func cleanPhoneNumber(_ value: Contact?) {
         guard let contact = value else { return }
@@ -150,7 +126,7 @@ struct SendingView: View {
     
     private func transferMoney() {
         hideKeyboard()
-        MainViewModel.performQuickDial(for: transaction.fullCode)
+        MainViewModel.performQuickDial(for: .other(transaction.fullCode))
     }
     
     /// Create a validation for the  `Number` field value
@@ -172,12 +148,9 @@ struct SendingView: View {
 #if DEBUG
 struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            NavigationView {
-                SendingView()
-            }
+        NavigationView {
+            SendingView()
         }
     }
 }
 #endif
-

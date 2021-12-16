@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8201D9B3261A3C94007D6892 /* DashBoardView.swift */; };
 		8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8207FA9426776AB600412AE1 /* TransactionModel.swift */; };
+		820C108A2766A31400A7CADE /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820C10892766A31400A7CADE /* NumberField.swift */; };
+		820C108E2766A52C00A7CADE /* ElectricityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820C108D2766A52C00A7CADE /* ElectricityView.swift */; };
+		820C10902766A56300A7CADE /* VoicePacksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820C108F2766A56300A7CADE /* VoicePacksView.swift */; };
 		8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8211528526E4EB1B00BA7BA2 /* Color+Extension.swift */; };
 		821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821BE13226FB19F200A3CA02 /* AboutView.swift */; };
 		821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821BE13426FB28CB00A3CA02 /* AppVersioning.swift */; };
@@ -21,6 +24,7 @@
 		8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440A26FDBB2300DB0643 /* SettingsItem.swift */; };
 		8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440C26FDBB3200DB0643 /* SettingsOption.swift */; };
 		824B80E127483E6F004041AA /* UtilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824B80E027483E6F004041AA /* UtilitiesView.swift */; };
+		824D4F1E2769F9EE00738014 /* ComingSoonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D4F1D2769F9EE00738014 /* ComingSoonLabel.swift */; };
 		825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825022E52673676B007ABB56 /* DialingsHistoryView.swift */; };
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
 		8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E68D2693959800657EFB /* CongratulationsView.swift */; };
@@ -30,6 +34,7 @@
 		825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996926720B7E009E4A7B /* ContactModel.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
 		828D79D726E1029800439F9A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828D79D626E1029800439F9A /* SettingsView.swift */; };
+		82C4A13A276B2BC2001E35EB /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C4A139276B2BC2001E35EB /* Authenticator.swift */; };
 		82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB625D1C1FE00551D22 /* AppDelegate.swift */; };
 		82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */; };
 		82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FBA25D1C1FE00551D22 /* ContentView.swift */; };
@@ -57,6 +62,9 @@
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
 		8207FA9426776AB600412AE1 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		820C10892766A31400A7CADE /* NumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberField.swift; sourceTree = "<group>"; };
+		820C108D2766A52C00A7CADE /* ElectricityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectricityView.swift; sourceTree = "<group>"; };
+		820C108F2766A56300A7CADE /* VoicePacksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoicePacksView.swift; sourceTree = "<group>"; };
 		8211528526E4EB1B00BA7BA2 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		821BE13226FB19F200A3CA02 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		821BE13426FB28CB00A3CA02 /* AppVersioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersioning.swift; sourceTree = "<group>"; };
@@ -72,6 +80,7 @@
 		8248440A26FDBB2300DB0643 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		8248440C26FDBB3200DB0643 /* SettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOption.swift; sourceTree = "<group>"; };
 		824B80E027483E6F004041AA /* UtilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesView.swift; sourceTree = "<group>"; };
+		824D4F1D2769F9EE00738014 /* ComingSoonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonLabel.swift; sourceTree = "<group>"; };
 		825022E52673676B007ABB56 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
@@ -85,6 +94,7 @@
 		8276274527085AF700A5F4BC /* rw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = rw; path = rw.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		828D79D626E1029800439F9A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		82C4A139276B2BC2001E35EB /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D41FB625D1C1FE00551D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,12 +131,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		820C108B2766A4D400A7CADE /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+				825F996226720AE6009E4A7B /* SendingView.swift */,
+				824B80E027483E6F004041AA /* UtilitiesView.swift */,
+				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		820C108C2766A51000A7CADE /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				820C108D2766A52C00A7CADE /* ElectricityView.swift */,
+				820C108F2766A56300A7CADE /* VoicePacksView.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
 		8218DBA72694644600E3C025 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
 				8255E68D2693959800657EFB /* CongratulationsView.swift */,
 				8255E690269395EE00657EFB /* CongratsViewController.swift */,
 				821C0737264DDFFB00DBD545 /* PinView.swift */,
+				824D4F1D2769F9EE00738014 /* ComingSoonLabel.swift */,
+				820C10892766A31400A7CADE /* NumberField.swift */,
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 			);
 			path = SubViews;
@@ -167,6 +199,7 @@
 				82550129263B3BDF00CB1BC2 /* Dialer.entitlements */,
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
+				82C4A139276B2BC2001E35EB /* Authenticator.swift */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				825F996826720B75009E4A7B /* Models */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
@@ -223,13 +256,11 @@
 			isa = PBXGroup;
 			children = (
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
+				820C108B2766A4D400A7CADE /* Main */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
-				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+				820C108C2766A51000A7CADE /* Details */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
-				825F996226720AE6009E4A7B /* SendingView.swift */,
 				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
-				824B80E027483E6F004041AA /* UtilitiesView.swift */,
-				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
 				8218DBA72694644600E3C025 /* SubViews */,
@@ -355,7 +386,9 @@
 				82EEBCF626C1338700B1720A /* PrimitiveExtensions.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
+				824D4F1E2769F9EE00738014 /* ComingSoonLabel.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
+				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
@@ -365,8 +398,10 @@
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
 				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
+				820C108E2766A52C00A7CADE /* ElectricityView.swift in Sources */,
 				8248440926FDBAF900DB0643 /* SettingsManager.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
+				820C10902766A56300A7CADE /* VoicePacksView.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */,
@@ -376,6 +411,7 @@
 				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
 				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
+				82C4A13A276B2BC2001E35EB /* Authenticator.swift in Sources */,
 				8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */,
 				8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */,
 				824B80E127483E6F004041AA /* UtilitiesView.swift in Sources */,
@@ -561,7 +597,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dialer/Dialer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"Dialer/Preview Content\"";
 				DEVELOPMENT_TEAM = 6V9B6LUW22;
 				ENABLE_PREVIEWS = YES;
@@ -587,7 +623,7 @@
 				CODE_SIGN_ENTITLEMENTS = Dialer/Dialer.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"Dialer/Preview Content\"";
 				DEVELOPMENT_TEAM = 6V9B6LUW22;
 				ENABLE_PREVIEWS = YES;
