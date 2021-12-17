@@ -74,7 +74,7 @@ class PhoneContacts {
                 let mtnNumbersFormat = contactsPhoneNumbers.filter { $0.value.stringValue.isMtnNumber }
                 
                 var pureMtnNumbers = mtnNumbersFormat.compactMap { $0.value.value(forKey: "digits") as? String }
-                pureMtnNumbers = pureMtnNumbers.map { $0.asMtnNumber() }
+                
                 if pureMtnNumbers.isEmpty == false {
                     let newContact = Contact(names: contact.givenName + " " +  contact.familyName,
                                              phoneNumbers: pureMtnNumbers)
