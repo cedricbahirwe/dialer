@@ -12,6 +12,8 @@ struct SettingsView: View {
     @EnvironmentObject
     private var dataStore: MainViewModel
     
+    @AppStorage("allowBiometrics")
+    private var allowBiometrics = false
     @State private
     var showMailErrorAlert = false
     
@@ -31,6 +33,9 @@ struct SettingsView: View {
                         VStack {
                             SettingsRow(.changeLanguage) {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                            }
+                            HStack {
+                                
                             }
                             SettingsRow(.biometrics)
                             if dataStore.hasStoredPinCode {
