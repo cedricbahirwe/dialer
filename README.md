@@ -19,7 +19,7 @@
 - **Understand what makes a great app**
 - **Understand the SDLC (Software Development Life Cycle)**
 - **Following Apple Human Interface Guidelines**
-- **Deep Dive into Home Screen Quick Actions Actions**
+- **Deep Dive into Home Screen Quick Actions**
 - **Management of Local DataBase in SwiftUI**
 - **Light / Dark Mode Support**
 
