@@ -69,7 +69,7 @@ struct ElectricityView: View {
                     hideKeyboard()
                     store.getElectricity(for: meterNumber, amount: Int(amount)!)
                 }) {
-                    Text("Send to back electricity")
+                    Text("Buy electricity")
                         .font(.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
@@ -82,10 +82,11 @@ struct ElectricityView: View {
                 Spacer()
             }
             .padding()
+            
         }
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
-        .navigationTitle("Bank Transaction")
+        .navigationTitle("Buy Electricity")
     }
 }
 

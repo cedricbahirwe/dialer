@@ -22,9 +22,9 @@ struct UtilitiesView: View {
                 
                 TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
                 
-                TappeableText("Send to my Bank", onTap: store.checkBankTransfer)
+                TappeableText("Send to my Bank Account", onTap: store.checkBankTransfer)
                 
-                TappeableText("Top-Up in my Mobile Account", onTap: store.checkBankTransfer)
+                TappeableText("Top-Up in my Mobile Wallet", onTap: store.checkBankTransfer)
                 
             }
             
