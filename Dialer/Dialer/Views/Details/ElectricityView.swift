@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct ElectricityView: View {
-    
-    @State private var showContactPicker = false
-    @State private var allContacts: [Contact] = []
+    @EnvironmentObject private var store: MainViewModel
     @State private var meterNumber: String = ""
     @State private var amount: String = ""
     
-    @EnvironmentObject private var store: MainViewModel
     private var isValidMeter: Bool { meterNumber.count >= 11  }
     private var isValidAmount: Bool { (Int(amount) != nil) }
     private var isValidTransaction: Bool {
@@ -72,7 +69,7 @@ struct ElectricityView: View {
                     hideKeyboard()
                     store.getElectricity(for: meterNumber, amount: Int(amount)!)
                 }) {
-                    Text("Buy electricity")
+                    Text("Send to back electricity")
                         .font(.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
@@ -85,11 +82,10 @@ struct ElectricityView: View {
                 Spacer()
             }
             .padding()
-            
         }
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
-        .navigationTitle("Buy Electricity")
+        .navigationTitle("Bank Transaction")
     }
 }
 

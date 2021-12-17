@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 enum DialerQuickCode {
-    case internetBalance, airtimeBalance
+    case internetBalance, airtimeBalance, bankTransfer
     case voicePackBalance, mobileNumber
     case mobileWalletBalance(code: Int?)
     case electricity(meter: String, amount: Int, code: Int?)
@@ -20,6 +20,7 @@ enum DialerQuickCode {
         case .internetBalance: return "*345*5#"
         case .airtimeBalance: return "*131#"
         case .voicePackBalance: return "*140*5#"
+        case .bankTransfer: return "*903*3#"
         case .mobileNumber: return "*135*8#"
         case .mobileWalletBalance(let code):
             return "*182*6*1\(codeSuffix(code))"
@@ -256,6 +257,10 @@ extension MainViewModel {
     
     public func checkSimNumber() {
         performQuickDial(for: .mobileNumber)
+    }
+    
+    public func checkBankTransfer() {
+        performQuickDial(for: .bankTransfer)
     }
     
     public func getElectricity(for meterNumber: String, amount: Int) {

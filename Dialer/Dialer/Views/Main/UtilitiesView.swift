@@ -20,7 +20,12 @@ struct UtilitiesView: View {
                     Text("Buy Electricity")
                 }
                 
-                TappeableText("Check Momo Balance", onTap: store.checkMobileWalletBalance)
+                TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
+                
+                TappeableText("Send to my Bank", onTap: store.checkBankTransfer)
+                
+                TappeableText("Top-Up in my Mobile Account", onTap: store.checkBankTransfer)
+                
             }
             
             Section("Secondary") {
