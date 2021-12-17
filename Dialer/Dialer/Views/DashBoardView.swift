@@ -72,6 +72,7 @@ struct DashBoardView: View {
                                         title: "Utilities",
                                         icon: "wrench.and.screwdriver")
                                 }
+                                .buttonStyle(PlainButtonStyle())
                         }
                     }
                     .padding()

@@ -36,9 +36,13 @@ struct SettingsView: View {
                             }
                             HStack {
                                 SettingsRow(.biometrics)
-                                Toggle("Biometrics", isOn: $allowBiometrics)
-                                    .toggleStyle(SwitchToggleStyle())
-                                    .labelsHidden()
+                                    .overlay(
+                                        Toggle("Biometrics", isOn: $allowBiometrics)
+                                            .toggleStyle(SwitchToggleStyle())
+                                            .labelsHidden()
+                                        , alignment: .trailing
+                                    )
+                                
                             }
                             
                             if dataStore.hasStoredPinCode {
