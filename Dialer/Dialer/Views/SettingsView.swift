@@ -12,7 +12,7 @@ struct SettingsView: View {
     @EnvironmentObject
     private var dataStore: MainViewModel
     
-    @AppStorage("allowBiometrics")
+    @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
     @State private
     var showMailErrorAlert = false
@@ -35,9 +35,12 @@ struct SettingsView: View {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
                             HStack {
-                                
+                                SettingsRow(.biometrics)
+                                Toggle("Biometrics", isOn: $allowBiometrics)
+                                    .toggleStyle(SwitchToggleStyle())
+                                    .labelsHidden()
                             }
-                            SettingsRow(.biometrics)
+                            
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, perform: dataStore.removePin)
                             }

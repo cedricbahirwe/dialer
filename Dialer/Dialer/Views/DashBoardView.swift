@@ -124,6 +124,7 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 settingsButton
+                    .contentShape(Rectangle())
                     .onTapGesture(perform: data.showSettingsView)
             }
         }

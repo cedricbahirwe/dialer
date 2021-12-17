@@ -17,12 +17,20 @@ struct MTNDisabling: ViewModifier {
 struct BiometricsAccessibility: ViewModifier {
     @StateObject private var biometrics = BiometricAuthenticator.shared
     @Binding var isEvaluated: Bool
+    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    private var allowBiometrics = false
+    
     func body(content: Content) -> some View {
         content
-            .onTapGesture(perform: biometrics.changeLoginState)
+            .onTapGesture(perform: manageTapGesture)
             .onChange(of: biometrics.state, perform: setState)
     }
     
+    private func manageTapGesture() {
+        if allowBiometrics {
+            biometrics.changeLoginState()
+        } else { isEvaluated = true }
+    }
     private func setState(state: BiometricAuthenticator.AuthenticationState) {
         isEvaluated = state == .loggedin
     }
