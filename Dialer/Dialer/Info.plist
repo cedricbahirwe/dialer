@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSContactsUsageDescription</key>
 	<string>Dialer need access to your contacts list to provide better user experience.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Use Face ID or Touch ID to access this feature.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -77,7 +79,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Use Face ID or Touch ID to access this feature.</string>
 </dict>
 </plist>
