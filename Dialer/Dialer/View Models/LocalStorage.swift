@@ -82,8 +82,8 @@ final class DialerStorage {
         return false
     }
     
-    func saveRecentCodes(_ values: RecentCodes) throws {
-        let data = try encodeCustomData(values)
+    func saveRecentCodes(_ codes: RecentCodes) throws {
+        let data = try encodeCustomData(codes)
         userDefaults.setValue(data, forKey: LocalKeys.recentCodes)
     }
     
@@ -100,8 +100,8 @@ final class DialerStorage {
         return []
     }
     
-    func saveRecentCodes(_ values: MeterNumbers) throws {
-        let data = try encodeCustomData(values)
+    func saveMeterNumbers(_ numbers: MeterNumbers) throws {
+        let data = try encodeCustomData(numbers)
         userDefaults.setValue(data, forKey: LocalKeys.meterNumbers)
     }
     

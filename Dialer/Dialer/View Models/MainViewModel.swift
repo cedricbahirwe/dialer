@@ -67,8 +67,9 @@ class MainViewModel: ObservableObject {
     
     @Published private(set) var recentCodes: [RecentCode] = []
     
+    @Published private(set) var meterNumbers: [MeterNumber] = []
     
-    /// Store a given  recent code locally.
+    /// Store a given  `RecentCode`  locally.
     /// - Parameter code: the code to be added.
     private func storeCode(code: RecentCode) {
         if let index = recentCodes.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
@@ -76,15 +77,34 @@ class MainViewModel: ObservableObject {
         } else {
             recentCodes.append(code)
         }
-        saveLocally()
+        saveRecentCodesLocally()
     }
     
-    /// Save code(s) locally.
-    public func saveLocally() {
+    
+//    public func containsMeter
+    /// Save RecentCode(s) locally.
+    public func saveRecentCodesLocally() {
         do {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
-            print("Could not save locally: ", error.localizedDescription)
+            print("Could not save recent codes locally: ", error.localizedDescription)
+        }
+    }
+    
+    /// Store a given  `MeterNumber`  locally.
+    /// - Parameter code: the code to be added.
+    private func storeMeter(_ number: MeterNumber) {
+        guard meterNumbers.contains(where: { $0.id == number.id }) == false else { return }
+        meterNumbers.append(number)
+        saveMeterNumbersLocally()
+    }
+    
+    /// Save MeterNumber(s) locally.
+    func saveMeterNumbersLocally() {
+        do {
+            try DialerStorage.shared.saveMeterNumbers(meterNumbers)
+        } catch {
+            print("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
     
@@ -120,7 +140,7 @@ class MainViewModel: ObservableObject {
     /// - Parameter offSets: the offsets to be deleted
     public func deleteRecentCode(at offSets: IndexSet) {
         recentCodes.remove(atOffsets: offSets)
-        saveLocally()
+        saveRecentCodesLocally()
     }
     
     /// Save locally the Pin Code
