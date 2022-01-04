@@ -51,6 +51,7 @@
 		CBC262C12784D0B5000B8E0E /* MeterNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C02784D0B5000B8E0E /* MeterNumber.swift */; };
 		CBC262C42784D233000B8E0E /* RecentCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C32784D233000B8E0E /* RecentCode.swift */; };
 		CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C52784D243000B8E0E /* PurchaseDetailModel.swift */; };
+		CBC262C72784E1EB000B8E0E /* MeterNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C02784D0B5000B8E0E /* MeterNumber.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -439,6 +440,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBC262C72784E1EB000B8E0E /* MeterNumber.swift in Sources */,
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

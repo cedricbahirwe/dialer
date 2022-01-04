@@ -13,10 +13,11 @@ struct MeterNumber: Equatable, Identifiable, Codable {
     var id: String { value }
     
     init(_ value: String) throws {
-        guard value.isEmpty == false else { throw MeterNumberError.emptyMeterNumber }
-        guard value.allSatisfy(\.isNumber) else { throw MeterNumberError.invalidMeterNumber }
+        let cleanValue = Self.cleanNumber(value)
+        guard cleanValue.isEmpty == false else { throw MeterNumberError.emptyMeterNumber }
+        guard cleanValue.allSatisfy(\.isNumber) else { throw MeterNumberError.invalidMeterNumber }
         
-        self.value = Self.cleanNumber(value)
+        self.value = cleanValue
     }
     
     enum MeterNumberError: String, Error {

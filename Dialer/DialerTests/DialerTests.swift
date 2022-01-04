@@ -56,4 +56,23 @@ class DialerTests: XCTestCase {
         XCTAssertNotEqual("250782628511", "250782628511".asMtnNumber())
     }
 
+    
+    func testMeterNumbers() throws {
+        let m1 = try MeterNumber("1234567890")
+        
+        let m2 = try MeterNumber("12345 67890 ")
+        
+        let m3Value = "a098765432"
+                
+        
+        
+        XCTAssertEqual(m1, m2)
+        
+        XCTAssertThrowsError(try MeterNumber(m3Value))
+        
+        XCTAssertThrowsError(try MeterNumber(""))
+        
+        XCTAssertNil(try? MeterNumber(m3Value))
+        
+    }
 }
