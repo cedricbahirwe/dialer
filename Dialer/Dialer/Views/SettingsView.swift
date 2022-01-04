@@ -105,7 +105,9 @@ struct SettingsView: View {
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showMailView) {
-                MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
+                MailView(recipientEmail: supportEmail,
+                         subject: "Dialer Question",
+                         bodyMessage: getEmailBody(),)
             }
             .safeAreaInset(edge: .bottom, content: {
                 
@@ -169,41 +171,6 @@ struct SettingsView: View {
         } else {
             showMailErrorAlert = true
         }
-    }
-}
-
-struct MailView: UIViewControllerRepresentable {
-    let recipientEmail: String
-    let bodyMessage: String
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        let mail = MFMailComposeViewController()
-        mail.navigationBar.prefersLargeTitles = false
-        mail.mailComposeDelegate = context.coordinator
-        mail.setToRecipients([recipientEmail])
-        mail.setSubject("Dialer Question")
-        
-        mail.setMessageBody(bodyMessage, isHTML: false)
-        return mail
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        let parent: MailView
-        
-        init(_ parent: MailView) {
-            self.parent = parent
-        }
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            controller.dismiss(animated: true)
-        }
-        
     }
 }
 
