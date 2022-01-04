@@ -9,13 +9,6 @@ import Foundation
 
 struct MeterNumber: Equatable, Identifiable, Codable {
     
-    static func == (lhs: MeterNumber, rhs: MeterNumber) -> Bool {
-        let left = lhs.id.replacingOccurrences(of: " ", with: "")
-        let right = rhs.id.replacingOccurrences(of: " ", with: "")
-        
-        return left == right
-    }
-    
     let value: String
     var id: String { value }
     
@@ -23,7 +16,7 @@ struct MeterNumber: Equatable, Identifiable, Codable {
         guard value.isEmpty == false else { throw MeterNumberError.emptyMeterNumber }
         guard value.allSatisfy(\.isNumber) else { throw MeterNumberError.invalidMeterNumber }
         
-        self.value = value
+        self.value = Self.cleanNumber(value)
     }
     
     enum MeterNumberError: String, Error {
@@ -34,4 +27,14 @@ struct MeterNumber: Equatable, Identifiable, Codable {
     
 }
 
-
+extension MeterNumber {
+    private static func cleanNumber(_ number: String) -> String {
+        // Remove middle white spaces
+        var cleanNumber = number.replacingOccurrences(of: " ", with: "")
+        
+        // Trim white spaces and new lines
+        cleanNumber = cleanNumber.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return cleanNumber
+    }
+}

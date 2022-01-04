@@ -81,7 +81,11 @@ class MainViewModel: ObservableObject {
     }
     
     
-//    public func containsMeter
+    public func containsMeter(with number: String) -> Bool {
+        guard let meterNumber = try? MeterNumber(number) else { return false }
+        return meterNumbers.contains(meterNumber)
+    }
+    
     /// Save RecentCode(s) locally.
     public func saveRecentCodesLocally() {
         do {

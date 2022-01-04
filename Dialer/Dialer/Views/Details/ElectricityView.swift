@@ -26,8 +26,12 @@ struct ElectricityView: View {
         }
     }
     
+    @Environment(\.colorScheme)
+    private var colorScheme
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+           
             VStack(spacing: 20) {
                 VStack(spacing: 5) {
                     if !amount.isEmpty {
@@ -78,14 +82,24 @@ struct ElectricityView: View {
                         .foregroundColor(Color.white)
                 }
                 .disabled(isValidTransaction == false)
-                
-                Spacer()
+            
+            }.padding()
+            
+            
+            List {
+                Section("Recents") {
+                    ForEach(store.meterNumbers) { meterNumber in
+                        TappeableText(meterNumber.value, onTap: { })
+                    }
+                }
             }
-            .padding()
             
         }
-        .background(Color(.systemBackground)
-                        .onTapGesture(perform: hideKeyboard))
+        .background(
+            Color(colorScheme == .light ? .secondarySystemBackground : .systemBackground)
+                .ignoresSafeArea()
+                        .onTapGesture(perform: hideKeyboard)
+        )
         .navigationTitle("Buy Electricity")
     }
 }
@@ -95,5 +109,6 @@ struct ElectricityView_Previews: PreviewProvider {
         NavigationView {
             ElectricityView()
         }
+//        .environment(\.colorScheme, .dark)
     }
 }

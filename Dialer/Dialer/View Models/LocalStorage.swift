@@ -35,10 +35,9 @@ final class DialerStorage {
     
     private let userDefaults = UserDefaults.standard
     
-    private init() { }
-    
     static let shared = DialerStorage()
     
+    private init() { }
     
     var hasPinCode: Bool {
         userDefaults.integer(forKey: LocalKeys.pinCode) != 0
@@ -113,7 +112,7 @@ final class DialerStorage {
         do {
             return  try JSONDecoder().decode(MeterNumbers.self, from: meterNumbersData)
         } catch let error {
-            print("Couldn't decode the meter numbers: " ,error.localizedDescription)
+            print("Couldn't decode the meters numbers: " ,error.localizedDescription)
         }
         return []
     }
