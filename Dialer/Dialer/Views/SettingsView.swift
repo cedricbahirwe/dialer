@@ -107,7 +107,7 @@ struct SettingsView: View {
             .sheet(isPresented: $showMailView) {
                 MailView(recipientEmail: supportEmail,
                          subject: "Dialer Question",
-                         bodyMessage: getEmailBody(),)
+                         bodyMessage: getEmailBody())
             }
             .safeAreaInset(edge: .bottom, content: {
                 
