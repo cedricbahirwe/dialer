@@ -16,6 +16,11 @@ public extension UserDefaults {
         static let purchaseDetails = "purchaseDetails"
         static let lastSyncDate = "lastSyncDate"
         
+        
+        // Electricity
+        static let meterNumbers = "meterNumbers"
+        
+        // Biometrics
         static let allowBiometrics = "allowBiometrics"
     }
 }
@@ -23,7 +28,9 @@ public extension UserDefaults {
 
 
 final class DialerStorage {
-    typealias RecentCodes = [MainViewModel.RecentCode]
+    typealias RecentCodes = [RecentCode]
+    typealias MeterNumbers = [MeterNumber]
+    
     private let LocalKeys = UserDefaults.Keys.self
     
     private let userDefaults = UserDefaults.standard
@@ -89,6 +96,24 @@ final class DialerStorage {
             return  try JSONDecoder().decode(RecentCodes.self, from: codesData)
         } catch let error {
             print("Couldn't decode the recent codes: " ,error.localizedDescription)
+        }
+        return []
+    }
+    
+    func saveRecentCodes(_ values: MeterNumbers) throws {
+        let data = try encodeCustomData(values)
+        userDefaults.setValue(data, forKey: LocalKeys.meterNumbers)
+    }
+    
+    func getMeterNumbers() -> MeterNumbers {
+        guard let meterNumbersData = userDefaults.object(forKey: LocalKeys.meterNumbers) as? Data else {
+            return []
+        }
+        
+        do {
+            return  try JSONDecoder().decode(MeterNumbers.self, from: meterNumbersData)
+        } catch let error {
+            print("Couldn't decode the meter numbers: " ,error.localizedDescription)
         }
         return []
     }

@@ -268,6 +268,12 @@ extension MainViewModel {
         performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
     }
     
+    public func saveMeterNumber(_ number: String) {
+        // check if it is not saved
+        // save it
+        
+    }
+    
 }
 
 // MARK: - Extension used for Error, Models, etc
@@ -287,53 +293,12 @@ extension MainViewModel {
             }
         }
     }
-    
-    enum CodeType: String, Codable {
-        case momo, call, message, other
-    }
-    struct RecentCode: Identifiable, Hashable, Codable {
-        static func == (lhs: MainViewModel.RecentCode, rhs: MainViewModel.RecentCode) -> Bool {
-            lhs.id == rhs.id
-        }
-        
-        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 1) {
-            self.id = id
-            self.detail = detail
-            self.count = count
-        }
-        
-        private(set) var id: UUID
-        private(set) var count: Int
-        var detail: PurchaseDetailModel
-        var totalPrice: Int { detail.amount * count }
-        
-        mutating func increaseCount() { count += 1 }
-        
-        static let example = RecentCode(detail: .example)
-        
-    }
-        
-    struct PurchaseDetailModel: Hashable, Codable {
-        var amount: Int = 0
-        var type: CodeType = .momo
-        var fullCode: String {
-            "*182*2*1*1*1*\(amount)*PIN#"
-        }
-        
-        func getDialCode(pin: String) -> String {
-            if pin.isEmpty {
-                return "*182*2*1*1*1*\(amount)#"
-            } else {
-                return "*182*2*1*1*1*\(amount)*\(pin)#"
-            }
-        }
-        static let example = PurchaseDetailModel()
-    }
+
 }
 
 
 // MARK: - Extension used for Home Quick Actions
-extension MainViewModel.RecentCode {
+extension RecentCode {
     
     /// - Tag: QuickActionUserInfo
     var quickActionUserInfo: [String: NSSecureCoding] {

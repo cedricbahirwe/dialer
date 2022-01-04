@@ -44,7 +44,7 @@ struct ElectricityView: View {
                     HStack {
                         NumberField("Enter Meter Number", text: $meterNumber)
                         Button(action: {
-                            
+                            store.saveMeterNumber("")
                         }){
                             Text("Save")
                                 .font(.caption)
