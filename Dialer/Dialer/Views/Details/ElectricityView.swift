@@ -105,7 +105,7 @@ struct ElectricityView: View {
             List {
                 Section("Saved Meters") {
                     ForEach(store.elecMeters) { meter in
-                        TappeableText(meter.number, onTap: { })
+                        TappeableText(meter.number, onTap: { fillMeterField(with: meter.number) })
                     }
                     .onDelete(perform: store.deleteMeter)
                     
@@ -120,6 +120,11 @@ struct ElectricityView: View {
         )
         .navigationTitle("Buy Electricity")
         .onAppear(perform: store.retrieveMeterNumbers)
+    }
+    
+    private func fillMeterField(with value: String) {
+        guard meterNumber != value else { return }
+        meterNumber = value
     }
 }
 

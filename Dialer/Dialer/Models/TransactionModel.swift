@@ -8,7 +8,7 @@
 import Foundation
 
 struct Transaction: Identifiable {
-    let id = UUID()
+    var id: String { Date().description }
     var amount: String
     var number: String
     var type: Transactiontype

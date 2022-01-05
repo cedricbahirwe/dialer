@@ -252,7 +252,7 @@ class MainViewModel: ObservableObject {
         showSettingsSheet = false
     }
     
-    public func defaultSheetBinding() -> Binding<Bool> {
+    public func settingsAndHistorySheetBinding() -> Binding<Bool> {
         let setter = { [weak self] (value: Bool) in
             guard let strongSelf = self else { return }
             if strongSelf.showSettingsSheet {
