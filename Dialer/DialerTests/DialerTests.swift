@@ -58,9 +58,9 @@ class DialerTests: XCTestCase {
 
     
     func testMeterNumbers() throws {
-        let m1 = try MeterNumber("1234567890")
+        let m1 = try ElectricityMeter("1234567890")
         
-        let m2 = try MeterNumber("12345 67890 ")
+        let m2 = try ElectricityMeter("12345 67890 ")
         
         let m3Value = "a098765432"
                 
@@ -68,11 +68,11 @@ class DialerTests: XCTestCase {
         
         XCTAssertEqual(m1, m2)
         
-        XCTAssertThrowsError(try MeterNumber(m3Value))
+        XCTAssertThrowsError(try ElectricityMeter(m3Value))
         
-        XCTAssertThrowsError(try MeterNumber(""))
+        XCTAssertThrowsError(try ElectricityMeter(""))
         
-        XCTAssertNil(try? MeterNumber(m3Value))
+        XCTAssertNil(try? ElectricityMeter(m3Value))
         
     }
 }

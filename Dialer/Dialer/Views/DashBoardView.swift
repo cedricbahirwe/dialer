@@ -39,100 +39,110 @@ struct DashBoardView: View {
             }
     }
     
+//    var body: some View {
+//
+//            ZStack(alignment: .bottom) {
+//                VStack {
+//                    VStack(spacing: 15) {
+//                        HStack(spacing: 15) {
+//                            DashItemView(
+//                                title: "Buy airtime",
+//                                icon: "wallet.pass")
+//                                .momoDisability()
+//                                .onTapGesture {
+//                                    showPurchaseSheet.toggle()
+//                                }
+//
+//                            DashItemView(
+//                                title: "Send/Pay",
+//                                icon: "paperplane.circle")
+//                                .onChangeBiometrics(isActive: $presentSendingView)
+//                        }
+//
+//                        HStack(spacing: 15) {
+//                            DashItemView(
+//                                title: "History",
+//                                icon: "clock.arrow.circlepath")
+//                                .onTapGesture {
+//                                    data.showHistorySheet.toggle()
+//                                }
+//
+//                            NavigationLink {
+//                                UtilitiesView()
+//                            } label: {
+//                                DashItemView(
+//                                    title: "Utilities",
+//                                    icon: "wrench.and.screwdriver")
+//                            }
+//                            .buttonStyle(PlainButtonStyle())
+//
+//                        }
+//                    }
+//                    .padding()
+//
+//                    NavigationLink(
+//                        destination: SendingView(), isActive: $presentSendingView) {}
+//
+//                    Spacer()
+//
+//                    if checkCellularProvider.status == false {
+//                        HStack {
+//                            Text("Sim card is required to unlock all the features.")
+//                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+//                                .foregroundColor(.red)
+//                                .lineLimit(1)
+//                                .minimumScaleFactor(0.6)
+//                        }
+//                        .frame(maxWidth: .infinity)
+//                        .padding()
+//                        .background(.ultraThickMaterial)
+//                    }
+//                    bottomBarView
+//                }
+//                .blur(radius: showPurchaseSheet ? 3 : 0)
+//                .allowsHitTesting(!showPurchaseSheet)
+//
+//                if showPurchaseSheet {
+//                    Color.black.opacity(0.001)
+//                        .onTapGesture {
+//                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+//                                showPurchaseSheet = false
+//                            }
+//                        }
+//                }
+//                PurchaseDetailView(isPresented: $showPurchaseSheet,
+//                                   data: data)
+//            }
+//            .sheet(isPresented: data.defaultSheetBinding()) {
+//                if data.showSettingsSheet {
+//                    SettingsView()
+//                        .environmentObject(data)
+//                } else {
+//                    DialingsHistoryView(data: data)
+//                }
+//            }
+//            .fullScreenCover(isPresented: $presentNewDial) {
+//                NewDialingView()
+//            }
+//            .background(bgColor.ignoresSafeArea())
+//            .navigationTitle("Dialer")
+//            .toolbar {
+//                settingsButton
+//                    .contentShape(Rectangle())
+//                    .onTapGesture(perform: data.showSettingsView)
+//            }
+//
+//    }
+    
     var body: some View {
-        NavigationView {
-            ZStack(alignment: .bottom) {
-                VStack {
-                    VStack(spacing: 15) {
-                        HStack(spacing: 15) {
-                            DashItemView(
-                                title: "Buy airtime",
-                                icon: "wallet.pass")
-                                .momoDisability()
-                                .onTapGesture {
-                                    showPurchaseSheet.toggle()
-                                }
-                      
-                            DashItemView(
-                                title: "Send/Pay",
-                                icon: "paperplane.circle")
-                                .onChangeBiometrics(isActive: $presentSendingView)
-                        }
-                        
-                        HStack(spacing: 15) {
-                            DashItemView(
-                                title: "History",
-                                icon: "clock.arrow.circlepath")
-                                .onTapGesture { 
-                                    data.showHistorySheet.toggle()
-                                }
-                            
-                            NavigationLink {
-                                UtilitiesView()
-                            } label: {
-                                DashItemView(
-                                    title: "Utilities",
-                                    icon: "wrench.and.screwdriver")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                                
-                        }
-                    }
-                    .padding()
-                    
-                    NavigationLink(
-                        destination: SendingView(), isActive: $presentSendingView) {}
-                    
-                    Spacer()
-                    
-                    if checkCellularProvider.status == false {
-                        HStack {
-                            Text("Sim card is required to unlock all the features.")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                .foregroundColor(.red)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(.ultraThickMaterial)
-                    }
-                    bottomBarView
-                }
-                .blur(radius: showPurchaseSheet ? 3 : 0)
-                .allowsHitTesting(!showPurchaseSheet)
-                
-                if showPurchaseSheet {
-                    Color.black.opacity(0.001)
-                        .onTapGesture {
-                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
-                                showPurchaseSheet = false
-                            }
-                        }
-                }
-                PurchaseDetailView(isPresented: $showPurchaseSheet,
-                                   data: data)
-            }
-            .sheet(isPresented: data.defaultSheetBinding()) {
-                if data.showSettingsSheet {
-                    SettingsView()
-                        .environmentObject(data)
-                } else {
-                    DialingsHistoryView(data: data)
-                }
-            }
-            .fullScreenCover(isPresented: $presentNewDial) {
-                NewDialingView()
-            }
-            .background(bgColor.ignoresSafeArea())
-            .navigationTitle("Dialer")
-            .toolbar {
-                settingsButton
-                    .contentShape(Rectangle())
-                    .onTapGesture(perform: data.showSettingsView)
-            }
+        NavigationLink {
+            UtilitiesView()
+        } label: {
+            DashItemView(
+                title: "Utilities",
+                icon: "wrench.and.screwdriver")
         }
-//        .onAppear(perform: setupAppearance)
+        .buttonStyle(PlainButtonStyle())
     }
     
     private var settingsButton: some View {
@@ -144,21 +154,7 @@ struct DashBoardView: View {
                     .aspectRatio(contentMode: .fit)
             )
     }
-    private func setupAppearance() {
-        
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
-        let descriptor2 = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
-        
-        UINavigationBar.appearance().largeTitleTextAttributes = [
-            NSAttributedString.Key.font:UIFont.init(descriptor: descriptor2!, size: 34),
-            NSAttributedString.Key.foregroundColor: UIColor.label
-        ]
-        
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSAttributedString.Key.font:UIFont.init(descriptor: descriptor!, size: 17),
-            NSAttributedString.Key.foregroundColor: UIColor.label
-        ]
-    }
+    
 }
 
 extension DashBoardView {

@@ -125,7 +125,7 @@ class MainViewModel: ObservableObject {
     
     /// Retrieve all locally stored Meter Numbers codes
     public func retrieveMeterNumbers() {
-        elecMeters = [] // [try! MeterNumber("12412498125")] //] DialerStorage.shared.getMeterNumbers()
+        elecMeters = DialerStorage.shared.getMeterNumbers()
     }
     
     /// Confirm and Purchase an entered Code.
@@ -152,7 +152,7 @@ class MainViewModel: ObservableObject {
         saveRecentCodesLocally()
     }
     
-    public func deleteMeterNumber(at offSets: IndexSet) {
+    public func deleteMeter(at offSets: IndexSet) {
         elecMeters.remove(atOffsets: offSets)
         saveMeterNumbersLocally()
     }
