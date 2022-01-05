@@ -1,23 +1,23 @@
 //
-//  MeterNumber.swift
+//  ElectricityMeter.swift
 //  Dialer
 //
-//  Created by Cédric Bahirwe on 04/01/2022.
+//  Created by Cédric Bahirwe on 05/01/2022.
 //
 
 import Foundation
 
-struct MeterNumber: Equatable, Identifiable, Codable {
+struct ElectricityMeter: Equatable, Identifiable, Codable {
     
-    let value: String
-    var id: String { value }
+    let number: String
+    var id: String { number }
     
-    init(_ value: String) throws {
-        let cleanValue = Self.cleanNumber(value)
+    init(_ number: String) throws {
+        let cleanValue = Self.cleanNumber(number)
         guard cleanValue.isEmpty == false else { throw MeterNumberError.emptyMeterNumber }
         guard cleanValue.allSatisfy(\.isNumber) else { throw MeterNumberError.invalidMeterNumber }
         
-        self.value = cleanValue
+        self.number = cleanValue
     }
     
     enum MeterNumberError: String, Error {
@@ -28,7 +28,7 @@ struct MeterNumber: Equatable, Identifiable, Codable {
     
 }
 
-extension MeterNumber {
+extension ElectricityMeter {
     private static func cleanNumber(_ number: String) -> String {
         // Remove middle white spaces
         var cleanNumber = number.replacingOccurrences(of: " ", with: "")

@@ -66,13 +66,16 @@ struct DashBoardView: View {
                                 .onTapGesture { 
                                     data.showHistorySheet.toggle()
                                 }
-                            NavigationLink(
-                                destination: UtilitiesView()) {
-                                    DashItemView(
-                                        title: "Utilities",
-                                        icon: "wrench.and.screwdriver")
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                            
+                            NavigationLink {
+                                UtilitiesView()
+                            } label: {
+                                DashItemView(
+                                    title: "Utilities",
+                                    icon: "wrench.and.screwdriver")
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                                
                         }
                     }
                     .padding()
@@ -129,7 +132,7 @@ struct DashBoardView: View {
                     .onTapGesture(perform: data.showSettingsView)
             }
         }
-        .onAppear(perform: setupAppearance)
+//        .onAppear(perform: setupAppearance)
     }
     
     private var settingsButton: some View {

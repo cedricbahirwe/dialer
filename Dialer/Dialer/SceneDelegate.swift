@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var savedShortCutItem: UIApplicationShortcutItem!
     
-    var viewModel = MainViewModel()
+    let viewModel = MainViewModel()
     
     /// - Tag: willConnectTo
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

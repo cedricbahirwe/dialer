@@ -29,7 +29,7 @@ public extension UserDefaults {
 
 final class DialerStorage {
     typealias RecentCodes = [RecentCode]
-    typealias MeterNumbers = [MeterNumber]
+    typealias ElectricityMeters = [ElectricityMeter]
     
     private let LocalKeys = UserDefaults.Keys.self
     
@@ -99,18 +99,18 @@ final class DialerStorage {
         return []
     }
     
-    func saveMeterNumbers(_ numbers: MeterNumbers) throws {
-        let data = try encodeCustomData(numbers)
+    func saveElectricityMeters(_ meters: ElectricityMeters) throws {
+        let data = try encodeCustomData(meters)
         userDefaults.setValue(data, forKey: LocalKeys.meterNumbers)
     }
     
-    func getMeterNumbers() -> MeterNumbers {
+    func getMeterNumbers() -> ElectricityMeters {
         guard let meterNumbersData = userDefaults.object(forKey: LocalKeys.meterNumbers) as? Data else {
             return []
         }
         
         do {
-            return  try JSONDecoder().decode(MeterNumbers.self, from: meterNumbersData)
+            return  try JSONDecoder().decode(ElectricityMeters.self, from: meterNumbersData)
         } catch let error {
             print("Couldn't decode the meters numbers: " ,error.localizedDescription)
         }

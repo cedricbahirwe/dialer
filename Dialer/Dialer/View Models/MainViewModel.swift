@@ -67,7 +67,7 @@ class MainViewModel: ObservableObject {
     
     @Published private(set) var recentCodes: [RecentCode] = []
     
-    @Published private(set) var meterNumbers: [MeterNumber] = []
+    @Published private(set) var elecMeters: [ElectricityMeter] = []
     
     /// Store a given  `RecentCode`  locally.
     /// - Parameter code: the code to be added.
@@ -82,8 +82,8 @@ class MainViewModel: ObservableObject {
     
     
     public func containsMeter(with number: String) -> Bool {
-        guard let meterNumber = try? MeterNumber(number) else { return false }
-        return meterNumbers.contains(meterNumber)
+        guard let meter = try? ElectricityMeter(number) else { return false }
+        return elecMeters.contains(meter)
     }
     
     /// Save RecentCode(s) locally.
@@ -97,16 +97,16 @@ class MainViewModel: ObservableObject {
     
     /// Store a given  `MeterNumber`  locally.
     /// - Parameter code: the code to be added.
-    private func storeMeter(_ number: MeterNumber) {
-        guard meterNumbers.contains(where: { $0.id == number.id }) == false else { return }
-        meterNumbers.append(number)
+    public func storeMeter(_ number: ElectricityMeter) {
+        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
+        elecMeters.append(number)
         saveMeterNumbersLocally()
     }
     
     /// Save MeterNumber(s) locally.
-    func saveMeterNumbersLocally() {
+    public func saveMeterNumbersLocally() {
         do {
-            try DialerStorage.shared.saveMeterNumbers(meterNumbers)
+            try DialerStorage.shared.saveElectricityMeters(elecMeters)
         } catch {
             print("Could not save meter numbers locally: ", error.localizedDescription)
         }
@@ -121,6 +121,11 @@ class MainViewModel: ObservableObject {
     /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
         recentCodes = DialerStorage.shared.getRecentCodes()
+    }
+    
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveMeterNumbers() {
+        elecMeters = [] // [try! MeterNumber("12412498125")] //] DialerStorage.shared.getMeterNumbers()
     }
     
     /// Confirm and Purchase an entered Code.
@@ -145,6 +150,11 @@ class MainViewModel: ObservableObject {
     public func deleteRecentCode(at offSets: IndexSet) {
         recentCodes.remove(atOffsets: offSets)
         saveRecentCodesLocally()
+    }
+    
+    public func deleteMeterNumber(at offSets: IndexSet) {
+        elecMeters.remove(atOffsets: offSets)
+        saveMeterNumbersLocally()
     }
     
     /// Save locally the Pin Code
@@ -290,12 +300,6 @@ extension MainViewModel {
     public func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
         performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
-    }
-    
-    public func saveMeterNumber(_ number: String) {
-        // check if it is not saved
-        // save it
-        
     }
     
 }

@@ -11,9 +11,9 @@ struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
     var body: some View {
         DashBoardView()
-            .fullScreenCover(isPresented: $data.hasReachSync) {
-                CongratulationsView(isPresented: $data.hasReachSync)
-            }
+//            .fullScreenCover(isPresented: $data.hasReachSync) {
+//                CongratulationsView(isPresented: $data.hasReachSync)
+//            }
     }
 }
 
