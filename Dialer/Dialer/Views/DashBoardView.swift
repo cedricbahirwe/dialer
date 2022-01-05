@@ -54,12 +54,6 @@ struct DashBoardView: View {
                                     showPurchaseSheet.toggle()
                                 }
                             
-                            
-                            
-                            NavigationLink(isActive: $presentSendingView) {
-                                SendingView()
-                            } label: { EmptyView() }
-                            
                             DashItemView(
                                 title: "Send/Pay",
                                 icon: "paperplane.circle")
@@ -86,6 +80,10 @@ struct DashBoardView: View {
                         }
                     }
                     .padding()
+                    
+                    NavigationLink(isActive: $presentSendingView) {
+                        SendingView()
+                    } label: { EmptyView() }
                     
                     Spacer()
                     
