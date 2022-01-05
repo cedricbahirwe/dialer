@@ -26,7 +26,7 @@ struct SendingView: View {
     var body: some View {
         VStack {
             VStack(spacing: 20) {
-                
+
                 VStack(spacing: 3) {
                     if transaction.type == .client && !transaction.amount.isEmpty  {
                         feeHintView
@@ -34,7 +34,7 @@ struct SendingView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.estimatedFee)
                     }
-                    
+
                     NumberField("Enter Amount", text: $transaction.amount.animation())
                 }
                 VStack(spacing: 3) {
@@ -46,13 +46,13 @@ struct SendingView: View {
                     NumberField(transaction.type == .client ?
                                 "Enter Receiver's number" :
                                     "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
-                    
+
                     if transaction.type == .merchant {
                         Text("The code should be a 5-6 digits number")
                             .font(.caption).foregroundColor(.blue)
                     }
                 }
-                
+
                 if transaction.type == .client {
                     Button(action: {
                         showContactPicker.toggle()
@@ -69,8 +69,8 @@ struct SendingView: View {
                         .foregroundColor(Color(.systemBackground))
                     }
                 }
-                
-                
+
+
                 Button(action: transferMoney) {
                     Text("Submit")
                         .font(.footnote.bold())
@@ -81,11 +81,11 @@ struct SendingView: View {
                         .foregroundColor(Color.white)
                 }
                 .disabled(transaction.isValid == false)
-                
+
                 Spacer()
             }
             .padding()
-            
+
         }
         .sheet(isPresented: $showContactPicker) {
             ContactsList(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
@@ -106,7 +106,6 @@ struct SendingView: View {
                 }
         }
     }
-    
     
     private func requestContacts() {
         Task {

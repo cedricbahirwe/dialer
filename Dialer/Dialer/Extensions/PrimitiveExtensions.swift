@@ -13,16 +13,11 @@ extension String {
     /// Check for the validity of the `MTN` number (078 && 079)
     /// This is a agnostic approach, since it does not handle all the edge cases
     public var isMtnNumber: Bool {
-        
-        return
-            trimmingCharacters(in: .whitespaces).hasPrefix("+25078") ||
-        trimmingCharacters(in: .whitespaces).hasPrefix("25078") ||
-        trimmingCharacters(in: .whitespaces).hasPrefix("078") ||
-        trimmingCharacters(in: .whitespaces).hasPrefix("+25079") ||
-        trimmingCharacters(in: .whitespaces).hasPrefix("25079") ||
-        trimmingCharacters(in: .whitespaces).hasPrefix("079")
+        var number = trimmingCharacters(in: .whitespacesAndNewlines)
+        number = number.replacingOccurrences(of: " ", with: "")
+        return number.hasPrefix("+25078") || number.hasPrefix("25078") || number.hasPrefix("078") ||
+        number.hasPrefix("+25079") || number.hasPrefix("25079") || number.hasPrefix("079")
     }
-    
     
     /// Removes the `Rwanda` country code and return a pure  `MTN` number format
     public func asMtnNumber() -> String {

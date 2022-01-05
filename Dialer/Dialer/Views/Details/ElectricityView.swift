@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ElectricityView: View {
+    @EnvironmentObject private var store: MainViewModel
     
-    @State private var showContactPicker = false
-    @State private var allContacts: [Contact] = []
     @State private var meterNumber: String = ""
     @State private var amount: String = ""
     
-    @EnvironmentObject private var store: MainViewModel
-    private var isValidMeter: Bool { meterNumber.count >= 11  }
+    private var isValidMeter: Bool {
+        meterNumber.count >= 11
+        
+    }
+    
+    private var canSaveMeterNumber: Bool {
+        isValidMeter && !store.containsMeter(with: meterNumber)
+    }
     private var isValidAmount: Bool { (Int(amount) != nil) }
     private var isValidTransaction: Bool {
         isValidMeter && isValidAmount
@@ -29,8 +34,12 @@ struct ElectricityView: View {
         }
     }
     
+    @Environment(\.colorScheme)
+    private var colorScheme
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+           
             VStack(spacing: 20) {
                 VStack(spacing: 5) {
                     if !amount.isEmpty {
@@ -45,9 +54,17 @@ struct ElectricityView: View {
                 
                 VStack(spacing: 5) {
                     HStack {
+                        
                         NumberField("Enter Meter Number", text: $meterNumber)
                         Button(action: {
-                            
+                            hideKeyboard()
+                            do {
+                                let meter = try ElectricityMeter(meterNumber)
+                                store.storeMeter(meter)
+
+                            } catch  {
+                                print(error, "Meter Error")
+                            }
                         }){
                             Text("Save")
                                 .font(.caption)
@@ -58,9 +75,9 @@ struct ElectricityView: View {
                                 .cornerRadius(8)
                                 .foregroundColor(Color(.systemBackground))
                         }
-                            .disabled(!isValidMeter)
-                            .opacity(isValidMeter ? 1 : 0.4)
-                            .animation(.easeInOut, value: isValidMeter)
+                            .disabled(!canSaveMeterNumber)
+                            .opacity(canSaveMeterNumber ? 1 : 0.4)
+                            .animation(.easeInOut, value: canSaveMeterNumber)
                     }
                     
                     Text("The meter number should have at least 14 digits.")
@@ -81,15 +98,33 @@ struct ElectricityView: View {
                         .foregroundColor(Color.white)
                 }
                 .disabled(isValidTransaction == false)
-                
-                Spacer()
+            
+            }.padding()
+            
+            
+            List {
+                Section("Saved Meters") {
+                    ForEach(store.elecMeters) { meter in
+                        TappeableText(meter.number, onTap: { fillMeterField(with: meter.number) })
+                    }
+                    .onDelete(perform: store.deleteMeter)
+                    
+                }.opacity(store.elecMeters.isEmpty ? 0 : 1)
             }
-            .padding()
             
         }
-        .background(Color(.systemBackground)
-                        .onTapGesture(perform: hideKeyboard))
+        .background(
+            Color(colorScheme == .light ? .secondarySystemBackground : .systemBackground)
+                .ignoresSafeArea()
+                        .onTapGesture(perform: hideKeyboard)
+        )
         .navigationTitle("Buy Electricity")
+        .onAppear(perform: store.retrieveMeterNumbers)
+    }
+    
+    private func fillMeterField(with value: String) {
+        guard meterNumber != value else { return }
+        meterNumber = value
     }
 }
 
@@ -97,6 +132,8 @@ struct ElectricityView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ElectricityView()
+                .environmentObject(MainViewModel())
         }
+//        .environment(\.colorScheme, .dark)
     }
 }

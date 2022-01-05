@@ -9,10 +9,9 @@ import SwiftUI
 
 struct UtilitiesView: View {
     @EnvironmentObject private var store: MainViewModel
-        
+    
     var body: some View {
         List {
-            
             Section("Primary") {
                 NavigationLink {
                     ElectricityView()
@@ -20,7 +19,12 @@ struct UtilitiesView: View {
                     Text("Buy Electricity")
                 }
                 
-                TappeableText("Check Momo Balance", onTap: store.checkMobileWalletBalance)
+                TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
+                
+                TappeableText("Send to my Bank Account", onTap: store.checkBankTransfer)
+                
+                TappeableText("Top-Up in my Mobile Wallet", onTap: store.checkBankTransfer)
+                
             }
             
             Section("Secondary") {
@@ -32,7 +36,7 @@ struct UtilitiesView: View {
                 
                 NavigationLink {
                     VoicePacksView()
-                        
+                    
                 } label: {
                     Text("Buy Voice Packs")
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,7 +50,6 @@ struct UtilitiesView: View {
             }
         }
         .navigationTitle("Utilities")
-        
     }
 }
 
@@ -54,23 +57,6 @@ struct UtilitiesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             UtilitiesView()
-                
         }.environmentObject(MainViewModel())
-    }
-}
-
-struct TappeableText: View {
-    init(_ title: String, onTap action: @escaping () -> Void) {
-        self.title = title
-        self.action = action
-    }
-    
-    let title: String
-    var action: () -> Void
-    var body: some View {
-        Text(title)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .onTapGesture(perform: action)
     }
 }

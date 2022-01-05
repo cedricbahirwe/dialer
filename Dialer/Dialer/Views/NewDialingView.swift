@@ -15,8 +15,10 @@ struct NewDialingView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Text("Incognito Mode by \(Image(uiImage: drawImage("abc.logo")))")
-                .font(.system(size: 32, weight: .bold, design: .rounded))
+            Image("dialer.applogo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 65)
             
             VStack(spacing: 10) {
                 Group {
@@ -28,7 +30,7 @@ struct NewDialingView: View {
                         .opacity(showInValidMsg ? 1 : 0)
                         
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                        .frame(height: 28)
+                        .frame(height: 32)
                         .mask(Text(composedCode))
                         .font(.title)
                         .lineLimit(1)

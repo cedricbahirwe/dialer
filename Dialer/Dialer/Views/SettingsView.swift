@@ -12,6 +12,8 @@ struct SettingsView: View {
     @EnvironmentObject
     private var dataStore: MainViewModel
     
+    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    private var allowBiometrics = false
     @State private
     var showMailErrorAlert = false
     
@@ -32,14 +34,24 @@ struct SettingsView: View {
                             SettingsRow(.changeLanguage) {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
-                            SettingsRow(.biometrics)
+                            HStack {
+                                SettingsRow(.biometrics)
+                                    .overlay(
+                                        Toggle("Biometrics", isOn: $allowBiometrics)
+                                            .toggleStyle(SwitchToggleStyle())
+                                            .labelsHidden()
+                                        , alignment: .trailing
+                                    )
+                                
+                            }
+                            
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, perform: dataStore.removePin)
                             }
                         }
                         .padding(.bottom, 20)
                     }
-                
+                    
                     Section(header: sectionHeader("Tips and Guides")){
                         VStack {
                             HStack(spacing: 0) {
@@ -62,8 +74,8 @@ struct SettingsView: View {
                                     Text(String(format:
                                                     NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
                                                 supportEmail
-                                                )
-                                         )
+                                               )
+                                    )
                                 }
                             Link(destination: URL(string: twitterLink)!) {
                                 SettingsRow(.tweetUs)
@@ -93,7 +105,9 @@ struct SettingsView: View {
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showMailView) {
-                MailView(recipientEmail: supportEmail,  bodyMessage: getEmailBody())
+                MailView(recipientEmail: supportEmail,
+                         subject: "Dialer Question",
+                         bodyMessage: getEmailBody())
             }
             .safeAreaInset(edge: .bottom, content: {
                 
@@ -157,41 +171,6 @@ struct SettingsView: View {
         } else {
             showMailErrorAlert = true
         }
-    }
-}
-
-struct MailView: UIViewControllerRepresentable {
-    let recipientEmail: String
-    let bodyMessage: String
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        let mail = MFMailComposeViewController()
-        mail.navigationBar.prefersLargeTitles = false
-        mail.mailComposeDelegate = context.coordinator
-        mail.setToRecipients([recipientEmail])
-        mail.setSubject("Dialer Question")
-        
-        mail.setMessageBody(bodyMessage, isHTML: false)
-        return mail
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        let parent: MailView
-        
-        init(_ parent: MailView) {
-            self.parent = parent
-        }
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            controller.dismiss(animated: true)
-        }
-        
     }
 }
 

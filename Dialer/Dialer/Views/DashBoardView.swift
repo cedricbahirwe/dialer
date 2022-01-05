@@ -14,8 +14,9 @@ fileprivate enum DragState {
 }
 
 struct DashBoardView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var data: MainViewModel
+
+    @Environment(\.colorScheme) private var colorScheme
     @State private var dragState: DragState = .closed
     @State private var presentNewDial = false
     @State private var presentSendingView = false
@@ -40,7 +41,7 @@ struct DashBoardView: View {
     }
     
     var body: some View {
-        NavigationView {
+
             ZStack(alignment: .bottom) {
                 VStack {
                     VStack(spacing: 15) {
@@ -52,7 +53,7 @@ struct DashBoardView: View {
                                 .onTapGesture {
                                     showPurchaseSheet.toggle()
                                 }
-                      
+                            
                             DashItemView(
                                 title: "Send/Pay",
                                 icon: "paperplane.circle")
@@ -63,21 +64,26 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "History",
                                 icon: "clock.arrow.circlepath")
-                                .onTapGesture { 
+                                .onTapGesture {
                                     data.showHistorySheet.toggle()
                                 }
-                            NavigationLink(
-                                destination: UtilitiesView()) {
-                                    DashItemView(
-                                        title: "Utilities",
-                                        icon: "wrench.and.screwdriver")
-                                }
+                            
+                            NavigationLink {
+                                UtilitiesView()
+                            } label: {
+                                DashItemView(
+                                    title: "Utilities",
+                                    icon: "wrench.and.screwdriver")
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            
                         }
                     }
                     .padding()
                     
-                    NavigationLink(
-                        destination: SendingView(), isActive: $presentSendingView) {}
+                    NavigationLink(isActive: $presentSendingView) {
+                        SendingView()
+                    } label: { EmptyView() }
                     
                     Spacer()
                     
@@ -93,11 +99,12 @@ struct DashBoardView: View {
                         .padding()
                         .background(.ultraThickMaterial)
                     }
+                    
                     bottomBarView
                 }
                 .blur(radius: showPurchaseSheet ? 3 : 0)
                 .allowsHitTesting(!showPurchaseSheet)
-                
+
                 if showPurchaseSheet {
                     Color.black.opacity(0.001)
                         .onTapGesture {
@@ -106,10 +113,9 @@ struct DashBoardView: View {
                             }
                         }
                 }
-                PurchaseDetailView(isPresented: $showPurchaseSheet,
-                                   data: data)
+                PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             }
-            .sheet(isPresented: data.defaultSheetBinding()) {
+            .sheet(isPresented: data.settingsAndHistorySheetBinding()) {
                 if data.showSettingsSheet {
                     SettingsView()
                         .environmentObject(data)
@@ -124,10 +130,9 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 settingsButton
+                    .contentShape(Rectangle())
                     .onTapGesture(perform: data.showSettingsView)
             }
-        }
-        .onAppear(perform: setupAppearance)
     }
     
     private var settingsButton: some View {
@@ -139,21 +144,7 @@ struct DashBoardView: View {
                     .aspectRatio(contentMode: .fit)
             )
     }
-    private func setupAppearance() {
-        
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
-        let descriptor2 = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
-        
-        UINavigationBar.appearance().largeTitleTextAttributes = [
-            NSAttributedString.Key.font:UIFont.init(descriptor: descriptor2!, size: 34),
-            NSAttributedString.Key.foregroundColor: UIColor.label
-        ]
-        
-        UINavigationBar.appearance().titleTextAttributes = [
-            NSAttributedString.Key.font:UIFont.init(descriptor: descriptor!, size: 17),
-            NSAttributedString.Key.foregroundColor: UIColor.label
-        ]
-    }
+    
 }
 
 extension DashBoardView {
@@ -165,12 +156,12 @@ extension DashBoardView {
                 Label("New Dial", systemImage: "plus.circle.fill")
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
             }
-            
+
             Spacer()
-            
+
             HStack(spacing: 1) {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
-                
+
                 Text(NSLocalizedString(checkCellularProvider.message, comment: ""))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 enum DialerQuickCode {
-    case internetBalance, airtimeBalance
+    case internetBalance, airtimeBalance, bankTransfer
     case voicePackBalance, mobileNumber
     case mobileWalletBalance(code: Int?)
     case electricity(meter: String, amount: Int, code: Int?)
@@ -20,6 +20,7 @@ enum DialerQuickCode {
         case .internetBalance: return "*345*5#"
         case .airtimeBalance: return "*131#"
         case .voicePackBalance: return "*140*5#"
+        case .bankTransfer: return "*903*3#"
         case .mobileNumber: return "*135*8#"
         case .mobileWalletBalance(let code):
             return "*182*6*1\(codeSuffix(code))"
@@ -66,8 +67,9 @@ class MainViewModel: ObservableObject {
     
     @Published private(set) var recentCodes: [RecentCode] = []
     
+    @Published private(set) var elecMeters: [ElectricityMeter] = []
     
-    /// Store a given  recent code locally.
+    /// Store a given  `RecentCode`  locally.
     /// - Parameter code: the code to be added.
     private func storeCode(code: RecentCode) {
         if let index = recentCodes.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
@@ -75,15 +77,38 @@ class MainViewModel: ObservableObject {
         } else {
             recentCodes.append(code)
         }
-        saveLocally()
+        saveRecentCodesLocally()
     }
     
-    /// Save code(s) locally.
-    public func saveLocally() {
+    
+    public func containsMeter(with number: String) -> Bool {
+        guard let meter = try? ElectricityMeter(number) else { return false }
+        return elecMeters.contains(meter)
+    }
+    
+    /// Save RecentCode(s) locally.
+    public func saveRecentCodesLocally() {
         do {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
-            print("Could not save locally: ", error.localizedDescription)
+            print("Could not save recent codes locally: ", error.localizedDescription)
+        }
+    }
+    
+    /// Store a given  `MeterNumber`  locally.
+    /// - Parameter code: the code to be added.
+    public func storeMeter(_ number: ElectricityMeter) {
+        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
+        elecMeters.append(number)
+        saveMeterNumbersLocally()
+    }
+    
+    /// Save MeterNumber(s) locally.
+    public func saveMeterNumbersLocally() {
+        do {
+            try DialerStorage.shared.saveElectricityMeters(elecMeters)
+        } catch {
+            print("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
     
@@ -96,6 +121,11 @@ class MainViewModel: ObservableObject {
     /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
         recentCodes = DialerStorage.shared.getRecentCodes()
+    }
+    
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveMeterNumbers() {
+        elecMeters = DialerStorage.shared.getMeterNumbers()
     }
     
     /// Confirm and Purchase an entered Code.
@@ -119,7 +149,12 @@ class MainViewModel: ObservableObject {
     /// - Parameter offSets: the offsets to be deleted
     public func deleteRecentCode(at offSets: IndexSet) {
         recentCodes.remove(atOffsets: offSets)
-        saveLocally()
+        saveRecentCodesLocally()
+    }
+    
+    public func deleteMeter(at offSets: IndexSet) {
+        elecMeters.remove(atOffsets: offSets)
+        saveMeterNumbersLocally()
     }
     
     /// Save locally the Pin Code
@@ -217,7 +252,7 @@ class MainViewModel: ObservableObject {
         showSettingsSheet = false
     }
     
-    public func defaultSheetBinding() -> Binding<Bool> {
+    public func settingsAndHistorySheetBinding() -> Binding<Bool> {
         let setter = { [weak self] (value: Bool) in
             guard let strongSelf = self else { return }
             if strongSelf.showSettingsSheet {
@@ -258,6 +293,10 @@ extension MainViewModel {
         performQuickDial(for: .mobileNumber)
     }
     
+    public func checkBankTransfer() {
+        performQuickDial(for: .bankTransfer)
+    }
+    
     public func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
         performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
@@ -282,53 +321,12 @@ extension MainViewModel {
             }
         }
     }
-    
-    enum CodeType: String, Codable {
-        case momo, call, message, other
-    }
-    struct RecentCode: Identifiable, Hashable, Codable {
-        static func == (lhs: MainViewModel.RecentCode, rhs: MainViewModel.RecentCode) -> Bool {
-            lhs.id == rhs.id
-        }
-        
-        public init(id: UUID = UUID(), detail: MainViewModel.PurchaseDetailModel, count: Int = 1) {
-            self.id = id
-            self.detail = detail
-            self.count = count
-        }
-        
-        private(set) var id: UUID
-        private(set) var count: Int
-        var detail: PurchaseDetailModel
-        var totalPrice: Int { detail.amount * count }
-        
-        mutating func increaseCount() { count += 1 }
-        
-        static let example = RecentCode(detail: .example)
-        
-    }
-        
-    struct PurchaseDetailModel: Hashable, Codable {
-        var amount: Int = 0
-        var type: CodeType = .momo
-        var fullCode: String {
-            "*182*2*1*1*1*\(amount)*PIN#"
-        }
-        
-        func getDialCode(pin: String) -> String {
-            if pin.isEmpty {
-                return "*182*2*1*1*1*\(amount)#"
-            } else {
-                return "*182*2*1*1*1*\(amount)*\(pin)#"
-            }
-        }
-        static let example = PurchaseDetailModel()
-    }
+
 }
 
 
 // MARK: - Extension used for Home Quick Actions
-extension MainViewModel.RecentCode {
+extension RecentCode {
     
     /// - Tag: QuickActionUserInfo
     var quickActionUserInfo: [String: NSSecureCoding] {

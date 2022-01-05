@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Contact: Identifiable, Equatable {
-    let id = UUID()
+struct Contact: Identifiable {
+    var id: String { names }
     let names: String
     private(set) var phoneNumbers: [String]
     
@@ -20,12 +20,9 @@ struct Contact: Identifiable, Equatable {
     init(firstName: String,
          lastName: String,
          phoneNumbers: [String]) {
-        
-        names = "\(firstName) \(lastName)"
+        self.names = "\(firstName) \(lastName)"
         self.phoneNumbers = phoneNumbers
     }
-    
-    
     
     mutating func updatePhones(_ numbers: [String]) {
         phoneNumbers = numbers
