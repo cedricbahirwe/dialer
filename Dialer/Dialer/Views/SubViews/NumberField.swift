@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct NumberField: View {
-    init(_ placeholder: String, text: Binding<String>) {
+    init(_ placeholder: LocalizedStringKey, text: Binding<String>) {
         self.placeholder = placeholder
         _text = text
     }
     
-    private let placeholder: String
+    private let placeholder: LocalizedStringKey
     @Binding private var text: String
     
     var body: some View {
