@@ -20,25 +20,10 @@ struct ComingSoonLabel: View {
     }
 }
 
-
-struct BetaLabel: View {
-    var body: some View {
-        Text("Beta feature")
-            .font(.caption)
-            .padding(8)
-            .frame(height: 30)
-            .background(Color.green.opacity(0.1))
-            .background(Color(.systemBackground))
-            .clipShape(Capsule())
-            .foregroundColor(.green)
-    }
-}
-
 struct ComingSoonLabel_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ComingSoonLabel()
-            BetaLabel()
         }
         .padding()
         .previewLayout(.sizeThatFits)
