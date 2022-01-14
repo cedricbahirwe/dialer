@@ -15,7 +15,7 @@
 "No SIM found" = "Carte SIM non detecté";
 
 // 2. Sending View
-"Transfer Money" = "Envoyer de l'argent";
+"Transfer Money USSD" = "Envoyer de l'argent";
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
 

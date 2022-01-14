@@ -20,7 +20,6 @@ class ReviewHandler {
 
         let lastVersionPromptedForReview = UserDefaults.standard.string(forKey: UserDefaultsKeys.lastVersionPromptedForReviewKey)
         
-        print(count)
         if count%4==0 && currentVersion != lastVersionPromptedForReview {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {

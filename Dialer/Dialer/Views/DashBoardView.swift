@@ -130,24 +130,20 @@ struct DashBoardView: View {
             .navigationTitle("Dialer")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    settingsButton
+                    Button(action: data.showSettingsView) { gearGradient }
                 }
                 
             }
     }
     
-    private var settingsButton: Button<AnyView> {
-        Button(action: data.showSettingsView) {
-            AnyView(
-            LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .frame(width: 30, height: 30)
-                .mask(
-                    Image(systemName: "gear")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                )
+    private var gearGradient: some View {
+        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .frame(width: 30, height: 30)
+            .mask(
+                Image(systemName: "gear")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
             )
-        }
     }
     
 }

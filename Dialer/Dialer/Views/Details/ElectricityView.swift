@@ -14,7 +14,7 @@ struct ElectricityView: View {
     @State private var amount: String = ""
     
     private var isValidMeter: Bool {
-        meterNumber.count >= 11
+        meterNumber.count >= 10
         
     }
     
@@ -80,11 +80,10 @@ struct ElectricityView: View {
                             .animation(.easeInOut, value: canSaveMeterNumber)
                     }
                     
-                    Text("The meter number should have at least 14 digits.")
+                    Text("The meter number should have at least 10 digits.")
                         .font(.caption).foregroundColor(.blue)
                 }
                                 
-                
                 Button(action: {
                     hideKeyboard()
                     store.getElectricity(for: meterNumber, amount: Int(amount)!)

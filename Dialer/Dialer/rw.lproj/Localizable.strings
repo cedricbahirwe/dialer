@@ -15,7 +15,7 @@
 "No SIM found" = "Nta SIMUKADI";
  
 // 2. Sending View
-"Transfer Money" = "Kohereza Amafaranga";
+"Transfer Money USSD" = "Kohereza Amafaranga";
 "Estimated fee: amount RWF" = "Ikiguzi cyo kohereza: %d RWF";
 "We can not estimate the fee for this amount." = "Ntidushobora kugereranya ikiguzi kuri uwo mubare w’ amafaranga.";
  
