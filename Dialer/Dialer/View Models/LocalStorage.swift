@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+typealias UserDefaultsKeys = UserDefaults.Keys
 public extension UserDefaults {
     
     /// Storing the used UserDefaults keys for safety.
@@ -22,6 +24,10 @@ public extension UserDefaults {
         
         // Biometrics
         static let allowBiometrics = "allowBiometrics"
+        
+        // Review
+        static let appStartUpsCountKey = "appStartUpsCountKey"
+        static let lastVersionPromptedForReviewKey = "lastVersionPromptedForReviewKey"
     }
 }
 

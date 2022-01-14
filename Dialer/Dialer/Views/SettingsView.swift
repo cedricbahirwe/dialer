@@ -92,9 +92,8 @@ struct SettingsView: View {
                             NavigationLink(destination: AboutView()) {
                                 SettingsRow(.about)
                             }
-                            Link(destination: URL(string: githubLink)!) {
-                                SettingsRow(.review)
-                            }
+                            
+                            SettingsRow(.review, perform: ReviewHandler.requestReviewManually)
                         }
                         .padding(.bottom, 20)
                     }
@@ -104,6 +103,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear(perform: ReviewHandler.requestReview)
             .sheet(isPresented: $showMailView) {
                 MailView(recipientEmail: supportEmail,
                          subject: "Dialer Question",

@@ -129,20 +129,25 @@ struct DashBoardView: View {
             .background(bgColor.ignoresSafeArea())
             .navigationTitle("Dialer")
             .toolbar {
-                settingsButton
-                    .contentShape(Rectangle())
-                    .onTapGesture(perform: data.showSettingsView)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    settingsButton
+                }
+                
             }
     }
     
-    private var settingsButton: some View {
-        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            .frame(width: 30, height: 30)
-            .mask(
-                Image(systemName: "gear")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+    private var settingsButton: Button<AnyView> {
+        Button(action: data.showSettingsView) {
+            AnyView(
+            LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .frame(width: 30, height: 30)
+                .mask(
+                    Image(systemName: "gear")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                )
             )
+        }
     }
     
 }
