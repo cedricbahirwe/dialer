@@ -31,22 +31,18 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("General settings")) {
                         VStack {
-                            HStack {
-                                SettingsRow(.changeLanguage, exists: false) {
-                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                                }
-                                BetaLabel()
+                            SettingsRow(.changeLanguage, exists: false) {
+                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
-                            HStack {
-                                SettingsRow(.biometrics, exists: false)
-                                    .overlay(
-                                        Toggle("Biometrics", isOn: $allowBiometrics)
-                                            .toggleStyle(SwitchToggleStyle())
-                                            .labelsHidden()
-                                        , alignment: .trailing
-                                    )
-                                
-                            }
+                            
+                            SettingsRow(.biometrics, exists: false)
+                                .overlay(
+                                    Toggle("Biometrics", isOn: $allowBiometrics)
+                                        .toggleStyle(SwitchToggleStyle())
+                                        .labelsHidden()
+                                    , alignment: .trailing
+                                )
+                            
                             
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, perform: dataStore.removePin)
@@ -55,15 +51,15 @@ struct SettingsView: View {
                         .padding(.bottom, 20)
                     }
                     
-                    Section(header: sectionHeader("Tips and Guides")){
-                        VStack {
-                            HStack(spacing: 0) {
-                                SettingsRow(.getStarted, exists: false)
-                                ComingSoonLabel()
-                            }
-                        }
-                        .padding(.bottom, 20)
-                    }
+//                    Section(header: sectionHeader("Tips and Guides")){
+//                        VStack {
+//                            HStack(spacing: 0) {
+//                                SettingsRow(.getStarted, exists: false)
+//                                ComingSoonLabel()
+//                            }
+//                        }
+//                        .padding(.bottom, 20)
+//                    }
                     
                     Section(header: sectionHeader("Reach Out")) {
                         VStack {
