@@ -31,11 +31,14 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("General settings")) {
                         VStack {
-                            SettingsRow(.changeLanguage) {
-                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                            HStack {
+                                SettingsRow(.changeLanguage, exists: false) {
+                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                                }
+                                BetaLabel()
                             }
                             HStack {
-                                SettingsRow(.biometrics)
+                                SettingsRow(.biometrics, exists: false)
                                     .overlay(
                                         Toggle("Biometrics", isOn: $allowBiometrics)
                                             .toggleStyle(SwitchToggleStyle())
@@ -56,7 +59,7 @@ struct SettingsView: View {
                         VStack {
                             HStack(spacing: 0) {
                                 SettingsRow(.getStarted, exists: false)
-                                
+                                ComingSoonLabel()
                             }
                         }
                         .padding(.bottom, 20)
@@ -238,8 +241,6 @@ extension SettingsView {
                 if exists {
                     Image(systemName: "chevron.right")
                         .foregroundColor(.secondary)
-                } else {
-                    ComingSoonLabel()
                 }
             }
             .padding(.vertical, 5)
