@@ -93,7 +93,7 @@ struct SendingView: View {
         .background(Color(.systemBackground)
                         .onTapGesture(perform: hideKeyboard))
         .onAppear(perform: requestContacts)
-        .navigationTitle("Transfer Money USSDt")
+        .navigationTitle("Transfer Money")
         .toolbar {
             Text(transaction.type == .client ? "Merchant pay" : "Send Money")
                 .font(.system(size: 18, design: .rounded))

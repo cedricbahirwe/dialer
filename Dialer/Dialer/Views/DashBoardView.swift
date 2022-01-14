@@ -22,7 +22,7 @@ struct DashBoardView: View {
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
     
-    private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
+    private let checkCellularProvider = (status: true, message: "MTN") // CTCarrierDetector.shared.cellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -98,6 +98,7 @@ struct DashBoardView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(.ultraThickMaterial)
+                        .hidden()
                     }
                     
                     bottomBarView
