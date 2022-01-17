@@ -22,7 +22,7 @@ struct DashBoardView: View {
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
     
-    private let checkCellularProvider = (status: true, message: "MTN") // CTCarrierDetector.shared.cellularProvider()
+    private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     private var bgColor: Color {
         colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
     }
@@ -184,6 +184,7 @@ struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
         DashBoardView()
             .environmentObject(MainViewModel())
+            .previewLayout(.sizeThatFits)
     }
 }
 
