@@ -15,7 +15,7 @@ struct NewDialingView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Image("dialer.applogo")
+            Image("dialit.applogo")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 65)

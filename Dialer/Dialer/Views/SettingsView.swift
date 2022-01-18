@@ -105,12 +105,12 @@ struct SettingsView: View {
             .onAppear(perform: ReviewHandler.requestReview)
             .sheet(isPresented: $showMailView) {
                 MailView(recipientEmail: supportEmail,
-                         subject: "Dialer Question",
+                         subject: "Dial It Question",
                          bodyMessage: getEmailBody())
             }
             .safeAreaInset(edge: .bottom, content: {
                 
-                Text("By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html).")
+                Text("By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html).")
                     .font(.subheadline.bold())
                     .multilineTextAlignment(.center)
                     .padding()
@@ -138,10 +138,10 @@ struct SettingsView: View {
         body.append(iosVersion)
         
         if let appVersion  = UIApplication.appVersion {
-            body.append("\nDialer Version: \(appVersion)")
+            body.append("\nDial It Version: \(appVersion)")
         }
         if let buildVersion = UIApplication.buildVersion {
-            body.append("\nDialer Build: \(buildVersion)")
+            body.append("\nDial It Build: \(buildVersion)")
         }
         return body
     }

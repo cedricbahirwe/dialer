@@ -128,7 +128,7 @@ struct DashBoardView: View {
                 NewDialingView()
             }
             .background(bgColor.ignoresSafeArea())
-            .navigationTitle("Dialer")
+            .navigationTitle("Dial It")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: data.showSettingsView) { gearGradient }

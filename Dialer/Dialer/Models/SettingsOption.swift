@@ -37,7 +37,7 @@ enum SettingsOption: Int {
         case .about:
             return .init(sysIcon: "info", color: .orange, title: "About", subtitle: "Version information.")
         case .review:
-            return .init(sysIcon: "heart.fill", color: .red, title: "Review Dialer", subtitle: "Let us know how we are doing.")
+            return .init(sysIcon: "heart.fill", color: .red, title: "Review Dial It", subtitle: "Let us know how we are doing.")
         }
     }
 }

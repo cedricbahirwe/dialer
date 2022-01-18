@@ -16,7 +16,7 @@ struct AboutView: View {
     
     var body: some View {
         VStack {
-            Image("dialer.applogo")
+            Image("dialit.applogo")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80)
@@ -24,7 +24,7 @@ struct AboutView: View {
                 .padding(30)
 
             VStack(spacing: 20) {
-                Text("Dialer Version \(appVersion)")
+                Text("Dial It Version \(appVersion)")
                     .fontWeight(.bold)
                 
                 Text("Build \(buildVersion)")

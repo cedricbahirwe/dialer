@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Dialer</string>
+	<string>Dial It</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSContactsUsageDescription</key>
-	<string>Dialer need access to your contacts list to provide better user experience.</string>
+	<string>Dial It needs access to your contacts list to provide better user experience.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID or Touch ID to access this feature.</string>
 	<key>UIApplicationSceneManifest</key>

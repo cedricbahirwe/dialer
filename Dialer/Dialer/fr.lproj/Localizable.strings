@@ -52,7 +52,7 @@
 "Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
 
 // 8. Congratulations View
-"Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
+"Thanks for using Dial It for the past month!" = "Merci d'avoir utilisé Dial It le mois dernier!";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense.";
 "Remaining time: timeRemaining seconds" = "Temps restant: %d seconds";
 
@@ -76,7 +76,7 @@
 
 "Help & More" = "Aide & Plus";
 
-"By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dialer, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
+"By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dial It, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
 
 
 // Parameters Options
@@ -86,14 +86,14 @@
 "Remove Pin" = "Supprimer le pin";
 "You'll need to re-enter it later." = "Vous devrez l'entrer à nouveau.";
 
-"Just getting started?" = "Nouveau sur Dialer?";
-"Read our quick start blog post." = "Lisez notre article sur Dialer.";
+"Just getting started?" = "Nouveau sur Dial It?";
+"Read our quick start blog post." = "Lisez notre article sur Dial It.";
 
 "Contact Us" = "Nous contacter";
 "Get help or ask a question." = "Obtenir de l'aide ou poser une question.";
 
 "Tweetez-nous" = "Tweet Us";
-"Stay up to date." = "Restez à jour à propos de Dialer.";
+"Stay up to date." = "Restez à jour à propos de Dial It.";
 
 "Translation Suggestion" = "Suggestion sur la traduction";
 "Improve our localization." = "Améliorez notre traduction de language.";
