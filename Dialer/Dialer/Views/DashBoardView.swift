@@ -55,7 +55,7 @@ struct DashBoardView: View {
                                 }
                             
                             DashItemView(
-                                title: "Send/Pay",
+                                title: "Transfer/Pay",
                                 icon: "paperplane.circle")
                                 .onChangeBiometrics(isActive: $presentSendingView)
                         }

@@ -72,7 +72,7 @@ struct SendingView: View {
 
 
                 Button(action: transferMoney) {
-                    Text("Submit")
+                    Text("Dial")
                         .font(.footnote.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
@@ -95,7 +95,7 @@ struct SendingView: View {
         .onAppear(perform: requestContacts)
         .navigationTitle("Transfer Money")
         .toolbar {
-            Text(transaction.type == .client ? "Merchant pay" : "Send Money")
+            Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
                 .font(.system(size: 18, design: .rounded))
                 .foregroundColor(.blue)
                 .onTapGesture  {

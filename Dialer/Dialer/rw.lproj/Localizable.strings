@@ -8,7 +8,7 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Kugura airtime";
-"Send/Pay" = "Kohereza/Kwishyura";
+"Transfer/Pay" = "Kohereza/Kwishyura";
 "History" = "Ibyashize";
 "Utilities" = "Ibikorwa";
 "New Dial" = "Gukanda bundi bushya";
@@ -39,8 +39,8 @@
 "Enter Merchant's Code" = "Injiza kode y’umucuruzi";
 "The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
 "Pick a contact" = "Hitamo nimero ya terefone ";
-"Submit" = "Kohereza";
-"Merchant pay" = "Kwishyura umucuruzi";
+"Dial" = "Kohereza";
+"Pay Merchant" = "Kwishyura umucuruzi";
 "Send Money" = "Kohereza amafaranga";
  
  

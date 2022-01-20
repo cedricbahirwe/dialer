@@ -8,7 +8,7 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Achéter des unités";
-"Send/Pay" = "Envoyer/Payer";
+"Transfer/Pay" = "Envoyer/Payer";
 "History" = "Historique";
 "Utilities" = "Utilitaires";
 "New Dial" = "Composer";
@@ -39,8 +39,8 @@
 "Enter Merchant's Code" = "Entrez le Code du Vendeur";
 "The code should be a 5-6 digits number" = "Le code doit être un nombre à 5 ou 6 chiffres";
 "Pick a contact" = "Choisissez un contact";
-"Submit" = "Soumettre";
-"Merchant pay" = "Payer le vendeur";
+"Dial" = "Soumettre";
+"Pay Merchant" = "Payer le vendeur";
 "Send Money" = "Envoyer de l'argent";
 
 
