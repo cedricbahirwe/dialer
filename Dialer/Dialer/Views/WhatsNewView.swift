@@ -57,21 +57,19 @@ struct WhatsNewView: View {
                     }
                     .padding(.horizontal, 2)
                 }
-            }
 
-            Spacer(minLength: 2)
-            Button {
-                isPresented = false
-            } label: {
-                Text("Continue")
-                    .font(.body.weight(.semibold))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-                    .background(Color.mainRed)
-                    .cornerRadius(12)
-                    .foregroundColor(.white)
+                Button {
+                    isPresented = false
+                } label: {
+                    Text("Continue")
+                        .font(.body.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(Color.mainRed)
+                        .cornerRadius(12)
+                        .foregroundColor(.white)
+                }
             }
-
         }
         .padding()
     }
