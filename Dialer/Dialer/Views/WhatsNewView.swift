@@ -9,9 +9,7 @@ import SwiftUI
 
 struct WhatsNewView: View {
     @Binding var isPresented: Bool
-
-    @Environment(\.colorScheme)
-    private var colorScheme
+    
     var body: some View {
         VStack(spacing: 20) {
             VStack(spacing: 6) {

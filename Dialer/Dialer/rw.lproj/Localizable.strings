@@ -57,7 +57,7 @@
 "Remaining time: timeRemaining seconds" = "Igihe gisigaye: %d seconds";
  
 // 9. About View
-"Designed and developed by\nCédric Bahirwe from ABC Incs." = "Byahanzwe bihinyanyurwa na\nCédric Bahirwe wo muri ABC Incs.";
+"Designed and developed by\nCédric Bahirwe." = "Byahanzwe bihinyanyurwa na\nCédric Bahirwe.";
 "About" = "Ibyerekeye";
  
 // 10. Settings View

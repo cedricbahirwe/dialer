@@ -37,12 +37,17 @@ struct DialingsHistoryView: View {
             }
             .navigationTitle("History")
             .safeAreaInset(edge: .bottom) {
-                HStack {
-                    Text("Total:")
-                    Spacer()
-                    Text("\(data.estimatedTotalPrice) RWF")
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Total:")
+                        Spacer()
+                        Text("\(data.estimatedTotalPrice) RWF")
+                    }
+                    Text("This estimation is based on the recent USSD codes.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
-                .font(.system(size: 30, weight: .bold, design: .monospaced))
+                .font(.system(size: 28, weight: .bold, design: .serif))
                 .opacity(0.9)
                 .padding(8)
                 .lineLimit(1)
