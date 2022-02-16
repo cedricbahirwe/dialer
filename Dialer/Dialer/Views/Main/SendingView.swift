@@ -90,11 +90,8 @@ struct SendingView: View {
                             .cornerRadius(8)
                             .foregroundColor(.white)
                     }
-                    .disabled(transaction.isValid == false)
-                    .disabled(didCopyToClipBoard)
+                    .disabled(transaction.isValid == false || didCopyToClipBoard)
                 }
-
-                Spacer()
 
                 if didCopyToClipBoard {
                     Text("USSD Code copied!")
@@ -105,6 +102,7 @@ struct SendingView: View {
                         .cornerRadius(5)
                         .animation(.easeInOut, value: didCopyToClipBoard)
                 }
+                Spacer()
             }
             .padding()
 
@@ -168,7 +166,7 @@ struct SendingView: View {
     private func copyToClipBoard() {
         UIPasteboard.general.string = transaction.fullCode
         didCopyToClipBoard = true
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             didCopyToClipBoard = false
         }
     }

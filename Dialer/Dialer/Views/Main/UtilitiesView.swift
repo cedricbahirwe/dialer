@@ -21,9 +21,9 @@ struct UtilitiesView: View {
                 
                 TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
                 
-                TappeableText("Send to my Bank Account", onTap: store.checkBankTransfer)
+//                TappeableText("Send to my Bank Account", onTap: store.checkBankTransfer)
                 
-                TappeableText("Top-Up in my Mobile Wallet", onTap: store.checkBankTransfer)
+//                TappeableText("Top-Up in my Mobile Wallet", onTap: store.checkBankTransfer)
                 
             }
             
@@ -34,19 +34,19 @@ struct UtilitiesView: View {
                 TappeableText("Check Internet Bundles", onTap: store.checkInternetBalance)
                 
                 
-                NavigationLink {
-                    VoicePacksView()
-                    
-                } label: {
-                    Text("Buy Voice Packs")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .overlay(ComingSoonLabel(), alignment: .trailing)
-                }
-                .disabled(true)
+//                NavigationLink {
+//                    VoicePacksView()
+//
+//                } label: {
+//                    Text("Buy Voice Packs")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .overlay(ComingSoonLabel(), alignment: .trailing)
+//                }
+//                .disabled(true)
                 
                 TappeableText("Check Voice Packs Balance", onTap: store.checkVoicePackBalance)
                 
-                TappeableText("Check my number", onTap: store.checkSimNumber)
+                TappeableText("Check my phone number", onTap: store.checkSimNumber)
             }
         }
         .navigationTitle("Utilities")
