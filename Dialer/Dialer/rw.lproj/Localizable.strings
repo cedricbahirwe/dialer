@@ -28,7 +28,7 @@
 // 5. PurchaseDetailView
 "Enter Pin" = "Injiza umubare w’ ibanga";
 "Save" = "Bika";
-"Your pin will not be saved unless you personally save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
+"Your pin will not be saved unless you manually save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
  
  
 "We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾" = "Turacyabibuka🎉\n Mwinjize umubare w’ amafaranga ibisigaye tugiye kubyitaho✌🏾";
