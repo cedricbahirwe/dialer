@@ -39,7 +39,7 @@
 "Enter Merchant's Code" = "Entrez le Code du Vendeur";
 "The code should be a 5-6 digits number" = "Le code doit être un nombre à 5 ou 6 chiffres";
 "Pick a contact" = "Choisissez un contact";
-"Dial" = "Soumettre";
+"Dial USSD" = "Soumettre le code USSD";
 "Pay Merchant" = "Payer le vendeur";
 "Send Money" = "Envoyer de l'argent";
 

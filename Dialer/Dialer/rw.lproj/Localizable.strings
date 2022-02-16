@@ -39,7 +39,7 @@
 "Enter Merchant's Code" = "Injiza kode y’umucuruzi";
 "The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
 "Pick a contact" = "Hitamo nimero ya terefone ";
-"Dial" = "Kohereza";
+"Dial USSD" = "Kohereza USSD Kode";
 "Pay Merchant" = "Kwishyura umucuruzi";
 "Send Money" = "Kohereza amafaranga";
  

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SendingView: View {
-    
+    @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
@@ -71,18 +71,40 @@ struct SendingView: View {
                 }
 
 
-                Button(action: transferMoney) {
-                    Text("Dial")
-                        .font(.footnote.bold())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 45)
-                        .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
-                        .cornerRadius(8)
-                        .foregroundColor(Color.white)
+                HStack {
+                    Button(action: transferMoney) {
+                        Text("Dial USSD")
+                            .font(.footnote.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 45)
+                            .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
+                            .cornerRadius(8)
+                            .foregroundColor(Color.white)
+                    }
+                    .disabled(transaction.isValid == false)
+
+                    Button(action: copyToClipBoard) {
+                        Image(systemName: "doc.on.doc.fill")
+                            .frame(width: 45, height: 45)
+                            .background(Color.secondary.opacity(transaction.isValid ? 1 : 0.3))
+                            .cornerRadius(8)
+                            .foregroundColor(.white)
+                    }
+                    .disabled(transaction.isValid == false)
+                    .disabled(didCopyToClipBoard)
                 }
-                .disabled(transaction.isValid == false)
 
                 Spacer()
+
+                if didCopyToClipBoard {
+                    Text("USSD Code copied!")
+                        .font(.system(.callout, design: .rounded))
+                        .foregroundColor(Color(.systemBackground))
+                        .padding(8)
+                        .background(Color.primary.opacity(0.75))
+                        .cornerRadius(5)
+                        .animation(.easeInOut, value: didCopyToClipBoard)
+                }
             }
             .padding()
 
@@ -142,6 +164,14 @@ struct SendingView: View {
             }
         }
     }
+
+    private func copyToClipBoard() {
+        UIPasteboard.general.string = transaction.fullCode
+        didCopyToClipBoard = true
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            didCopyToClipBoard = false
+        }
+    }
 }
 
 #if DEBUG
@@ -149,6 +179,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
+//                .preferredColorScheme(.dark)
         }
     }
 }

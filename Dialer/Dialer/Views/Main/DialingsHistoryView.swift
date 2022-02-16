@@ -43,7 +43,7 @@ struct DialingsHistoryView: View {
                         Spacer()
                         Text("\(data.estimatedTotalPrice) RWF")
                     }
-                    Text("This estimation is based on the recent USSD codes.")
+                    Text("This estimation is based on the recent USSD codes used.")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
