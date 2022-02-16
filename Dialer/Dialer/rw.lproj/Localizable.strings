@@ -8,7 +8,7 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Kugura airtime";
-"Send/Pay" = "Kohereza/Kwishyura";
+"Transfer/Pay" = "Kohereza/Kwishyura";
 "History" = "Ibyashize";
 "Utilities" = "Ibikorwa";
 "New Dial" = "Gukanda bundi bushya";
@@ -28,7 +28,7 @@
 // 5. PurchaseDetailView
 "Enter Pin" = "Injiza umubare w’ ibanga";
 "Save" = "Bika";
-"Your pin will not be saved unless you personally save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
+"Your pin will not be saved unless you manually save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
  
  
 "We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾" = "Turacyabibuka🎉\n Mwinjize umubare w’ amafaranga ibisigaye tugiye kubyitaho✌🏾";
@@ -39,8 +39,8 @@
 "Enter Merchant's Code" = "Injiza kode y’umucuruzi";
 "The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
 "Pick a contact" = "Hitamo nimero ya terefone ";
-"Submit" = "Kohereza";
-"Merchant pay" = "Kwishyura umucuruzi";
+"Dial USSD" = "Kohereza USSD Kode";
+"Pay Merchant" = "Kwishyura umucuruzi";
 "Send Money" = "Kohereza amafaranga";
  
  
@@ -57,7 +57,7 @@
 "Remaining time: timeRemaining seconds" = "Igihe gisigaye: %d seconds";
  
 // 9. About View
-"Designed and developed by\nCédric Bahirwe from ABC Incs." = "Byahanzwe bihinyanyurwa na\nCédric Bahirwe wo muri ABC Incs.";
+"Designed and developed by\nCédric Bahirwe." = "Byahanzwe bihinyanyurwa na\nCédric Bahirwe.";
 "About" = "Ibyerekeye";
  
 // 10. Settings View

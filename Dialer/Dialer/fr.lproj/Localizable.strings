@@ -8,7 +8,7 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Achéter des unités";
-"Send/Pay" = "Envoyer/Payer";
+"Transfer/Pay" = "Envoyer/Payer";
 "History" = "Historique";
 "Utilities" = "Utilitaires";
 "New Dial" = "Composer";
@@ -28,7 +28,7 @@
 // 5. PurchaseDetailView
 "Enter Pin" = "Entrer le Pin";
 "Save" = "Enregister";
-"Your pin will not be saved unless you personally save it." = "Votre PIN ne sera pas enregistré automatiquement.";
+"Your pin will not be saved unless you manually save it." = "Votre PIN ne sera pas enregistré automatiquement.";
 "Confirm" = "Confirmer";
 
 "We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾" = "Nous nous souvenons de vous🎉\n Entrez le montant et nous nous occupons du reste✌🏾";
@@ -39,8 +39,8 @@
 "Enter Merchant's Code" = "Entrez le Code du Vendeur";
 "The code should be a 5-6 digits number" = "Le code doit être un nombre à 5 ou 6 chiffres";
 "Pick a contact" = "Choisissez un contact";
-"Submit" = "Soumettre";
-"Merchant pay" = "Payer le vendeur";
+"Dial USSD" = "Soumettre le code USSD";
+"Pay Merchant" = "Payer le vendeur";
 "Send Money" = "Envoyer de l'argent";
 
 
@@ -57,7 +57,7 @@
 "Remaining time: timeRemaining seconds" = "Temps restant: %d seconds";
 
 // 9. About View
-"Designed and developed by\nCédric Bahirwe from ABC Incs." = "Conçu et développé par\nCédric Bahirwe de ABC Incs.";
+"Designed and developed by\nCédric Bahirwe." = "Conçu et développé par\nCédric Bahirwe.";
 "About" = "A propos";
 
 // 10. Settings View

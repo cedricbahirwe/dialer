@@ -114,7 +114,7 @@ struct PurchaseDetailView: View {
                                 , alignment: .trailing
                         )
                         
-                        Text("Your pin will not be saved unless you personally save it.")
+                        Text("Your pin will not be saved unless you manually save it.")
                             .font(.caption)
                             .foregroundColor(.red)
                             .lineLimit(1)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ElectricityView: View {
     @EnvironmentObject private var store: MainViewModel
-    
+    @State private var didCopyToClipBoard: Bool = false
     @State private var meterNumber: String = ""
     @State private var amount: String = ""
     
@@ -84,19 +84,40 @@ struct ElectricityView: View {
                         .font(.caption).foregroundColor(.blue)
                 }
                                 
-                Button(action: {
-                    hideKeyboard()
-                    store.getElectricity(for: meterNumber, amount: Int(amount)!)
-                }) {
-                    Text("Buy electricity")
-                        .font(.footnote.bold())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 45)
-                        .background(Color.blue.opacity(isValidMeter ? 1 : 0.6))
-                        .cornerRadius(8)
-                        .foregroundColor(Color.white)
+                HStack {
+                    Button(action: {
+                        hideKeyboard()
+                        store.getElectricity(for: meterNumber, amount: Int(amount)!)
+                    }) {
+                        Text("Dial Electricity USSD")
+                            .font(.footnote.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 45)
+                            .background(Color.blue.opacity(isValidMeter ? 1 : 0.6))
+                            .cornerRadius(8)
+                            .foregroundColor(Color.white)
+                    }
+                    .disabled(isValidTransaction == false)
+
+                    Button(action: copyToClipBoard) {
+                        Image(systemName: "doc.on.doc.fill")
+                            .frame(width: 45, height: 45)
+                            .background(Color.secondary.opacity(isValidTransaction ? 1 : 0.3))
+                            .cornerRadius(8)
+                            .foregroundColor(.white)
+                    }
+                    .disabled(isValidTransaction == false || didCopyToClipBoard)
                 }
-                .disabled(isValidTransaction == false)
+
+                if didCopyToClipBoard {
+                    Text("USSD Code copied!")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(Color(.systemBackground))
+                        .padding(8)
+                        .background(Color.primary.opacity(0.75))
+                        .cornerRadius(5)
+                        .animation(.easeInOut, value: didCopyToClipBoard)
+                }
             
             }.padding()
             
@@ -124,6 +145,10 @@ struct ElectricityView: View {
     private func fillMeterField(with value: String) {
         guard meterNumber != value else { return }
         meterNumber = value
+    }
+
+    private func copyToClipBoard() {
+
     }
 }
 

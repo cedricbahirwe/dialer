@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SendingView: View {
-    
+    @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
@@ -71,17 +71,37 @@ struct SendingView: View {
                 }
 
 
-                Button(action: transferMoney) {
-                    Text("Submit")
-                        .font(.footnote.bold())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 45)
-                        .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
-                        .cornerRadius(8)
-                        .foregroundColor(Color.white)
-                }
-                .disabled(transaction.isValid == false)
+                HStack {
+                    Button(action: transferMoney) {
+                        Text("Dial USSD")
+                            .font(.footnote.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 45)
+                            .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
+                            .cornerRadius(8)
+                            .foregroundColor(Color.white)
+                    }
+                    .disabled(transaction.isValid == false)
 
+                    Button(action: copyToClipBoard) {
+                        Image(systemName: "doc.on.doc.fill")
+                            .frame(width: 45, height: 45)
+                            .background(Color.secondary.opacity(transaction.isValid ? 1 : 0.3))
+                            .cornerRadius(8)
+                            .foregroundColor(.white)
+                    }
+                    .disabled(transaction.isValid == false || didCopyToClipBoard)
+                }
+
+                if didCopyToClipBoard {
+                    Text("USSD Code copied!")
+                        .font(.system(.callout, design: .rounded))
+                        .foregroundColor(Color(.systemBackground))
+                        .padding(8)
+                        .background(Color.primary.opacity(0.75))
+                        .cornerRadius(5)
+                        .animation(.easeInOut, value: didCopyToClipBoard)
+                }
                 Spacer()
             }
             .padding()
@@ -95,7 +115,7 @@ struct SendingView: View {
         .onAppear(perform: requestContacts)
         .navigationTitle("Transfer Money")
         .toolbar {
-            Text(transaction.type == .client ? "Merchant pay" : "Send Money")
+            Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
                 .font(.system(size: 18, design: .rounded))
                 .foregroundColor(.blue)
                 .onTapGesture  {
@@ -142,6 +162,14 @@ struct SendingView: View {
             }
         }
     }
+
+    private func copyToClipBoard() {
+        UIPasteboard.general.string = transaction.fullCode
+        didCopyToClipBoard = true
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            didCopyToClipBoard = false
+        }
+    }
 }
 
 #if DEBUG
@@ -149,6 +177,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
+//                .preferredColorScheme(.dark)
         }
     }
 }

@@ -12,6 +12,9 @@ struct HistoryRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
+                Image(systemName: "phone.circle.fill")
+                    .imageScale(.large)
+                    .symbolRenderingMode(.multicolor)
                 Text(recentCode.detail.fullCode)
                     .font(.title3)
                     .fontWeight(.semibold)

@@ -31,7 +31,7 @@ struct AboutView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
 
-                Text("Designed and developed by\nCédric Bahirwe from ABC Incs.")
+                Text("Designed and developed by\nCédric Bahirwe.")
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)

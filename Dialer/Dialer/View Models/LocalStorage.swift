@@ -17,7 +17,9 @@ public extension UserDefaults {
         static let pinCode = "pinCode"
         static let purchaseDetails = "purchaseDetails"
         static let lastSyncDate = "lastSyncDate"
-        
+
+        // Onboarding
+        static let showWelcomeView = "showWelcomeView"
         
         // Electricity
         static let meterNumbers = "meterNumbers"
@@ -28,6 +30,7 @@ public extension UserDefaults {
         // Review
         static let appStartUpsCountKey = "appStartUpsCountKey"
         static let lastVersionPromptedForReviewKey = "lastVersionPromptedForReviewKey"
+        
     }
 }
 
