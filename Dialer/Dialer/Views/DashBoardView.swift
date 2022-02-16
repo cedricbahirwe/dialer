@@ -21,6 +21,8 @@ struct DashBoardView: View {
     @State private var presentNewDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
+    @AppStorage(UserDefaults.Keys.showWelcomeView)
+    private var showWelcomeView: Bool = true
     
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     private var bgColor: Color {
@@ -116,12 +118,16 @@ struct DashBoardView: View {
                 }
                 PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             }
-            .sheet(isPresented: data.settingsAndHistorySheetBinding()) {
-                if data.showSettingsSheet {
-                    SettingsView()
-                        .environmentObject(data)
+            .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
+                if showWelcomeView {
+                    WhatsNewView(isPresented: $showWelcomeView)
                 } else {
-                    DialingsHistoryView(data: data)
+                    if data.showSettingsSheet {
+                        SettingsView()
+                            .environmentObject(data)
+                    } else {
+                        DialingsHistoryView(data: data)
+                    }
                 }
             }
             .fullScreenCover(isPresented: $presentNewDial) {

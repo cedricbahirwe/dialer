@@ -53,6 +53,7 @@
 		CBC262BF2784C7D3000B8E0E /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262BE2784C7D3000B8E0E /* MailView.swift */; };
 		CBC262C42784D233000B8E0E /* RecentCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C32784D233000B8E0E /* RecentCode.swift */; };
 		CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C52784D243000B8E0E /* PurchaseDetailModel.swift */; };
+		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		CBC262BE2784C7D3000B8E0E /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		CBC262C32784D233000B8E0E /* RecentCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCode.swift; sourceTree = "<group>"; };
 		CBC262C52784D243000B8E0E /* PurchaseDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModel.swift; sourceTree = "<group>"; };
+		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
+				CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */,
 				820C108B2766A4D400A7CADE /* Main */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
 				820C108C2766A51000A7CADE /* Details */,
@@ -399,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */,
+				CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */,
 				CBC262C42784D233000B8E0E /* RecentCode.swift in Sources */,
 				82EEBCF626C1338700B1720A /* PrimitiveExtensions.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
