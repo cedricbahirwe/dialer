@@ -23,7 +23,6 @@
 		8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440A26FDBB2300DB0643 /* SettingsItem.swift */; };
 		8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440C26FDBB3200DB0643 /* SettingsOption.swift */; };
 		824B80E127483E6F004041AA /* UtilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824B80E027483E6F004041AA /* UtilitiesView.swift */; };
-		824D4F1E2769F9EE00738014 /* ComingSoonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D4F1D2769F9EE00738014 /* ComingSoonLabel.swift */; };
 		825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825022E52673676B007ABB56 /* DialingsHistoryView.swift */; };
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
 		8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E68D2693959800657EFB /* CongratulationsView.swift */; };
@@ -47,6 +46,7 @@
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
+		CB9E56F12807710E005865D7 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9E56F02807710E005865D7 /* TestingView.swift */; };
 		CBAF13172785A34800D32E1F /* ElectricityMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13162785A34800D32E1F /* ElectricityMeter.swift */; };
 		CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13182785A54100D32E1F /* TappeableText.swift */; };
 		CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13162785A34800D32E1F /* ElectricityMeter.swift */; };
@@ -86,7 +86,6 @@
 		8248440A26FDBB2300DB0643 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		8248440C26FDBB3200DB0643 /* SettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOption.swift; sourceTree = "<group>"; };
 		824B80E027483E6F004041AA /* UtilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesView.swift; sourceTree = "<group>"; };
-		824D4F1D2769F9EE00738014 /* ComingSoonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonLabel.swift; sourceTree = "<group>"; };
 		825022E52673676B007ABB56 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
@@ -118,6 +117,7 @@
 		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
+		CB9E56F02807710E005865D7 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
 		CBAF13162785A34800D32E1F /* ElectricityMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectricityMeter.swift; sourceTree = "<group>"; };
 		CBAF13182785A54100D32E1F /* TappeableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappeableText.swift; sourceTree = "<group>"; };
 		CBC262BE2784C7D3000B8E0E /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
@@ -170,7 +170,6 @@
 				8255E68D2693959800657EFB /* CongratulationsView.swift */,
 				8255E690269395EE00657EFB /* CongratsViewController.swift */,
 				821C0737264DDFFB00DBD545 /* PinView.swift */,
-				824D4F1D2769F9EE00738014 /* ComingSoonLabel.swift */,
 				820C10892766A31400A7CADE /* NumberField.swift */,
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 				CBAF13182785A54100D32E1F /* TappeableText.swift */,
@@ -216,6 +215,7 @@
 				82550129263B3BDF00CB1BC2 /* Dialer.entitlements */,
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
+				CB9E56F02807710E005865D7 /* TestingView.swift */,
 				CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				825F996826720B75009E4A7B /* Models */,
@@ -407,7 +407,6 @@
 				82EEBCF626C1338700B1720A /* PrimitiveExtensions.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
-				824D4F1E2769F9EE00738014 /* ComingSoonLabel.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
@@ -415,6 +414,7 @@
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
+				CB9E56F12807710E005865D7 /* TestingView.swift in Sources */,
 				825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */,
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,

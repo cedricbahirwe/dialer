@@ -37,5 +37,7 @@ struct HistoryRow: View {
 struct HistoryRow_Previews: PreviewProvider {
     static var previews: some View {
         HistoryRow(recentCode: .example)
+            .padding()
+            .previewLayout(.sizeThatFits)
     }
 }

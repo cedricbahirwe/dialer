@@ -25,9 +25,6 @@ struct DashBoardView: View {
     private var showWelcomeView: Bool = true
     
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
-    private var bgColor: Color {
-        colorScheme == .dark ? Color(.systemBackground) : Color(.secondarySystemBackground)
-    }
     
     private var dragGesture: some Gesture {
         DragGesture()
@@ -38,7 +35,9 @@ struct DashBoardView: View {
             .onEnded { value in
                 let snapDistance = 600 * CGFloat(0.25)
                 showPurchaseSheet = value.translation.height < snapDistance
-                dragState = showPurchaseSheet ? .open : .closed
+                withAnimation {
+                    dragState = showPurchaseSheet ? .open : .closed
+                }
             }
     }
     
@@ -46,14 +45,16 @@ struct DashBoardView: View {
 
             ZStack(alignment: .bottom) {
                 VStack {
-                    VStack(spacing: 15) {
-                        HStack(spacing: 15) {
+                    VStack(spacing: 29) {
+                        HStack(spacing: 20) {
                             DashItemView(
                                 title: "Buy airtime",
                                 icon: "wallet.pass")
                                 .momoDisability()
                                 .onTapGesture {
-                                    showPurchaseSheet.toggle()
+                                    withAnimation {
+                                        showPurchaseSheet.toggle()
+                                    }
                                 }
                             
                             DashItemView(
@@ -133,7 +134,7 @@ struct DashBoardView: View {
             .fullScreenCover(isPresented: $presentNewDial) {
                 NewDialingView()
             }
-            .background(bgColor.ignoresSafeArea())
+            .background(Color.primaryBackground)
             .navigationTitle("Dial It")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -165,6 +166,7 @@ extension DashBoardView {
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
             }
             .foregroundColor(.mainRed)
+            .hidden()
             Spacer()
 
             HStack(spacing: 1) {
@@ -218,10 +220,11 @@ struct DashItemView: View {
         .padding(8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 80)
-        .background(
-            Color(.secondarySystemGroupedBackground)
-        )
+        .background(Color.primaryBackground)
         .cornerRadius(12)
         .contentShape(Rectangle())
+        .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
+        .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)
+
     }
 }

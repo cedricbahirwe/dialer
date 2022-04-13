@@ -9,10 +9,13 @@ import SwiftUI
 
 struct UtilitiesView: View {
     @EnvironmentObject private var store: MainViewModel
-    
+    @Environment(\.colorScheme) private var colorScheme
+    private var rowBackground: Color {
+        Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
+    }
     var body: some View {
         List {
-            Section("Primary") {
+            Section("Most Popular") {
                 NavigationLink {
                     ElectricityView()
                 } label: {
@@ -26,8 +29,9 @@ struct UtilitiesView: View {
 //                TappeableText("Top-Up in my Mobile Wallet", onTap: store.checkBankTransfer)
                 
             }
+            .listRowBackground(rowBackground)
             
-            Section("Secondary") {
+            Section("Other") {
                 
                 TappeableText("Check Airtime Balance", onTap: store.checkAirtimeBalance)
                 
@@ -40,7 +44,6 @@ struct UtilitiesView: View {
 //                } label: {
 //                    Text("Buy Voice Packs")
 //                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .overlay(ComingSoonLabel(), alignment: .trailing)
 //                }
 //                .disabled(true)
                 
@@ -48,7 +51,10 @@ struct UtilitiesView: View {
                 
                 TappeableText("Check my phone number", onTap: store.checkSimNumber)
             }
+            .listRowBackground(rowBackground)
         }
+//        .listStyle(.plain)
+        .background(Color.primaryBackground)
         .navigationTitle("Utilities")
     }
 }
@@ -57,6 +63,8 @@ struct UtilitiesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             UtilitiesView()
-        }.environmentObject(MainViewModel())
+                .environmentObject(MainViewModel())
+//                .preferredColorScheme(.dark)
+        }
     }
 }

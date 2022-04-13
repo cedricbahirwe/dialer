@@ -23,11 +23,11 @@ struct NumberField: View {
             .disableAutocorrection(true)
             .foregroundColor(.primary)
             .padding()
-            .frame(height: 45)
-            .background(Color(.systemBackground))
-            .cornerRadius(8)
-            .overlay(RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.primary, lineWidth: 0.5))
+            .frame(height: 48)
+            .background(Color.primaryBackground)
+            .cornerRadius(10)
+            .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
+            .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
             .font(.callout)
     }
 }
@@ -36,5 +36,7 @@ struct NumberField: View {
 struct NumberField_Previews: PreviewProvider {
     static var previews: some View {
         NumberField("placeholder", text: .constant(""))
+            .padding()
+            .previewLayout(.sizeThatFits)
     }
 }

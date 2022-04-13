@@ -122,7 +122,7 @@ struct PurchaseDetailView: View {
                     }
                     
                 } else {
-                    Text("We've got your back 🎉\n Enter the amount and we'll take care of the rest✌🏾")
+                    Text("We've got your back 🎉\n Enter the amount and you're good to go✌🏾")
                         .foregroundColor(.green)
                         .lineLimit(2)
                         .minimumScaleFactor(0.5)
@@ -137,7 +137,7 @@ struct PurchaseDetailView: View {
                     Text("Confirm")
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
-                        .background(Color.primary)
+                        .background(Color.primary.opacity((!validCode || !validAmount) ? 0.5 : 1))
                         .cornerRadius(8)
                         .foregroundColor(Color(.systemBackground))
                 }
@@ -150,7 +150,8 @@ struct PurchaseDetailView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .top)
-        .background(Color(.systemBackground))
+
+        .background(Color.primaryBackground)
         .cornerRadius(15)
         .shadow(radius: 5)
         .offset(y: 0 + (keyWindow?.safeAreaInsets.top ?? 0))

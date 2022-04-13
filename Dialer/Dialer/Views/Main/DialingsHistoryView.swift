@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DialingsHistoryView: View {
     @ObservedObject var data: MainViewModel
+
     var body: some View {
         NavigationView {
             VStack {
@@ -26,36 +27,40 @@ struct DialingsHistoryView: View {
                     
                     Spacer()
                     Text("No History Yet")
-                        .font(.system(.largeTitle, design: .rounded))
-                        .bold()
+                        .font(.system(.largeTitle, design: .rounded).bold())
+                        .frame(maxWidth: .infinity)
                     Text("Come back later.")
                         .font(.system(.headline, design: .rounded))
-                        .foregroundColor(Color.main)
                     Spacer()
                 }
 
             }
+            .background(Color.primaryBackground)
             .navigationTitle("History")
             .safeAreaInset(edge: .bottom) {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Total:")
                         Spacer()
-                        Text("\(data.estimatedTotalPrice) RWF")
+                        HStack(spacing: 3) {
+                            Text("\(data.estimatedTotalPrice)")
+                            Text("RWF")
+                                .font(.system(size: 16, weight: .bold, design: .serif))
+                        }
                     }
                     Text("This estimation is based on the recent USSD codes used.")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                .font(.system(size: 28, weight: .bold, design: .serif))
+                .font(.system(size: 26, weight: .bold, design: .serif))
                 .opacity(0.9)
                 .padding(8)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
                 .truncationMode(.middle)
-                .padding()
+                .padding(.horizontal)
                 .frame(maxWidth: .infinity)
-                .background(.ultraThickMaterial)
+                .background(.thinMaterial)
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -71,5 +76,6 @@ struct DialingsHistoryView: View {
 struct DialingsHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         DialingsHistoryView(data: MainViewModel())
+            .preferredColorScheme(.dark)
     }
 }

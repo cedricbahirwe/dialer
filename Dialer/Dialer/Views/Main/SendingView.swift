@@ -25,9 +25,9 @@ struct SendingView: View {
     
     var body: some View {
         VStack {
-            VStack(spacing: 20) {
+            VStack(spacing: 15) {
 
-                VStack(spacing: 3) {
+                VStack(spacing: 10) {
                     if transaction.type == .client && !transaction.amount.isEmpty  {
                         feeHintView
                             .font(.caption).foregroundColor(.blue)
@@ -37,7 +37,7 @@ struct SendingView: View {
 
                     NumberField("Enter Amount", text: $transaction.amount.animation())
                 }
-                VStack(spacing: 3) {
+                VStack(spacing: 10) {
                     if transaction.type == .client {
                         Text(selectedContact.names).font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -53,45 +53,48 @@ struct SendingView: View {
                     }
                 }
 
-                if transaction.type == .client {
-                    Button(action: {
-                        showContactPicker.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "person.fill")
-                            Text("Pick a contact").bold().font(.footnote)
-                        }
-                        .font(.footnote.bold())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 45)
-                        .background(Color.primary)
-                        .cornerRadius(8)
-                        .foregroundColor(Color(.systemBackground))
-                    }
-                }
-
-
-                HStack {
-                    Button(action: transferMoney) {
-                        Text("Dial USSD")
-                            .font(.footnote.bold())
+                VStack(spacing: 18) {
+                    if transaction.type == .client {
+                        Button(action: {
+                            showContactPicker.toggle()
+                        }) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                Text("Pick a contact")
+                            }
+                            .font(.subheadline.bold())
                             .frame(maxWidth: .infinity)
-                            .frame(height: 45)
-                            .background(Color.blue.opacity(transaction.isValid ? 1 : 0.6))
+                            .frame(height: 48)
+                            .background(Color(.secondarySystemBackground))
                             .cornerRadius(8)
-                            .foregroundColor(Color.white)
+                            .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
+                            .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
+                        }
                     }
-                    .disabled(transaction.isValid == false)
 
-                    Button(action: copyToClipBoard) {
-                        Image(systemName: "doc.on.doc.fill")
-                            .frame(width: 45, height: 45)
-                            .background(Color.secondary.opacity(transaction.isValid ? 1 : 0.3))
-                            .cornerRadius(8)
-                            .foregroundColor(.white)
+                    HStack {
+                        Button(action: transferMoney) {
+                            Text("Dial USSD")
+                                .font(.subheadline.bold())
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                .cornerRadius(8)
+                                .foregroundColor(Color.white)
+                        }
+                        .disabled(transaction.isValid == false)
+
+                        Button(action: copyToClipBoard) {
+                            Image(systemName: "doc.on.doc.fill")
+                                .frame(width: 48, height: 48)
+                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                .cornerRadius(8)
+                                .foregroundColor(.white)
+                        }
+                        .disabled(transaction.isValid == false || didCopyToClipBoard)
                     }
-                    .disabled(transaction.isValid == false || didCopyToClipBoard)
                 }
+                .padding(.top)
 
                 if didCopyToClipBoard {
                     Text("USSD Code copied!")
@@ -110,8 +113,7 @@ struct SendingView: View {
         .sheet(isPresented: $showContactPicker) {
             ContactsList(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
         }
-        .background(Color(.systemBackground)
-                        .onTapGesture(perform: hideKeyboard))
+        .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .onAppear(perform: requestContacts)
         .navigationTitle("Transfer Money")
         .toolbar {
@@ -177,7 +179,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
-//                .preferredColorScheme(.dark)
+                .preferredColorScheme(.dark)
         }
     }
 }

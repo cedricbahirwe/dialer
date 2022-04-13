@@ -26,7 +26,7 @@ struct ContentView: View {
         
         UINavigationBar.appearance().largeTitleTextAttributes = [
             NSAttributedString.Key.font:UIFont.init(descriptor: descriptor2!, size: 34),
-            NSAttributedString.Key.foregroundColor: UIColor.label
+            NSAttributedString.Key.foregroundColor: UIColor.label,
         ]
         
         UINavigationBar.appearance().titleTextAttributes = [

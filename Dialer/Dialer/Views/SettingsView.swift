@@ -55,7 +55,6 @@ struct SettingsView: View {
 //                        VStack {
 //                            HStack(spacing: 0) {
 //                                SettingsRow(.getStarted, exists: false)
-//                                ComingSoonLabel()
 //                            }
 //                        }
 //                        .padding(.bottom, 20)
@@ -100,6 +99,7 @@ struct SettingsView: View {
                 .padding(.horizontal, 10)
                 .foregroundColor(.primary.opacity(0.8))
             }
+            .background(Color.primaryBackground)
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
@@ -177,6 +177,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
+//            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {
