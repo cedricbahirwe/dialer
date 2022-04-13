@@ -164,7 +164,7 @@ extension DashBoardView {
                 Label("New Dial", systemImage: "plus.circle.fill")
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
             }
-            .hidden()
+            .foregroundColor(.mainRed)
             Spacer()
 
             HStack(spacing: 1) {
@@ -190,7 +190,8 @@ struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
         DashBoardView()
             .environmentObject(MainViewModel())
-            .previewLayout(.sizeThatFits)
+//            .previewLayout(.sizeThatFits)
+            .preferredColorScheme(.dark)
     }
 }
 
