@@ -12,26 +12,27 @@ struct WhatsNewView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            VStack(spacing: 6) {
+            VStack(spacing: 10) {
                 Image("dialit.applogo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100)
                     .cornerRadius(20)
 
-                Text("Dial It")
-                    .font(.system(.largeTitle, design: .rounded).weight(.heavy))
+                VStack {
+                    Text("Dial It")
+                        .font(.system(.title, design: .rounded).weight(.heavy))
 
-                Text("Your Rwanda reference for USSD codes.")
-                    .font(.headline)
-                Text("No need to memorize all USSD codes!\n**Dial It** is there for you!📞")
-                    .font(.system(.callout, design: .serif))
-                    .multilineTextAlignment(.center)
+                    Text("Your USSD companion app.")
+                        .font(.headline)
+                        .opacity(0.95)
+                }
+
             }
 
-            VStack(spacing: 10) {
+            VStack(spacing: 18) {
 
-                Text("What's In for You👀?")
+                Text("What's in for you👀?")
                     .font(.system(.title, design: .rounded).weight(.heavy))
 
                 ScrollView(.vertical, showsIndicators: true) {
@@ -65,13 +66,17 @@ struct WhatsNewView: View {
                         .font(.body.weight(.semibold))
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
-                        .background(Color.mainRed)
+                        .background(Color.primaryBackground)
                         .cornerRadius(12)
-                        .foregroundColor(.white)
+                        .shadow(color: .lightShadow, radius: 3, x: -3, y: -3)
+                        .shadow(color: .darkShadow, radius: 3, x: 3, y: 3)
+                        .foregroundColor(.mainRed)
                 }
+                .padding(.vertical)
             }
         }
         .padding()
+        .background(Color.primaryBackground)
     }
 
     private func featureView(icon: String, title: String, subtitle: String) -> some View {
@@ -79,35 +84,33 @@ struct WhatsNewView: View {
         HStack(spacing: 10) {
 
             Image(systemName: icon)
-//                            .symbolRenderingMode(.monochrome)
                 .resizable()
                 .foregroundColor(.mainRed)
                 .brightness(0.1)
                 .scaledToFit()
-                .frame(width: 42, height: 42)
+                .frame(width: 30, height: 30)
 
             VStack(alignment: .leading) {
                 Text(title)
-                    .font(.title3.weight(.semibold))
+                    .font(.system(.title3, design: .rounded).weight(.semibold))
                     .contrast(0.85)
 
                 Text(subtitle)
                     .opacity(0.8)
-                    .font(.callout)
+                    .font(.system(.callout, design: .rounded))
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
+//                    .scaleEffect(0.95, anchor: .topLeading)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-
     }
-
 }
 
 struct WhatsNewView_Previews: PreviewProvider {
     static var previews: some View {
         WhatsNewView(isPresented: .constant(true))
-//            .preferredColorScheme(.dark)
+            .preferredColorScheme(.dark)
     }
 }

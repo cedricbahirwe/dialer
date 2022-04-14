@@ -36,7 +36,7 @@ fileprivate class CongratsViewController: UIViewController {
         let red = makeEmitterCell(color: UIColor.red)
         let green = makeEmitterCell(color: UIColor.yellow)
         let blue = makeEmitterCell(color: UIColor.green)
-        let dialer = makeEmitterCell(color: UIColor.mainColor)
+        let dialer = makeEmitterCell(color: UIColor.label)
         
         particleEmitter.emitterCells = [red, green, blue, dialer]
         
@@ -67,7 +67,7 @@ fileprivate class CongratsViewController: UIViewController {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 35, height: 35))
         return renderer.image { _ in
             // Draw image in circle
-            let image =  UIImage(named: "star")!
+            let image =  UIImage(named: "emitter")!
             let size = CGSize(width: 32, height: 32)
             let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
             image.draw(in: rect)

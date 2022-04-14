@@ -36,12 +36,18 @@ struct ElectricityView: View {
     
     @Environment(\.colorScheme)
     private var colorScheme
+    private var rowBackground: Color {
+        Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
+    }
+    init() {
+        UITableView.appearance().backgroundColor = UIColor.primaryBackground
+    }
     
     var body: some View {
         VStack(spacing: 0) {
            
-            VStack(spacing: 20) {
-                VStack(spacing: 5) {
+            VStack(spacing: 28) {
+                VStack(spacing: 10) {
                     if !amount.isEmpty {
                         amountHintView
                             .font(.caption).foregroundColor(.blue)
@@ -52,7 +58,7 @@ struct ElectricityView: View {
                     NumberField("Enter Amount", text: $amount.animation())
                 }
                 
-                VStack(spacing: 5) {
+                VStack(spacing: 10) {
                     HStack {
                         
                         NumberField("Enter Meter Number", text: $meterNumber)
@@ -70,7 +76,7 @@ struct ElectricityView: View {
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .padding(.horizontal)
-                                .frame(height: 46)
+                                .frame(height: 48)
                                 .background(Color.primary)
                                 .cornerRadius(8)
                                 .foregroundColor(Color(.systemBackground))
@@ -92,8 +98,8 @@ struct ElectricityView: View {
                         Text("Dial Electricity USSD")
                             .font(.footnote.bold())
                             .frame(maxWidth: .infinity)
-                            .frame(height: 45)
-                            .background(Color.blue.opacity(isValidMeter ? 1 : 0.6))
+                            .frame(height: 48)
+                            .background(Color.blue.opacity(isValidMeter ? 1 : 0.3))
                             .cornerRadius(8)
                             .foregroundColor(Color.white)
                     }
@@ -101,8 +107,8 @@ struct ElectricityView: View {
 
                     Button(action: copyToClipBoard) {
                         Image(systemName: "doc.on.doc.fill")
-                            .frame(width: 45, height: 45)
-                            .background(Color.secondary.opacity(isValidTransaction ? 1 : 0.3))
+                            .frame(width: 48, height: 48)
+                            .background(Color.blue.opacity(isValidTransaction ? 1 : 0.3))
                             .cornerRadius(8)
                             .foregroundColor(.white)
                     }
@@ -126,16 +132,19 @@ struct ElectricityView: View {
                 Section("Saved Meters") {
                     ForEach(store.elecMeters) { meter in
                         TappeableText(meter.number, onTap: { fillMeterField(with: meter.number) })
+
                     }
                     .onDelete(perform: store.deleteMeter)
                     
-                }.opacity(store.elecMeters.isEmpty ? 0 : 1)
+                }
+                .listRowBackground(rowBackground)
+                .opacity(store.elecMeters.isEmpty ? 0 : 1)
+                
             }
             
         }
         .background(
-            Color(colorScheme == .light ? .secondarySystemBackground : .systemBackground)
-                .ignoresSafeArea()
+            Color.primaryBackground.ignoresSafeArea()
                         .onTapGesture(perform: hideKeyboard)
         )
         .navigationTitle("Buy Electricity")
@@ -164,6 +173,6 @@ struct ElectricityView_Previews: PreviewProvider {
             ElectricityView()
                 .environmentObject(MainViewModel())
         }
-//        .environment(\.colorScheme, .dark)
+        .environment(\.colorScheme, .dark)
     }
 }

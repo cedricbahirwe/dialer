@@ -28,76 +28,33 @@ struct ContactsList: View {
     init(contacts: Binding<[Contact]>, selection: Binding<Contact>) {
         _allContacts = contacts
         _selectedContact = selection
+        UITableView.appearance().backgroundColor = UIColor.primaryBackground
     }
     
     var body: some View {
-        VStack(spacing: 8) {
-            if isEditing == false {
+        VStack {
+
+            VStack(alignment: .leading) {
                 Text("Contacts List")
-                    .font(.largeTitle)
-                    .bold()
+                    .font(.system(.title2, design: .rounded).bold())
+                    .padding(.top)
+
                     .transition(.move(edge: .top))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                    .padding(.horizontal, 20)
+                    .animation(.spring(), value: isEditing)
+                searchBarView
             }
-            
-            HStack {
-                
-                TextField("Search by name or phone", text: $searchQuery) { isEditing in
-                    withAnimation {
-                        self.isEditing = isEditing
-                    }
-                }
-                .padding(7)
-                .padding(.leading, 25)
-                .padding(.trailing, 4)
-                .background(Color(.tertiarySystemGroupedBackground))
-                .cornerRadius(8)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8)
-                        
-                        if isEditing {
-                            Button(action: {
-                                searchQuery = ""
-                            }) {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
-                            }
-                        }
-                    }
-                )
-                
-                if isEditing {
-                    Button(action: {
-                        withAnimation {
-                            searchQuery = ""
-                            isEditing = false
-                            hideKeyboard()
-                        }
-                        
-                    }) {
-                        Text("Cancel")
-                    }
-                    .padding(.trailing, 10)
-                }
-            }
-            .padding(.horizontal, 10)
-            
+            .padding(.horizontal)
+            .padding(.top, isEditing ? -50 : 0)
+
             List(resultedContacts) { contact in
                 ContactRowView(contact: contact)
                     .onTapGesture {
                         manageContact(contact)
-                        
                     }
             }
         }
         .padding(.top, 10)
+        .background(Color.primaryBackground)
         .actionSheet(isPresented: $showNumberSelection) {
             ActionSheet(title: Text("Phone Number."),
                         message: Text("Select a phone number to send to"),
@@ -126,15 +83,72 @@ struct ContactsList: View {
     }
 }
 
+private extension ContactsList {
+    var searchBarView: some View {
+        HStack {
+            HStack(spacing: 2) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                    .padding(9)
+
+                TextField("Search name or phone", text: $searchQuery) { isEditing in
+                    withAnimation {
+                        self.isEditing = isEditing
+                    }
+                }
+                .font(.system(.callout, design: .rounded))
+
+                if isEditing {
+                    Button(action: {
+                        withAnimation {
+                            if searchQuery.isEmpty {
+                                endEditing()
+                            } else {
+                                searchQuery = ""
+                            }
+                        }
+
+                    }) {
+                        Image(systemName: "multiply.circle.fill")
+                            .foregroundColor(.secondary)
+                            .padding(.trailing, 9)
+                    }
+                }
+            }
+            .background(Color("offBackground"))
+            .cornerRadius(6)
+
+            if isEditing {
+                Button(action: endEditing) {
+                    Text("Cancel")
+                        .font(.system(.body, design: .rounded))
+                }
+                .padding(.trailing, 10)
+            }
+        }
+    }
+
+
+    private func endEditing() {
+        hideKeyboard()
+        withAnimation {
+            searchQuery = ""
+            isEditing = false
+        }
+    }
+}
+
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
-            ContactsList(contacts: .constant([.example]),
+            ContactsList(contacts: .constant([.example, .example, .example1, .example, .example]),
                          selection: .constant(.example))
             ContactRowView(contact: .example)
-                .previewLayout(.fixed(width: 400, height: 100))
+                .padding()
+                .previewLayout(.sizeThatFits)
         }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -142,23 +156,22 @@ struct ContactRowView: View {
     let contact: Contact
     var body: some View {
         HStack {
-            LinearGradient(gradient: Gradient(colors: [Color.main, Color.primary, Color.secondary]), startPoint: .top, endPoint: .bottom)
-                .frame(width: 70, height: 70)
-                .clipShape(Circle())
-                .overlay(
-                    Text(String(contact.initials))
-                        .textCase(.uppercase)
-                        .foregroundColor(Color(.systemBackground))
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                )
-            VStack(alignment: .leading) {
-                Text(contact.names)
-                    .font(.system(size: 18, weight: .semibold))
-                ForEach(contact.phoneNumbers, id: \.self) { phoneNumber in
-                    Text(phoneNumber)
-                        .foregroundColor(.secondary)
+            Text(contact.names)
+                .font(.system(.callout, design: .rounded).weight(.medium))
+
+            Spacer()
+
+            VStack(alignment: .trailing) {
+                if contact.phoneNumbers.count == 1 {
+                    Text(contact.phoneNumbers[0])
+                } else {
+                    Text("\(Text(contact.phoneNumbers[0])), +\(contact.phoneNumbers.count-1)more")
                 }
             }
+            .font(.system(.footnote, design: .rounded))
+            .foregroundColor(.secondary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())

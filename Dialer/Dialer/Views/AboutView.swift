@@ -15,30 +15,38 @@ struct AboutView: View {
     private let buildVersion = UIApplication.buildVersion ?? "1"
     
     var body: some View {
-        VStack {
-            Image("dialit.applogo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 80)
-                .cornerRadius(12)
-                .padding(30)
+        VStack(spacing: 30) {
 
-            VStack(spacing: 20) {
-                Text("Dial It Version \(appVersion)")
+            VStack {
+                Image("dialit.applogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80)
+                    .cornerRadius(12)
+                Text("Dial It")
+                    .font(.system(.title3, design: .rounded).weight(.bold))
+
+            }
+            .padding(.top, 30)
+
+            VStack(spacing: 10) {
+                Text("Version \(appVersion)")
                     .fontWeight(.bold)
-                
+
                 Text("Build \(buildVersion)")
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
-
-                Text("Designed and developed by\nCédric Bahirwe.")
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
             }
+
+            Text("Designed and developed by\n[Cédric Bahirwe](https://twitter.com/cedricbahirwe)")
+                .fontWeight(.semibold)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.secondary)
             
             Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.primaryBackground)
         .navigationBarTitle("About")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -55,6 +63,7 @@ struct AboutView_Previews: PreviewProvider {
         NavigationView {
             AboutView()
                 .navigationBarTitleDisplayMode(.inline)
+                .preferredColorScheme(.dark)
         }
     }
 }

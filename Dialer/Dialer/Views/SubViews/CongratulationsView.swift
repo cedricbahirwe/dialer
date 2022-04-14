@@ -9,17 +9,13 @@ import SwiftUI
 
 struct CongratulationsView: View {
     @Binding var isPresented: Bool
-    private let width = UIScreen.main.bounds.size.width
-    private let email = "abc.incs.001@gmail.com"
-
-    @State private var didCopyToClipBoard = false    
     @State private var timeRemaining: Int = 71
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var isAppActive = true
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
-            Color(.secondarySystemBackground)
+            Color.primaryBackground
                 .ignoresSafeArea()
             CongratsView()
                 .opacity(timeRemaining <= 1 ? 0.3 : 1)
@@ -32,40 +28,30 @@ struct CongratulationsView: View {
                     .scaledToFit()
                     .frame(height: 80)
                     .padding(.bottom, -10)
-                Text("Thanks for using Dialer for the past month!")
+
+                Text("Thanks for using Dial It for the past month!")
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
                     .opacity(0.8)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                
-                Text("Please take a screenshot of this screen and send it to the following email to receive your award.")
+                Text("We appreciate your support, and would like to hear how to make **Dial It** even more better.")
                     .font(.caption)
                     .multilineTextAlignment(.center)
-                
-                HStack {
-                    Button(email, action: sendMail)
-                    Button(action:copyToClipBoard) {
-                        if didCopyToClipBoard {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.green)
-                        } else {
-                        Image(systemName: "doc.on.clipboard.fill")
-                            .imageScale(.small)
-                        }
-                    }
-                }
+
                 Text(String(format: NSLocalizedString("Remaining time: timeRemaining seconds", comment: ""), timeRemaining))
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red.opacity(0.8))
             }
             .padding(20)
-            .frame(width: width-20)
-            .background(
-                Color(.systemBackground)
-            )
+            .frame(maxWidth: .infinity)
+            .background(Color.primaryBackground)
             .cornerRadius(10)
+            .shadow(color: .lightShadow, radius: 8, x: -8, y: -8)
+            .shadow(color: .darkShadow, radius: 8, x: 8, y: 8)
+            .padding()
         }
         .overlay(
             Button(action: {
@@ -96,30 +82,13 @@ struct CongratulationsView: View {
             isAppActive = true
         }
     }
-    
-    private func sendMail() {
-        
-        let mailUrl = URL(string: "mailto:\(email)?subject=Dialer%20Monthly%20Award!")!
-        
-        if UIApplication.shared.canOpenURL(mailUrl) {
-            UIApplication.shared.open(mailUrl)
-        }
-        copyToClipBoard()
-    }
-    
-    private func copyToClipBoard() {
-        UIPasteboard.general.string = email
-        didCopyToClipBoard = true
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            didCopyToClipBoard = false
-        }
-    }
 }
 
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
         CongratulationsView(isPresented: .constant(true))
             .environment(\.locale, .init(identifier: "en"))
+            .preferredColorScheme(.dark)
     }
 }
 
