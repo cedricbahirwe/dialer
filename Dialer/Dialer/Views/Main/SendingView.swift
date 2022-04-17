@@ -28,7 +28,7 @@ struct SendingView: View {
             VStack(spacing: 15) {
 
                 VStack(spacing: 10) {
-                    if transaction.type == .client && !transaction.amount.isEmpty  {
+                    if transaction.type == .client && !transaction.amount.isEmpty {
                         feeHintView
                             .font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -179,7 +179,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
-                .preferredColorScheme(.dark)
+//                .preferredColorScheme(.dark)
         }
     }
 }
