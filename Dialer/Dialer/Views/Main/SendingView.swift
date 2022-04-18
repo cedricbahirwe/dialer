@@ -65,7 +65,7 @@ struct SendingView: View {
                             .font(.subheadline.bold())
                             .frame(maxWidth: .infinity)
                             .frame(height: 48)
-                            .background(Color(.secondarySystemBackground))
+                            .background(Color(.systemBackground))
                             .cornerRadius(8)
                             .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
                             .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
