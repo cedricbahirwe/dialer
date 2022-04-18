@@ -28,7 +28,7 @@ struct SendingView: View {
             VStack(spacing: 15) {
 
                 VStack(spacing: 10) {
-                    if transaction.type == .client && !transaction.amount.isEmpty  {
+                    if transaction.type == .client && !transaction.amount.isEmpty {
                         feeHintView
                             .font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -65,7 +65,7 @@ struct SendingView: View {
                             .font(.subheadline.bold())
                             .frame(maxWidth: .infinity)
                             .frame(height: 48)
-                            .background(Color(.secondarySystemBackground))
+                            .background(Color(.systemBackground))
                             .cornerRadius(8)
                             .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
                             .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
@@ -117,18 +117,20 @@ struct SendingView: View {
         .onAppear(perform: requestContacts)
         .navigationTitle("Transfer Money")
         .toolbar {
-            Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
-                .font(.system(size: 18, design: .rounded))
-                .foregroundColor(.blue)
-                .onTapGesture  {
-                    withAnimation {
-                        transaction.number = ""
-                        transaction.type.toggle()
-                    }
-                }
+            Button(action: switchPaymentType) {
+                Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
+                    .font(.system(size: 18, design: .rounded))
+                    .foregroundColor(.blue)
+                    .padding(5)
+            }
         }
     }
-    
+
+    private func switchPaymentType() {
+        withAnimation {
+            transaction.type.toggle()
+        }
+    }
     private func requestContacts() {
         Task {
             do {
@@ -179,7 +181,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
-                .preferredColorScheme(.dark)
+//                .preferredColorScheme(.dark)
         }
     }
 }
