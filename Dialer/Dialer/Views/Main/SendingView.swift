@@ -117,17 +117,20 @@ struct SendingView: View {
         .onAppear(perform: requestContacts)
         .navigationTitle("Transfer Money")
         .toolbar {
-            Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
-                .font(.system(size: 18, design: .rounded))
-                .foregroundColor(.blue)
-                .onTapGesture  {
-                    withAnimation {
-                        transaction.type.toggle()
-                    }
-                }
+            Button(action: switchPaymentType) {
+                Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
+                    .font(.system(size: 18, design: .rounded))
+                    .foregroundColor(.blue)
+                    .padding(5)
+            }
         }
     }
-    
+
+    private func switchPaymentType() {
+        withAnimation {
+            transaction.type.toggle()
+        }
+    }
     private func requestContacts() {
         Task {
             do {
