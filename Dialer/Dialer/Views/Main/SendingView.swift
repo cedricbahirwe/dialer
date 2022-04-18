@@ -122,7 +122,6 @@ struct SendingView: View {
                 .foregroundColor(.blue)
                 .onTapGesture  {
                     withAnimation {
-                        transaction.number = ""
                         transaction.type.toggle()
                     }
                 }
