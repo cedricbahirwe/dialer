@@ -7,27 +7,30 @@
 
 import SwiftUI
 
-struct UtilitiesView: View {
+struct UtilitiesView: View, UtilitiesDelegate {
     @EnvironmentObject private var store: MainViewModel
     @Environment(\.colorScheme) private var colorScheme
+    @State private var didCopyToClipBoard = false
     private var rowBackground: Color {
         Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
     }
     var body: some View {
         List {
-            Section("Most Popular") {
+            Section {
                 NavigationLink {
                     ElectricityView()
                 } label: {
                     Text("Buy Electricity")
                 }
-                
+
                 TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
-                
-//                TappeableText("Send to my Bank Account", onTap: store.checkBankTransfer)
-                
-//                TappeableText("Top-Up in my Mobile Wallet", onTap: store.checkBankTransfer)
-                
+            } header: {
+                HStack {
+                    Text("Most Popular")
+                    Spacer()
+                    CopiedUSSDLabel()
+                        .opacity(didCopyToClipBoard ? 1 : 0)
+                }
             }
             .listRowBackground(rowBackground)
             
@@ -37,25 +40,33 @@ struct UtilitiesView: View {
                 
                 TappeableText("Check Internet Bundles", onTap: store.checkInternetBalance)
                 
-                
-//                NavigationLink {
-//                    VoicePacksView()
-//
-//                } label: {
-//                    Text("Buy Voice Packs")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                }
-//                .disabled(true)
-                
                 TappeableText("Check Voice Packs Balance", onTap: store.checkVoicePackBalance)
                 
                 TappeableText("Check my phone number", onTap: store.checkSimNumber)
             }
             .listRowBackground(rowBackground)
         }
-//        .listStyle(.plain)
         .background(Color.primaryBackground)
         .navigationTitle("Utilities")
+        .onAppear() {
+            store.utilityDelegate = self
+        }
+    }
+
+
+    func didSelectOption(with code: DialerQuickCode) {
+        copyToClipBoard(fullCode: code.ussd)
+    }
+
+    private func copyToClipBoard(fullCode: String) {
+        UIPasteboard.general.string = fullCode
+        withAnimation { didCopyToClipBoard = true }
+
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            withAnimation {
+                didCopyToClipBoard = false
+            }
+        }
     }
 }
 

@@ -9,31 +9,54 @@ import SwiftUI
 
 struct DialingsHistoryView: View {
     @ObservedObject var data: MainViewModel
-
+    @State private var didCopyToClipBoard: Bool = false
     var body: some View {
         NavigationView {
-            VStack {
-                if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
-                    List {
-                        ForEach(recentCodes) { recentCode in
-                            HistoryRow(recentCode: recentCode)
-                                .onTapGesture {
-                                    data.performRecentDialing(for: recentCode)
-                                }
+            ZStack {
+                VStack {
+                    if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
+                        List {
+                            ForEach(recentCodes) { recentCode in
+                                HistoryRow(recentCode: recentCode)
+                                    .onTapGesture {
+                                        data.performRecentDialing(for: recentCode)
+                                        copyToClipBoard(recentCode)
+                                    }
+                            }
+                            .onDelete(perform: data.deleteRecentCode)
                         }
-                        .onDelete(perform: data.deleteRecentCode)
+                    } else {
+
+                        Spacer()
+                        Text("No History Yet")
+                            .font(.system(.largeTitle, design: .rounded).bold())
+                            .frame(maxWidth: .infinity)
+                        Text("Come back later.")
+                            .font(.system(.headline, design: .rounded))
+                        Spacer()
                     }
-                } else {
-                    
-                    Spacer()
-                    Text("No History Yet")
-                        .font(.system(.largeTitle, design: .rounded).bold())
-                        .frame(maxWidth: .infinity)
-                    Text("Come back later.")
-                        .font(.system(.headline, design: .rounded))
-                    Spacer()
+
                 }
 
+                if didCopyToClipBoard {
+                    Color.clear
+                        .background(.ultraThinMaterial)
+                    
+                    VStack {
+                        Image(systemName: "checkmark")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(25)
+                        
+                        Text("USSD Code copied!")
+                            .font(.headline)
+                    }
+                    .padding(20)
+                    .frame(width: 200, height: 200)
+                    .background(.thickMaterial)
+                    .cornerRadius(15)
+                    .transition(.scale)
+                }
             }
             .background(Color.primaryBackground)
             .navigationTitle("History")
@@ -48,9 +71,15 @@ struct DialingsHistoryView: View {
                                 .font(.system(size: 16, weight: .bold, design: .serif))
                         }
                     }
-                    Text("This estimation is based on the recent USSD codes used.")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Group {
+                        if UIApplication.hasSupportForUSSD {
+                            Text("These estimations are based on the recent USSD codes used.")
+                        } else {
+                            Text("These estimations are based on the recent USSD codes copied.")
+                        }
+                    }
+                    .font(.caption)
+                    .foregroundColor(.secondary)
                 }
                 .font(.system(size: 26, weight: .bold, design: .serif))
                 .opacity(0.9)
@@ -71,11 +100,24 @@ struct DialingsHistoryView: View {
             }
         }
     }
+
+    private func copyToClipBoard(_ recentCode: RecentCode) {
+        let fullCode = data.getFullUSSDCode(from: recentCode.detail)
+        UIPasteboard.general.string = fullCode
+        withAnimation { didCopyToClipBoard = true }
+
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            withAnimation {
+                didCopyToClipBoard = false
+            }
+        }
+    }
+
 }
 
 struct DialingsHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         DialingsHistoryView(data: MainViewModel())
-            .preferredColorScheme(.dark)
+        //            .preferredColorScheme(.dark)
     }
 }

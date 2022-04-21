@@ -142,7 +142,10 @@ struct PurchaseDetailView: View {
                     .disabled(!validCode || !validAmount)
                 } else {
                     VStack(spacing: 6) {
-                        Button(action: copyToClipBoard) {
+                        Button(action: {
+                            data.confirmPurchase()
+                            copyToClipBoard()
+                        }) {
                             Label("Copy USSD code", systemImage: "doc.on.doc.fill")
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 45)
