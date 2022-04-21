@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 enum DialerQuickCode {
-    case internetBalance, airtimeBalance, bankTransfer
+    case internetBalance, airtimeBalance
     case voicePackBalance, mobileNumber
     case mobileWalletBalance(code: Int?)
     case electricity(meter: String, amount: Int, code: Int?)
@@ -20,7 +20,6 @@ enum DialerQuickCode {
         case .internetBalance: return "*345*5#"
         case .airtimeBalance: return "*131#"
         case .voicePackBalance: return "*140*5#"
-        case .bankTransfer: return "*903*3#"
         case .mobileNumber: return "*135*8#"
         case .mobileWalletBalance(let code):
             return "*182*6*1\(codeSuffix(code))"
@@ -37,6 +36,10 @@ enum DialerQuickCode {
     
 }
 
+
+protocol UtilitiesDelegate {
+    func didSelectOption(with code: DialerQuickCode)
+}
 class MainViewModel: ObservableObject {
     
     @Published var pinCode: Int? = DialerStorage.shared.getPinCode()
@@ -47,7 +50,8 @@ class MainViewModel: ObservableObject {
             }
         }
     }
-    
+
+    var utilityDelegate: UtilitiesDelegate?
     public var hasStoredPinCode: Bool {
         DialerStorage.shared.hasPinCode
     }
@@ -175,14 +179,8 @@ class MainViewModel: ObservableObject {
     private func dialCode(from purchase: PurchaseDetailModel,
                           completion: @escaping (Result<String, DialingError>) -> Void) {
         
-        let code: String
-        if let _ = pinCode, String(pinCode!).count >= 5 {
-            code = String(pinCode!)
-        } else {
-            code = ""
-        }
-        
-        let newUrl = purchase.getDialCode(pin: code)
+
+        let newUrl = getFullUSSDCode(from: purchase)
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
@@ -193,6 +191,21 @@ class MainViewModel: ObservableObject {
             // Can not dial this code
             completion(.failure(.canNotDial))
         }
+    }
+
+    func getFullUSSDCode(from purchase: PurchaseDetailModel) -> String {
+        let code: String
+        if let _ = pinCode, String(pinCode!).count >= 5 {
+            code = String(pinCode!)
+        } else {
+            code = ""
+        }
+        return purchase.getDialCode(pin: code)
+
+    }
+
+    public func getPurchaseDetailUSSDCode() -> String {
+        getFullUSSDCode(from: purchaseDetail)
     }
     
     /// Returns a Recent Code that matches the input identifier.
@@ -272,7 +285,11 @@ class MainViewModel: ObservableObject {
 // MARK: - Extension used for Quick USSD actions.
 extension MainViewModel {
     private func performQuickDial(for quickCode: DialerQuickCode) {
-        Self.performQuickDial(for: quickCode)
+        if UIApplication.hasSupportForUSSD {
+            Self.performQuickDial(for: quickCode)
+        } else {
+            utilityDelegate?.didSelectOption(with: quickCode)
+        }
     }
     public func checkInternetBalance() {
         performQuickDial(for: .internetBalance)
@@ -291,10 +308,6 @@ extension MainViewModel {
     
     public func checkSimNumber() {
         performQuickDial(for: .mobileNumber)
-    }
-    
-    public func checkBankTransfer() {
-        performQuickDial(for: .bankTransfer)
     }
     
     public func getElectricity(for meterNumber: String, amount: Int) {
@@ -323,7 +336,6 @@ extension MainViewModel {
     }
 
 }
-
 
 // MARK: - Extension used for Home Quick Actions
 extension RecentCode {

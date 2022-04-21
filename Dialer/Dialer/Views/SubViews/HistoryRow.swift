@@ -12,12 +12,15 @@ struct HistoryRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "phone.circle.fill")
-                    .imageScale(.large)
-                    .symbolRenderingMode(.multicolor)
+                Circle()
+                    .fill(getColor())
+                    .frame(width: 10, height: 10)
+
                 Text(recentCode.detail.fullCode)
                     .font(.title3)
                     .fontWeight(.semibold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 Spacer()
                 Image(systemName:
                         recentCode.count > 50 ?
@@ -31,6 +34,16 @@ struct HistoryRow: View {
             .contentShape(Rectangle())
         }
         .padding(.horizontal, 5)
+    }
+
+    private func getColor() -> Color {  
+        if recentCode.detail.amount < 1000 {
+            return .green
+        } else if recentCode.detail.amount < 5000 {
+            return .blue
+        } else {
+            return .red
+        }
     }
 }
 

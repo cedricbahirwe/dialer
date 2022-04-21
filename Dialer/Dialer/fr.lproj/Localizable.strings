@@ -40,6 +40,7 @@
 "The code should be a 5-6 digits number" = "Le code doit être un nombre à 5 ou 6 chiffres";
 "Pick a contact" = "Choisissez un contact";
 "Dial USSD" = "Soumettre le code USSD";
+"Copy USSD Kode" = "Copier le code USSD";
 "Pay Merchant" = "Payer le vendeur";
 "Send Money" = "Envoyer de l'argent";
 

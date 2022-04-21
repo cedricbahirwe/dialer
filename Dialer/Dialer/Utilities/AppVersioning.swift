@@ -15,4 +15,9 @@ extension UIApplication {
     static var buildVersion: String? {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
     }
+
+    static var hasSupportForUSSD: Bool {
+        UIDevice.current.systemVersion < "15.4"
+    }
 }
+

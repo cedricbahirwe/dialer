@@ -10,12 +10,12 @@ import SwiftUI
 struct PurchaseDetailView: View {
     @Binding var isPresented: Bool
     @ObservedObject var data: MainViewModel
-    private enum Field {
+    private enum EditedField {
         case amount, code
     }
-    @State private var edition: Field = .amount
-    
+    @State private var editedField: EditedField = .amount
     @State private var codepin: String = ""
+    @State private var didCopyToClipBoard: Bool = false
     
     private var validCode: Bool {
         if let pin = data.pinCode {
@@ -52,19 +52,19 @@ struct PurchaseDetailView: View {
                     .background(Color.primary.opacity(0.06))
                     
                     .background(
-                        Color.green.opacity(edition == .amount ? 0.04 : 0)
+                        Color.green.opacity(editedField == .amount ? 0.04 : 0)
                     )
                     .cornerRadius(8)
                     .overlay(
                         ZStack {
-                            if edition == .amount {
+                            if editedField == .amount {
                                 fieldBorder
                             }
                         }
                     )
                     .onTapGesture {
                         withAnimation {
-                            edition = .amount
+                            editedField = .amount
                         }
                     }
                 
@@ -79,12 +79,12 @@ struct PurchaseDetailView: View {
                             .background(Color.primary.opacity(0.06))
                             
                             .background(
-                                Color.green.opacity(edition == .code ? 0.04 : 0.0)
+                                Color.green.opacity(editedField == .code ? 0.04 : 0.0)
                             )
                             .cornerRadius(8)
                             .overlay(
                                 ZStack {
-                                    if edition == .code {
+                                    if editedField == .code {
                                         fieldBorder
                                     }
                                 }
@@ -92,7 +92,7 @@ struct PurchaseDetailView: View {
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 withAnimation {
-                                    edition = .code
+                                    editedField = .code
                                 }
                             }
                             .overlay(
@@ -129,19 +129,36 @@ struct PurchaseDetailView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 5)
                 }
-                
-                Button {
-                    data.confirmPurchase()
-                    
-                } label: {
-                    Text("Confirm")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 45)
-                        .background(Color.primary.opacity((!validCode || !validAmount) ? 0.5 : 1))
-                        .cornerRadius(8)
-                        .foregroundColor(Color(.systemBackground))
+
+                if UIApplication.hasSupportForUSSD {
+                    Button(action: data.confirmPurchase) {
+                        Text("Confirm")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 45)
+                            .background(Color.primary.opacity((!validCode || !validAmount) ? 0.5 : 1))
+                            .cornerRadius(8)
+                            .foregroundColor(Color(.systemBackground))
+                    }
+                    .disabled(!validCode || !validAmount)
+                } else {
+                    VStack(spacing: 6) {
+                        Button(action: {
+                            data.confirmPurchase()
+                            copyToClipBoard()
+                        }) {
+                            Label("Copy USSD code", systemImage: "doc.on.doc.fill")
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 45)
+                                .background(Color.primary.opacity((!validCode || !validAmount) ? 0.5 : 1))
+                                .cornerRadius(8)
+                                .foregroundColor(Color(.systemBackground))
+                        }
+                        .disabled(!validCode || !validAmount)
+                        if didCopyToClipBoard {
+                            CopiedUSSDLabel()
+                        }
+                    }
                 }
-                .disabled(!validCode || !validAmount)
             }
             
             PinView(input: storeInput())
@@ -193,14 +210,27 @@ struct PurchaseDetailView: View {
     }
     
     private func storeInput() -> Binding<String>{
-        switch edition {
+        switch editedField {
         case .amount:
             return $data.purchaseDetail.amount.stringBind
         case .code:
             return $codepin.onChange(filterPin)
         }
     }
-    
+
+    private func copyToClipBoard() {
+        let fullCode = data.getPurchaseDetailUSSDCode()
+        UIPasteboard.general.string = fullCode
+        withAnimation {
+            didCopyToClipBoard = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            withAnimation {
+                didCopyToClipBoard = false
+            }
+        }
+    }
 }
 
 struct PurchaseDetailView_Previews: PreviewProvider {
