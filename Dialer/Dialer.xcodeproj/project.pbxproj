@@ -42,8 +42,10 @@
 		82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */; };
 		82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsList.swift */; };
 		82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCEC26C12E2500B1720A /* DialerTests.swift */; };
-		82EEBCF626C1338700B1720A /* PrimitiveExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF526C1338700B1720A /* PrimitiveExtensions.swift */; };
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
+		CB393A2728120A59009CA95E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2628120A59009CA95E /* String+Extension.swift */; };
+		CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2828120A73009CA95E /* Binding+Extension.swift */; };
+		CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
 		CB9E56F12807710E005865D7 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9E56F02807710E005865D7 /* TestingView.swift */; };
@@ -113,8 +115,10 @@
 		82EEBCEA26C12E2500B1720A /* DialerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EEBCEC26C12E2500B1720A /* DialerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTests.swift; sourceTree = "<group>"; };
 		82EEBCEE26C12E2500B1720A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82EEBCF526C1338700B1720A /* PrimitiveExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitiveExtensions.swift; sourceTree = "<group>"; };
 		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		CB393A2628120A59009CA95E /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		CB393A2828120A73009CA95E /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
+		CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopiedUSSDLabel.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
 		CB9E56F02807710E005865D7 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 				820C10892766A31400A7CADE /* NumberField.swift */,
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 				CBAF13182785A54100D32E1F /* TappeableText.swift */,
+				CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -220,7 +225,7 @@
 				82FBCC05261BB2F400F00FAE /* Views */,
 				825F996826720B75009E4A7B /* Models */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
-				82EEBCF426C1336000B1720A /* Resources */,
+				82EEBCF426C1336000B1720A /* Utilities */,
 				82D7C1A1266D26D4003E0E0E /* Extensions */,
 				82D41FBC25D1C1FF00551D22 /* Assets.xcassets */,
 				82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */,
@@ -245,7 +250,8 @@
 			children = (
 				82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */,
 				8211528526E4EB1B00BA7BA2 /* Color+Extension.swift */,
-				82EEBCF526C1338700B1720A /* PrimitiveExtensions.swift */,
+				CB393A2628120A59009CA95E /* String+Extension.swift */,
+				CB393A2828120A73009CA95E /* Binding+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -259,7 +265,7 @@
 			path = DialerTests;
 			sourceTree = "<group>";
 		};
-		82EEBCF426C1336000B1720A /* Resources */ = {
+		82EEBCF426C1336000B1720A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */,
@@ -267,7 +273,7 @@
 				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
 				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
 			);
-			path = Resources;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		82FBCC05261BB2F400F00FAE /* Views */ = {
@@ -404,7 +410,6 @@
 				8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */,
 				CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */,
 				CBC262C42784D233000B8E0E /* RecentCode.swift in Sources */,
-				82EEBCF626C1338700B1720A /* PrimitiveExtensions.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
@@ -414,14 +419,17 @@
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
+				CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */,
 				CB9E56F12807710E005865D7 /* TestingView.swift in Sources */,
 				825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */,
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
 				CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */,
 				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
+				CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */,
 				820C108E2766A52C00A7CADE /* ElectricityView.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
+				CB393A2728120A59009CA95E /* String+Extension.swift in Sources */,
 				CBC262BF2784C7D3000B8E0E /* MailView.swift in Sources */,
 				820C10902766A56300A7CADE /* VoicePacksView.swift in Sources */,
 				CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */,

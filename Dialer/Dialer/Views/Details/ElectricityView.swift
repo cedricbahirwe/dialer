@@ -91,38 +91,46 @@ struct ElectricityView: View {
                 }
                                 
                 HStack {
-                    Button(action: {
-                        hideKeyboard()
-                        store.getElectricity(for: meterNumber, amount: Int(amount)!)
-                    }) {
-                        Text("Dial Electricity USSD")
-                            .font(.footnote.bold())
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 48)
-                            .background(Color.blue.opacity(isValidMeter ? 1 : 0.3))
-                            .cornerRadius(8)
-                            .foregroundColor(Color.white)
-                    }
-                    .disabled(isValidTransaction == false)
+                    if UIApplication.hasSupportForUSSD {
+                        Button(action: {
+                            hideKeyboard()
+                            store.getElectricity(for: meterNumber, amount: Int(amount)!)
+                        }) {
+                            Text("Dial Electricity USSD")
+                                .font(.footnote.bold())
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(Color.blue.opacity(isValidMeter ? 1 : 0.3))
+                                .cornerRadius(8)
+                                .foregroundColor(Color.white)
+                        }
+                        .disabled(isValidTransaction == false)
 
-                    Button(action: copyToClipBoard) {
-                        Image(systemName: "doc.on.doc.fill")
-                            .frame(width: 48, height: 48)
-                            .background(Color.blue.opacity(isValidTransaction ? 1 : 0.3))
-                            .cornerRadius(8)
-                            .foregroundColor(.white)
+                        Button(action: copyToClipBoard) {
+                            Image(systemName: "doc.on.doc.fill")
+                                .frame(width: 48, height: 48)
+                                .background(Color.blue.opacity(isValidTransaction ? 1 : 0.3))
+                                .cornerRadius(8)
+                                .foregroundColor(.white)
+                        }
+                        .disabled(isValidTransaction == false || didCopyToClipBoard)
+                    } else {
+                        Button(action: copyToClipBoard) {
+                            Label("Copy USSD code", systemImage: "doc.on.doc.fill")
+                                .foregroundColor(.white)
+                                .font(.subheadline.bold())
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(Color.blue.opacity(isValidTransaction ? 1 : 0.3))
+                                .cornerRadius(8)
+                                .foregroundColor(Color.white)
+                        }
+                        .disabled(isValidTransaction == false || didCopyToClipBoard)
                     }
-                    .disabled(isValidTransaction == false || didCopyToClipBoard)
                 }
 
                 if didCopyToClipBoard {
-                    Text("USSD Code copied!")
-                        .font(.system(.caption, design: .rounded))
-                        .foregroundColor(Color(.systemBackground))
-                        .padding(8)
-                        .background(Color.primary.opacity(0.75))
-                        .cornerRadius(5)
-                        .animation(.easeInOut, value: didCopyToClipBoard)
+                    CopiedUSSDLabel()
                 }
             
             }.padding()
@@ -160,9 +168,12 @@ struct ElectricityView: View {
         guard let amount = Int(amount) else { return }
         let fullCode = DialerQuickCode.electricity(meter: meterNumber, amount: amount, code: store.pinCode)
         UIPasteboard.general.string = fullCode.ussd
-        didCopyToClipBoard = true
+        withAnimation { didCopyToClipBoard = true }
+
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            didCopyToClipBoard = false
+            withAnimation {
+                didCopyToClipBoard = false
+            }
         }
     }
 }

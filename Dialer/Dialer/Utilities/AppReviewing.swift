@@ -7,7 +7,7 @@
 
 import StoreKit
 
-class ReviewHandler {
+enum ReviewHandler {
     
     static func requestReview() {
         var count = UserDefaults.standard.integer(forKey: UserDefaults.Keys.appStartUpsCountKey)

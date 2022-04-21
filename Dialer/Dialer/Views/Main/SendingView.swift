@@ -73,37 +73,45 @@ struct SendingView: View {
                     }
 
                     HStack {
-                        Button(action: transferMoney) {
-                            Text("Dial USSD")
-                                .font(.subheadline.bold())
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 48)
-                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(Color.white)
-                        }
-                        .disabled(transaction.isValid == false)
+                        if UIApplication.hasSupportForUSSD {
+                            Button(action: transferMoney) {
+                                Text("Dial USSD")
+                                    .font(.subheadline.bold())
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
+                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(Color.white)
+                            }
+                            .disabled(transaction.isValid == false)
 
-                        Button(action: copyToClipBoard) {
-                            Image(systemName: "doc.on.doc.fill")
-                                .frame(width: 48, height: 48)
-                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(.white)
+                            Button(action: copyToClipBoard) {
+                                Image(systemName: "doc.on.doc.fill")
+                                    .frame(width: 48, height: 48)
+                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(.white)
+                            }
+                            .disabled(transaction.isValid == false || didCopyToClipBoard)
+                        } else {
+                            Button(action: copyToClipBoard) {
+                                Label("Copy USSD code", systemImage: "doc.on.doc.fill")
+                                    .foregroundColor(.white)
+                                    .font(.subheadline.bold())
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
+                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(Color.white)
+                            }
+                            .disabled(transaction.isValid == false || didCopyToClipBoard)
                         }
-                        .disabled(transaction.isValid == false || didCopyToClipBoard)
                     }
                 }
                 .padding(.top)
 
                 if didCopyToClipBoard {
-                    Text("USSD Code copied!")
-                        .font(.system(.callout, design: .rounded))
-                        .foregroundColor(Color(.systemBackground))
-                        .padding(8)
-                        .background(Color.primary.opacity(0.75))
-                        .cornerRadius(5)
-                        .animation(.easeInOut, value: didCopyToClipBoard)
+                    CopiedUSSDLabel()
                 }
                 Spacer()
             }
@@ -169,9 +177,12 @@ struct SendingView: View {
 
     private func copyToClipBoard() {
         UIPasteboard.general.string = transaction.fullCode
-        didCopyToClipBoard = true
+        withAnimation { didCopyToClipBoard = true }
+
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            didCopyToClipBoard = false
+            withAnimation {
+                didCopyToClipBoard = false
+            }
         }
     }
 }

@@ -1,15 +1,17 @@
 //
-//  PrimitiveExtensions.swift
+//  String+Extension.swift
 //  Dialer
 //
-//  Created by Cédric Bahirwe on 09/08/2021.
+//  Created by Cédric Bahirwe on 21/04/2022.
 //
 
 import Foundation
-import SwiftUI
 
 extension String {
-    
+    func percentEncoded() -> String? {
+        return (self as NSString).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+    }
+
     /// Check for the validity of the `MTN` number (078 && 079)
     /// This is a agnostic approach, since it does not handle all the edge cases
     public var isMtnNumber: Bool {
@@ -18,7 +20,7 @@ extension String {
         return number.hasPrefix("+25078") || number.hasPrefix("25078") || number.hasPrefix("078") ||
         number.hasPrefix("+25079") || number.hasPrefix("25079") || number.hasPrefix("079")
     }
-    
+
     /// Removes the `Rwanda` country code and return a pure  `MTN` number format
     public func asMtnNumber() -> String {
         var mtnNumber = self
@@ -29,16 +31,5 @@ extension String {
         }
         return mtnNumber
     }
-}
 
-extension Binding {
-    public func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
-        Binding(
-            get: { wrappedValue },
-            set: { newValue in
-                wrappedValue = newValue
-                handler(newValue )
-            }
-        )
-    }
 }

@@ -40,6 +40,7 @@
 "The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
 "Pick a contact" = "Hitamo nimero ya terefone ";
 "Dial USSD" = "Kohereza USSD Kode";
+"Copy USSD code" = "Copy USSD Kode";
 "Pay Merchant" = "Kwishyura umucuruzi";
 "Send Money" = "Kohereza amafaranga";
  

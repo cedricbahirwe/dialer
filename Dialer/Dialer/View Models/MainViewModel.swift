@@ -175,14 +175,8 @@ class MainViewModel: ObservableObject {
     private func dialCode(from purchase: PurchaseDetailModel,
                           completion: @escaping (Result<String, DialingError>) -> Void) {
         
-        let code: String
-        if let _ = pinCode, String(pinCode!).count >= 5 {
-            code = String(pinCode!)
-        } else {
-            code = ""
-        }
-        
-        let newUrl = purchase.getDialCode(pin: code)
+
+        let newUrl = getFullUSSDCode(from: purchase)
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
@@ -193,6 +187,21 @@ class MainViewModel: ObservableObject {
             // Can not dial this code
             completion(.failure(.canNotDial))
         }
+    }
+
+    private func getFullUSSDCode(from purchase: PurchaseDetailModel) -> String {
+        let code: String
+        if let _ = pinCode, String(pinCode!).count >= 5 {
+            code = String(pinCode!)
+        } else {
+            code = ""
+        }
+        return purchase.getDialCode(pin: code)
+
+    }
+
+    public func getPurchaseDetailUSSDCode() -> String {
+        getFullUSSDCode(from: purchaseDetail)
     }
     
     /// Returns a Recent Code that matches the input identifier.

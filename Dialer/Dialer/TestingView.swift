@@ -12,7 +12,6 @@ struct TestingView: View {
         ZStack {
             Color.primaryBackground.ignoresSafeArea()
             VStack  {
-                
             }
             .padding()
         }
