@@ -159,14 +159,16 @@ struct DashBoardView: View {
 extension DashBoardView {
     var bottomBarView: some View {
         HStack {
-            Button {
-                presentNewDial.toggle()
-            } label: {
-                Label("New Dial", systemImage: "plus.circle.fill")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+            if UIApplication.hasSupportForUSSD {
+                Button {
+                    presentNewDial.toggle()
+                } label: {
+                    Label("New Dial", systemImage: "plus.circle.fill")
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                }
+                .foregroundColor(.mainRed)
             }
-            .foregroundColor(.mainRed)
-            .hidden()
+
             Spacer()
 
             HStack(spacing: 1) {

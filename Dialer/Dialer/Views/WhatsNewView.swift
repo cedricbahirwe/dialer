@@ -34,6 +34,8 @@ struct WhatsNewView: View {
 
                 Text("What's in for you?")
                     .font(.system(.title, design: .rounded).weight(.heavy))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
 
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(spacing: 20) {
@@ -57,16 +59,14 @@ struct WhatsNewView: View {
 
                         HStack {
                             Image(systemName: "info.circle")
-                            Text("This version includes support for **iOS 15.5** ")
+                            Text("This version includes support for **iOS 15.5**")
                                 .lineLimit(1)
-
                         }
-                        .padding(8)
-                        .padding(.vertical, 4)
-                        .frame(maxWidth: .infinity)
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color.cyan.opacity(0.15))
                         .cornerRadius(15)
-                        .minimumScaleFactor(0.8)
+                        .minimumScaleFactor(0.5)
                         .foregroundColor(.teal)
 
                     }
@@ -93,7 +93,7 @@ struct WhatsNewView: View {
         .background(Color.primaryBackground)
     }
 
-    private func featureView(icon: String, title: String, subtitle: String) -> some View {
+    private func featureView(icon: String, title: LocalizedStringKey, subtitle: LocalizedStringKey) -> some View {
 
         HStack(spacing: 10) {
 
@@ -115,7 +115,6 @@ struct WhatsNewView: View {
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-//                    .scaleEffect(0.95, anchor: .topLeading)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -125,6 +124,7 @@ struct WhatsNewView: View {
 struct WhatsNewView_Previews: PreviewProvider {
     static var previews: some View {
         WhatsNewView(isPresented: .constant(true))
+            .environment(\.locale, .init(identifier: "fr"))
             .preferredColorScheme(.dark)
     }
 }

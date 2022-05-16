@@ -124,70 +124,9 @@ struct NewDialingView: View {
     }
 }
 
-struct NewDiallingView: View {
-    var body: some View {
-        VStack(spacing: 10) {
-            Image("dialit.applogo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 65)
-                .cornerRadius(14)
-
-            VStack(spacing: 10) {
-                Group {
-                    Text("Invalid code. Check it and try again.")
-                        .font(.system(size: 16))
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
-//                        .opacity(showInValidMsg ? 1 : 0)
-                    TextField("", text: .constant(""))
-                        .padding(10)
-                        .background(Color.init("offBackground"))
-                        .cornerRadius(15)
-                        .padding(.horizontal, 20)
-                        .shadow(radius: 0.4)
-                    LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                        .frame(height: 32)
-                        .font(.title)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .truncationMode(.head)
-                        .padding(.horizontal, 20)
-                }
-
-                PinView(input: .constant("").animation(),
-                        isFullMode: true, btnSize: 80)
-                    .font(.title.bold())
-                    .padding(.vertical, 10)
-                    .padding()
-
-                Button(action: {
-//                    dial(composedCode)
-                }, label: {
-                    Image(systemName: "phone.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 75, height: 75)
-                        .clipShape(Circle())
-                        .foregroundColor(.accentColor)
-                })
-                .frame(maxWidth: .infinity)
-//                .overlay(bottomNavigationView)
-                Spacer()
-            }
-
-
-        }
-    }
-}
-
 struct NewDialingView_Previews: PreviewProvider {
     static var previews: some View {
-        HStack {
-            NewDiallingView()
-//            NewDialingView()
-        }
+        NewDialingView()
 //        .previewLayout(.fixed(width: 850, height: 900))
     }
 }

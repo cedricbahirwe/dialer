@@ -8,9 +8,6 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Achéter des unités";
-"Transfer/Pay" = "Envoyer/Payer";
-"History" = "Historique";
-"Utilities" = "Utilitaires";
 "New Dial" = "Composer";
 "No SIM found" = "Carte SIM non detecté";
 
@@ -19,8 +16,7 @@
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
 
-// 3. History View
-"Done" = "Terminé";
+// 3. History Vie
 
 // 4. NewDialingView
 "Invalid code. Check it and try again." = "Code Invalide. Vérifiez-le et réessayez.";
@@ -73,12 +69,20 @@
 "Open Twitter" = "Ouvrir Twitter";
 
 "We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well." = "Nous n'avons pas pu détecter un service de messagerie par défaut sur votre appareil.\n\n Vous pouvez nous joindre sur Twitter ou nous envoyer un e-mail à %@ également.";
-"Colophon" = "Colophon";
 
 "Help & More" = "Aide & Plus";
 
 "By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dial It, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
 
+
+// 11. Welcome View
+"Your USSD companion app." = "Votre companion pour les codes USSD.";
+"What's in for you?" = "Qu'est-ce qui vous attend ?";
+"This version includes support for **iOS 15.5**" = "Cette version supporte **iOS 15.5**";
+"Ability to quickly generate USSD for buying airtime." = "Générer rapidement des codes USSD pour l'achat d'unités.";
+"Get direct access to your frequently used USSD codes." = "Accédez directement à vos codes USSD fréquemment utilisés.";
+"Get the right USSD code for transfering to your friend or paying to the store." = "Obtenez le correct code USSD pour transférer à votre ami ou payer au magasin.";
+"Get USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Accédez les codes USSD pour l'achat d'électricité, packets vocaux et plus encore.";
 
 // Parameters Options
 "Change Language" = "Changer de langue";
@@ -102,3 +106,11 @@
 
 "Let us know how we are doing." = "Dites-nous comment nous faisons.";
 
+// Commons
+"Airtime" = "Unités";
+"Continue" = "Continuer";
+"History" = "Historique";
+"Utilities" = "Utilitaires";
+"Done" = "Terminé";
+"Colophon" = "Colophon";
+"Transfer/Pay" = "Envoyer/Payer";
