@@ -221,7 +221,7 @@ struct DashItemView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 80)
         .background(Color.primaryBackground)
-        .cornerRadius(12)
+        .cornerRadius(15)
         .contentShape(Rectangle())
         .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
         .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)

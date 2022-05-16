@@ -144,18 +144,16 @@ struct NewDiallingView: View {
                     TextField("", text: .constant(""))
                         .padding(10)
                         .background(Color.init("offBackground"))
-                        .cornerRadius(12)
+                        .cornerRadius(15)
                         .padding(.horizontal, 20)
                         .shadow(radius: 0.4)
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
                         .frame(height: 32)
-//                        .mask(Text(composedCode))
                         .font(.title)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                         .truncationMode(.head)
                         .padding(.horizontal, 20)
-//                        .opacity(composedCode.isEmpty ? 0 : 1)
                 }
 
                 PinView(input: .constant("").animation(),

@@ -22,7 +22,7 @@ struct AboutView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80)
-                    .cornerRadius(12)
+                    .cornerRadius(15)
                 Text("Dial It")
                     .font(.system(.title3, design: .rounded).weight(.bold))
 

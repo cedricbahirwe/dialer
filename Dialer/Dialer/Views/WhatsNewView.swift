@@ -32,7 +32,7 @@ struct WhatsNewView: View {
 
             VStack(spacing: 18) {
 
-                Text("What's in for you👀?")
+                Text("What's in for you?")
                     .font(.system(.title, design: .rounded).weight(.heavy))
 
                 ScrollView(.vertical, showsIndicators: true) {
@@ -55,6 +55,20 @@ struct WhatsNewView: View {
                                     subtitle: "Get USSD codes for buying electricity, Voice packs, Internet bundles and more.")
 
 
+                        HStack {
+                            Image(systemName: "info.circle")
+                            Text("This version includes support for **iOS 15.5** ")
+                                .lineLimit(1)
+
+                        }
+                        .padding(8)
+                        .padding(.vertical, 4)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.cyan.opacity(0.15))
+                        .cornerRadius(15)
+                        .minimumScaleFactor(0.8)
+                        .foregroundColor(.teal)
+
                     }
                     .padding(.horizontal, 2)
                 }
@@ -67,7 +81,7 @@ struct WhatsNewView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
                         .background(Color.primaryBackground)
-                        .cornerRadius(12)
+                        .cornerRadius(15)
                         .shadow(color: .lightShadow, radius: 3, x: -3, y: -3)
                         .shadow(color: .darkShadow, radius: 3, x: 3, y: 3)
                         .foregroundColor(.mainRed)
