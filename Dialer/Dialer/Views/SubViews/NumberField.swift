@@ -25,7 +25,6 @@ struct NumberField: View {
             .padding()
             .frame(height: 48)
             .background(Color.primaryBackground)
-            .cornerRadius(10)
             .overlay(
                 Rectangle()
                     .stroke(Color.darkShadow, lineWidth: 4)

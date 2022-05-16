@@ -48,7 +48,7 @@ struct CongratulationsView: View {
             .padding(20)
             .frame(maxWidth: .infinity)
             .background(Color.primaryBackground)
-            .cornerRadius(10)
+            .cornerRadius(15)
             .shadow(color: .lightShadow, radius: 8, x: -8, y: -8)
             .shadow(color: .darkShadow, radius: 8, x: 8, y: 8)
             .padding()
