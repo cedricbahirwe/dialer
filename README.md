@@ -5,14 +5,14 @@
 
 
 ## Features:
-* ### Beautiful UI with Light/Dark Mode support.
-* ### History View to Track Past dialings.
-* ### Incognito mode for dialings (No track will be stored).
-* ### Home Screen Quick Actions.
-* ### Quick MTN Momo transfer (Client and Merchant support).
-* ### Contacts Filtering.
-* ### Settings
-* ### Transaction Amount Limit 
+* Beautiful UI with Light/Dark Mode support.
+* History View to Track Past dialings.
+* Incognito mode for dialings (No track will be stored).
+* Home Screen Quick Actions.
+* Quick MTN Momo transfer (Client and Merchant support).
+* Contacts Filtering.
+* Settings
+* Transaction Amount Limit 
 
 ## TakeAways 🚀
 
@@ -23,9 +23,9 @@
 - **Management of Local DataBase in SwiftUI**
 - **Light / Dark Mode Support**
 
-## Special Thanks to:
+## Special Thanks:
 
-1. [Esther Carelle](https://github.com/esthcarelle) for her contribution✨.
+1. [Esther Carelle](https://github.com/esthcarelle) for her feedback.
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
