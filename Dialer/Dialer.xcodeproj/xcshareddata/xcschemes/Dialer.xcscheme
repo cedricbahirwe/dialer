@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Dialer.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CB54462F289C5763009F3457"
+               BuildableName = "DialerUITests.xctest"
+               BlueprintName = "DialerUITests"
+               ReferencedContainer = "container:Dialer.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

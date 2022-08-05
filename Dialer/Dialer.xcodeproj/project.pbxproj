@@ -45,6 +45,8 @@
 		CB393A2728120A59009CA95E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2628120A59009CA95E /* String+Extension.swift */; };
 		CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2828120A73009CA95E /* Binding+Extension.swift */; };
 		CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */; };
+		CB544633289C5763009F3457 /* DialerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544632289C5763009F3457 /* DialerUITests.swift */; };
+		CB544635289C5763009F3457 /* DialerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
 		CB9E56F12807710E005865D7 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9E56F02807710E005865D7 /* TestingView.swift */; };
@@ -59,6 +61,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		82EEBCEF26C12E2500B1720A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82D41FAB25D1C1FE00551D22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82D41FB225D1C1FE00551D22;
+			remoteInfo = Dialer;
+		};
+		CB544636289C5763009F3457 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 82D41FAB25D1C1FE00551D22 /* Project object */;
 			proxyType = 1;
@@ -117,6 +126,9 @@
 		CB393A2628120A59009CA95E /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2828120A73009CA95E /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopiedUSSDLabel.swift; sourceTree = "<group>"; };
+		CB544630289C5763009F3457 /* DialerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB544632289C5763009F3457 /* DialerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITests.swift; sourceTree = "<group>"; };
+		CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
 		CB9E56F02807710E005865D7 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
@@ -137,6 +149,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		82EEBCE726C12E2500B1720A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB54462D289C5763009F3457 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -198,6 +217,7 @@
 			children = (
 				82D41FB525D1C1FE00551D22 /* Dialer */,
 				82EEBCEB26C12E2500B1720A /* DialerTests */,
+				CB544631289C5763009F3457 /* DialerUITests */,
 				82D41FB425D1C1FE00551D22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -207,6 +227,7 @@
 			children = (
 				82D41FB325D1C1FE00551D22 /* Dialer.app */,
 				82EEBCEA26C12E2500B1720A /* DialerTests.xctest */,
+				CB544630289C5763009F3457 /* DialerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -300,6 +321,15 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		CB544631289C5763009F3457 /* DialerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CB544632289C5763009F3457 /* DialerUITests.swift */,
+				CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */,
+			);
+			path = DialerUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -338,13 +368,31 @@
 			productReference = 82EEBCEA26C12E2500B1720A /* DialerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		CB54462F289C5763009F3457 /* DialerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB54463A289C5763009F3457 /* Build configuration list for PBXNativeTarget "DialerUITests" */;
+			buildPhases = (
+				CB54462C289C5763009F3457 /* Sources */,
+				CB54462D289C5763009F3457 /* Frameworks */,
+				CB54462E289C5763009F3457 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB544637289C5763009F3457 /* PBXTargetDependency */,
+			);
+			name = DialerUITests;
+			productName = DialerUITests;
+			productReference = CB544630289C5763009F3457 /* DialerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		82D41FAB25D1C1FE00551D22 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					82D41FB225D1C1FE00551D22 = {
@@ -352,6 +400,10 @@
 					};
 					82EEBCE926C12E2500B1720A = {
 						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 82D41FB225D1C1FE00551D22;
+					};
+					CB54462F289C5763009F3457 = {
+						CreatedOnToolsVersion = 13.4.1;
 						TestTargetID = 82D41FB225D1C1FE00551D22;
 					};
 				};
@@ -373,6 +425,7 @@
 			targets = (
 				82D41FB225D1C1FE00551D22 /* Dialer */,
 				82EEBCE926C12E2500B1720A /* DialerTests */,
+				CB54462F289C5763009F3457 /* DialerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -391,6 +444,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		82EEBCE826C12E2500B1720A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB54462E289C5763009F3457 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -457,6 +517,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CB54462C289C5763009F3457 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB544633289C5763009F3457 /* DialerUITests.swift in Sources */,
+				CB544635289C5763009F3457 /* DialerUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -464,6 +533,11 @@
 			isa = PBXTargetDependency;
 			target = 82D41FB225D1C1FE00551D22 /* Dialer */;
 			targetProxy = 82EEBCEF26C12E2500B1720A /* PBXContainerItemProxy */;
+		};
+		CB544637289C5763009F3457 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82D41FB225D1C1FE00551D22 /* Dialer */;
+			targetProxy = CB544636289C5763009F3457 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -713,6 +787,44 @@
 			};
 			name = Release;
 		};
+		CB544638289C5763009F3457 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.DialerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dialer;
+			};
+			name = Debug;
+		};
+		CB544639289C5763009F3457 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.DialerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dialer;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -739,6 +851,15 @@
 			buildConfigurations = (
 				82EEBCF226C12E2500B1720A /* Debug */,
 				82EEBCF326C12E2500B1720A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB54463A289C5763009F3457 /* Build configuration list for PBXNativeTarget "DialerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB544638289C5763009F3457 /* Debug */,
+				CB544639289C5763009F3457 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
