@@ -85,10 +85,16 @@
 "Get USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Accédez les codes USSD pour l'achat d'électricité, packets vocaux et plus encore.";
 
 // 12. Electricity View
+"Saved Meters" = "Compteurs enregistrés";
+"Copy USSD code" = "Copier le code USSD";
+"Dial Electricity USSD" = "Composez l'électricité USSD";
+"The meter number should have at least 10 digits." = "Le numéro de compteur doit avoir au moins 10 chiffres.";
+"Enter Meter Number" = "Entrez le numéro de compteur";
+"You have entered an invalid amount." = "Vous avez entré un montant invalide.";
+"The amount must be greater or equal to 600 RWF" = "Le montant doit être supérieur ou égal à 600 FRW";
 
 // 13. My Space View
 "Add USSD Code" = "Ajouter un code USSD";
-"Buy Electricity" = "Acheter de l'électricité";
 "Check Mobile Balance" = "Vérifier le solde mobile";
 "Most Popular" = "Les Plus Populaires";
 "Other" = "Autres";
@@ -130,3 +136,4 @@
 "Done" = "Terminé";
 "Colophon" = "Colophon";
 "Transfer/Pay" = "Envoyer/Payer";
+"Buy Electricity" = "Acheter de l'électricité";

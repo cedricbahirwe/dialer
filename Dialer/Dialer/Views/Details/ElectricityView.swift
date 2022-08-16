@@ -135,7 +135,6 @@ struct ElectricityView: View {
             
             }.padding()
             
-            
             List {
                 Section("Saved Meters") {
                     ForEach(store.elecMeters) { meter in
@@ -147,9 +146,7 @@ struct ElectricityView: View {
                 }
                 .listRowBackground(rowBackground)
                 .opacity(store.elecMeters.isEmpty ? 0 : 1)
-                
             }
-            
         }
         .background(
             Color.primaryBackground.ignoresSafeArea()
