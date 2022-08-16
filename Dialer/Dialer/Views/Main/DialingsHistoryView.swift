@@ -101,7 +101,7 @@ struct DialingsHistoryView: View {
         }
     }
 
-    private func copyToClipBoard(_ recentCode: RecentCode) {
+    private func copyToClipBoard(_ recentCode: RecentDialCode) {
         let fullCode = data.getFullUSSDCode(from: recentCode.detail)
         UIPasteboard.general.string = fullCode
         withAnimation { didCopyToClipBoard = true }

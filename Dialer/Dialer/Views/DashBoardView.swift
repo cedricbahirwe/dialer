@@ -18,7 +18,7 @@ struct DashBoardView: View {
 
     @Environment(\.colorScheme) private var colorScheme
     @State private var dragState: DragState = .closed
-    @State private var presentNewDial = false
+    @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
     @AppStorage(UserDefaults.Keys.showWelcomeView)
@@ -131,8 +131,8 @@ struct DashBoardView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $presentNewDial) {
-                NewDialingView()
+            .fullScreenCover(isPresented: $presentQuickDial) {
+                QuickDialingView()
             }
             .background(Color.primaryBackground)
             .navigationTitle("Dial It")
@@ -161,9 +161,9 @@ extension DashBoardView {
         HStack {
             if UIApplication.hasSupportForUSSD {
                 Button {
-                    presentNewDial.toggle()
+                    presentQuickDial.toggle()
                 } label: {
-                    Label("New Dial", systemImage: "plus.circle.fill")
+                    Label("Quick Dial", systemImage: "plus.circle.fill")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                 }
                 .foregroundColor(.mainRed)

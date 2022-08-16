@@ -37,7 +37,7 @@ public extension UserDefaults {
 
 
 final class DialerStorage {
-    typealias RecentCodes = [RecentCode]
+    typealias RecentCodes = [RecentDialCode]
     typealias ElectricityMeters = [ElectricityMeter]
     
     private let LocalKeys = UserDefaults.Keys.self

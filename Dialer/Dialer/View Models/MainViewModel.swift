@@ -69,13 +69,13 @@ class MainViewModel: ObservableObject {
     
     @Published public var purchaseDetail = PurchaseDetailModel()
     
-    @Published private(set) var recentCodes: [RecentCode] = []
+    @Published private(set) var recentCodes: [RecentDialCode] = []
     
     @Published private(set) var elecMeters: [ElectricityMeter] = []
     
     /// Store a given  `RecentCode`  locally.
     /// - Parameter code: the code to be added.
-    private func storeCode(code: RecentCode) {
+    private func storeCode(code: RecentDialCode) {
         if let index = recentCodes.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
             recentCodes[index].increaseCount()
         } else {
@@ -138,7 +138,7 @@ class MainViewModel: ObservableObject {
         dialCode(from: purchaseDetail, completion: { result in
             switch result {
             case .success(_):
-                self.storeCode(code: RecentCode(detail: purchase))
+                self.storeCode(code: RecentDialCode(detail: purchase))
                 self.purchaseDetail = PurchaseDetailModel()
                 
                 break;
@@ -208,8 +208,8 @@ class MainViewModel: ObservableObject {
         getFullUSSDCode(from: purchaseDetail)
     }
     
-    /// Returns a Recent Code that matches the input identifier.
-    public func rencentCode(_ identifier: String) -> RecentCode? {
+    /// Returns a `RecentDialCode` that matches the input identifier.
+    public func rencentDialCode(_ identifier: String) -> RecentDialCode? {
         let foundCode = recentCodes.first(where: { $0.id.uuidString == identifier})
         return foundCode
     }
@@ -245,7 +245,7 @@ class MainViewModel: ObservableObject {
     
     /// Perfom a quick dialing from the `History View Row.`
     /// - Parameter recentCode: the row code to be performed.
-    public func performRecentDialing(for recentCode: RecentCode) {
+    public func performRecentDialing(for recentCode: RecentDialCode) {
         let recent = recentCode
         dialCode(from: recentCode.detail) { result in
             switch result {
@@ -338,7 +338,7 @@ extension MainViewModel {
 }
 
 // MARK: - Extension used for Home Quick Actions
-extension RecentCode {
+extension RecentDialCode {
     
     /// - Tag: QuickActionUserInfo
     var quickActionUserInfo: [String: NSSecureCoding] {
