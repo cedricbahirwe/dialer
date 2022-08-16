@@ -113,6 +113,9 @@
 "Remove Pin" = "Supprimer le pin";
 "You'll need to re-enter it later." = "Vous devrez l'entrer à nouveau.";
 
+"Delete All USSD codes" = "Supprimer tous les codes USSD";
+"This action can not be undone." = "Cette action ne peut pas être annulée.";
+
 "Just getting started?" = "Nouveau sur Dial It?";
 "Read our quick start blog post." = "Lisez notre article sur Dial It.";
 

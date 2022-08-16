@@ -297,6 +297,11 @@ extension MainViewModel {
             print("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
+
+    public func removeAllUSSDs() {
+        DialerStorage.shared.removeAllUSSDCodes()
+        ussdCodes = []
+    }
 }
 
 // MARK: Custom USSD Storage

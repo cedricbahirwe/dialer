@@ -75,7 +75,6 @@ struct MySpaceView: View, UtilitiesDelegate {
         }
         .onAppear() {
             store.utilityDelegate = self
-            store.retrieveUSSDCodes()
         }
     }
 

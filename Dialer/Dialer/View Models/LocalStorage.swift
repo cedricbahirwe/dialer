@@ -88,6 +88,10 @@ final class DialerStorage {
     func getUSSDCodes() -> USSDCodes {
         decodeDatasArray(key: LocalKeys.customUSSDCodes, type: USSDCodes.self)
     }
+
+    func removeAllUSSDCodes() {
+        userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
+    }
 }
 
 private extension  DialerStorage {

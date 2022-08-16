@@ -17,6 +17,9 @@ enum SettingsOption {
     case about
     case review
     case deletePin
+    case deleteUSSDs
+//    case deleteRencentCodes
+//    case deleteElectricityMeters
         
     func getSettingsItem() -> SettingsItem {
         switch self {
@@ -26,6 +29,8 @@ enum SettingsOption {
             return .init(sysIcon: "lock.fill", color: .green, title: "Biometric Authentication", subtitle: "For securing your activities on the app.")
         case .deletePin:
             return .init(sysIcon: "trash", color: .red, title: "Remove Pin", subtitle: "You'll need to re-enter it later.")
+        case .deleteUSSDs:
+            return .init(sysIcon: "xmark.bin.fill", color: .red.opacity(0.9), title: "Delete All USSD codes", subtitle: "This action can not be undone.")
         case .getStarted:
             return .init(sysIcon: "lightbulb.fill", color: .blue, title: "Just getting started?", subtitle: "Read our quick start blog post.")
         case .contactUs:
