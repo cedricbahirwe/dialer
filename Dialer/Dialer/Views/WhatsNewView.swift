@@ -53,8 +53,8 @@ struct WhatsNewView: View {
                                     subtitle: "Get the right USSD code for transfering to your friend or paying to the store.")
 
                         featureView(icon: "wrench.and.screwdriver",
-                                    title: "Utilities",
-                                    subtitle: "Get USSD codes for buying electricity, Voice packs, Internet bundles and more.")
+                                    title: "My Space",
+                                    subtitle: "Your own personalized space to save and access your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more.")
 
 
                         HStack {

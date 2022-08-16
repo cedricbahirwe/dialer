@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct NumberField: View {
-    init(_ placeholder: LocalizedStringKey, text: Binding<String>) {
+    init(_ placeholder: LocalizedStringKey,
+         text: Binding<String>,
+         keyboardType: UIKeyboardType = .numberPad) {
         self.placeholder = placeholder
+        self.keyboardType = keyboardType
         _text = text
     }
     
     private let placeholder: LocalizedStringKey
+    private let keyboardType: UIKeyboardType
     @Binding private var text: String
-    
+
     var body: some View {
         TextField(placeholder, text: $text)
-            .keyboardType(.numberPad)
+            .keyboardType(keyboardType)
             .textInputAutocapitalization(.never)
             .disableAutocorrection(true)
             .foregroundColor(.primary)

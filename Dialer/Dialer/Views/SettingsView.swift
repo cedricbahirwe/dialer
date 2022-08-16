@@ -47,6 +47,10 @@ struct SettingsView: View {
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, perform: dataStore.removePin)
                             }
+
+                            if !dataStore.ussdCodes.isEmpty {
+                                SettingsRow(.deleteUSSDs, perform: dataStore.removeAllUSSDs)
+                            }
                         }
                         .padding(.bottom, 20)
                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryRow: View {
-    let recentCode: RecentCode
+    let recentCode: RecentDialCode
     var body: some View {
         VStack(alignment: .leading) {
             HStack {

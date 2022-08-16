@@ -10,17 +10,26 @@ import SwiftUI
 struct TestingView: View {
     var body: some View {
         ZStack {
-            Color.primaryBackground.ignoresSafeArea()
+            //            Color.primaryBackground.ignoresSafeArea()
             VStack  {
+                Menu("Options") {
+                    Button("Order Now", action: placeOrder)
+                    Button("Adjust Order", action: adjustOrder)
+                    Button("Cancel", action: cancelOrder)
+                }
             }
-            .padding()
         }
+        .padding()
     }
+
+    func placeOrder() { }
+    func adjustOrder() { }
+    func cancelOrder() { }
 }
 
 struct TestingView_Previews: PreviewProvider {
     static var previews: some View {
         TestingView()
-            .preferredColorScheme(.dark)
+        //            .preferredColorScheme(.dark)
     }
 }

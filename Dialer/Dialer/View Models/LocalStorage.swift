@@ -7,38 +7,10 @@
 
 import Foundation
 
-
-typealias UserDefaultsKeys = UserDefaults.Keys
-public extension UserDefaults {
-    
-    /// Storing the used UserDefaults keys for safety.
-    enum Keys {
-        static let recentCodes = "recentCodes"
-        static let pinCode = "pinCode"
-        static let purchaseDetails = "purchaseDetails"
-        static let lastSyncDate = "lastSyncDate"
-
-        // Onboarding
-        static let showWelcomeView = "showWelcomeView"
-        
-        // Electricity
-        static let meterNumbers = "meterNumbers"
-        
-        // Biometrics
-        static let allowBiometrics = "allowBiometrics"
-        
-        // Review
-        static let appStartUpsCountKey = "appStartUpsCountKey"
-        static let lastVersionPromptedForReviewKey = "lastVersionPromptedForReviewKey"
-        
-    }
-}
-
-
-
 final class DialerStorage {
-    typealias RecentCodes = [RecentCode]
+    typealias RecentCodes = [RecentDialCode]
     typealias ElectricityMeters = [ElectricityMeter]
+    typealias USSDCodes = [USSDCode]
     
     private let LocalKeys = UserDefaults.Keys.self
     
@@ -91,47 +63,51 @@ final class DialerStorage {
     }
     
     func saveRecentCodes(_ codes: RecentCodes) throws {
-        let data = try encodeCustomData(codes)
+        let data = try encodeData(codes)
         userDefaults.setValue(data, forKey: LocalKeys.recentCodes)
     }
     
     func getRecentCodes() -> RecentCodes {
-        guard let codesData = userDefaults.object(forKey: LocalKeys.recentCodes) as? Data else {
-            return []
-        }
-        
-        do {
-            return  try JSONDecoder().decode(RecentCodes.self, from: codesData)
-        } catch let error {
-            print("Couldn't decode the recent codes: " ,error.localizedDescription)
-        }
-        return []
+        decodeDatasArray(key: LocalKeys.recentCodes, type: RecentCodes.self)
     }
     
     func saveElectricityMeters(_ meters: ElectricityMeters) throws {
-        let data = try encodeCustomData(meters)
+        let data = try encodeData(meters)
         userDefaults.setValue(data, forKey: LocalKeys.meterNumbers)
     }
     
     func getMeterNumbers() -> ElectricityMeters {
-        guard let meterNumbersData = userDefaults.object(forKey: LocalKeys.meterNumbers) as? Data else {
-            return []
-        }
-        
-        do {
-            return  try JSONDecoder().decode(ElectricityMeters.self, from: meterNumbersData)
-        } catch let error {
-            print("Couldn't decode the meters numbers: " ,error.localizedDescription)
-        }
-        return []
+        decodeDatasArray(key: LocalKeys.meterNumbers, type: ElectricityMeters.self)
     }
-    
+
+    func saveUSSDCodes(_ ussds: USSDCodes) throws {
+        let data = try encodeData(ussds)
+        userDefaults.setValue(data, forKey: LocalKeys.customUSSDCodes)
+    }
+
+    func getUSSDCodes() -> USSDCodes {
+        decodeDatasArray(key: LocalKeys.customUSSDCodes, type: USSDCodes.self)
+    }
+
+    func removeAllUSSDCodes() {
+        userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
+    }
 }
 
-
 private extension  DialerStorage {
-    
-    func encodeCustomData<T>(_ value: T) throws -> Data where T: Codable {
+    func encodeData<T>(_ value: T) throws -> Data where T: Codable {
         return try JSONEncoder().encode(value)
+    }
+
+    func decodeDatasArray<T: Codable>(key: String, type:  Array<T>.Type) -> [T] {
+        guard let data = userDefaults.object(forKey: key) as? Data else {
+            return []
+        }
+        do {
+            return  try JSONDecoder().decode(type, from: data)
+        } catch let error {
+            print("Couldn't decode the data of type \(type): ", error.localizedDescription)
+        }
+        return []
     }
 }

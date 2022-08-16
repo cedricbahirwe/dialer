@@ -8,35 +8,6 @@
 import Foundation
 import SwiftUI
 
-enum DialerQuickCode {
-    case internetBalance, airtimeBalance
-    case voicePackBalance, mobileNumber
-    case mobileWalletBalance(code: Int?)
-    case electricity(meter: String, amount: Int, code: Int?)
-    case other(String)
-    
-    var ussd: String {
-        switch self {
-        case .internetBalance: return "*345*5#"
-        case .airtimeBalance: return "*131#"
-        case .voicePackBalance: return "*140*5#"
-        case .mobileNumber: return "*135*8#"
-        case .mobileWalletBalance(let code):
-            return "*182*6*1\(codeSuffix(code))"
-        case .electricity(let meterNumber, let amount, let code):
-            return "*182*2*2*1*1*\(meterNumber)*\(amount)\(codeSuffix(code))"
-        case .other(let fullCode):
-            return fullCode
-        }
-    }
-    
-    private func codeSuffix(_ code: Int?) -> String {
-        return code == nil ? "#" : "*\(code!)#"
-    }
-    
-}
-
-
 protocol UtilitiesDelegate {
     func didSelectOption(with code: DialerQuickCode)
 }
@@ -69,13 +40,15 @@ class MainViewModel: ObservableObject {
     
     @Published public var purchaseDetail = PurchaseDetailModel()
     
-    @Published private(set) var recentCodes: [RecentCode] = []
+    @Published private(set) var recentCodes: [RecentDialCode] = []
     
     @Published private(set) var elecMeters: [ElectricityMeter] = []
+
+    @Published private(set) var ussdCodes: [USSDCode] = []
     
     /// Store a given  `RecentCode`  locally.
     /// - Parameter code: the code to be added.
-    private func storeCode(code: RecentCode) {
+    private func storeCode(code: RecentDialCode) {
         if let index = recentCodes.firstIndex(where: { $0.detail.amount == code.detail.amount }) {
             recentCodes[index].increaseCount()
         } else {
@@ -99,23 +72,6 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    /// Store a given  `MeterNumber`  locally.
-    /// - Parameter code: the code to be added.
-    public func storeMeter(_ number: ElectricityMeter) {
-        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
-        elecMeters.append(number)
-        saveMeterNumbersLocally()
-    }
-    
-    /// Save MeterNumber(s) locally.
-    public func saveMeterNumbersLocally() {
-        do {
-            try DialerStorage.shared.saveElectricityMeters(elecMeters)
-        } catch {
-            print("Could not save meter numbers locally: ", error.localizedDescription)
-        }
-    }
-    
     ///  Delete locally the Pin Code.
     public func removePin() {
         DialerStorage.shared.removePinCode()
@@ -127,18 +83,13 @@ class MainViewModel: ObservableObject {
         recentCodes = DialerStorage.shared.getRecentCodes()
     }
     
-    /// Retrieve all locally stored Meter Numbers codes
-    public func retrieveMeterNumbers() {
-        elecMeters = DialerStorage.shared.getMeterNumbers()
-    }
-    
     /// Confirm and Purchase an entered Code.
     public func confirmPurchase() {
         let purchase = purchaseDetail
         dialCode(from: purchaseDetail, completion: { result in
             switch result {
             case .success(_):
-                self.storeCode(code: RecentCode(detail: purchase))
+                self.storeCode(code: RecentDialCode(detail: purchase))
                 self.purchaseDetail = PurchaseDetailModel()
                 
                 break;
@@ -208,8 +159,8 @@ class MainViewModel: ObservableObject {
         getFullUSSDCode(from: purchaseDetail)
     }
     
-    /// Returns a Recent Code that matches the input identifier.
-    public func rencentCode(_ identifier: String) -> RecentCode? {
+    /// Returns a `RecentDialCode` that matches the input identifier.
+    public func rencentDialCode(_ identifier: String) -> RecentDialCode? {
         let foundCode = recentCodes.first(where: { $0.id.uuidString == identifier})
         return foundCode
     }
@@ -245,7 +196,7 @@ class MainViewModel: ObservableObject {
     
     /// Perfom a quick dialing from the `History View Row.`
     /// - Parameter recentCode: the row code to be performed.
-    public func performRecentDialing(for recentCode: RecentCode) {
+    public func performRecentDialing(for recentCode: RecentDialCode) {
         let recent = recentCode
         dialCode(from: recentCode.detail) { result in
             switch result {
@@ -291,25 +242,11 @@ extension MainViewModel {
             utilityDelegate?.didSelectOption(with: quickCode)
         }
     }
-    public func checkInternetBalance() {
-        performQuickDial(for: .internetBalance)
-    }
-    public func checkAirtimeBalance() {
-        performQuickDial(for: .airtimeBalance)
-    }
-    
-    public func checkVoicePackBalance() {
-        performQuickDial(for: .voicePackBalance)
-    }
 
     public func checkMobileWalletBalance() {
         performQuickDial(for: .mobileWalletBalance(code: pinCode))
     }
-    
-    public func checkSimNumber() {
-        performQuickDial(for: .mobileNumber)
-    }
-    
+
     public func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
         performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
@@ -337,8 +274,63 @@ extension MainViewModel {
 
 }
 
+// MARK: Electricity Storage
+extension MainViewModel {
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveMeterNumbers() {
+        elecMeters = DialerStorage.shared.getMeterNumbers()
+    }
+
+    /// Store a given  `MeterNumber`  locally.
+    /// - Parameter code: the code to be added.
+    public func storeMeter(_ number: ElectricityMeter) {
+        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
+        elecMeters.append(number)
+        saveMeterNumbersLocally()
+    }
+
+    /// Save MeterNumber(s) locally.
+    public func saveMeterNumbersLocally() {
+        do {
+            try DialerStorage.shared.saveElectricityMeters(elecMeters)
+        } catch {
+            print("Could not save meter numbers locally: ", error.localizedDescription)
+        }
+    }
+
+    public func removeAllUSSDs() {
+        DialerStorage.shared.removeAllUSSDCodes()
+        ussdCodes = []
+    }
+}
+
+// MARK: Custom USSD Storage
+extension MainViewModel {
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveUSSDCodes() {
+        ussdCodes = DialerStorage.shared.getUSSDCodes()
+    }
+
+    /// Store a given  `USSDCode`  locally.
+    /// - Parameter code: the code to be added.
+    public func storeUSSD(_ code: USSDCode) {
+        guard ussdCodes.contains(where: { $0 == code }) == false else { return }
+        ussdCodes.append(code)
+        saveUSSDCodesLocally()
+    }
+
+    /// Save USSDCode(s) locally.
+    public func saveUSSDCodesLocally() {
+        do {
+            try DialerStorage.shared.saveUSSDCodes(ussdCodes)
+        } catch {
+            print("Could not save ussd codes locally: ", error.localizedDescription)
+        }
+    }
+}
+
 // MARK: - Extension used for Home Quick Actions
-extension RecentCode {
+extension RecentDialCode {
     
     /// - Tag: QuickActionUserInfo
     var quickActionUserInfo: [String: NSSecureCoding] {

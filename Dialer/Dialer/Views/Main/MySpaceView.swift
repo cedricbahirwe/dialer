@@ -1,16 +1,29 @@
 //
-//  UtilitiesView.swift
+//  MySpaceView.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 19/11/2021.
+//  Update by Cédric Bahirwe on 16/08/2022.
 //
 
 import SwiftUI
 
-struct UtilitiesView: View, UtilitiesDelegate {
+struct MySpaceView: View, UtilitiesDelegate {
+    private enum USSDFilterOption {
+        case system
+        case custom
+        case all
+    }
+    // MARK: - Environment Properties
     @EnvironmentObject private var store: MainViewModel
     @Environment(\.colorScheme) private var colorScheme
+
+    // MARK: - Private Properties
     @State private var didCopyToClipBoard = false
+    @State private var showUserCustomCodes = false
+    @State private var presentNewDial = false
+    @State private var filterOption: USSDFilterOption = .all
+
     private var rowBackground: Color {
         Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
     }
@@ -33,26 +46,37 @@ struct UtilitiesView: View, UtilitiesDelegate {
                 }
             }
             .listRowBackground(rowBackground)
-            
-            Section("Other") {
-                
-                TappeableText("Check Airtime Balance", onTap: store.checkAirtimeBalance)
-                
-                TappeableText("Check Internet Bundles", onTap: store.checkInternetBalance)
-                
-                TappeableText("Check Voice Packs Balance", onTap: store.checkVoicePackBalance)
-                
-                TappeableText("Check my phone number", onTap: store.checkSimNumber)
+
+            if !store.ussdCodes.isEmpty {
+                Section("Other") {
+                    ForEach(store.ussdCodes) { code in
+                        TappeableText(code.title) {
+                            MainViewModel.performQuickDial(for: .other(code.ussd))
+                        }
+                    }
+                }
+                .listRowBackground(rowBackground)
             }
-            .listRowBackground(rowBackground)
         }
         .background(Color.primaryBackground)
-        .navigationTitle("Utilities")
+        .navigationTitle("My Space")
+        .sheet(isPresented: $presentNewDial) {
+            NewDialingView(store: store)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+//                EditButton()
+                Button {
+                    presentNewDial.toggle()
+                } label: {
+                    Label("Add USSD Code", systemImage: "plus")
+                }
+            }
+        }
         .onAppear() {
             store.utilityDelegate = self
         }
     }
-
 
     func didSelectOption(with code: DialerQuickCode) {
         copyToClipBoard(fullCode: code.ussd)
@@ -70,10 +94,10 @@ struct UtilitiesView: View, UtilitiesDelegate {
     }
 }
 
-struct UtilitiesView_Previews: PreviewProvider {
+struct MySpaceView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            UtilitiesView()
+            MySpaceView()
                 .environmentObject(MainViewModel())
 //                .preferredColorScheme(.dark)
         }

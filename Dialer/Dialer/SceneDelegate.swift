@@ -103,6 +103,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         viewModel.retrieveCodes()
+        viewModel.retrieveUSSDCodes()
         DialerStorage.shared.storeSyncDate()
     }
 
@@ -128,7 +129,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // Go to that particular code shortcut.
                 if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
                     // Find the code from the userInfo identifier.
-                    if let foundRecentCode = viewModel.rencentCode(codeIdentifier) {
+                    if let foundRecentCode = viewModel.rencentDialCode(codeIdentifier) {
                         viewModel.performRecentDialing(for: foundRecentCode)
                     }
                 }

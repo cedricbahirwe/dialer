@@ -8,126 +8,160 @@
 import SwiftUI
 
 struct NewDialingView: View {
-    @State private var composedCode: String = ""
-    @State private var showInValidMsg: Bool = false
-    @Environment(\.presentationMode)
-    private var presentationMode
+    @ObservedObject var store: MainViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var model: UIModel = UIModel()
+
+    @State private var alertItem: (status: Bool, message: String) = (false, "")
+    
+    @FocusState  private var focusedField: Field?
     
     var body: some View {
-        VStack(spacing: 10) {
-            Image("dialit.applogo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 65)
-            
-            VStack(spacing: 10) {
-                Group {
-                    Text("Invalid code. Check it and try again.")
-                        .font(.system(size: 16))
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
-                        .opacity(showInValidMsg ? 1 : 0)
-                        
-                    LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                        .frame(height: 32)
-                        .mask(Text(composedCode))
-                        .font(.title)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .truncationMode(.head)
-                        .padding(.horizontal, 20)
-                        .opacity(composedCode.isEmpty ? 0 : 1)
+        NavigationView {
+            VStack(spacing: 20) {
+                VStack(spacing: 10) {
+                    if titleAlreadyExists() {
+                        Text("This name is already used by another USSD code.")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: model.editedCode)
+                    }
+                    TextField("What's your USSD code name?", text: $model.label.animation())
+                        .keyboardType(.default)
+                        .disableAutocorrection(true)
+                        .focused($focusedField, equals: .title)
+                        .submitLabel(.next)
+                        .foregroundColor(.primary)
+                        .padding()
+                        .frame(height: 48)
+                        .background(Color.primaryBackground)
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.darkShadow, lineWidth: 4)
+                                .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
+                                .offset(x: 2, y: 2)
+                                .clipped()
+                        )
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.lightShadow, lineWidth: 4)
+                                .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
+                                .offset(x: -2, y: -2)
+                                .clipped()
+                        )
+                }
+                VStack(spacing: 10) {
+                    NumberField("Enter your USSD Code", text: $model.editedCode.animation(), keyboardType: .phonePad)
+                        .focused($focusedField, equals: .code)
+                        .submitLabel(.done)
+                        .onChange(of: model.editedCode, perform: cleanCode)
+                    
+                    if ussdAlreadyExists() {
+                        Text("This USSD code is already saved under another name")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: model.editedCode)
+                    }
                 }
                 
-                PinView(input: $composedCode.animation(),
-                        isFullMode: true, btnSize: 80)
-                    .font(.title.bold())
-                    .padding(.vertical, 10)
-                    .padding()
+                Button(action: saveUSSD) {
+                    Text("Save USSD")
+                        .font(.subheadline.bold())
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 48)
+                        .background(Color.blue.opacity(isUSSDValid() ? 1 : 0.3))
+                        .cornerRadius(8)
+                        .foregroundColor(Color.white)
+                }
+                .disabled(isUSSDValid() == false)
                 
-                Button(action: {
-                    dial(composedCode)
-                }, label: {
-                    Image(systemName: "phone.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 75, height: 75)
-                        .clipShape(Circle())
-                        .foregroundColor(.accentColor)
-                })
-                .frame(maxWidth: .infinity)
-                .overlay(bottomNavigationView)
                 Spacer()
             }
-            
-        }
-        .preferredColorScheme(.dark)
-        
-    }
-    
-    private func dial(_ code: String) {
-        // Basic Checks
-        // This can be removed when user wants to dial a phone number ....
-        if code.contains("*") && code.contains("#") && code.count >= 5 {
-            if let telUrl = URL(string: "tel://\(code)"), UIApplication.shared.canOpenURL(telUrl) {
-                UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in})
-
-            } else {
-                // Can not dial this code
-                manageInvalidCode()
-            }
-            
-        } else {
-            // Supposed to be invalid, Can not dial this code
-            manageInvalidCode()
-        }
-    }
-    
-    private func manageInvalidCode() {
-        showInValidMsg = true
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            showInValidMsg = false
-        }
-    }
-    
-    private var bottomNavigationView: some View {
-        HStack {
-            
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }, label: {
-                Image(systemName: "arrow.backward.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(10)
-                    .frame(width: 55, height: 55)
+            .alert("USSD Validation", isPresented: $alertItem.status, actions: {
+                Button("Okay", action: {})
+            }, message: {
+                Text(alertItem.message)
             })
-            .frame(width: 75, height: 75)
-            Spacer()
-            Button(action: {
-                if !composedCode.isEmpty {
-                    composedCode.removeLast()
+            .padding()
+            .navigationTitle("Save your own code")
+            .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
+            .onSubmit(manageKeyboardFocus)
+            .onAppear() {
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.6) {
+                    focusedField = .title
                 }
-            }, label: {
-                Image(systemName: "delete.left.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(10)
-                    .frame(width: 55, height: 55)
-            })
-            .frame(width: 75, height: 75)
-            .opacity(composedCode.isEmpty ? 0 : 1)
+            }
         }
-        .padding(.horizontal, 25)
-        .foregroundColor(Color.red.opacity(0.8))
+    }
+}
+
+// MARK: Keyboard
+extension NewDialingView {
+    func manageKeyboardFocus() {
+        switch focusedField {
+        case .title:
+            focusedField = .code
+        default:
+            focusedField = nil
+        }
+    }
+
+    enum Field {
+        case title, code
+    }
+}
+
+// MARK: Validation
+extension NewDialingView {
+    private func cleanedTitle(_ value: String) -> String {
+        value.trimmingCharacters(in: .whitespaces)
+    }
+
+    private func cleanCode(_ value: String) {
+        withAnimation {
+            model.editedCode = value.trimmingCharacters(in: .whitespaces)
+        }
+    }
+
+    private func titleAlreadyExists() -> Bool {
+        store.ussdCodes.contains { $0.title.lowercased() == cleanedTitle(model.label.lowercased()) }
+    }
+
+    private func ussdAlreadyExists() -> Bool {
+        store.ussdCodes.contains { $0.ussd == model.editedCode }
+    }
+
+    private func isUSSDValid() -> Bool {
+        !titleAlreadyExists() && !ussdAlreadyExists()
+    }
+
+    private func saveUSSD() {
+        do {
+            let newCode = try USSDCode(title: model.label,
+                                       ussd: model.editedCode)
+            store.storeUSSD(newCode)
+            dismiss()
+        } catch let error as USSDCode.USSDCodeValidationError  {
+            alertItem = (true, error.description)
+        } catch {
+            alertItem = (true, error.localizedDescription)
+        }
+    }
+
+}
+
+extension NewDialingView {
+    struct UIModel {
+        var editedCode: String = ""
+        var label: String = ""
     }
 }
 
 struct NewDialingView_Previews: PreviewProvider {
     static var previews: some View {
-        NewDialingView()
-//        .previewLayout(.fixed(width: 850, height: 900))
+        NewDialingView(store: MainViewModel())
     }
 }
 

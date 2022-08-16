@@ -1,5 +1,5 @@
 //
-//  RecentCode.swift
+//  RecentDialCode.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 04/01/2022.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct RecentCode: Identifiable, Hashable, Codable {
-    static func == (lhs: RecentCode, rhs: RecentCode) -> Bool {
+struct RecentDialCode: Identifiable, Hashable, Codable {
+    static func == (lhs: RecentDialCode, rhs: RecentDialCode) -> Bool {
         lhs.id == rhs.id
     }
     
@@ -25,6 +25,6 @@ struct RecentCode: Identifiable, Hashable, Codable {
     
     mutating func increaseCount() { count += 1 }
     
-    static let example = RecentCode(detail: .example)
+    static let example = RecentDialCode(detail: .example)
     
 }
