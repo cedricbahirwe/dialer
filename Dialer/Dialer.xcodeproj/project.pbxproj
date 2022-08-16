@@ -47,6 +47,8 @@
 		CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */; };
 		CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */; };
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
+		CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
+		CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */; };
 		CB544633289C5763009F3457 /* DialerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544632289C5763009F3457 /* DialerUITests.swift */; };
 		CB544635289C5763009F3457 /* DialerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
@@ -130,6 +132,8 @@
 		CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopiedUSSDLabel.swift; sourceTree = "<group>"; };
 		CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDialingView.swift; sourceTree = "<group>"; };
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
+		CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
+		CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		CB544630289C5763009F3457 /* DialerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB544632289C5763009F3457 /* DialerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITests.swift; sourceTree = "<group>"; };
 		CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				8248440A26FDBB2300DB0643 /* SettingsItem.swift */,
 				8248440C26FDBB3200DB0643 /* SettingsOption.swift */,
 				CBAF13162785A34800D32E1F /* ElectricityMeter.swift */,
+				CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,6 +300,7 @@
 				825F996526720B46009E4A7B /* ContactsFetcher.swift */,
 				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
 				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
+				CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -503,6 +509,7 @@
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */,
+				CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */,
 				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,
@@ -512,6 +519,7 @@
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
 				8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */,
 				824B80E127483E6F004041AA /* UtilitiesView.swift in Sources */,
+				CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */,
 				8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

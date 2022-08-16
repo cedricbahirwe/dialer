@@ -8,24 +8,22 @@
 import Foundation
 
 struct ElectricityMeter: Equatable, Identifiable, Codable {
-    
-    let number: String
     var id: String { number }
-    
+    let number: String
+
     init(_ number: String) throws {
         let cleanValue = Self.cleanNumber(number)
         guard cleanValue.isEmpty == false else { throw MeterNumberError.emptyMeterNumber }
         guard cleanValue.allSatisfy(\.isNumber) else { throw MeterNumberError.invalidMeterNumber }
-        
         self.number = cleanValue
     }
-    
+}
+
+extension ElectricityMeter {
     enum MeterNumberError: String, Error {
         case emptyMeterNumber = "Meter can not be empty."
         case invalidMeterNumber = "Meter Number should only contains digits between 0-9."
-        
     }
-    
 }
 
 extension ElectricityMeter {

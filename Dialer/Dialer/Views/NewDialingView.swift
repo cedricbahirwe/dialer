@@ -8,95 +8,111 @@
 import SwiftUI
 
 struct NewDialingView: View {
+    enum Field {
+        case title, code
+    }
+    @State private var model: UIModel = UIModel()
+    var titleAlreadyExists: Bool { true }
+    var ussdAlreadyExists: Bool { true }
+
+    @FocusState var focusedField: Field?
+
     var body: some View {
-        VStack {
-            VStack(spacing: 10) {
-                //                if transaction.type == .client && !transaction.amount.isEmpty {
-                //                    feeHintView
-                //                        .font(.caption).foregroundColor(.blue)
-                //                        .frame(maxWidth: .infinity, alignment: .leading)
-                //                        .animation(.default, value: transaction.estimatedFee)
-                //                }
-
-//                                NumberField("Enter Amount", text: $transaction.amount.animation())
-            }
-            VStack(spacing: 10) {
-                if true {
-                    Text("(selectedContact.names").font(.caption).foregroundColor(.blue)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    //                        .animation(.default, value: transaction.type)
+        NavigationView {
+            VStack(spacing: 20) {
+                VStack(spacing: 10) {
+                    if titleAlreadyExists {
+                        Text("This name is already used by another USSD code.")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: model.editedCode)
+                    }
+                    TextField("What's your USSD code name?", text: $model.label)
+                        .keyboardType(.default)
+                        .disableAutocorrection(true)
+                        .focused($focusedField, equals: .title)
+                        .submitLabel(.next)
+                        .foregroundColor(.primary)
+                        .padding()
+                        .frame(height: 48)
+                        .background(Color.primaryBackground)
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.darkShadow, lineWidth: 4)
+                                .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
+                                .offset(x: 2, y: 2)
+                                .clipped()
+                        )
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.lightShadow, lineWidth: 4)
+                                .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
+                                .offset(x: -2, y: -2)
+                                .clipped()
+                        )
                 }
-                //                NumberField(transaction.type == .client ?
-                //                            "Enter Receiver's number" :
-                //                                "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
+                VStack(spacing: 10) {
 
-                if true {
-                    Text("The code should be a 5-6 digits number")
-                        .font(.caption).foregroundColor(.blue)
+
+                    NumberField("Enter your USSD Code", text: $model.editedCode, keyboardType: .phonePad)
+                        .focused($focusedField, equals: .code)
+                        .submitLabel(.done)
+
+                    if ussdAlreadyExists {
+                        Text("This USSD code is already saved under another name")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: model.editedCode)
+                    }
                 }
-            }
 
-            VStack(spacing: 18) {
-                if true {
-                    Button(action: {
-                        //                        showContactPicker.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "person.fill")
-                            Text("Pick a contact")
-                        }
+                Button(action: { }) {
+                    Text("Save USSD")
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
-                        .background(Color(.systemBackground))
+                        .background(Color.blue.opacity(isUSSDValid() ? 1 : 0.3))
                         .cornerRadius(8)
-                        .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
-                        .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
-                    }
+                        .foregroundColor(Color.white)
                 }
+                .disabled(isUSSDValid() == false)
 
-                HStack {
-                    if UIApplication.hasSupportForUSSD {
-                        Button(action: { }) {
-                            Text("Dial USSD")
-                                .font(.subheadline.bold())
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 48)
-                            //                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(Color.white)
-                        }
-                        //                        .disabled(transaction.isValid == false)
 
-                        Button(action: { }) {
-                            Image(systemName: "doc.on.doc.fill")
-                                .frame(width: 48, height: 48)
-                            //                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(.white)
-                        }
-                        //                        .disabled(transaction.isValid == false || didCopyToClipBoard)
-                    } else {
-                        Button(action: {}) {
-                            Label("Copy USSD code", systemImage: "doc.on.doc.fill")
-                                .foregroundColor(.white)
-                                .font(.subheadline.bold())
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 48)
-                            //                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(Color.white)
-                        }
-                        //                        .disabled(transaction.isValid == false || didCopyToClipBoard)
-                    }
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("Save your own code")
+            .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
+            .onSubmit(manageKeyboardFocus)
+            .onAppear() {
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.6) {
+                    focusedField = .title
                 }
             }
-            .padding(.top)
-
-            Spacer()
         }
-        .padding()
-        .navigationTitle("Add your own code")
+    }
+
+    private func isUSSDValid() -> Bool {
+        return false
+    }
+
+    func manageKeyboardFocus() {
+        switch focusedField {
+        case .title:
+            focusedField = .code
+        default:
+            focusedField = nil
+        }
+//        getSearchableUsers()
+    }
+}
+
+extension NewDialingView {
+    struct UIModel {
+        var editedCode: String = ""
+        var label: String = ""
     }
 }
 

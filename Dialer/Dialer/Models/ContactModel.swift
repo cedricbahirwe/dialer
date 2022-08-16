@@ -8,7 +8,7 @@
 import Foundation
 
 struct Contact: Identifiable {
-    var id: String { names+phoneNumbers.description }
+    var id: String { names + phoneNumbers.description }
     let names: String
     private(set) var phoneNumbers: [String]
     
@@ -33,8 +33,6 @@ struct Contact: Identifiable {
                                  phoneNumbers: ["(415) 555-3695"])
 }
 
-
-
 extension Contact {
     var initials: String {
         if names.isEmpty {
@@ -58,5 +56,4 @@ extension Contact {
             }
         }
     }
-
 }

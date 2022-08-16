@@ -12,15 +12,17 @@ struct USSDCode: Identifiable, Hashable, Codable {
         lhs.ussd == rhs.ussd
     }
 
-    public init(id: UUID = UUID(), ussd: String) throws {
+    public init(id: UUID = UUID(), title: String, ussd: String) throws {
         self.id = id
+        self.title = title
         self.ussd = try Self.validateUSSD(from: ussd)
     }
 
     public let id: UUID
+    public let title: String
     public let ussd: String
 
-    static let example: USSDCode = try! USSDCode(ussd: "*131#")
+    static let example: USSDCode = try! USSDCode(title: "Check Airtime", ussd: "*131#")
 
     static let starSymbol: Character = "*"
 
