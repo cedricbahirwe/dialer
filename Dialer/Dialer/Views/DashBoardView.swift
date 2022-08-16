@@ -72,11 +72,11 @@ struct DashBoardView: View {
                                 }
                             
                             NavigationLink {
-                                UtilitiesView()
+                                MySpaceView()
                             } label: {
                                 DashItemView(
-                                    title: "Utilities",
-                                    icon: "wrench.and.screwdriver")
+                                    title: "My Space",
+                                    icon: "person.crop.circle.badge")
                             }
                             .buttonStyle(PlainButtonStyle())
                             

@@ -242,25 +242,11 @@ extension MainViewModel {
             utilityDelegate?.didSelectOption(with: quickCode)
         }
     }
-    public func checkInternetBalance() {
-        performQuickDial(for: .internetBalance)
-    }
-    public func checkAirtimeBalance() {
-        performQuickDial(for: .airtimeBalance)
-    }
-    
-    public func checkVoicePackBalance() {
-        performQuickDial(for: .voicePackBalance)
-    }
 
     public func checkMobileWalletBalance() {
         performQuickDial(for: .mobileWalletBalance(code: pinCode))
     }
-    
-    public func checkSimNumber() {
-        performQuickDial(for: .mobileNumber)
-    }
-    
+
     public func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
         performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))

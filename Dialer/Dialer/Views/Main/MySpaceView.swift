@@ -1,13 +1,14 @@
 //
-//  UtilitiesView.swift
+//  MySpaceView.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 19/11/2021.
+//  Update by Cédric Bahirwe on 16/08/2022.
 //
 
 import SwiftUI
 
-struct UtilitiesView: View, UtilitiesDelegate {
+struct MySpaceView: View, UtilitiesDelegate {
     private enum USSDFilterOption {
         case system
         case custom
@@ -38,57 +39,33 @@ struct UtilitiesView: View, UtilitiesDelegate {
                 TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
             } header: {
                 HStack {
-                    Text("Most Used")
+                    Text("Most Popular")
                     Spacer()
                     CopiedUSSDLabel()
                         .opacity(didCopyToClipBoard ? 1 : 0)
                 }
             }
             .listRowBackground(rowBackground)
-            
-            Section("Other") {
-                
-                TappeableText("Check Airtime Balance", onTap: store.checkAirtimeBalance)
-                
-                TappeableText("Check Internet Bundles", onTap: store.checkInternetBalance)
-                
-                TappeableText("Check Voice Packs Balance", onTap: store.checkVoicePackBalance)
-                
-                TappeableText("Check my phone number", onTap: store.checkSimNumber)
+
+            if !store.ussdCodes.isEmpty {
+                Section("Other") {
+                    ForEach(store.ussdCodes) { code in
+                        TappeableText(code.title) {
+                            MainViewModel.performQuickDial(for: .other(code.ussd))
+                        }
+                    }
+                }
+                .listRowBackground(rowBackground)
             }
-            .listRowBackground(rowBackground)
         }
         .background(Color.primaryBackground)
-        .navigationTitle("Utilities")
+        .navigationTitle("My Space")
         .sheet(isPresented: $presentNewDial) {
             NewDialingView(store: store)
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Menu {
-                    Button {
-                        filterOption = .custom
-                    } label: {
-                        if filterOption == .custom {
-                            Label("Show my codes", systemImage: "smallcircle.circle.fill")
-                        } else {
-                            Label("Show my codes", image: .init())
-                        }
-                    }
-
-                    Button {
-                        filterOption = .all
-                    } label: {
-                        if filterOption == .all {
-                            Label("Show all codes", systemImage: "smallcircle.circle.fill")
-                        } else {
-                            Label("Show all codes", image: .init())
-                        }
-                    }
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                }
-
+//                EditButton()
                 Button {
                     presentNewDial.toggle()
                 } label: {
@@ -98,6 +75,7 @@ struct UtilitiesView: View, UtilitiesDelegate {
         }
         .onAppear() {
             store.utilityDelegate = self
+            store.retrieveUSSDCodes()
         }
     }
 
@@ -117,10 +95,10 @@ struct UtilitiesView: View, UtilitiesDelegate {
     }
 }
 
-struct UtilitiesView_Previews: PreviewProvider {
+struct MySpaceView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            UtilitiesView()
+            MySpaceView()
                 .environmentObject(MainViewModel())
 //                .preferredColorScheme(.dark)
         }

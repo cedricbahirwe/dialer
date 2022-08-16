@@ -21,7 +21,6 @@
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440A26FDBB2300DB0643 /* SettingsItem.swift */; };
 		8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440C26FDBB3200DB0643 /* SettingsOption.swift */; };
-		824B80E127483E6F004041AA /* UtilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824B80E027483E6F004041AA /* UtilitiesView.swift */; };
 		825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825022E52673676B007ABB56 /* DialingsHistoryView.swift */; };
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
 		8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E68D2693959800657EFB /* CongratulationsView.swift */; };
@@ -49,6 +48,7 @@
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 		CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */; };
+		CB45381628AB9C6500F3F24C /* MySpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381528AB9C6500F3F24C /* MySpaceView.swift */; };
 		CB544633289C5763009F3457 /* DialerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544632289C5763009F3457 /* DialerUITests.swift */; };
 		CB544635289C5763009F3457 /* DialerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
@@ -98,7 +98,6 @@
 		823FA768261A556200ABE045 /* PurchaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailView.swift; sourceTree = "<group>"; };
 		8248440A26FDBB2300DB0643 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		8248440C26FDBB3200DB0643 /* SettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOption.swift; sourceTree = "<group>"; };
-		824B80E027483E6F004041AA /* UtilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesView.swift; sourceTree = "<group>"; };
 		825022E52673676B007ABB56 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
@@ -134,6 +133,7 @@
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
 		CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
 		CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		CB45381528AB9C6500F3F24C /* MySpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpaceView.swift; sourceTree = "<group>"; };
 		CB544630289C5763009F3457 /* DialerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB544632289C5763009F3457 /* DialerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITests.swift; sourceTree = "<group>"; };
 		CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 			children = (
 				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
 				825F996226720AE6009E4A7B /* SendingView.swift */,
-				824B80E027483E6F004041AA /* UtilitiesView.swift */,
+				CB45381528AB9C6500F3F24C /* MySpaceView.swift */,
 				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
 			);
 			path = Main;
@@ -517,8 +517,8 @@
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
 				8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
+				CB45381628AB9C6500F3F24C /* MySpaceView.swift in Sources */,
 				8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */,
-				824B80E127483E6F004041AA /* UtilitiesView.swift in Sources */,
 				CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */,
 				8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */,
 			);

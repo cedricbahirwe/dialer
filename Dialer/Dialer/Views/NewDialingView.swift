@@ -9,13 +9,15 @@ import SwiftUI
 
 struct NewDialingView: View {
     @ObservedObject var store: MainViewModel
-
+    @Environment(\.dismiss) private var dismiss
     @State private var model: UIModel = UIModel()
     private var titleAlreadyExists: Bool { true }
     private var ussdAlreadyExists: Bool { true }
 
+    @State private var alertItem: (status: Bool, message: String) = (false, "")
+    
     @FocusState  private var focusedField: Field?
-
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -52,12 +54,12 @@ struct NewDialingView: View {
                         )
                 }
                 VStack(spacing: 10) {
-
-
+                    
+                    
                     NumberField("Enter your USSD Code", text: $model.editedCode, keyboardType: .phonePad)
                         .focused($focusedField, equals: .code)
                         .submitLabel(.done)
-
+                    
                     if ussdAlreadyExists {
                         Text("This USSD code is already saved under another name")
                             .font(.caption)
@@ -66,8 +68,8 @@ struct NewDialingView: View {
                             .animation(.default, value: model.editedCode)
                     }
                 }
-
-                Button(action: { }) {
+                
+                Button(action: saveUSSD) {
                     Text("Save USSD")
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
@@ -77,10 +79,15 @@ struct NewDialingView: View {
                         .foregroundColor(Color.white)
                 }
                 .disabled(isUSSDValid() == false)
-
-
+                
+                
                 Spacer()
             }
+            .alert("Validation", isPresented: $alertItem.status, actions: {
+                Button("Okay", action: {})
+            }, message: {
+                Text(alertItem.message)
+            })
             .padding()
             .navigationTitle("Save your own code")
             .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
@@ -92,11 +99,24 @@ struct NewDialingView: View {
             }
         }
     }
-
+    
     private func isUSSDValid() -> Bool {
-        return false
+        return true
     }
 
+    private func saveUSSD() {
+        do {
+            let newCode = try USSDCode(title: model.label,
+                                       ussd: model.editedCode)
+            store.storeUSSD(newCode)
+            dismiss()
+        } catch let error as USSDCode.USSDCodeValidationError  {
+            alertItem = (true, error.description)
+        } catch {
+            alertItem = (true, error.localizedDescription)
+        }
+    }
+    
     func manageKeyboardFocus() {
         switch focusedField {
         case .title:
@@ -120,10 +140,7 @@ extension NewDialingView {
 
 struct NewDialingView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            NewDialingView(store: MainViewModel())
-        }
-        //        .previewLayout(.fixed(width: 850, height: 900))
+        NewDialingView(store: MainViewModel())
     }
 }
 

@@ -37,6 +37,8 @@ extension USSDCode {
         case invalidLastCharacter
         case invalidUSSD
 
+//        localize
+
         var description: String {
             switch self {
             case .emptyUSSD:
