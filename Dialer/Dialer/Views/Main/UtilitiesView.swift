@@ -61,7 +61,7 @@ struct UtilitiesView: View, UtilitiesDelegate {
         .background(Color.primaryBackground)
         .navigationTitle("Utilities")
         .sheet(isPresented: $presentNewDial) {
-            NewDialingView()
+            NewDialingView(store: store)
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

@@ -80,12 +80,12 @@ final class DialerStorage {
         decodeDatasArray(key: LocalKeys.meterNumbers, type: ElectricityMeters.self)
     }
 
-    func saveCustomUSSDs(_ ussds: USSDCodes) throws {
+    func saveUSSDCodes(_ ussds: USSDCodes) throws {
         let data = try encodeData(ussds)
         userDefaults.setValue(data, forKey: LocalKeys.customUSSDCodes)
     }
 
-    func getCustomUSSDs() -> USSDCodes {
+    func getUSSDCodes() -> USSDCodes {
         decodeDatasArray(key: LocalKeys.customUSSDCodes, type: USSDCodes.self)
     }
 }

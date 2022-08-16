@@ -43,6 +43,8 @@ class MainViewModel: ObservableObject {
     @Published private(set) var recentCodes: [RecentDialCode] = []
     
     @Published private(set) var elecMeters: [ElectricityMeter] = []
+
+    @Published private(set) var ussdCodes: [USSDCode] = []
     
     /// Store a given  `RecentCode`  locally.
     /// - Parameter code: the code to be added.
@@ -70,23 +72,6 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    /// Store a given  `MeterNumber`  locally.
-    /// - Parameter code: the code to be added.
-    public func storeMeter(_ number: ElectricityMeter) {
-        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
-        elecMeters.append(number)
-        saveMeterNumbersLocally()
-    }
-    
-    /// Save MeterNumber(s) locally.
-    public func saveMeterNumbersLocally() {
-        do {
-            try DialerStorage.shared.saveElectricityMeters(elecMeters)
-        } catch {
-            print("Could not save meter numbers locally: ", error.localizedDescription)
-        }
-    }
-    
     ///  Delete locally the Pin Code.
     public func removePin() {
         DialerStorage.shared.removePinCode()
@@ -96,11 +81,6 @@ class MainViewModel: ObservableObject {
     /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
         recentCodes = DialerStorage.shared.getRecentCodes()
-    }
-    
-    /// Retrieve all locally stored Meter Numbers codes
-    public func retrieveMeterNumbers() {
-        elecMeters = DialerStorage.shared.getMeterNumbers()
     }
     
     /// Confirm and Purchase an entered Code.
@@ -306,6 +286,56 @@ extension MainViewModel {
         }
     }
 
+}
+
+// MARK: Electricity Storage
+extension MainViewModel {
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveMeterNumbers() {
+        elecMeters = DialerStorage.shared.getMeterNumbers()
+    }
+
+    /// Store a given  `MeterNumber`  locally.
+    /// - Parameter code: the code to be added.
+    public func storeMeter(_ number: ElectricityMeter) {
+        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
+        elecMeters.append(number)
+        saveMeterNumbersLocally()
+    }
+
+    /// Save MeterNumber(s) locally.
+    public func saveMeterNumbersLocally() {
+        do {
+            try DialerStorage.shared.saveElectricityMeters(elecMeters)
+        } catch {
+            print("Could not save meter numbers locally: ", error.localizedDescription)
+        }
+    }
+}
+
+// MARK: Custom USSD Storage
+extension MainViewModel {
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveUSSDCodes() {
+        ussdCodes = DialerStorage.shared.getUSSDCodes()
+    }
+
+    /// Store a given  `USSDCode`  locally.
+    /// - Parameter code: the code to be added.
+    public func storeUSSD(_ code: USSDCode) {
+        guard ussdCodes.contains(where: { $0 == code }) == false else { return }
+        ussdCodes.append(code)
+        saveUSSDCodesLocally()
+    }
+
+    /// Save USSDCode(s) locally.
+    public func saveUSSDCodesLocally() {
+        do {
+            try DialerStorage.shared.saveUSSDCodes(ussdCodes)
+        } catch {
+            print("Could not save ussd codes locally: ", error.localizedDescription)
+        }
+    }
 }
 
 // MARK: - Extension used for Home Quick Actions

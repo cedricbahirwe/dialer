@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct NewDialingView: View {
-    enum Field {
-        case title, code
-    }
-    @State private var model: UIModel = UIModel()
-    var titleAlreadyExists: Bool { true }
-    var ussdAlreadyExists: Bool { true }
+    @ObservedObject var store: MainViewModel
 
-    @FocusState var focusedField: Field?
+    @State private var model: UIModel = UIModel()
+    private var titleAlreadyExists: Bool { true }
+    private var ussdAlreadyExists: Bool { true }
+
+    @FocusState  private var focusedField: Field?
 
     var body: some View {
         NavigationView {
@@ -105,7 +104,10 @@ struct NewDialingView: View {
         default:
             focusedField = nil
         }
-//        getSearchableUsers()
+        //        getSearchableUsers()
+    }
+    enum Field {
+        case title, code
     }
 }
 
@@ -119,7 +121,7 @@ extension NewDialingView {
 struct NewDialingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            NewDialingView()
+            NewDialingView(store: MainViewModel())
         }
         //        .previewLayout(.fixed(width: 850, height: 900))
     }
