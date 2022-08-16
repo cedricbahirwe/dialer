@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-enum SettingsOption: Int {
+enum SettingsOption {
     case changeLanguage
     case biometrics
-    case deletePin
     case getStarted
     case contactUs
     case tweetUs
     case translationSuggestion
     case about
     case review
+    case deletePin
         
     func getSettingsItem() -> SettingsItem {
         switch self {
