@@ -53,14 +53,14 @@ class DialerUITests: XCTestCase {
     }
 
     func testNewDialViewComponents() throws {
-        app.buttons["Dial"].tap()
+        app.buttons["Quick Dial"].tap()
         // Delete button is hidden on first view appearance
         XCTAssertFalse(app.buttons["Backspace"].isEnabled)
     }
 
     func testDialButtonDisplay() throws {
-        XCTAssertTrue(app.staticTexts["Dial"].exists)
-        XCTAssertTrue(app.buttons["Dial"].exists)
+        XCTAssertTrue(app.staticTexts["Quick Dial"].exists)
+        XCTAssertTrue(app.buttons["Quick Dial"].exists)
     }
 
     private func debugMe(_ element: XCUIElementQuery) {
