@@ -10,7 +10,6 @@ import SwiftUI
 struct AboutView: View {
     @EnvironmentObject
     private var dataStore: MainViewModel
-    
     private let appVersion = UIApplication.appVersion ?? "1.0"
     private let buildVersion = UIApplication.buildVersion ?? "1"
     
@@ -38,11 +37,13 @@ struct AboutView: View {
                     .foregroundColor(.secondary)
             }
 
-            Text("Designed and developed by\n[%@](%@)".localized(with: ["Cédric Bahirwe", DialerlLinks.authorTwitter]))
-                .fontWeight(.semibold)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
-            
+            VStack(spacing: 2) {
+                Text("Designed and developed by")
+                    .foregroundColor(.secondary)
+                Link("Cedric Bahirwe.", destination: URL(string: DialerlLinks.authorTwitter)!)
+            }
+            .font(.body.weight(.semibold))
+
             Spacer()
         }
         .frame(maxWidth: .infinity)
@@ -63,8 +64,7 @@ struct AboutView_Previews: PreviewProvider {
         NavigationView {
             AboutView()
                 .navigationBarTitleDisplayMode(.inline)
-                .preferredColorScheme(.dark)
-//                .environment(\.locale, .init(identifier: "fr"))
         }
+        .preferredColorScheme(.dark)
     }
 }

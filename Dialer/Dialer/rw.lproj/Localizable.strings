@@ -58,7 +58,7 @@
 "Remaining time: timeRemaining seconds" = "Igihe gisigaye: %d seconds";
  
 // 9. About View
-"Designed and developed by\n[%@](%@)." = "Byahanzwe bihinyanyurwa na\n[%@](%@).";
+"Designed and developed by" = "Byahanzwe bihinyanyurwa na";
 "About" = "Ibyerekeye";
  
 // 10. Settings View
