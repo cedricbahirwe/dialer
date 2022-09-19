@@ -54,7 +54,7 @@
 "Remaining time: timeRemaining seconds" = "Temps restant: %d seconds";
 
 // 9. About View
-"Designed and developed by\nCédric Bahirwe." = "Conçu et développé par\nCédric Bahirwe.";
+"Designed and developed by\n[%@](%@)." = "Conçu et développé par\n[%@](%@).";
 "About" = "A propos";
 
 // 10. Settings View

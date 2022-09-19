@@ -38,7 +38,7 @@ struct AboutView: View {
                     .foregroundColor(.secondary)
             }
 
-            Text("Designed and developed by\n[Cédric Bahirwe](https://twitter.com/cedricbahirwe)")
+            Text("Designed and developed by\n[%@](%@)".localized(with: ["Cédric Bahirwe", DialerlLinks.authorTwitter]))
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
@@ -64,6 +64,7 @@ struct AboutView_Previews: PreviewProvider {
             AboutView()
                 .navigationBarTitleDisplayMode(.inline)
                 .preferredColorScheme(.dark)
+//                .environment(\.locale, .init(identifier: "fr"))
         }
     }
 }
