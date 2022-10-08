@@ -22,7 +22,7 @@ struct DashBoardView: View {
     @State private var dragState: DragState = .closed
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
-    @State private var showPurchaseSheet = false
+    @State private var showPurchaseSheet = true
     @State private var isSpeaking = false
 
 
@@ -121,24 +121,23 @@ struct DashBoardView: View {
                 }
                 PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
 
-
-                VStack {
-
-                    LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
-                        .frame(width: 50, height: 50)
-                        .mask(
-                            Image(systemName: isSpeaking ? "waveform.circle.fill" : "mic.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                        )
-                        .scaleEffect(isSpeaking ? 1.3 : 1)
-                        .animation(.spring(), value: isSpeaking)
-                        .padding(.bottom, isSpeaking ? 70 : 60)
-                        .onTapGesture {
-                            isSpeaking.toggle()
-                        }
-                        .hidden()
-                }
+//                VStack {
+//
+//                    LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+//                        .frame(width: 50, height: 50)
+//                        .mask(
+//                            Image(systemName: isSpeaking ? "waveform.circle.fill" : "mic.circle.fill")
+//                                .resizable()
+//                                .scaledToFit()
+//                        )
+//                        .scaleEffect(isSpeaking ? 1.3 : 1)
+//                        .animation(.spring(), value: isSpeaking)
+//                        .padding(.bottom, isSpeaking ? 70 : 60)
+//                        .onTapGesture {
+//                            isSpeaking.toggle()
+//                        }
+//                        .hidden()
+//                }
             }
             .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
                 if showWelcomeView {
@@ -161,7 +160,6 @@ struct DashBoardView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: data.showSettingsView) { gearGradient }
                 }
-                
             }
     }
     

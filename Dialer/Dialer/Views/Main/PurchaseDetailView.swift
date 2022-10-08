@@ -46,7 +46,7 @@ struct PurchaseDetailView: View {
             Capsule()
                 .fill(Color.gray)
                 .frame(width: 50, height: 5)
-                .padding(.vertical, )
+                .padding(.vertical, 8)
 
             VStack(spacing: 15) {
                 
@@ -172,10 +172,12 @@ struct PurchaseDetailView: View {
         }
         .padding([.horizontal, .bottom])
         .frame(maxWidth: .infinity, alignment: .top)
-        .background(Color.primaryBackground)
-        .cornerRadius(15)
-        .shadow(radius: 5)
-        .offset(y: 0 + (keyWindow?.safeAreaInsets.top ?? 0))
+        .background(
+            Color.primaryBackground
+                .cornerRadius(15)
+                .ignoresSafeArea()
+                .shadow(radius: 5)
+        )
         .font(.system(size: 18, weight: .semibold, design: .rounded))
         .offset(x: 0, y: isPresented ? 0 : 800)
         .offset(y: max(0, bottomState.height))
@@ -237,6 +239,7 @@ struct PurchaseDetailView: View {
     }
 }
 
+#if DEBUG
 struct PurchaseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
@@ -249,16 +252,4 @@ struct PurchaseDetailView_Previews: PreviewProvider {
         }
     }
 }
-
-
-
-extension PurchaseDetailView {
-    var keyWindow: UIWindow? {
-        UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .map({$0 as? UIWindowScene})
-                .compactMap({$0})
-                .first?.windows
-                .filter({$0.isKeyWindow}).first
-    }
-}
+#endif

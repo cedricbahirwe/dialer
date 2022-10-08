@@ -31,9 +31,8 @@ enum ReviewHandler {
     }
     
     static func requestReviewManually() {
-        let url = DialerlLinks.dialerAppReview
-        guard let writeReviewURL = URL(string: url)
-            else { fatalError("Expected a valid URL") }
+        guard let writeReviewURL = URL(string: DialerlLinks.dialerAppReview)
+        else { return }
         UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
     }
 }
