@@ -121,10 +121,12 @@ struct WhatsNewView: View {
     }
 }
 
+#if DEBUG
 struct WhatsNewView_Previews: PreviewProvider {
     static var previews: some View {
         WhatsNewView(isPresented: .constant(true))
-            .environment(\.locale, .init(identifier: "fr"))
+            .previewIn(.fr)
             .preferredColorScheme(.dark)
     }
 }
+#endif

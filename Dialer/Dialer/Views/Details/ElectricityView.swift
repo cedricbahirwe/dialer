@@ -175,6 +175,7 @@ struct ElectricityView: View {
     }
 }
 
+#if DEBUG
 struct ElectricityView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -184,3 +185,4 @@ struct ElectricityView_Previews: PreviewProvider {
         .environment(\.colorScheme, .dark)
     }
 }
+#endif

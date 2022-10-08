@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-struct SettingsItem: Identifiable {
-    init(icon: String, color: Color, title: LocalizedStringKey, subtitle: LocalizedStringKey) {
+public struct SettingsItem: Identifiable {
+    public init(icon: String, color: Color, title: LocalizedStringKey, subtitle: LocalizedStringKey) {
         self.icon = Image(icon)
         self.color = color
         self.title = title
         self.subtitle = subtitle
     }
     
-    init(sysIcon: String, color: Color, title: LocalizedStringKey, subtitle: LocalizedStringKey) {
+    public init(sysIcon: String, color: Color, title: LocalizedStringKey, subtitle: LocalizedStringKey) {
         self.icon = Image(systemName: sysIcon)
         self.color = color
         self.title = title
         self.subtitle = subtitle
     }
     
-    let id = UUID()
-    let icon: Image
-    let color: Color
-    let title: LocalizedStringKey
-    let subtitle: LocalizedStringKey
+    public let id = UUID()
+    public let icon: Image
+    public let color: Color
+    public let title: LocalizedStringKey
+    public let subtitle: LocalizedStringKey
 }

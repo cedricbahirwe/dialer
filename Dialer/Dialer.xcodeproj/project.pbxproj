@@ -60,6 +60,8 @@
 		CBC262BF2784C7D3000B8E0E /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262BE2784C7D3000B8E0E /* MailView.swift */; };
 		CBC262C42784D233000B8E0E /* RecentDialCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C32784D233000B8E0E /* RecentDialCode.swift */; };
 		CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC262C52784D243000B8E0E /* PurchaseDetailModel.swift */; };
+		CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */; };
+		CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */; };
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +147,8 @@
 		CBC262BE2784C7D3000B8E0E /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		CBC262C32784D233000B8E0E /* RecentDialCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDialCode.swift; sourceTree = "<group>"; };
 		CBC262C52784D243000B8E0E /* PurchaseDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModel.swift; sourceTree = "<group>"; };
+		CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerExternalLinks.swift; sourceTree = "<group>"; };
+		CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashItemView.swift; sourceTree = "<group>"; };
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -202,6 +206,7 @@
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 				CBAF13182785A54100D32E1F /* TappeableText.swift */,
 				CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */,
+				CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
 				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
 				CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */,
+				CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -505,7 +511,9 @@
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */,
 				8255E691269395EE00657EFB /* CongratsViewController.swift in Sources */,
+				CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */,
 				CBAF13172785A34800D32E1F /* ElectricityMeter.swift in Sources */,
+				CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */,

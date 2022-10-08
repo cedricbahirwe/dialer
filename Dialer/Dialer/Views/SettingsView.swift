@@ -17,12 +17,6 @@ struct SettingsView: View {
     @State private
     var showMailErrorAlert = false
     
-    private let supportEmail = "abc.incs.001@gmail.com"
-    private let twitterLink = "https://twitter.com/TheDialerApp"
-    private let githubLink = "https://github.com/cedricbahirwe/dialer"
-    private let appstoreLink = "https://apps.apple.com/us/app/dial-it/id1589599545"
-    private let privacyLink  = "https://cedricbahirwe.github.io/html/privacy.html"
-    
     @State var showMailView = false
     var body: some View {
         NavigationView {
@@ -34,16 +28,14 @@ struct SettingsView: View {
                             SettingsRow(.changeLanguage, exists: false) {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
-                            
-                            SettingsRow(.biometrics, exists: false)
-                                .overlay(
-                                    Toggle("Biometrics", isOn: $allowBiometrics)
-                                        .toggleStyle(SwitchToggleStyle())
-                                        .labelsHidden()
-                                    , alignment: .trailing
-                                )
-                            
-                            
+
+                            HStack(spacing: 3) {
+                                SettingsRow(.biometrics, exists: false)
+                                Toggle("Biometrics", isOn: $allowBiometrics)
+                                    .toggleStyle(SwitchToggleStyle())
+                                    .labelsHidden()
+                            }
+
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, perform: dataStore.removePin)
                             }
@@ -66,6 +58,10 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("Reach Out")) {
                         VStack {
+                            Link(destination: URL(string: DialerlLinks.patreaonSupport)!) {
+                                SettingsRow(.patreonSupport)
+                            }
+
                             SettingsRow(.contactUs, perform: openMail)
                                 .alert("No Email Client Found",
                                        isPresented: $showMailErrorAlert) {
@@ -75,11 +71,11 @@ struct SettingsView: View {
                                 } message: {
                                     Text(String(format:
                                                     NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
-                                                supportEmail
+                                                DialerlLinks.supportEmail
                                                )
                                     )
                                 }
-                            Link(destination: URL(string: twitterLink)!) {
+                            Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
                                 SettingsRow(.tweetUs)
                             }
                             
@@ -108,7 +104,7 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
             .sheet(isPresented: $showMailView) {
-                MailView(recipientEmail: supportEmail,
+                MailView(recipientEmail: DialerlLinks.supportEmail,
                          subject: "Dial It Question",
                          bodyMessage: getEmailBody())
             }
@@ -151,7 +147,7 @@ struct SettingsView: View {
     }
     private func copyEmail() {
         let pasteBoard = UIPasteboard.general
-        pasteBoard.string = "https://twitter.com/TheDialerApp"
+        pasteBoard.string = DialerlLinks.dialerTwitter
     }
     
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
@@ -163,7 +159,7 @@ struct SettingsView: View {
     
     private func openTwitter() {
         
-        guard let url = URL(string: twitterLink) else { return }
+        guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
@@ -181,7 +177,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
-//            .preferredColorScheme(.dark)
+        //            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {
@@ -232,8 +228,10 @@ extension SettingsView {
                     Text(item.subtitle)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.secondary)
+
                 }
-                .lineLimit(1)
+                .multilineTextAlignment(.leading)
+//                .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .padding(.leading, 15)
                 

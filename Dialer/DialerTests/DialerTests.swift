@@ -31,7 +31,10 @@ class DialerTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
+
+    func testSettingOptions() throws {
+
+    }
     
     func testMtnNumbers() throws {
         XCTAssert("0782628511".isMtnNumber, "This is not an mtn number")

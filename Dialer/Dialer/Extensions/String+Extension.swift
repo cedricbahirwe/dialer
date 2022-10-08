@@ -6,8 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension String {
+    func localized(with arguments: [CVarArg]) -> LocalizedStringKey {
+        LocalizedStringKey(String(format: self, arguments: arguments))
+    }
+
     func percentEncoded() -> String? {
         return (self as NSString).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
     }
