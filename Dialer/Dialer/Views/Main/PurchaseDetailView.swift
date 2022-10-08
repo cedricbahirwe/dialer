@@ -45,8 +45,9 @@ struct PurchaseDetailView: View {
         VStack(spacing: 8) {
             Capsule()
                 .fill(Color.gray)
-                .frame(width: 100, height: 15)
-            
+                .frame(width: 50, height: 5)
+                .padding(.vertical, )
+
             VStack(spacing: 15) {
                 
                 Text(validAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
@@ -169,9 +170,8 @@ struct PurchaseDetailView: View {
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .padding(.bottom, 20)
         }
-        .padding()
+        .padding([.horizontal, .bottom])
         .frame(maxWidth: .infinity, alignment: .top)
-
         .background(Color.primaryBackground)
         .cornerRadius(15)
         .shadow(radius: 5)

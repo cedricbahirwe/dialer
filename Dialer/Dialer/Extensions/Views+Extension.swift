@@ -35,9 +35,25 @@ struct BiometricsAccessibility: ViewModifier {
         isEvaluated = state == .loggedin
     }
 }
+#if DEBUG
+struct LanguagePreview: ViewModifier {
+    init(_ language: LanguagePreview.Language) {
+        self.language = language
+    }
+
+    let language: Language
+    enum Language: String {
+        case en, fr, kin
+    }
+    func body(content: Content) -> some View {
+        content
+            .environment(\.locale, .init(identifier: language.rawValue))
+    }
+}
+#endif
 
 extension View {
-    
+    /// Whether or not biometrics is turned on
     func onChangeBiometrics(isActive: Binding<Bool>) -> some View {
         ModifiedContent(content: self, modifier: BiometricsAccessibility(isEvaluated: isActive))
     }
@@ -53,6 +69,13 @@ extension View {
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
+
+    /// Preview UI in supported languages in debug mode
+    #if DEBUG
+    func previewIn(_ language: LanguagePreview.Language) -> some View {
+        ModifiedContent(content: self, modifier: LanguagePreview(language))
+    }
+    #endif
 }
 
 func drawImage(_ name: String, size: CGSize = CGSize(width: 60, height: 40)) -> UIImage {

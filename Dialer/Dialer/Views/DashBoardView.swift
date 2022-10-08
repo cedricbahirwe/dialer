@@ -192,20 +192,22 @@ extension DashBoardView {
 
             Spacer()
 
-            HStack(spacing: 1) {
-                Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
-
+            Label {
                 Text(LocalizedStringKey(checkCellularProvider.message))
-                    .font(.system(.body, design: .rounded))
-                    .fontWeight(.medium)
-                    .minimumScaleFactor(0.8)
+                    .font(
+                        .system(
+                            .body,
+                            design: .rounded)
+                        .weight(.medium)
+                    )
                     .multilineTextAlignment(.leading)
+            } icon: {
+                Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
             }
             .foregroundColor(checkCellularProvider.status ? .main : .red)
-            .padding(.horizontal, 12)
-            .frame(height: 35)
+            .padding(10)
             .background(Color.white)
-            .cornerRadius(5)
+            .cornerRadius(10)
         }
         .padding(.horizontal)
         .padding(.bottom,8)
@@ -217,6 +219,7 @@ struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
         DashBoardView()
             .environmentObject(MainViewModel())
+            .previewIn(.fr)
 //            .previewLayout(.sizeThatFits)
     }
 }
