@@ -15,15 +15,17 @@ fileprivate enum DragState {
 
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
-
     @Environment(\.colorScheme) private var colorScheme
+    @AppStorage(UserDefaults.Keys.showWelcomeView)
+    private var showWelcomeView: Bool = true
+
     @State private var dragState: DragState = .closed
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
-    @AppStorage(UserDefaults.Keys.showWelcomeView)
-    private var showWelcomeView: Bool = true
-    
+    @State private var isSpeaking = false
+
+
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
     private var dragGesture: some Gesture {
@@ -118,6 +120,25 @@ struct DashBoardView: View {
                         }
                 }
                 PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
+
+
+                VStack {
+
+                    LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+                        .frame(width: 50, height: 50)
+                        .mask(
+                            Image(systemName: isSpeaking ? "waveform.circle.fill" : "mic.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                        )
+                        .scaleEffect(isSpeaking ? 1.3 : 1)
+                        .animation(.spring(), value: isSpeaking)
+                        .padding(.bottom, isSpeaking ? 70 : 60)
+                        .onTapGesture {
+                            isSpeaking.toggle()
+                        }
+                        .hidden()
+                }
             }
             .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
                 if showWelcomeView {
@@ -174,9 +195,11 @@ extension DashBoardView {
             HStack(spacing: 1) {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
 
-                Text(NSLocalizedString(checkCellularProvider.message, comment: ""))
+                Text(LocalizedStringKey(checkCellularProvider.message))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.leading)
             }
             .foregroundColor(checkCellularProvider.status ? .main : .red)
             .padding(.horizontal, 12)
@@ -189,44 +212,12 @@ extension DashBoardView {
     }
 }
 
-
+#if DEBUG
 struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
         DashBoardView()
             .environmentObject(MainViewModel())
 //            .previewLayout(.sizeThatFits)
-            .preferredColorScheme(.dark)
     }
 }
-
-struct DashItemView: View {
-    let title: LocalizedStringKey
-    let icon: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
-                .frame(width: 25, height: 25)
-                .mask(
-                    Image(systemName: icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                )
-            
-            Text(title)
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundColor(.secondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-        }
-        .padding(8)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 80)
-        .background(Color.primaryBackground)
-        .cornerRadius(15)
-        .contentShape(Rectangle())
-        .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
-        .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)
-
-    }
-}
+#endif

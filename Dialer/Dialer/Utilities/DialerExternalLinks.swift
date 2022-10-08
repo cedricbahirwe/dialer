@@ -9,6 +9,7 @@ import Foundation
 
 public typealias DialerlLinks = DialerExternalLinks
 public enum DialerExternalLinks {
+    public static let patreaonSupport = "https://patreon.com/cedricbahirwe?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator"
     public static let supportEmail = "abc.incs.001@gmail.com"
     public static let privacyLink  = "https://cedricbahirwe.github.io/html/privacy.html"
     public static let dialerTwitter = "https://twitter.com/TheDialerApp"

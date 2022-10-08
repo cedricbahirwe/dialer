@@ -43,6 +43,10 @@ struct PurchaseDetailView: View {
     
     var body: some View {
         VStack(spacing: 8) {
+            Capsule()
+                .fill(Color.gray)
+                .frame(width: 100, height: 15)
+            
             VStack(spacing: 15) {
                 
                 Text(validAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))

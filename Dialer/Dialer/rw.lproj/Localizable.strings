@@ -81,9 +81,13 @@
  
  
 // Parameters Options
+"Become my patron" = "Ube umutunzi wanjye";
+"Help me produce more apps, videos, and content." = "Mfasha gukora porogaramu nyinshi, videwo, n'ibirimo.";
 "Change Language" = "Guhindura ururimi";
 "Select your desired language." = "Hitamo ururimi mukunda gukoresha.";
- 
+
+"Biometric Authentication" = "kwemeza biometric";
+"For securing your activities on the app." = "kugirango ubone ibikorwa byawe kuri porogaramu";
 "Remove Pin" = "Gusiba umubare w’ ibanga";
 "You'll need to re-enter it later." = "Muraza gukenera kongera kuwinjiza nyuma.";
  

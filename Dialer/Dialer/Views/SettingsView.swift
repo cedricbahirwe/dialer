@@ -28,16 +28,14 @@ struct SettingsView: View {
                             SettingsRow(.changeLanguage, exists: false) {
                                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                             }
-                            
-                            SettingsRow(.biometrics, exists: false)
-                                .overlay(
-                                    Toggle("Biometrics", isOn: $allowBiometrics)
-                                        .toggleStyle(SwitchToggleStyle())
-                                        .labelsHidden()
-                                    , alignment: .trailing
-                                )
-                            
-                            
+
+                            HStack(spacing: 3) {
+                                SettingsRow(.biometrics, exists: false)
+                                Toggle("Biometrics", isOn: $allowBiometrics)
+                                    .toggleStyle(SwitchToggleStyle())
+                                    .labelsHidden()
+                            }
+
                             if dataStore.hasStoredPinCode {
                                 SettingsRow(.deletePin, perform: dataStore.removePin)
                             }
@@ -60,6 +58,10 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("Reach Out")) {
                         VStack {
+                            Link(destination: URL(string: DialerlLinks.patreaonSupport)!) {
+                                SettingsRow(.patreonSupport)
+                            }
+
                             SettingsRow(.contactUs, perform: openMail)
                                 .alert("No Email Client Found",
                                        isPresented: $showMailErrorAlert) {
@@ -175,7 +177,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
-//            .preferredColorScheme(.dark)
+        //            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {
@@ -226,8 +228,10 @@ extension SettingsView {
                     Text(item.subtitle)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.secondary)
+
                 }
-                .lineLimit(1)
+                .multilineTextAlignment(.leading)
+//                .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .padding(.leading, 15)
                 

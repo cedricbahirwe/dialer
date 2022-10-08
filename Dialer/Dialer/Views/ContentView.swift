@@ -17,6 +17,7 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $data.hasReachSync) {
             CongratulationsView(isPresented: $data.hasReachSync)
         }
+        .environment(\.locale, .init(identifier: "kin"))
     }
     
     private func setupAppearance() {
