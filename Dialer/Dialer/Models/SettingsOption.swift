@@ -18,14 +18,11 @@ public enum SettingsOption {
     case review
     case deletePin
     case deleteUSSDs
-    case patreonSupport
 //    case deleteRencentCodes
 //    case deleteElectricityMeters
         
     public func getSettingsItem() -> SettingsItem {
         switch self {
-        case .patreonSupport:
-            return .init(sysIcon: "heart.fill", color: .red, title: "Become my patron", subtitle: "Help me produce more apps, videos, and content.")
         case .changeLanguage:
             return .init(icon: "language", color: .main.opacity(0.7), title: "Change Language", subtitle: "Select your desired language.")
         case .biometrics:

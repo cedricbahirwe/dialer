@@ -58,10 +58,6 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("Reach Out")) {
                         VStack {
-                            Link(destination: URL(string: DialerlLinks.patreaonSupport)!) {
-                                SettingsRow(.patreonSupport)
-                            }
-
                             SettingsRow(.contactUs, perform: openMail)
                                 .alert("No Email Client Found",
                                        isPresented: $showMailErrorAlert) {
