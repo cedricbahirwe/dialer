@@ -117,7 +117,7 @@ struct SendingView: View {
         .padding()
         
         .sheet(isPresented: $showContactPicker) {
-            ContactsList(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+            ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .onAppear(perform: requestContacts)
