@@ -33,6 +33,9 @@ struct ContentView: View {
             NSAttributedString.Key.font:UIFont.init(descriptor: descriptor!, size: 17),
             NSAttributedString.Key.foregroundColor: UIColor.label
         ]
+
+        AppIntent.allowSiri()
+        AppIntent.balance() 
     }
 }
 

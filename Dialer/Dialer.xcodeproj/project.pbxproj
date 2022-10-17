@@ -41,6 +41,17 @@
 		82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsListView.swift */; };
 		82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCEC26C12E2500B1720A /* DialerTests.swift */; };
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
+		CB1C6A6B28FD6FD90005C901 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1C6A6A28FD6FD90005C901 /* Intents.framework */; };
+		CB1C6A6E28FD6FDA0005C901 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1C6A6D28FD6FDA0005C901 /* IntentHandler.swift */; };
+		CB1C6A7628FD6FDA0005C901 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1C6A7528FD6FDA0005C901 /* IntentsUI.framework */; };
+		CB1C6A7928FD6FDA0005C901 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1C6A7828FD6FDA0005C901 /* IntentViewController.swift */; };
+		CB1C6A7C28FD6FDA0005C901 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB1C6A7A28FD6FDA0005C901 /* MainInterface.storyboard */; };
+		CB1C6A8028FD6FDA0005C901 /* DialerIntentsUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CB1C6A7428FD6FDA0005C901 /* DialerIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CB1C6A8328FD6FDA0005C901 /* DialerIntents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CB1C6A6828FD6FD90005C901 /* DialerIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CB1C6A8C28FD702C0005C901 /* DialerDefaultIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CB1C6A8B28FD702C0005C901 /* DialerDefaultIntents.intentdefinition */; };
+		CB1C6A9028FD72670005C901 /* AirtimBalanceIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1C6A8F28FD72670005C901 /* AirtimBalanceIntentHandler.swift */; };
+		CB1C6A9128FD73A70005C901 /* DialerDefaultIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CB1C6A8B28FD702C0005C901 /* DialerDefaultIntents.intentdefinition */; };
+		CB1C6A9328FD74CA0005C901 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1C6A9228FD74CA0005C901 /* AppIntent.swift */; };
 		CB393A2728120A59009CA95E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2628120A59009CA95E /* String+Extension.swift */; };
 		CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2828120A73009CA95E /* Binding+Extension.swift */; };
 		CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */; };
@@ -73,6 +84,20 @@
 			remoteGlobalIDString = 82D41FB225D1C1FE00551D22;
 			remoteInfo = Dialer;
 		};
+		CB1C6A7E28FD6FDA0005C901 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82D41FAB25D1C1FE00551D22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB1C6A7328FD6FDA0005C901;
+			remoteInfo = DialerIntentsUI;
+		};
+		CB1C6A8128FD6FDA0005C901 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82D41FAB25D1C1FE00551D22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB1C6A6728FD6FD90005C901;
+			remoteInfo = DialerIntents;
+		};
 		CB544636289C5763009F3457 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 82D41FAB25D1C1FE00551D22 /* Project object */;
@@ -81,6 +106,21 @@
 			remoteInfo = Dialer;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB1C6A8428FD6FDA0005C901 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CB1C6A8028FD6FDA0005C901 /* DialerIntentsUI.appex in Embed Foundation Extensions */,
+				CB1C6A8328FD6FDA0005C901 /* DialerIntents.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
@@ -128,6 +168,18 @@
 		82EEBCEC26C12E2500B1720A /* DialerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTests.swift; sourceTree = "<group>"; };
 		82EEBCEE26C12E2500B1720A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		CB1C6A6828FD6FD90005C901 /* DialerIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DialerIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB1C6A6A28FD6FD90005C901 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		CB1C6A6D28FD6FDA0005C901 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		CB1C6A6F28FD6FDA0005C901 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB1C6A7428FD6FDA0005C901 /* DialerIntentsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DialerIntentsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB1C6A7528FD6FDA0005C901 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		CB1C6A7828FD6FDA0005C901 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		CB1C6A7B28FD6FDA0005C901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		CB1C6A7D28FD6FDA0005C901 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB1C6A8B28FD702C0005C901 /* DialerDefaultIntents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = DialerDefaultIntents.intentdefinition; sourceTree = "<group>"; };
+		CB1C6A8F28FD72670005C901 /* AirtimBalanceIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtimBalanceIntentHandler.swift; sourceTree = "<group>"; };
+		CB1C6A9228FD74CA0005C901 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		CB393A2628120A59009CA95E /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2828120A73009CA95E /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopiedUSSDLabel.swift; sourceTree = "<group>"; };
@@ -164,6 +216,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB1C6A6528FD6FD90005C901 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB1C6A6B28FD6FD90005C901 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB1C6A7128FD6FDA0005C901 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB1C6A7628FD6FDA0005C901 /* IntentsUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +301,9 @@
 				82D41FB525D1C1FE00551D22 /* Dialer */,
 				82EEBCEB26C12E2500B1720A /* DialerTests */,
 				CB544631289C5763009F3457 /* DialerUITests */,
+				CB1C6A6C28FD6FD90005C901 /* DialerIntents */,
+				CB1C6A7728FD6FDA0005C901 /* DialerIntentsUI */,
+				CB1C6A6928FD6FD90005C901 /* Frameworks */,
 				82D41FB425D1C1FE00551D22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -243,6 +314,8 @@
 				82D41FB325D1C1FE00551D22 /* Dialer.app */,
 				82EEBCEA26C12E2500B1720A /* DialerTests.xctest */,
 				CB544630289C5763009F3457 /* DialerUITests.xctest */,
+				CB1C6A6828FD6FD90005C901 /* DialerIntents.appex */,
+				CB1C6A7428FD6FDA0005C901 /* DialerIntentsUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -307,6 +380,7 @@
 				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
 				CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */,
 				CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */,
+				CB1C6A9228FD74CA0005C901 /* AppIntent.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -339,6 +413,36 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		CB1C6A6928FD6FD90005C901 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB1C6A6A28FD6FD90005C901 /* Intents.framework */,
+				CB1C6A7528FD6FDA0005C901 /* IntentsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB1C6A6C28FD6FD90005C901 /* DialerIntents */ = {
+			isa = PBXGroup;
+			children = (
+				CB1C6A6D28FD6FDA0005C901 /* IntentHandler.swift */,
+				CB1C6A8F28FD72670005C901 /* AirtimBalanceIntentHandler.swift */,
+				CB1C6A8B28FD702C0005C901 /* DialerDefaultIntents.intentdefinition */,
+				CB1C6A6F28FD6FDA0005C901 /* Info.plist */,
+			);
+			path = DialerIntents;
+			sourceTree = "<group>";
+		};
+		CB1C6A7728FD6FDA0005C901 /* DialerIntentsUI */ = {
+			isa = PBXGroup;
+			children = (
+				CB1C6A7828FD6FDA0005C901 /* IntentViewController.swift */,
+				CB1C6A7A28FD6FDA0005C901 /* MainInterface.storyboard */,
+				CB1C6A7D28FD6FDA0005C901 /* Info.plist */,
+			);
+			path = DialerIntentsUI;
+			sourceTree = "<group>";
+		};
 		CB544631289C5763009F3457 /* DialerUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,10 +462,13 @@
 				82D41FAF25D1C1FE00551D22 /* Sources */,
 				82D41FB025D1C1FE00551D22 /* Frameworks */,
 				82D41FB125D1C1FE00551D22 /* Resources */,
+				CB1C6A8428FD6FDA0005C901 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CB1C6A7F28FD6FDA0005C901 /* PBXTargetDependency */,
+				CB1C6A8228FD6FDA0005C901 /* PBXTargetDependency */,
 			);
 			name = Dialer;
 			productName = Dialer;
@@ -385,6 +492,40 @@
 			productName = DialerTests;
 			productReference = 82EEBCEA26C12E2500B1720A /* DialerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CB1C6A6728FD6FD90005C901 /* DialerIntents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB1C6A8A28FD6FDA0005C901 /* Build configuration list for PBXNativeTarget "DialerIntents" */;
+			buildPhases = (
+				CB1C6A6428FD6FD90005C901 /* Sources */,
+				CB1C6A6528FD6FD90005C901 /* Frameworks */,
+				CB1C6A6628FD6FD90005C901 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DialerIntents;
+			productName = DialerIntents;
+			productReference = CB1C6A6828FD6FD90005C901 /* DialerIntents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		CB1C6A7328FD6FDA0005C901 /* DialerIntentsUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB1C6A8928FD6FDA0005C901 /* Build configuration list for PBXNativeTarget "DialerIntentsUI" */;
+			buildPhases = (
+				CB1C6A7028FD6FDA0005C901 /* Sources */,
+				CB1C6A7128FD6FDA0005C901 /* Frameworks */,
+				CB1C6A7228FD6FDA0005C901 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DialerIntentsUI;
+			productName = DialerIntentsUI;
+			productReference = CB1C6A7428FD6FDA0005C901 /* DialerIntentsUI.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		CB54462F289C5763009F3457 /* DialerUITests */ = {
 			isa = PBXNativeTarget;
@@ -410,7 +551,7 @@
 		82D41FAB25D1C1FE00551D22 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					82D41FB225D1C1FE00551D22 = {
@@ -419,6 +560,12 @@
 					82EEBCE926C12E2500B1720A = {
 						CreatedOnToolsVersion = 12.5.1;
 						TestTargetID = 82D41FB225D1C1FE00551D22;
+					};
+					CB1C6A6728FD6FD90005C901 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					CB1C6A7328FD6FDA0005C901 = {
+						CreatedOnToolsVersion = 14.0;
 					};
 					CB54462F289C5763009F3457 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -444,6 +591,8 @@
 				82D41FB225D1C1FE00551D22 /* Dialer */,
 				82EEBCE926C12E2500B1720A /* DialerTests */,
 				CB54462F289C5763009F3457 /* DialerUITests */,
+				CB1C6A6728FD6FD90005C901 /* DialerIntents */,
+				CB1C6A7328FD6FDA0005C901 /* DialerIntentsUI */,
 			);
 		};
 /* End PBXProject section */
@@ -465,6 +614,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB1C6A6628FD6FD90005C901 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB1C6A7228FD6FDA0005C901 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB1C6A7C28FD6FDA0005C901 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +664,7 @@
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
 				CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */,
+				CB1C6A9328FD74CA0005C901 /* AppIntent.swift in Sources */,
 				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
 				CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */,
 				820C108E2766A52C00A7CADE /* ElectricityView.swift in Sources */,
@@ -523,6 +688,7 @@
 				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,
 				CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
+				CB1C6A9128FD73A70005C901 /* DialerDefaultIntents.intentdefinition in Sources */,
 				8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
 				CB45381628AB9C6500F3F24C /* MySpaceView.swift in Sources */,
@@ -538,6 +704,24 @@
 			files = (
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB1C6A6428FD6FD90005C901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB1C6A6E28FD6FDA0005C901 /* IntentHandler.swift in Sources */,
+				CB1C6A8C28FD702C0005C901 /* DialerDefaultIntents.intentdefinition in Sources */,
+				CB1C6A9028FD72670005C901 /* AirtimBalanceIntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB1C6A7028FD6FDA0005C901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB1C6A7928FD6FDA0005C901 /* IntentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,6 +741,16 @@
 			isa = PBXTargetDependency;
 			target = 82D41FB225D1C1FE00551D22 /* Dialer */;
 			targetProxy = 82EEBCEF26C12E2500B1720A /* PBXContainerItemProxy */;
+		};
+		CB1C6A7F28FD6FDA0005C901 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB1C6A7328FD6FDA0005C901 /* DialerIntentsUI */;
+			targetProxy = CB1C6A7E28FD6FDA0005C901 /* PBXContainerItemProxy */;
+		};
+		CB1C6A8228FD6FDA0005C901 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB1C6A6728FD6FD90005C901 /* DialerIntents */;
+			targetProxy = CB1C6A8128FD6FDA0005C901 /* PBXContainerItemProxy */;
 		};
 		CB544637289C5763009F3457 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -594,6 +788,14 @@
 				8276274327085AF700A5F4BC /* rw */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CB1C6A7A28FD6FDA0005C901 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB1C6A7B28FD6FDA0005C901 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -720,6 +922,7 @@
 		82D41FC825D1C1FF00551D22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dialer/Dialer.entitlements;
@@ -746,6 +949,7 @@
 		82D41FC925D1C1FF00551D22 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dialer/Dialer.entitlements;
@@ -808,6 +1012,118 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dialer.app/Dialer";
+			};
+			name = Release;
+		};
+		CB1C6A8528FD6FDA0005C901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DialerIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DialerIntents;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.DialerIntents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CB1C6A8628FD6FDA0005C901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DialerIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DialerIntents;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.DialerIntents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CB1C6A8728FD6FDA0005C901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DialerIntentsUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DialerIntentsUI;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.DialerIntentsUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CB1C6A8828FD6FDA0005C901 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DialerIntentsUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DialerIntentsUI;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.DialerIntentsUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -875,6 +1191,24 @@
 			buildConfigurations = (
 				82EEBCF226C12E2500B1720A /* Debug */,
 				82EEBCF326C12E2500B1720A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB1C6A8928FD6FDA0005C901 /* Build configuration list for PBXNativeTarget "DialerIntentsUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB1C6A8728FD6FDA0005C901 /* Debug */,
+				CB1C6A8828FD6FDA0005C901 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB1C6A8A28FD6FDA0005C901 /* Build configuration list for PBXNativeTarget "DialerIntents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB1C6A8528FD6FDA0005C901 /* Debug */,
+				CB1C6A8628FD6FDA0005C901 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
