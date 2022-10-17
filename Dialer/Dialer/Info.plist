@@ -30,6 +30,12 @@
 	<string>Dial It needs access to your contacts to help you pick the contact you want to transfer money.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID or Touch ID to access this feature.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Dial It needs access to Siri to provides shortcuts experience</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>BalanceIntent</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
