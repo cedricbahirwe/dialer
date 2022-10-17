@@ -38,7 +38,7 @@
 		82D41FC325D1C1FF00551D22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */; };
 		82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */; };
 		82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */; };
-		82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsList.swift */; };
+		82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsListView.swift */; };
 		82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCEC26C12E2500B1720A /* DialerTests.swift */; };
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
 		CB393A2728120A59009CA95E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2628120A59009CA95E /* String+Extension.swift */; };
@@ -123,7 +123,7 @@
 		82D41FC425D1C1FF00551D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCarrierDetector.swift; sourceTree = "<group>"; };
 		82D7C1A6266D26E7003E0E0E /* Views+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views+Extension.swift"; sourceTree = "<group>"; };
-		82E8E63A2676A7B300AB1723 /* ContactsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsList.swift; sourceTree = "<group>"; };
+		82E8E63A2676A7B300AB1723 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
 		82EEBCEA26C12E2500B1720A /* DialerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EEBCEC26C12E2500B1720A /* DialerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTests.swift; sourceTree = "<group>"; };
 		82EEBCEE26C12E2500B1720A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
-				82E8E63A2676A7B300AB1723 /* ContactsList.swift */,
+				82E8E63A2676A7B300AB1723 /* ContactsListView.swift */,
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				CBC262BE2784C7D3000B8E0E /* MailView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
@@ -486,7 +486,7 @@
 				CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */,
 				CBC262C42784D233000B8E0E /* RecentDialCode.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
-				82E8E63B2676A7B300AB1723 /* ContactsList.swift in Sources */,
+				82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
@@ -734,7 +734,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.3;
+				MARKETING_VERSION = 4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -760,7 +760,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.3;
+				MARKETING_VERSION = 4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

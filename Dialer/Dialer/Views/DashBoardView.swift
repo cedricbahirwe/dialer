@@ -22,7 +22,7 @@ struct DashBoardView: View {
     @State private var dragState: DragState = .closed
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
-    @State private var showPurchaseSheet = true
+    @State private var showPurchaseSheet = false
     @State private var isSpeaking = false
 
 

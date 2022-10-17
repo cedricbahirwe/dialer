@@ -81,8 +81,6 @@
  
  
 // Parameters Options
-"Become my patron" = "Ube umutunzi wanjye";
-"Help me produce more apps, videos, and content." = "Mfasha gukora porogaramu nyinshi, videwo, n'ibirimo.";
 "Change Language" = "Guhindura ururimi";
 "Select your desired language." = "Hitamo ururimi mukunda gukoresha.";
 
@@ -94,7 +92,7 @@
 "Just getting started?" = "Muri bashya kuri Dial It?";
 "Read our quick start blog post." = "Musome itangazo rigufi ryo gutangira twashizeho.";
  
-"Contact Us" = "Kuduhamagara";
+"Contact Us" = "Twandikire";
 "Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";
  
 "Twandikire kuri Twitter" = "Tweet Us";

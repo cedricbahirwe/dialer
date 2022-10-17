@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-struct ContactsList: View {
+struct ContactsListView: View {
     @Binding var allContacts: [Contact]
     @Binding var selectedContact: Contact
     
     @State private var searchQuery: String = ""
     @State private var isEditing = false
     @State private var showNumberSelection: Bool = false
-    @Environment(\.presentationMode)
-    private var presentationMode
+    @Environment(\.dismiss)
+    private var dismiss
     
     private var resultedContacts: [Contact] {
         let contacts = allContacts.sorted(by: { $0.names < $1.names })
@@ -71,7 +71,7 @@ struct ContactsList: View {
     private func manageContact(_ contact: Contact) {
         selectedContact = contact
         if contact.phoneNumbers.count == 1 {
-            presentationMode.wrappedValue.dismiss()
+            dismiss()
         } else {
             showNumberSelection.toggle()
         }
@@ -79,11 +79,11 @@ struct ContactsList: View {
     
     private func managePhoneNumber(_ phone: String) {
         selectedContact.updatePhones([phone])
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 
-private extension ContactsList {
+private extension ContactsListView {
     var searchBarView: some View {
         HStack {
             HStack(spacing: 2) {
@@ -142,7 +142,7 @@ struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
-            ContactsList(contacts: .constant([.example, .example, .example1, .example, .example]),
+            ContactsListView(contacts: .constant([.example, .example, .example1, .example, .example]),
                          selection: .constant(.example))
             ContactRowView(contact: .example)
                 .padding()
