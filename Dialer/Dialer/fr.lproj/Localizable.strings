@@ -132,6 +132,7 @@
 "Version information." = "Information sur la version.";
 
 "Let us know how we are doing." = "Dites-nous comment nous faisons.";
+"Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Voulez-vous vraiment supprimer votre code PIN ?.\nVous devrez le saisir à nouveau manuellement ultérieurement.";
 
 // Commons
 "Airtime" = "Unités";
