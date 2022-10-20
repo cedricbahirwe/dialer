@@ -23,9 +23,7 @@
 - **Management of Local DataBase in SwiftUI**
 - **Light / Dark Mode Support**
 
-## Special Thanks:
-
-1. [Esther Carelle](https://github.com/esthcarelle) for her feedback.
+## Screenshots
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
