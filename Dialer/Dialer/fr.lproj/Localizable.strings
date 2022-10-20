@@ -132,6 +132,8 @@
 "Version information." = "Information sur la version.";
 
 "Let us know how we are doing." = "Dites-nous comment nous faisons.";
+"Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Voulez-vous vraiment supprimer votre code PIN ?.\nVous devrez le saisir à nouveau manuellement ultérieurement.";
+"Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Voulez-vous vraiment supprimer vos codes USSD enregistrés ?\nCette action est irréversible.";
 
 // Commons
 "Airtime" = "Unités";
@@ -142,3 +144,5 @@
 "Colophon" = "Colophon";
 "Transfer/Pay" = "Envoyer/Payer";
 "Buy Electricity" = "Acheter de l'électricité";
+"Delete" = "Supprimer";
+"Confirmation" = "Confirmation";

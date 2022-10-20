@@ -91,6 +91,7 @@
  
 "Just getting started?" = "Muri bashya kuri Dial It?";
 "Read our quick start blog post." = "Musome itangazo rigufi ryo gutangira twashizeho.";
+"Delete All USSD codes" = "Siba kode zose za USSD";
  
 "Contact Us" = "Twandikire";
 "Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";
@@ -103,3 +104,9 @@
 "Version information." = "Amakuru kuri verisiyo.";
  
 "Let us know how we are doing." = "Mutumenyeshe uburyo dukora.";
+"Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Urashaka rwose gukuramo pin yawe ?.\nUzakenera kongera kuyinjiramo intoki nyuma.";
+"Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Urashaka rwose gukuraho code yawe ya USSD wabitswe? \ NIki gikorwa ntigishobora gusubirwaho.";
+
+// Commons
+"Delete" = "Gusiba";
+"Confirmation" = "Kwemeza";

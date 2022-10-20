@@ -41,6 +41,7 @@
 		82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsListView.swift */; };
 		82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCEC26C12E2500B1720A /* DialerTests.swift */; };
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
+		CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */; };
 		CB393A2728120A59009CA95E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2628120A59009CA95E /* String+Extension.swift */; };
 		CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2828120A73009CA95E /* Binding+Extension.swift */; };
 		CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */; };
@@ -128,6 +129,7 @@
 		82EEBCEC26C12E2500B1720A /* DialerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTests.swift; sourceTree = "<group>"; };
 		82EEBCEE26C12E2500B1720A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		CB393A2628120A59009CA95E /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2828120A73009CA95E /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopiedUSSDLabel.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				8248440C26FDBB3200DB0643 /* SettingsOption.swift */,
 				CBAF13162785A34800D32E1F /* ElectricityMeter.swift */,
 				CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */,
+				CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */,
 				CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */,
+				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,

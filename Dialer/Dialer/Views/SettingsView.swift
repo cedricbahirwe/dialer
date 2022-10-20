@@ -9,15 +9,15 @@ import SwiftUI
 import MessageUI
 
 struct SettingsView: View {
-    @EnvironmentObject
-    private var dataStore: MainViewModel
+    @EnvironmentObject var dataStore: MainViewModel
     
     @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
-    @State private
-    var showMailErrorAlert = false
-    
     @State var showMailView = false
+    @State var showMailErrorAlert = false
+    @State var alertItem: AlertDialog?
+    @State var showDialog = false
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -37,16 +37,37 @@ struct SettingsView: View {
                             }
 
                             if dataStore.hasStoredPinCode {
-                                SettingsRow(.deletePin, perform: dataStore.removePin)
+                                SettingsRow(.deletePin,
+                                            action: presentPinRemovalSheet)
                             }
 
                             if !dataStore.ussdCodes.isEmpty {
-                                SettingsRow(.deleteUSSDs, perform: dataStore.removeAllUSSDs)
+                                SettingsRow(.deleteUSSDs,
+                                            action: presentUSSDsRemovalSheet)
                             }
                         }
                         .padding(.bottom, 20)
                     }
-                    
+                    .confirmationDialog("Confirmation",
+                                        isPresented: $showDialog,
+                                        titleVisibility: .visible,
+                                        presenting: alertItem) { item in
+
+                        Button("Delete",
+                               role: .destructive,
+                               action: item.action)
+
+                        Button("Cancel",
+                               role: .cancel) {
+                            alertItem = nil
+                        }
+                    } message: { item in
+                        VStack {
+                            Text(item.message)
+                            Text(item.title ?? "asfa")
+                        }
+                    }
+
 //                    Section(header: sectionHeader("Tips and Guides")){
 //                        VStack {
 //                            HStack(spacing: 0) {
@@ -58,7 +79,7 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("Reach Out")) {
                         VStack {
-                            SettingsRow(.contactUs, perform: openMail)
+                            SettingsRow(.contactUs, action: openMail)
                                 .alert("No Email Client Found",
                                        isPresented: $showMailErrorAlert) {
                                     Button("OK", role: .cancel) { }
@@ -75,7 +96,7 @@ struct SettingsView: View {
                                 SettingsRow(.tweetUs)
                             }
                             
-                            SettingsRow(.translationSuggestion, perform: openMail)
+                            SettingsRow(.translationSuggestion, action: openMail)
                             
                         }
                         .padding(.bottom, 20)
@@ -87,7 +108,7 @@ struct SettingsView: View {
                                 SettingsRow(.about)
                             }
                             
-                            SettingsRow(.review, perform: ReviewHandler.requestReviewManually)
+                            SettingsRow(.review, action: ReviewHandler.requestReviewManually)
                         }
                         .padding(.bottom, 20)
                     }
@@ -122,6 +143,20 @@ struct SettingsView: View {
             }
         }
     }
+
+    private func presentPinRemovalSheet() {
+        alertItem = .init("Confirmation",
+                          message: "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later.",
+                          action: dataStore.removePin)
+        showDialog.toggle()
+    }
+
+    private func presentUSSDsRemovalSheet() {
+        alertItem = .init("Confirmation",
+                          message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
+                          action: dataStore.removeAllUSSDs)
+        showDialog.toggle()
+    }
     
     
     private func getEmailBody() -> String {
@@ -141,6 +176,7 @@ struct SettingsView: View {
         }
         return body
     }
+
     private func copyEmail() {
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = DialerlLinks.dialerTwitter
@@ -182,7 +218,7 @@ extension SettingsView {
         
         init(_ option: SettingsOption,
              exists: Bool = true,
-             perform action: @escaping () -> Void) {
+             action: @escaping () -> Void) {
             self.item = option.getSettingsItem()
             self.exists = exists
             self.action = action
@@ -199,15 +235,13 @@ extension SettingsView {
         
         var body: some View {
             if let action = action {
-                Button(action: action, label: {
-                    contenView
-                })
+                Button(action: action) { contentView }
             } else {
-                contenView
+                contentView
             }
         }
         
-        var contenView: some View {
+        var contentView: some View {
             HStack(spacing: 0) {
                 item.icon
                     .resizable()
@@ -227,7 +261,6 @@ extension SettingsView {
 
                 }
                 .multilineTextAlignment(.leading)
-//                .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .padding(.leading, 15)
                 
