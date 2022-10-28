@@ -224,7 +224,9 @@ class MainViewModel: ObservableObject {
             if strongSelf.showSettingsSheet {
                 strongSelf.showSettingsSheet = value
             } else {
-                strongSelf.showHistorySheet = value
+                DispatchQueue.main.async {
+                    strongSelf.showHistorySheet = value
+                }
             }
         }
         let getter = showSettingsSheet ? showSettingsSheet : showHistorySheet

@@ -15,24 +15,22 @@ struct MTNDisabling: ViewModifier {
 }
 
 struct BiometricsAccessibility: ViewModifier {
-    @StateObject private var biometrics = BiometricAuthenticator.shared
-    @Binding var isEvaluated: Bool
+    private let biometrics = BiometricsAuth.shared
+    var onEvaluation: (Bool) -> Void
     @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
     
     func body(content: Content) -> some View {
         content
-            .onTapGesture(perform: manageTapGesture)
-            .onChange(of: biometrics.state, perform: setState)
+            .onTapGesture(perform: manageBiometrics)
     }
     
-    private func manageTapGesture() {
+    private func manageBiometrics() {
         if allowBiometrics {
-            biometrics.changeLoginState()
-        } else { isEvaluated = true }
-    }
-    private func setState(state: BiometricAuthenticator.AuthenticationState) {
-        isEvaluated = state == .loggedin
+            biometrics.onStateChanged(onEvaluation)
+        } else {
+            onEvaluation(true)
+        }
     }
 }
 #if DEBUG
@@ -53,9 +51,9 @@ struct LanguagePreview: ViewModifier {
 #endif
 
 extension View {
-    /// Whether or not biometrics is turned on
-    func onChangeBiometrics(isActive: Binding<Bool>) -> some View {
-        ModifiedContent(content: self, modifier: BiometricsAccessibility(isEvaluated: isActive))
+    /// Handle  Tap Gesture for Biometrics Evaluation
+    func onTapForBiometrics(onEvaluation: @escaping(Bool) -> Void) -> some View {
+        ModifiedContent(content: self, modifier: BiometricsAccessibility(onEvaluation: onEvaluation))
     }
     
     /// Disable access if `Mtn` sim card is not detected

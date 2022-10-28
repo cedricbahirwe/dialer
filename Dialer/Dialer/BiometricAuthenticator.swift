@@ -7,19 +7,15 @@
 
 import LocalAuthentication
 
-class BiometricAuthenticator: ObservableObject {
+typealias BiometricsAuth = BiometricAuthenticator
+final class BiometricAuthenticator {
     /// An authentication context stored at class scope so it's available for use during UI updates.
-    var context = LAContext()
+    private var context = LAContext()
 
     static var shared = BiometricAuthenticator()
 
-    /// The available states of being logged in or not.
-    enum AuthenticationState {
-        case loggedin, loggedout
-    }
-
     /// The current authentication state.
-    @Published var state = AuthenticationState.loggedout
+    //    @Published var state = AuthenticationState.loggedout
 
     private init() {
         // The biometryType, which affects this app's UI when state changes, is only meaningful
@@ -28,58 +24,39 @@ class BiometricAuthenticator: ObservableObject {
         //  method, which is triggered as a result of the state change made in the callback),
         //  because that might result in deadlock.
         context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
-
-
-        // Set the initial app state. This impacts the initial state of the UI as well.
-        state = .loggedout
     }
 
+    /// Observe biometrics authentication changes
+    public func onStateChanged(_ completion: @escaping (Bool) -> Void) {
+        // Get a fresh context for each login. If you use the same context on multiple attempts
+        //  (by commenting out the next line), then a previously successful authentication
+        //  causes the next policy evaluation to succeed without testing biometry again.
+        //  That's usually not what you want.
+        context = LAContext()
 
-    /// Logs out or attempts to log in.
-    public func changeLoginState() {
-        if state == .loggedin {
-            // Log out immediately.
-            state = .loggedout
-            changeLoginState()
+        // First check if we have the needed hardware support.
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
 
-        } else {
-
-            // Get a fresh context for each login. If you use the same context on multiple attempts
-            //  (by commenting out the next line), then a previously successful authentication
-            //  causes the next policy evaluation to succeed without testing biometry again.
-            //  That's usually not what you want.
-            context = LAContext()
-
-//            context.localizedCancelTitle = "Enter Username/Password"
-
-            // First check if we have the needed hardware support.
-            var error: NSError?
-            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-
-                let reason = "Authenticate to access this feature."
-                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
-
-                    if success {
-
-                        // Move to the main thread because a state update triggers UI changes.
-                        DispatchQueue.main.async { [unowned self] in
-                            self.state = .loggedin
-                        }
-
-                    } else {
-                        print(error?.localizedDescription ?? "Failed to authenticate")
-
-                        // Fall back to a asking for username and password.
-                        // ...
+            let reason = "Authenticate to access this feature."
+            context.evaluatePolicy(.deviceOwnerAuthentication,
+                                   localizedReason: reason) { success, error in
+                if success {
+                    // Move to the main thread because a state update triggers UI changes.
+                    DispatchQueue.main.async {
+                        completion(true)
+                        return
                     }
+                } else {
+                    print(error?.localizedDescription ?? "Failed to authenticate")
+                    completion(false)
+                    return
                 }
-            } else {
-                print(error?.localizedDescription ?? "Can't evaluate policy")
-
-                // Fall back to a asking for username and password.
-                // ...
             }
+        } else {
+            print(error?.localizedDescription ?? "Can't evaluate policy")
+            completion(false)
+            return
         }
     }
 }
-
