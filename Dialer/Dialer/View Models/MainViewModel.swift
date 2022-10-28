@@ -13,7 +13,7 @@ protocol UtilitiesDelegate {
 }
 class MainViewModel: ObservableObject {
     
-    @Published var pinCode: Int? = DialerStorage.shared.getPinCode()
+    @Published var pinCode: CodePin? = DialerStorage.shared.getCodePin()
     @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
         didSet(newValue) {
             if newValue == false {
@@ -23,9 +23,6 @@ class MainViewModel: ObservableObject {
     }
 
     var utilityDelegate: UtilitiesDelegate?
-    public var hasStoredPinCode: Bool {
-        DialerStorage.shared.hasPinCode
-    }
     
     // Present a sheet contains all dialed code
     @Published var showHistorySheet: Bool = false
@@ -77,6 +74,11 @@ class MainViewModel: ObservableObject {
         DialerStorage.shared.removePinCode()
         pinCode = nil
     }
+
+    /// Has user saved Code Pin
+    public func hasStoredCodePin() -> Bool {
+        DialerStorage.shared.hasSavedCodePin()
+    }
     
     /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
@@ -112,14 +114,14 @@ class MainViewModel: ObservableObject {
         saveMeterNumbersLocally()
     }
     
-    /// Save locally the Pin Code
+    /// Save locally the Code Pin
     /// - Parameter value: the pin value to be saved.
-    public func savePinCode(value: Int) {
-        if String(value).count == 5 {
-            pinCode = value
-            DialerStorage.shared.savePinCode(value)
-        } else {
-            print("Well, we can't save that pin")
+    public func saveCodePin(_ value: CodePin) {
+        pinCode = value
+        do {
+            try DialerStorage.shared.saveCodePin(value)
+        } catch {
+            print("Storage: \(error.localizedDescription)")
         }
     }
     
