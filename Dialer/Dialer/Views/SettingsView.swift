@@ -36,7 +36,7 @@ struct SettingsView: View {
                                     .labelsHidden()
                             }
 
-                            if dataStore.hasStoredPinCode {
+                            if dataStore.hasStoredCodePin() {
                                 SettingsRow(.deletePin,
                                             action: presentPinRemovalSheet)
                             }

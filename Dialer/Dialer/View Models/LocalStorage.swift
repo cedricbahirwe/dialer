@@ -7,7 +7,6 @@
 
 import Foundation
 
-#warning("Needs migration")
 final class DialerStorage {
     typealias RecentCodes = [RecentDialCode]
     typealias ElectricityMeters = [ElectricityMeter]
@@ -20,21 +19,25 @@ final class DialerStorage {
     static let shared = DialerStorage()
     
     private init() { }
-    
-    var hasPinCode: Bool {
-        userDefaults.integer(forKey: LocalKeys.pinCode) != 0
-    }
-    
-    func saveCodePin(_ value: CodePin) {
-        userDefaults.setValue(value, forKey: LocalKeys.pinCode)
+
+    func saveCodePin(_ value: CodePin) throws {
+        let data = try encodeData(value)
+        userDefaults.setValue(data, forKey: LocalKeys.pinCode)
     }
     
     func getCodePin() -> CodePin? {
-        print("I think of", userDefaults.value(forKey: LocalKeys.pinCode) as? String)
-        return nil
-//        return userDefaults.value(forKey: LocalKeys.pinCode) as? String
+        // Handle Migration
+        if let code = userDefaults.value(forKey: LocalKeys.pinCode) as? Int {
+            return try? CodePin(code)
+        } else {
+            return decodeData(key: LocalKeys.pinCode, as: CodePin.self)
+        }
     }
-    
+
+    func hasSavedCodePin() -> Bool {
+        getCodePin() != nil
+    }
+
     func removePinCode() {
         userDefaults.removeObject(forKey: LocalKeys.pinCode)
     }
@@ -99,6 +102,18 @@ final class DialerStorage {
 private extension  DialerStorage {
     func encodeData<T>(_ value: T) throws -> Data where T: Codable {
         return try JSONEncoder().encode(value)
+    }
+
+    func decodeData<T: Decodable>(key: String, as type: T.Type) -> T? {
+        guard let data = userDefaults.object(forKey: key) as? Data else {
+            return nil
+        }
+        do {
+            return  try JSONDecoder().decode(type, from: data)
+        } catch let error {
+            print("Couldn't decode the data of type \(type): ", error.localizedDescription)
+        }
+        return nil
     }
 
     func decodeDatasArray<T: Codable>(key: String, type:  Array<T>.Type) -> [T] {

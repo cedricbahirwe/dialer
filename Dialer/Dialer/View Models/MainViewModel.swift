@@ -23,9 +23,6 @@ class MainViewModel: ObservableObject {
     }
 
     var utilityDelegate: UtilitiesDelegate?
-    public var hasStoredPinCode: Bool {
-        DialerStorage.shared.hasPinCode
-    }
     
     // Present a sheet contains all dialed code
     @Published var showHistorySheet: Bool = false
@@ -77,6 +74,11 @@ class MainViewModel: ObservableObject {
         DialerStorage.shared.removePinCode()
         pinCode = nil
     }
+
+    /// Has user saved Code Pin
+    public func hasStoredCodePin() -> Bool {
+        DialerStorage.shared.hasSavedCodePin()
+    }
     
     /// Retrieve all locally stored recent codes.
     public func retrieveCodes() {
@@ -116,7 +118,11 @@ class MainViewModel: ObservableObject {
     /// - Parameter value: the pin value to be saved.
     public func saveCodePin(_ value: CodePin) {
         pinCode = value
-        DialerStorage.shared.saveCodePin(value)
+        do {
+            try DialerStorage.shared.saveCodePin(value)
+        } catch {
+            print("Storage: \(error.localizedDescription)")
+        }
     }
     
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.

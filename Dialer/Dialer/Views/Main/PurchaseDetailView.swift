@@ -73,10 +73,10 @@ struct PurchaseDetailView: View {
                         }
                     }
                 
-                if !data.hasStoredPinCode {
+                if !data.hasStoredCodePin() {
                     VStack(spacing: 2) {
                         Text(
-                            NSLocalizedString(data.pinCode != nil ? data.pinCode!.description : "Enter Pin",
+                            NSLocalizedString(codepin.isEmpty ? "Enter Pin" : codepin.description,
                                               comment: "")
                             )
                             .frame(maxWidth: .infinity)

@@ -57,25 +57,25 @@ struct PinView_Previews: PreviewProvider {
     }
 }
 
-struct CircleButton: View {
-    
-    let title: String
-    let size: CGFloat
-    let action: () -> Void
+extension PinView {
+    struct CircleButton: View {
+        let title: String
+        let size: CGFloat
+        let action: () -> Void
 
-    
-    init(_ title: String, size: CGFloat, action: @escaping () -> Void) {
-        self.title = title
-        self.size = size
-        self.action = action
-    }
-    
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-                .frame(width: size, height: size)
-                .background(Color.gray.opacity(0.2))
-                .clipShape(Circle())
+        init(_ title: String, size: CGFloat, action: @escaping () -> Void) {
+            self.title = title
+            self.size = size
+            self.action = action
+        }
+
+        var body: some View {
+            Button(action: action) {
+                Text(title)
+                    .frame(width: size, height: size)
+                    .background(Color.gray.opacity(0.2))
+                    .clipShape(Circle())
+            }
         }
     }
 }
