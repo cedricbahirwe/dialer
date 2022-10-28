@@ -8,8 +8,8 @@
 import Foundation
 
 enum DialerQuickCode {
-    case mobileWalletBalance(code: Int?)
-    case electricity(meter: String, amount: Int, code: Int?)
+    case mobileWalletBalance(code: CodePin?)
+    case electricity(meter: String, amount: Int, code: CodePin?)
     case other(String)
 
     var ussd: String {
@@ -23,8 +23,8 @@ enum DialerQuickCode {
         }
     }
 
-    private func codeSuffix(_ code: Int?) -> String {
-        return code == nil ? "#" : "*\(code!)#"
+    private func codeSuffix(_ code: CodePin?) -> String {
+        if let code { return "*\(code.asDigits)#"  }
+        return "#"
     }
-
 }

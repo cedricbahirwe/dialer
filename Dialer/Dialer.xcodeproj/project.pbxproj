@@ -64,6 +64,10 @@
 		CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */; };
 		CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */; };
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
+		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
+		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
+		CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
+		CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +156,8 @@
 		CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerExternalLinks.swift; sourceTree = "<group>"; };
 		CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashItemView.swift; sourceTree = "<group>"; };
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
+		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
+		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +232,7 @@
 				CBAF13162785A34800D32E1F /* ElectricityMeter.swift */,
 				CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */,
 				CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */,
+				CBE3D8A6290C147300DF5C09 /* CodePin.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -296,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				82EEBCEC26C12E2500B1720A /* DialerTests.swift */,
+				CBE3D8A8290C165A00DF5C09 /* Test Cases */,
 				82EEBCEE26C12E2500B1720A /* Info.plist */,
 			);
 			path = DialerTests;
@@ -349,6 +357,14 @@
 				CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */,
 			);
 			path = DialerUITests;
+			sourceTree = "<group>";
+		};
+		CBE3D8A8290C165A00DF5C09 /* Test Cases */ = {
+			isa = PBXGroup;
+			children = (
+				CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */,
+			);
+			path = "Test Cases";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -513,6 +529,7 @@
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */,
+				CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */,
 				8255E691269395EE00657EFB /* CongratsViewController.swift in Sources */,
 				CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */,
 				CBAF13172785A34800D32E1F /* ElectricityMeter.swift in Sources */,
@@ -540,7 +557,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */,
+				CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */,
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
+				CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */,
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -738,7 +758,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.4;
+				MARKETING_VERSION = 4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -764,7 +784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.4;
+				MARKETING_VERSION = 4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

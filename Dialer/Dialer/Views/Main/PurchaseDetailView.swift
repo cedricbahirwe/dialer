@@ -102,8 +102,9 @@ struct PurchaseDetailView: View {
                             }
                             .overlay(
                                 Button(action: {
-                                    data.savePinCode(value: Int(codepin)!)
-                                    codepin = ""
+                                    guard let codepin = try? CodePin(codepin) else { return }
+                                    data.saveCodePin(codepin)
+                                    self.codepin = ""
                                 }){
                                     Text("Save")
                                         .font(.caption)
@@ -166,7 +167,7 @@ struct PurchaseDetailView: View {
                 }
             }
             
-            PinView(input: storeInput())
+            PinView(input: inputBinding())
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .padding(.bottom, 20)
         }
@@ -212,13 +213,17 @@ struct PurchaseDetailView: View {
     }
     private func filterPin(_ value: String) {
         codepin = String(value.prefix(5))
-        data.pinCode = Int(codepin)
+        data.pinCode = try? CodePin(codepin)
     }
     
-    private func storeInput() -> Binding<String>{
+    private func inputBinding() -> Binding<String> {
         switch editedField {
         case .amount:
-            return $data.purchaseDetail.amount.stringBind
+            return Binding {
+                String(data.purchaseDetail.amount)
+            } set: {
+                data.purchaseDetail.amount = Int($0) ?? 0
+            }
         case .code:
             return $codepin.onChange(filterPin)
         }

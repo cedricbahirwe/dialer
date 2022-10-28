@@ -13,7 +13,7 @@ protocol UtilitiesDelegate {
 }
 class MainViewModel: ObservableObject {
     
-    @Published var pinCode: Int? = DialerStorage.shared.getPinCode()
+    @Published var pinCode: CodePin? = DialerStorage.shared.getCodePin()
     @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
         didSet(newValue) {
             if newValue == false {
@@ -112,15 +112,11 @@ class MainViewModel: ObservableObject {
         saveMeterNumbersLocally()
     }
     
-    /// Save locally the Pin Code
+    /// Save locally the Code Pin
     /// - Parameter value: the pin value to be saved.
-    public func savePinCode(value: Int) {
-        if String(value).count == 5 {
-            pinCode = value
-            DialerStorage.shared.savePinCode(value)
-        } else {
-            print("Well, we can't save that pin")
-        }
+    public func saveCodePin(_ value: CodePin) {
+        pinCode = value
+        DialerStorage.shared.saveCodePin(value)
     }
     
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.

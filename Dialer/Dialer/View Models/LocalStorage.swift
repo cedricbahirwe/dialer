@@ -7,6 +7,7 @@
 
 import Foundation
 
+#warning("Needs migration")
 final class DialerStorage {
     typealias RecentCodes = [RecentDialCode]
     typealias ElectricityMeters = [ElectricityMeter]
@@ -24,13 +25,14 @@ final class DialerStorage {
         userDefaults.integer(forKey: LocalKeys.pinCode) != 0
     }
     
-    func savePinCode(_ value: Int) {
+    func saveCodePin(_ value: CodePin) {
         userDefaults.setValue(value, forKey: LocalKeys.pinCode)
     }
     
-    func getPinCode() -> Int? {
-        userDefaults.value(forKey: LocalKeys.pinCode) as? Int
-
+    func getCodePin() -> CodePin? {
+        print("I think of", userDefaults.value(forKey: LocalKeys.pinCode) as? String)
+        return nil
+//        return userDefaults.value(forKey: LocalKeys.pinCode) as? String
     }
     
     func removePinCode() {

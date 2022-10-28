@@ -51,14 +51,6 @@ struct PinView: View {
     }
 }
 
-extension Int {
-    var stringBind: String {
-        get { String(self) }
-        set(value) { self = Int(value) ?? 0 }
-    }
-}
-
-
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
         PinView(input: .constant("*182#"))
