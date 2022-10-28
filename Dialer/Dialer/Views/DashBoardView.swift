@@ -16,15 +16,17 @@ fileprivate enum DragState {
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @Environment(\.colorScheme) private var colorScheme
+
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
+    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    private var allowBiometrics = false
 
     @State private var dragState: DragState = .closed
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
     @State private var isSpeaking = false
-
 
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
@@ -44,7 +46,6 @@ struct DashBoardView: View {
     }
     
     var body: some View {
-
             ZStack(alignment: .bottom) {
                 VStack {
                     VStack(spacing: 29) {
@@ -62,7 +63,9 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "Transfer/Pay",
                                 icon: "paperplane.circle")
-                                .onChangeBiometrics(isActive: $presentSendingView)
+                            .onTapForBiometrics {
+                                presentSendingView = $0
+                            }
                         }
                         
                         HStack(spacing: 15) {
@@ -158,7 +161,16 @@ struct DashBoardView: View {
             .navigationTitle("Dial It")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: data.showSettingsView) { gearGradient }
+                    if allowBiometrics {
+                        gearGradient
+                            .onTapForBiometrics {
+                                if $0 {
+                                    data.showSettingsView()
+                                }
+                            }
+                    } else {
+                        Button(action: data.showSettingsView) { gearGradient }
+                    }
                 }
             }
     }
