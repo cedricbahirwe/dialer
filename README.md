@@ -27,15 +27,15 @@
 
 Home Light                 |  Home Dark
 :-------------------------:|:-------------------------:
-![](light.png)  |  ![](dark.png)
+![](../Shots/light.png)  |  ![](../Shots/dark.png)
 
 Transfer                    |  Settings
 :-------------------------:|:-------------------------:
-![](send.png)  |  ![](settings.png)
+![](../Shots/send.png)  |  ![](../Shots/settings.png)
 
 Utilities                  |  Electricity Payment
 :-------------------------:|:-------------------------:
-![](utilities.png)  |  ![](electricity.png)
+![](../Shots/utilities.png)  |  ![](../Shots/electricity.png)
 ## ✨ Upcoming features:
 
 * ### Good Local Storage (Core Data)
