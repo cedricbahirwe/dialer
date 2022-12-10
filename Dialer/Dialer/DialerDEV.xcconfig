@@ -1,0 +1,11 @@
+//
+//  DialerDEV.xcconfig
+//  Dialer
+//
+//  Created by Cédric Bahirwe on 10/12/2022.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+DIALER_APP_NAME = Dialer DEV
