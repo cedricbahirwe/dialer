@@ -6,6 +6,6 @@
   
 */
 
-"CFBundleDisplayName" = "Dial It";
+"CFBundleDisplayName" = "Dialer";
 
-"NSContactsUsageDescription" = "Dial It a besoin d'accéder à vos contacts pour vous aider à choisir le contact auquel vous souhaitez transférer de l'argent.";
+"NSContactsUsageDescription" = "Dialer a besoin d'accéder à vos contacts pour vous aider à choisir le contact auquel vous souhaitez transférer de l'argent.";

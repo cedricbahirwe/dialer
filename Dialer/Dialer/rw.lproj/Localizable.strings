@@ -53,7 +53,7 @@
 "Select a phone number to send to" = "Hitamo nimero ya terefone muri bwoherezeho";
  
 // 8. Congratulations View
-"Thanks for using Dial It for the past month!" = "Mwarakoze gukoresha Dial It mu kwezi gushize !";
+"Thanks for using Dialer for the past month!" = "Mwarakoze gukoresha Dialer mu kwezi gushize !";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Turabasaba ngo mufate amashusho ya bino mukoresheje screenshot muhite muyohereza kuri imeyiri ikurikira kugira ngo muhabwe impano yanyu.";
 "Remaining time: timeRemaining seconds" = "Igihe gisigaye: %d seconds";
  
@@ -77,7 +77,7 @@
  
 "Help & More" = "Ubufasha & Ibindi";
  
-"By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "Mugukoresha Dial It, mwemeye  \n[Ibisabwa n’ ingamba](https://cedricbahirwe.github.io/html/privacy.html) hamwe na [Politiki y’ubuzima bwite](https://cedricbahirwe.github.io/html/privacy.html).";
+"By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "Mugukoresha Dialer, mwemeye  \n[Ibisabwa n’ ingamba](https://cedricbahirwe.github.io/html/privacy.html) hamwe na [Politiki y’ubuzima bwite](https://cedricbahirwe.github.io/html/privacy.html).";
  
  
 // Parameters Options
@@ -89,7 +89,7 @@
 "Remove Pin" = "Gusiba umubare w’ ibanga";
 "You'll need to re-enter it later." = "Muraza gukenera kongera kuwinjiza nyuma.";
  
-"Just getting started?" = "Muri bashya kuri Dial It?";
+"Just getting started?" = "Muri bashya kuri Dialer?";
 "Read our quick start blog post." = "Musome itangazo rigufi ryo gutangira twashizeho.";
 "Delete All USSD codes" = "Siba kode zose za USSD";
  
@@ -97,12 +97,12 @@
 "Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";
  
 "Twandikire kuri Twitter" = "Tweet Us";
-"Stay up to date." = "Mujyane n’ ibigezweho muri Dial It.";
+"Stay up to date." = "Mujyane n’ ibigezweho muri Dialer.";
  
 "Translation Suggestion" = "Inama ku ivunura";
 "Improve our localization." = "Guteza imbere aho duherereye.";
 "Version information." = "Amakuru kuri verisiyo.";
- 
+"Review Dialer" = "Subiramo Dialer";
 "Let us know how we are doing." = "Mutumenyeshe uburyo dukora.";
 "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Urashaka rwose gukuramo pin yawe ?.\nUzakenera kongera kuyinjiramo intoki nyuma.";
 "Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Urashaka rwose gukuraho code yawe ya USSD wabitswe? \ NIki gikorwa ntigishobora gusubirwaho.";
@@ -110,3 +110,4 @@
 // Commons
 "Delete" = "Gusiba";
 "Confirmation" = "Kwemeza";
+"Close" = "Funga";

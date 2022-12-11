@@ -22,21 +22,15 @@ struct AboutView: View {
                     .scaledToFit()
                     .frame(width: 80)
                     .cornerRadius(15)
-                Text("Dial It")
+                Text("Dialer")
                     .font(.system(.title3, design: .rounded).weight(.bold))
 
             }
             .padding(.top, 30)
 
-            VStack(spacing: 10) {
-                Text("Version \(appVersion)")
-                    .fontWeight(.bold)
-
-                Text("Build \(buildVersion)")
-                    .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
-            }
-
+            Text("Version \(appVersion) (\(buildVersion)")
+                .fontWeight(.bold)
+            
             VStack(spacing: 2) {
                 Text("Designed and developed by")
                     .foregroundColor(.secondary)

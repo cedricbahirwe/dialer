@@ -49,7 +49,7 @@
 "Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
 
 // 8. Congratulations View
-"Thanks for using Dial It for the past month!" = "Merci d'avoir utilisé Dial It le mois dernier!";
+"Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense.";
 "Remaining time: timeRemaining seconds" = "Temps restant: %d seconds";
 
@@ -73,7 +73,7 @@
 
 "Help & More" = "Aide & Plus";
 
-"By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dial It, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
+"By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dialer, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
 
 
 // 11. Welcome View
@@ -82,7 +82,7 @@
 "Ability to quickly generate USSD for buying airtime." = "Générer rapidement des codes USSD pour l'achat d'unités.";
 "Get direct access to your frequently used USSD codes." = "Accédez directement à vos codes USSD fréquemment utilisés.";
 "Get the right USSD code for transfering to your friend or paying to the store." = "Obtenez le correct code USSD pour transférer à votre ami ou payer au magasin.";
-"Get USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Accédez les codes USSD pour l'achat d'électricité, packets vocaux et plus encore.";
+"Your personalized space to save your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Votre espace personnalisé pour garder vos codes USSD préférés pour acheter de l'électricité, des packs Voix, des forfaits Internet et plus encore.";
 
 // 12. Electricity View
 "Saved Meters" = "Compteurs enregistrés";
@@ -117,19 +117,19 @@
 "Delete All USSD codes" = "Supprimer tous les codes USSD";
 "This action can not be undone." = "Cette action ne peut pas être annulée.";
 
-"Just getting started?" = "Nouveau sur Dial It?";
-"Read our quick start blog post." = "Lisez notre article sur Dial It.";
+"Just getting started?" = "Nouveau sur Dialer?";
+"Read our quick start blog post." = "Lisez notre article sur Dialer.";
 
 "Contact Us" = "Nous contacter";
 "Get help or ask a question." = "Obtenir de l'aide ou poser une question.";
 
 "Tweetez-nous" = "Tweet Us";
-"Stay up to date." = "Restez à jour à propos de Dial It.";
+"Stay up to date." = "Restez à jour à propos de Dialer.";
 
 "Translation Suggestion" = "Suggestion sur la traduction";
 "Improve our localization." = "Améliorez notre traduction de language.";
 "Version information." = "Information sur la version.";
-
+"Review Dialer" = "Notez Dialer";
 "Let us know how we are doing." = "Dites-nous comment nous faisons.";
 "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Voulez-vous vraiment supprimer votre code PIN ?.\nVous devrez le saisir à nouveau manuellement ultérieurement.";
 "Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Voulez-vous vraiment supprimer vos codes USSD enregistrés ?\nCette action est irréversible.";
@@ -145,3 +145,4 @@
 "Buy Electricity" = "Acheter de l'électricité";
 "Delete" = "Supprimer";
 "Confirmation" = "Confirmation";
+"Close" = "Fermé";
