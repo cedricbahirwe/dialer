@@ -79,7 +79,6 @@
 // 11. Welcome View
 "Your USSD companion app." = "Votre companion pour les codes USSD.";
 "What's in for you?" = "Qu'est-ce qui vous attend ?";
-"This version includes support for **iOS 15.5**" = "Cette version supporte **iOS 15.5**";
 "Ability to quickly generate USSD for buying airtime." = "Générer rapidement des codes USSD pour l'achat d'unités.";
 "Get direct access to your frequently used USSD codes." = "Accédez directement à vos codes USSD fréquemment utilisés.";
 "Get the right USSD code for transfering to your friend or paying to the store." = "Obtenez le correct code USSD pour transférer à votre ami ou payer au magasin.";

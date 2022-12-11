@@ -55,20 +55,6 @@ struct WhatsNewView: View {
                         featureView(icon: "wrench.and.screwdriver",
                                     title: "My Space",
                                     subtitle: "Your own personalized space to save and access your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more.")
-
-
-                        HStack {
-                            Image(systemName: "info.circle")
-                            Text("This version includes support for **iOS 15.5**")
-                                .lineLimit(1)
-                        }
-                        .padding(12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.cyan.opacity(0.15))
-                        .cornerRadius(15)
-                        .minimumScaleFactor(0.5)
-                        .foregroundColor(.teal)
-
                     }
                     .padding(.horizontal, 2)
                 }
