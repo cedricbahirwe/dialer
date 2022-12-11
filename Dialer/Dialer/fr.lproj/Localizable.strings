@@ -101,7 +101,6 @@
 "Add USSD Code" = "Ajouter un code USSD";
 "Check Mobile Balance" = "Vérifier le solde mobile";
 "Most Popular" = "Les Plus Populaires";
-"Other" = "Autres";
 "This name is already used by another USSD code." = "Ce nom est déjà utilisé par un autre code USSD.";
 "What's your USSD code name?" = "Quel est le nom de votre code USSD?";
 "Enter your USSD Code" = "Entrez votre code USSD";
@@ -154,3 +153,4 @@
 "Save" = "Enregister";
 "Cancel" = "Annuler";
 "Phone Number." = "Numéro de téléphone.";
+"Other" = "Autres";
