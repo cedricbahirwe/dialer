@@ -28,7 +28,7 @@ struct AboutView: View {
             }
             .padding(.top, 30)
 
-            Text("Version \(appVersion) (\(buildVersion)")
+            Text("Version \(appVersion) (\(buildVersion))")
                 .fontWeight(.bold)
             
             VStack(spacing: 2) {

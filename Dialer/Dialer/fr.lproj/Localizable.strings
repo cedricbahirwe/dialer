@@ -16,14 +16,19 @@
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
 
-// 3. History Vie
+// 3. History View
+"No History Yet" = "Pas encore d'historique";
+"Come back later." = "Revenez plus tard.";
+"The estimations are based on the recent USSD codes used." = "Les estimations sont basées sur les récents codes USSD utilisés.";
+"USSD Code copied!" = "Code USSD copié!";
+
+"The estimations are based on the recent USSD codes copied." = "Les estimations sont basées sur les récents codes USSD copiés.";
 
 // 4. NewDialingView
 "Invalid code. Check it and try again." = "Code Invalide. Vérifiez-le et réessayez.";
 
 // 5. PurchaseDetailView
 "Enter Pin" = "Entrer le Pin";
-"Save" = "Enregister";
 "Your pin will not be saved unless you manually save it." = "Votre PIN ne sera pas enregistré automatiquement.";
 "Confirm" = "Confirmer";
 
@@ -44,8 +49,7 @@
 // 7. Contacts List View
 "Contacts List" = "Liste de contacts";
 "Search by name or phone" = "Rechercher par nom ou par téléphone";
-"Cancel" = "Annuler";
-"Phone Number." = "Numéro de téléphone.";
+"Search name or phone" = "Chercher un nom ou téléphone";
 "Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
 
 // 8. Congratulations View
@@ -123,7 +127,7 @@
 "Contact Us" = "Nous contacter";
 "Get help or ask a question." = "Obtenir de l'aide ou poser une question.";
 
-"Tweetez-nous" = "Tweet Us";
+"Tweet Us" = "Tweetez-nous";
 "Stay up to date." = "Restez à jour à propos de Dialer.";
 
 "Translation Suggestion" = "Suggestion sur la traduction";
@@ -146,3 +150,7 @@
 "Delete" = "Supprimer";
 "Confirmation" = "Confirmation";
 "Close" = "Fermé";
+"Total" = "Totale";
+"Save" = "Enregister";
+"Cancel" = "Annuler";
+"Phone Number." = "Numéro de téléphone.";

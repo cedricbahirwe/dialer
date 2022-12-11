@@ -20,14 +20,17 @@
 "We can not estimate the fee for this amount." = "Ntidushobora kugereranya ikiguzi kuri uwo mubare w’ amafaranga.";
  
 // 3. History View
-"Done" = "Byarangiye";
+"No History Yet" = "Nta mateka aracyafite";
+"Come back later." = "Garuka nyuma.";
+"The estimations are based on the recent USSD codes used." = "Iri gereranya rishingiye ku kode ya USSD iherutse gukoreshwa.";
+"The estimations are based on the recent USSD codes used." = "Iri gereranya rishingiye ku kode ya USSD iherutse kwimurwa.";
+"USSD Code copied!" = "Kode ya USSD yandukuwe!";
  
 // 4. NewDialingView
 "Invalid code. Check it and try again." = "kode ntiyemewe. Ongera muyisuzume mwongere mugeraze.";
-"Confirm" = "Emeza";
+
 // 5. PurchaseDetailView
 "Enter Pin" = "Injiza umubare w’ ibanga";
-"Save" = "Bika";
 "Your pin will not be saved unless you manually save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
  
  
@@ -48,8 +51,7 @@
 // 7. Contacts List View
 "Contacts List" = "Urutonde rwa nimero za terefone";
 "Search by name or phone" = "Gushakisha ugendeye kw’izina cyangwa terefone";
-"Cancel" = "Kuburizamo";
-"Phone Number." = "Nimero ya Terefone.";
+"Search name or phone" = "Shakisha izina cyangwa terefone";
 "Select a phone number to send to" = "Hitamo nimero ya terefone muri bwoherezeho";
  
 // 8. Congratulations View
@@ -96,7 +98,7 @@
 "Contact Us" = "Twandikire";
 "Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";
  
-"Twandikire kuri Twitter" = "Tweet Us";
+"Tweet Us" = "Twandikire kuri Twitter";
 "Stay up to date." = "Mujyane n’ ibigezweho muri Dialer.";
  
 "Translation Suggestion" = "Inama ku ivunura";
@@ -109,5 +111,11 @@
 
 // Commons
 "Delete" = "Gusiba";
+"Confirm" = "Emeza";
 "Confirmation" = "Kwemeza";
 "Close" = "Funga";
+"Cancel" = "Kuburizamo";
+"Done" = "Byarangiye";
+"Total" = "Igiteranyo";
+"Save" = "Bika";
+"Phone Number." = "Nimero ya Terefone.";

@@ -18,7 +18,6 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $data.hasReachSync) {
             CongratulationsView(isPresented: $data.hasReachSync)
         }
-        .previewIn(.fr)
     }
     
     private func setupAppearance() {
