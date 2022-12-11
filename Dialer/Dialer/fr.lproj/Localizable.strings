@@ -109,6 +109,7 @@
 "Save your own code" = "Ajouter votre code";
 
 "USSD code is empty." = "Le code USSD est vide.";
+"USSD title is Empty." = "Le titre USSD est vide.";
 "USSD code should start with a *." = "Le code USSD doit commencer par un *.";
 "USSD code should end with a #." = "Le code USSD doit se terminer par un #.";
 "Invalid USSD code, please check again your code." = "Code USSD invalide, veuillez revérifier votre code.";

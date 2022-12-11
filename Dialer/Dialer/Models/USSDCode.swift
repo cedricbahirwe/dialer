@@ -7,16 +7,19 @@
 
 import Foundation
 
-struct USSDCode: Identifiable, Hashable, Codable {
+struct USSDCode: Identifiable, Equatable, Codable {
     private static let starSymbol: Character = "*"
     private static let hashSymbol: Character = "#"
 
     static func == (lhs: USSDCode, rhs: USSDCode) -> Bool {
-        lhs.ussd == rhs.ussd || lhs.title == lhs.title
+        lhs.ussd == rhs.ussd || lhs.title == rhs.title
     }
 
     public init(id: UUID = UUID(), title: String, ussd: String) throws {
         self.id = id
+        guard !title.isEmpty else {
+            throw USSDCodeValidationError.emptyTitle
+        }
         self.title = title
         self.ussd = try Self.validateUSSD(from: ussd)
     }
@@ -29,6 +32,7 @@ struct USSDCode: Identifiable, Hashable, Codable {
 // MARK: Validation
 extension USSDCode {
     enum USSDCodeValidationError: Error {
+        case emptyTitle
         case emptyUSSD
         case invalidFirstCharacter
         case invalidLastCharacter
@@ -36,6 +40,8 @@ extension USSDCode {
 
         var description: String {
             switch self {
+            case .emptyTitle:
+                return "USSD title is Empty."
             case .emptyUSSD:
                 return "USSD code is empty."
             case .invalidFirstCharacter:
@@ -52,6 +58,9 @@ extension USSDCode {
         guard code.isEmpty == false else { throw USSDCodeValidationError.emptyUSSD }
 
         guard code.hasPrefix(String(starSymbol)) else { throw USSDCodeValidationError.invalidFirstCharacter }
+
+        guard !code.dropFirst(1).hasPrefix(String(starSymbol))
+        else { throw USSDCodeValidationError.invalidUSSD }
 
         guard code.hasSuffix(String(hashSymbol)) else { throw USSDCodeValidationError.invalidLastCharacter }
 
