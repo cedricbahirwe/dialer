@@ -24,7 +24,7 @@ struct DialingsHistoryView: View {
                                         copyToClipBoard(recentCode)
                                     }
                             }
-                            .onDelete(perform: data.deleteRecentCode)
+                            .onDelete(perform: data.deletePastCode)
                         }
                     } else {
 

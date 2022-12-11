@@ -149,7 +149,6 @@ extension NewDialingView {
             alertItem = (true, error.localizedDescription)
         }
     }
-
 }
 
 extension NewDialingView {

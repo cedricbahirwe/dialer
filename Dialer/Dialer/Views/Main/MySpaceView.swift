@@ -48,12 +48,24 @@ struct MySpaceView: View, UtilitiesDelegate {
             .listRowBackground(rowBackground)
 
             if !store.ussdCodes.isEmpty {
+//                List {
+//                    Section("Saved Meters") {
+//                        ForEach(store.elecMeters) { meter in
+//                            TappeableText(LocalizedStringKey(meter.number),
+//                                          onTap: { fillMeterField(with: meter.number) })
+//                        }
+//                        .onDelete(perform: store.deleteMeter)
+//                    }
+//                    .listRowBackground(rowBackground)
+//                    .opacity(store.elecMeters.isEmpty ? 0 : 1)
+//                }
                 Section("Other") {
                     ForEach(store.ussdCodes) { code in
                         TappeableText(LocalizedStringKey(code.title)) {
                             MainViewModel.performQuickDial(for: .other(code.ussd))
                         }
                     }
+                    .onDelete(perform: store.deleteUSSD)
                 }
                 .listRowBackground(rowBackground)
             }

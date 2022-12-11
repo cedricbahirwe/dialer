@@ -138,11 +138,10 @@ struct ElectricityView: View {
             List {
                 Section("Saved Meters") {
                     ForEach(store.elecMeters) { meter in
-                        TappeableText(LocalizedStringKey(meter.number), onTap: { fillMeterField(with: meter.number) })
-
+                        TappeableText(LocalizedStringKey(meter.number),
+                                      onTap: { fillMeterField(with: meter.number) })
                     }
                     .onDelete(perform: store.deleteMeter)
-                    
                 }
                 .listRowBackground(rowBackground)
                 .opacity(store.elecMeters.isEmpty ? 0 : 1)

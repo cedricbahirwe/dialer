@@ -26,7 +26,7 @@
 "USSD Code copied!" = "Kode ya USSD yandukuwe!";
  
 // 4. NewDialingView
-"Invalid code. Check it and try again." = "kode ntiyemewe. Ongera muyisuzume mwongere mugeraze.";
+"Invalid code. Check it and try again." = "Kode itemewe. Gerageza nanone.";
 
 // 5. PurchaseDetailView
 "Enter Pin" = "Injiza umubare w’ ibanga";
@@ -42,7 +42,6 @@
 "The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
 "Pick a contact" = "Hitamo nimero ya terefone ";
 "Dial USSD" = "Kohereza USSD Kode";
-"Copy USSD code" = "Copy USSD Kode";
 "Pay Merchant" = "Kwishyura umucuruzi";
 "Send Money" = "Kohereza amafaranga";
  
@@ -83,6 +82,13 @@
 // 11. Welcome View
 
 // 12. Electricity View
+"Saved Meters" = "Ibipimo Byakijijwe";
+"Copy USSD code" = "Gukoporora kode ya USSD";
+"Dial Electricity USSD" = "Hamagara amashanyarazi USSD";
+"The meter number should have at least 10 digits." = "Umubare wa metero ugomba kugira byibuze imibare 10.";
+"Enter Meter Number" = "Injiza umubare wa metero";
+"You have entered an invalid amount." = "Winjije amafaranga atemewe.";
+"The amount must be greater or equal to 600 RWF" = "Amafaranga agomba kuba agera kuri 600 RWF";
 
 // 13. My Space View
 "Add USSD Code" = "Ongeraho Kode ya USSD";
@@ -91,7 +97,7 @@
 "This name is already used by another USSD code." = "Iri zina rimaze gukoreshwa n'indi kode ya USSD.";
 "What's your USSD code name?" = "Izina rya kode yawe ya USSD ni irihe?";
 "Enter your USSD Code" = "Injira Kode yawe ya USSD";
-"This name is already used by another USSD code." = "Iri zina rimaze gukoreshwa n'indi kode ya USSD.";
+"This USSD code is already saved under another name" = "Iyi code ya USSD yamaze kubikwa ku rindi zina.";
 "Save USSD" = "Bika USSD";
 "USSD Validation" = "Kwemeza USSD";
 "Save your own code" = "Bika kode yawe bwite";
@@ -113,6 +119,7 @@
 "Just getting started?" = "Muri bashya kuri Dialer?";
 "Read our quick start blog post." = "Musome itangazo rigufi ryo gutangira twashizeho.";
 "Delete All USSD codes" = "Siba kode zose za USSD";
+"This action can not be undone." = "Iki gikorwa ntigishobora gusubirwaho.";
  
 "Contact Us" = "Twandikire";
 "Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";

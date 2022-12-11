@@ -23,11 +23,10 @@ struct QuickDialingView: View {
             VStack(spacing: 10) {
                 Group {
                     Text("Invalid code. Check it and try again.")
-                        .font(.system(size: 16))
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
                         .opacity(showInValidMsg ? 1 : 0)
+                        .padding(.horizontal)
 
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
                         .frame(height: 40)
@@ -104,7 +103,7 @@ struct QuickDialingView: View {
                     .frame(width: 55, height: 55)
             })
             .frame(width: 75, height: 75)
-            Spacer()
+            Spacer(minLength: 0)
             Button(action: {
                 if !composedCode.isEmpty {
                     composedCode.removeLast()
