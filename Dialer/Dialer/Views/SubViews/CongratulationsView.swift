@@ -29,14 +29,14 @@ struct CongratulationsView: View {
                     .frame(height: 80)
                     .padding(.bottom, -10)
 
-                Text("Thanks for using Dial It for the past month!")
+                Text("Thanks for using Dialer for the past month!")
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
                     .opacity(0.8)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                
-                Text("We appreciate your support, and would like to hear how to make **Dial It** even more better.")
+                Text("We appreciate your support, and would like to hear how to make **Dialer** even more better.")
                     .font(.caption)
                     .multilineTextAlignment(.center)
 

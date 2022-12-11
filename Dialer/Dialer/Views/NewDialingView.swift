@@ -82,7 +82,7 @@ struct NewDialingView: View {
             .alert("USSD Validation", isPresented: $alertItem.status, actions: {
                 Button("Okay", action: {})
             }, message: {
-                Text(alertItem.message)
+                Text(LocalizedStringKey(alertItem.message))
             })
             .padding()
             .navigationTitle("Save your own code")
@@ -149,7 +149,6 @@ extension NewDialingView {
             alertItem = (true, error.localizedDescription)
         }
     }
-
 }
 
 extension NewDialingView {

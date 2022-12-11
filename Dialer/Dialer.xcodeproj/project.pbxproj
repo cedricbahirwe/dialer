@@ -41,6 +41,8 @@
 		82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8E63A2676A7B300AB1723 /* ContactsListView.swift */; };
 		82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCEC26C12E2500B1720A /* DialerTests.swift */; };
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
+		CB0A52912946159A0023370C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
+		CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */; };
 		CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */; };
 		CB393A2728120A59009CA95E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2628120A59009CA95E /* String+Extension.swift */; };
 		CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2828120A73009CA95E /* Binding+Extension.swift */; };
@@ -134,6 +136,7 @@
 		82EEBCEE26C12E2500B1720A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		CB0A52902944EBA30023370C /* DialerDEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DialerDEV.xcconfig; sourceTree = "<group>"; };
+		CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUSSDCodeTests.swift; sourceTree = "<group>"; };
 		CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		CB393A2628120A59009CA95E /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CB393A2828120A73009CA95E /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
@@ -365,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */,
+				CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */,
 			);
 			path = "Test Cases";
 			sourceTree = "<group>";
@@ -564,6 +568,8 @@
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
 				CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */,
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
+				CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */,
+				CB0A52912946159A0023370C /* USSDCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

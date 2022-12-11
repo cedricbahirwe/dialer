@@ -102,16 +102,11 @@ class MainViewModel: ObservableObject {
         
     }
     
-    /// Delete locally the recent Code(s).
+    /// Delete locally the used Code(s).
     /// - Parameter offSets: the offsets to be deleted
-    public func deleteRecentCode(at offSets: IndexSet) {
+    public func deletePastCode(at offSets: IndexSet) {
         recentCodes.remove(atOffsets: offSets)
         saveRecentCodesLocally()
-    }
-    
-    public func deleteMeter(at offSets: IndexSet) {
-        elecMeters.remove(atOffsets: offSets)
-        saveMeterNumbersLocally()
     }
     
     /// Save locally the Code Pin
@@ -280,56 +275,67 @@ extension MainViewModel {
 
 // MARK: Electricity Storage
 extension MainViewModel {
-    /// Retrieve all locally stored Meter Numbers codes
-    public func retrieveMeterNumbers() {
-        elecMeters = DialerStorage.shared.getMeterNumbers()
-    }
 
     /// Store a given  `MeterNumber`  locally.
     /// - Parameter code: the code to be added.
     public func storeMeter(_ number: ElectricityMeter) {
         guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
         elecMeters.append(number)
-        saveMeterNumbersLocally()
+        saveMeterNumbersLocally(elecMeters)
     }
 
     /// Save MeterNumber(s) locally.
-    public func saveMeterNumbersLocally() {
+    private func saveMeterNumbersLocally(_ meters: [ElectricityMeter]) {
         do {
-            try DialerStorage.shared.saveElectricityMeters(elecMeters)
+            try DialerStorage.shared.saveElectricityMeters(meters)
         } catch {
             print("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
 
-    public func removeAllUSSDs() {
-        DialerStorage.shared.removeAllUSSDCodes()
-        ussdCodes = []
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveMeterNumbers() {
+        elecMeters = DialerStorage.shared.getMeterNumbers()
+    }
+
+    public func deleteMeter(at offSets: IndexSet) {
+        elecMeters.remove(atOffsets: offSets)
+        saveMeterNumbersLocally(elecMeters)
     }
 }
 
 // MARK: Custom USSD Storage
 extension MainViewModel {
-    /// Retrieve all locally stored Meter Numbers codes
-    public func retrieveUSSDCodes() {
-        ussdCodes = DialerStorage.shared.getUSSDCodes()
-    }
-
     /// Store a given  `USSDCode`  locally.
     /// - Parameter code: the code to be added.
     public func storeUSSD(_ code: USSDCode) {
         guard ussdCodes.contains(where: { $0 == code }) == false else { return }
         ussdCodes.append(code)
-        saveUSSDCodesLocally()
+        saveUSSDCodesLocally(ussdCodes)
     }
 
     /// Save USSDCode(s) locally.
-    public func saveUSSDCodesLocally() {
+    private func saveUSSDCodesLocally(_ codes: [USSDCode]) {
         do {
-            try DialerStorage.shared.saveUSSDCodes(ussdCodes)
+            try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
             print("Could not save ussd codes locally: ", error.localizedDescription)
         }
+    }
+
+    /// Retrieve all locally stored Meter Numbers codes
+    public func retrieveUSSDCodes() {
+        ussdCodes = DialerStorage.shared.getUSSDCodes()
+    }
+
+    public func deleteUSSD(at offSets: IndexSet) {
+        ussdCodes.remove(atOffsets: offSets)
+        saveUSSDCodesLocally(ussdCodes)
+    }
+
+    public func removeAllUSSDs() {
+        DialerStorage.shared.removeAllUSSDCodes()
+        ussdCodes = []
     }
 }
 

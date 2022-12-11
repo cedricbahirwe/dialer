@@ -13,6 +13,7 @@ struct ContentView: View {
         NavigationView {
             DashBoardView()
         }
+        .navigationViewStyle(.stack)
         .onAppear(perform: setupAppearance)
         .fullScreenCover(isPresented: $data.hasReachSync) {
             CongratulationsView(isPresented: $data.hasReachSync)

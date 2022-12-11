@@ -8,7 +8,6 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Kugura airtime";
-"Transfer/Pay" = "Kohereza/Kwishyura";
 "History" = "Ibyashize";
 "My Space" = "Umwanya wanjye";
 "Quick Dial" = "Gukanda bundi bushya";
@@ -20,14 +19,17 @@
 "We can not estimate the fee for this amount." = "Ntidushobora kugereranya ikiguzi kuri uwo mubare w’ amafaranga.";
  
 // 3. History View
-"Done" = "Byarangiye";
+"No History Yet" = "Nta mateka aracyafite";
+"Come back later." = "Garuka nyuma.";
+"The estimations are based on the recent USSD codes used." = "Iri gereranya rishingiye ku kode ya USSD iherutse gukoreshwa.";
+"The estimations are based on the recent USSD codes used." = "Iri gereranya rishingiye ku kode ya USSD iherutse kwimurwa.";
+"USSD Code copied!" = "Kode ya USSD yandukuwe!";
  
 // 4. NewDialingView
-"Invalid code. Check it and try again." = "kode ntiyemewe. Ongera muyisuzume mwongere mugeraze.";
-"Confirm" = "Emeza";
+"Invalid code. Check it and try again." = "Kode itemewe. Gerageza nanone.";
+
 // 5. PurchaseDetailView
 "Enter Pin" = "Injiza umubare w’ ibanga";
-"Save" = "Bika";
 "Your pin will not be saved unless you manually save it." = "Umubare wanyu w’ ibanga nturi bwiyemeze, keretse nimuwemeza.";
  
  
@@ -40,7 +42,6 @@
 "The code should be a 5-6 digits number" = "Kode igomba kuba igizwe n’ imibare itanu cyangwa itandatu";
 "Pick a contact" = "Hitamo nimero ya terefone ";
 "Dial USSD" = "Kohereza USSD Kode";
-"Copy USSD code" = "Copy USSD Kode";
 "Pay Merchant" = "Kwishyura umucuruzi";
 "Send Money" = "Kohereza amafaranga";
  
@@ -48,12 +49,11 @@
 // 7. Contacts List View
 "Contacts List" = "Urutonde rwa nimero za terefone";
 "Search by name or phone" = "Gushakisha ugendeye kw’izina cyangwa terefone";
-"Cancel" = "Kuburizamo";
-"Phone Number." = "Nimero ya Terefone.";
+"Search name or phone" = "Shakisha izina cyangwa terefone";
 "Select a phone number to send to" = "Hitamo nimero ya terefone muri bwoherezeho";
  
 // 8. Congratulations View
-"Thanks for using Dial It for the past month!" = "Mwarakoze gukoresha Dial It mu kwezi gushize !";
+"Thanks for using Dialer for the past month!" = "Mwarakoze gukoresha Dialer mu kwezi gushize !";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Turabasaba ngo mufate amashusho ya bino mukoresheje screenshot muhite muyohereza kuri imeyiri ikurikira kugira ngo muhabwe impano yanyu.";
 "Remaining time: timeRemaining seconds" = "Igihe gisigaye: %d seconds";
  
@@ -77,9 +77,37 @@
  
 "Help & More" = "Ubufasha & Ibindi";
  
-"By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "Mugukoresha Dial It, mwemeye  \n[Ibisabwa n’ ingamba](https://cedricbahirwe.github.io/html/privacy.html) hamwe na [Politiki y’ubuzima bwite](https://cedricbahirwe.github.io/html/privacy.html).";
+"By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "Mugukoresha Dialer, mwemeye  \n[Ibisabwa n’ ingamba](https://cedricbahirwe.github.io/html/privacy.html) hamwe na [Politiki y’ubuzima bwite](https://cedricbahirwe.github.io/html/privacy.html).";
  
- 
+// 11. Welcome View
+
+// 12. Electricity View
+"Saved Meters" = "Ibipimo Byakijijwe";
+"Copy USSD code" = "Gukoporora kode ya USSD";
+"Dial Electricity USSD" = "Hamagara amashanyarazi USSD";
+"The meter number should have at least 10 digits." = "Umubare wa metero ugomba kugira byibuze imibare 10.";
+"Enter Meter Number" = "Injiza umubare wa metero";
+"You have entered an invalid amount." = "Winjije amafaranga atemewe.";
+"The amount must be greater or equal to 600 RWF" = "Amafaranga agomba kuba agera kuri 600 RWF";
+
+// 13. My Space View
+"Add USSD Code" = "Ongeraho Kode ya USSD";
+"Check Mobile Balance" = "Reba Impirimbanyi zigendanwa";
+"Most Popular" = "Abakunzwe cyane";
+"This name is already used by another USSD code." = "Iri zina rimaze gukoreshwa n'indi kode ya USSD.";
+"What's your USSD code name?" = "Izina rya kode yawe ya USSD ni irihe?";
+"Enter your USSD Code" = "Injira Kode yawe ya USSD";
+"This USSD code is already saved under another name" = "Iyi code ya USSD yamaze kubikwa ku rindi zina.";
+"Save USSD" = "Bika USSD";
+"USSD Validation" = "Kwemeza USSD";
+"Save your own code" = "Bika kode yawe bwite";
+
+"USSD code is empty." = "Kode ya USSD irimo ubusa.";
+"USSD title is Empty." = "Umutwe wa USSD ni ubusa.";
+"USSD code should start with a *." = "Kode ya USSD igomba gutangirana na *.";
+"USSD code should end with a #." = "Kode ya USSD igomba kurangirana na #.";
+"Invalid USSD code, please check again your code." = "Kode ya USSD itemewe, nyamuneka reba kode yawe.";
+
 // Parameters Options
 "Change Language" = "Guhindura ururimi";
 "Select your desired language." = "Hitamo ururimi mukunda gukoresha.";
@@ -89,24 +117,39 @@
 "Remove Pin" = "Gusiba umubare w’ ibanga";
 "You'll need to re-enter it later." = "Muraza gukenera kongera kuwinjiza nyuma.";
  
-"Just getting started?" = "Muri bashya kuri Dial It?";
+"Just getting started?" = "Muri bashya kuri Dialer?";
 "Read our quick start blog post." = "Musome itangazo rigufi ryo gutangira twashizeho.";
 "Delete All USSD codes" = "Siba kode zose za USSD";
+"This action can not be undone." = "Iki gikorwa ntigishobora gusubirwaho.";
  
 "Contact Us" = "Twandikire";
 "Get help or ask a question." = "Kubona ubufasha cyangwa kubaza ikibazo.";
  
-"Twandikire kuri Twitter" = "Tweet Us";
-"Stay up to date." = "Mujyane n’ ibigezweho muri Dial It.";
+"Tweet Us" = "Twandikire kuri Twitter";
+"Stay up to date." = "Mujyane n’ ibigezweho muri Dialer.";
  
 "Translation Suggestion" = "Inama ku ivunura";
 "Improve our localization." = "Guteza imbere aho duherereye.";
 "Version information." = "Amakuru kuri verisiyo.";
- 
+"Review Dialer" = "Subiramo Dialer";
 "Let us know how we are doing." = "Mutumenyeshe uburyo dukora.";
 "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Urashaka rwose gukuramo pin yawe ?.\nUzakenera kongera kuyinjiramo intoki nyuma.";
 "Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Urashaka rwose gukuraho code yawe ya USSD wabitswe? \ NIki gikorwa ntigishobora gusubirwaho.";
 
 // Commons
+"Airtime" = "Ikirere";
+"Continue" = "Komeza";
+"History" = "Amateka";
+"My Space" = "Umwanya wanjye";
+"Done" = "Byarangiye";
+"Transfer/Pay" = "Kohereza/Kwishyura";
+"Buy Electricity" = "Gura Amashanyarazi";
 "Delete" = "Gusiba";
 "Confirmation" = "Kwemeza";
+"Close" = "Funga";
+"Total" = "Igiteranyo";
+"Save" = "Bika";
+"Cancel" = "Kuburizamo";
+"Phone Number." = "Nimero ya Terefone.";
+"Other" = "Obindi";
+"Confirm" = "Emeza";

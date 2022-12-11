@@ -10,8 +10,8 @@ import SwiftUI
 struct QuickDialingView: View {
     @State private var composedCode: String = ""
     @State private var showInValidMsg: Bool = false
-    @Environment(\.presentationMode)
-    private var presentationMode
+    @Environment(\.dismiss)
+    private var dismiss
 
     var body: some View {
         VStack(spacing: 10) {
@@ -23,19 +23,20 @@ struct QuickDialingView: View {
             VStack(spacing: 10) {
                 Group {
                     Text("Invalid code. Check it and try again.")
-                        .font(.system(size: 16))
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
                         .opacity(showInValidMsg ? 1 : 0)
+                        .padding(.horizontal)
 
                     LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                        .frame(height: 32)
-                        .mask(Text(composedCode))
-                        .font(.title)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .truncationMode(.head)
+                        .frame(height: 40)
+                        .mask(
+                            Text(composedCode)
+                                .font(.largeTitle.weight(.semibold))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                                .truncationMode(.head)
+                        )
                         .padding(.horizontal, 20)
                         .opacity(composedCode.isEmpty ? 0 : 1)
                 }
@@ -54,16 +55,14 @@ struct QuickDialingView: View {
                         .scaledToFit()
                         .frame(width: 75, height: 75)
                         .clipShape(Circle())
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.green)
                 })
                 .frame(maxWidth: .infinity)
                 .overlay(bottomNavigationView)
-                Spacer()
+                .padding(.bottom, 20)
             }
-
         }
         .preferredColorScheme(.dark)
-
     }
 
     private func dial(_ code: String) {
@@ -95,7 +94,7 @@ struct QuickDialingView: View {
         HStack {
 
             Button(action: {
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }, label: {
                 Image(systemName: "arrow.backward.circle.fill")
                     .resizable()
@@ -104,7 +103,7 @@ struct QuickDialingView: View {
                     .frame(width: 55, height: 55)
             })
             .frame(width: 75, height: 75)
-            Spacer()
+            Spacer(minLength: 0)
             Button(action: {
                 if !composedCode.isEmpty {
                     composedCode.removeLast()

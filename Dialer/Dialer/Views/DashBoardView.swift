@@ -158,7 +158,7 @@ struct DashBoardView: View {
                 QuickDialingView()
             }
             .background(Color.primaryBackground)
-            .navigationTitle("Dial It")
+            .navigationTitle("Dialer")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if allowBiometrics {

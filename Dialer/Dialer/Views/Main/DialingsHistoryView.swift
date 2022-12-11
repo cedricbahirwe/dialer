@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DialingsHistoryView: View {
     @ObservedObject var data: MainViewModel
-    @State private var didCopyToClipBoard: Bool = false
+    @State private var didCopyToClipBoard = false
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -23,19 +24,19 @@ struct DialingsHistoryView: View {
                                         copyToClipBoard(recentCode)
                                     }
                             }
-                            .onDelete(perform: data.deleteRecentCode)
+                            .onDelete(perform: data.deletePastCode)
                         }
                     } else {
 
                         Spacer()
                         Text("No History Yet")
-                            .font(.system(.largeTitle, design: .rounded).bold())
+                            .font(.system(.title, design: .rounded).bold())
                             .frame(maxWidth: .infinity)
+                            .padding(.horizontal)
                         Text("Come back later.")
                             .font(.system(.headline, design: .rounded))
                         Spacer()
                     }
-
                 }
 
                 if didCopyToClipBoard {
@@ -63,7 +64,8 @@ struct DialingsHistoryView: View {
             .safeAreaInset(edge: .bottom) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Total:")
+                        Text("Total")
+                        Text(":")
                         Spacer()
                         HStack(spacing: 3) {
                             Text("\(data.estimatedTotalPrice)")
@@ -73,9 +75,9 @@ struct DialingsHistoryView: View {
                     }
                     Group {
                         if UIApplication.hasSupportForUSSD {
-                            Text("These estimations are based on the recent USSD codes used.")
+                            Text("The estimations are based on the recent USSD codes used.")
                         } else {
-                            Text("These estimations are based on the recent USSD codes copied.")
+                            Text("The estimations are based on the recent USSD codes copied.")
                         }
                     }
                     .font(.caption)
@@ -112,7 +114,6 @@ struct DialingsHistoryView: View {
             }
         }
     }
-
 }
 
 struct DialingsHistoryView_Previews: PreviewProvider {

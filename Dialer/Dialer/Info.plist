@@ -29,7 +29,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSContactsUsageDescription</key>
-	<string>Dial It needs access to your contacts to help you pick the contact you want to transfer money.</string>
+	<string>Dialer needs access to your contacts to help you pick the contact you want to transfer money.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID or Touch ID to access this feature.</string>
 	<key>UIApplicationSceneManifest</key>

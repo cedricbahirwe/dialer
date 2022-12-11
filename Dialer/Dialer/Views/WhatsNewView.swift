@@ -20,7 +20,7 @@ struct WhatsNewView: View {
                     .cornerRadius(20)
 
                 VStack {
-                    Text("Dial It")
+                    Text("Dialer")
                         .font(.system(.title, design: .rounded).weight(.heavy))
 
                     Text("Your USSD companion app.")
@@ -54,21 +54,7 @@ struct WhatsNewView: View {
 
                         featureView(icon: "wrench.and.screwdriver",
                                     title: "My Space",
-                                    subtitle: "Your own personalized space to save and access your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more.")
-
-
-                        HStack {
-                            Image(systemName: "info.circle")
-                            Text("This version includes support for **iOS 15.5**")
-                                .lineLimit(1)
-                        }
-                        .padding(12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.cyan.opacity(0.15))
-                        .cornerRadius(15)
-                        .minimumScaleFactor(0.5)
-                        .foregroundColor(.teal)
-
+                                    subtitle: "Your personalized space to your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more.")
                     }
                     .padding(.horizontal, 2)
                 }
@@ -113,7 +99,7 @@ struct WhatsNewView: View {
                     .opacity(0.8)
                     .font(.system(.callout, design: .rounded))
                     .multilineTextAlignment(.leading)
-                    .lineLimit(2)
+                    .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

@@ -7,13 +7,19 @@
 
 import Foundation
 
-struct USSDCode: Identifiable, Hashable, Codable {
+struct USSDCode: Identifiable, Equatable, Codable {
+    private static let starSymbol: Character = "*"
+    private static let hashSymbol: Character = "#"
+
     static func == (lhs: USSDCode, rhs: USSDCode) -> Bool {
-        lhs.ussd == rhs.ussd
+        lhs.ussd == rhs.ussd || lhs.title == rhs.title
     }
 
     public init(id: UUID = UUID(), title: String, ussd: String) throws {
         self.id = id
+        guard !title.isEmpty else {
+            throw USSDCodeValidationError.emptyTitle
+        }
         self.title = title
         self.ussd = try Self.validateUSSD(from: ussd)
     }
@@ -21,32 +27,27 @@ struct USSDCode: Identifiable, Hashable, Codable {
     public let id: UUID
     public let title: String
     public let ussd: String
-
-    static let example: USSDCode = try! USSDCode(title: "Check Airtime", ussd: "*131#")
-
-    static let starSymbol: Character = "*"
-
-    static let hashSymbol: Character = "#"
 }
 
 // MARK: Validation
 extension USSDCode {
     enum USSDCodeValidationError: Error {
+        case emptyTitle
         case emptyUSSD
         case invalidFirstCharacter
         case invalidLastCharacter
         case invalidUSSD
 
-//        localize
-
         var description: String {
             switch self {
+            case .emptyTitle:
+                return "USSD title is Empty."
             case .emptyUSSD:
                 return "USSD code is empty."
             case .invalidFirstCharacter:
-                return "USSD code should start with a * symbol."
+                return "USSD code should start with a *."
             case .invalidLastCharacter:
-                return "USSD code should end with a # symbol."
+                return "USSD code should end with a #."
             case .invalidUSSD:
                 return "Invalid USSD code, please check again your code."
             }
@@ -57,6 +58,9 @@ extension USSDCode {
         guard code.isEmpty == false else { throw USSDCodeValidationError.emptyUSSD }
 
         guard code.hasPrefix(String(starSymbol)) else { throw USSDCodeValidationError.invalidFirstCharacter }
+
+        guard !code.dropFirst(1).hasPrefix(String(starSymbol))
+        else { throw USSDCodeValidationError.invalidUSSD }
 
         guard code.hasSuffix(String(hashSymbol)) else { throw USSDCodeValidationError.invalidLastCharacter }
 

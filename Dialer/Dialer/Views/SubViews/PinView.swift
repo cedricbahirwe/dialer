@@ -24,7 +24,7 @@ struct PinView: View {
             GridItem(.flexible()),
             GridItem(.flexible()),
             GridItem(.flexible()),
-        ], spacing: 10) {
+        ], spacing: 16) {
             ForEach(buttons, id: \.self) { button in
                 CircleButton(button, size: btnSize,
                              action: { addKey(button)})

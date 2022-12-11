@@ -16,16 +16,20 @@
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
 
-// 3. History Vie
+// 3. History View
+"No History Yet" = "Pas encore d'historique";
+"Come back later." = "Revenez plus tard.";
+"The estimations are based on the recent USSD codes used." = "Les estimations sont basées sur les récents codes USSD utilisés.";
+"USSD Code copied!" = "Code USSD copié!";
+
+"The estimations are based on the recent USSD codes copied." = "Les estimations sont basées sur les récents codes USSD copiés.";
 
 // 4. NewDialingView
 "Invalid code. Check it and try again." = "Code Invalide. Vérifiez-le et réessayez.";
 
 // 5. PurchaseDetailView
 "Enter Pin" = "Entrer le Pin";
-"Save" = "Enregister";
 "Your pin will not be saved unless you manually save it." = "Votre PIN ne sera pas enregistré automatiquement.";
-"Confirm" = "Confirmer";
 
 "We've got your back 🎉\n Enter the amount and you're good to go✌🏾" = "Nous nous souvenons de vous🎉\n Entrez le montant et nous nous occupons du reste✌🏾";
 
@@ -44,12 +48,11 @@
 // 7. Contacts List View
 "Contacts List" = "Liste de contacts";
 "Search by name or phone" = "Rechercher par nom ou par téléphone";
-"Cancel" = "Annuler";
-"Phone Number." = "Numéro de téléphone.";
+"Search name or phone" = "Chercher un nom ou téléphone";
 "Select a phone number to send to" = "Sélectionnez un numéro de téléphone auquel envoyer";
 
 // 8. Congratulations View
-"Thanks for using Dial It for the past month!" = "Merci d'avoir utilisé Dial It le mois dernier!";
+"Thanks for using Dialer for the past month!" = "Merci d'avoir utilisé Dialer le mois dernier!";
 "Please take a screenshot of this screen and send it to the following email to receive your award." = "Veuillez prendre une capture d'écran et l'envoyer à l'e-mail suivant pour recevoir votre récompense.";
 "Remaining time: timeRemaining seconds" = "Temps restant: %d seconds";
 
@@ -73,17 +76,16 @@
 
 "Help & More" = "Aide & Plus";
 
-"By using Dial It, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dial It, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
+"By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)." = "En utilisant Dialer, vous acceptez nos\n[Conditions générales](https://cedricbahirwe.github.io/html/privacy.html) et notre [Politique de confidentialité](https://cedricbahirwe.github.io/html/privacy.html).";
 
 
 // 11. Welcome View
 "Your USSD companion app." = "Votre companion pour les codes USSD.";
 "What's in for you?" = "Qu'est-ce qui vous attend ?";
-"This version includes support for **iOS 15.5**" = "Cette version supporte **iOS 15.5**";
 "Ability to quickly generate USSD for buying airtime." = "Générer rapidement des codes USSD pour l'achat d'unités.";
 "Get direct access to your frequently used USSD codes." = "Accédez directement à vos codes USSD fréquemment utilisés.";
 "Get the right USSD code for transfering to your friend or paying to the store." = "Obtenez le correct code USSD pour transférer à votre ami ou payer au magasin.";
-"Get USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Accédez les codes USSD pour l'achat d'électricité, packets vocaux et plus encore.";
+"Your personalized space to save your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Votre espace personnalisé pour garder vos codes USSD préférés pour acheter de l'électricité, des packs Voix, des forfaits Internet et plus encore.";
 
 // 12. Electricity View
 "Saved Meters" = "Compteurs enregistrés";
@@ -96,9 +98,8 @@
 
 // 13. My Space View
 "Add USSD Code" = "Ajouter un code USSD";
-"Check Mobile Balance" = "Vérifier le solde mobile";
+"Check Mobile Balance" = "Vérifier Mon solde";
 "Most Popular" = "Les Plus Populaires";
-"Other" = "Autres";
 "This name is already used by another USSD code." = "Ce nom est déjà utilisé par un autre code USSD.";
 "What's your USSD code name?" = "Quel est le nom de votre code USSD?";
 "Enter your USSD Code" = "Entrez votre code USSD";
@@ -107,6 +108,11 @@
 "USSD Validation" = "Validation USSD";
 "Save your own code" = "Ajouter votre code";
 
+"USSD code is empty." = "Le code USSD est vide.";
+"USSD title is Empty." = "Le titre USSD est vide.";
+"USSD code should start with a *." = "Le code USSD doit commencer par un *.";
+"USSD code should end with a #." = "Le code USSD doit se terminer par un #.";
+"Invalid USSD code, please check again your code." = "Code USSD invalide, veuillez revérifier votre code.";
 // Parameters Options
 "Change Language" = "Changer de langue";
 "Select your desired language." = "Selectionez votre langue préferée.";
@@ -118,19 +124,19 @@
 "Delete All USSD codes" = "Supprimer tous les codes USSD";
 "This action can not be undone." = "Cette action ne peut pas être annulée.";
 
-"Just getting started?" = "Nouveau sur Dial It?";
-"Read our quick start blog post." = "Lisez notre article sur Dial It.";
+"Just getting started?" = "Nouveau sur Dialer?";
+"Read our quick start blog post." = "Lisez notre article sur Dialer.";
 
 "Contact Us" = "Nous contacter";
 "Get help or ask a question." = "Obtenir de l'aide ou poser une question.";
 
-"Tweetez-nous" = "Tweet Us";
-"Stay up to date." = "Restez à jour à propos de Dial It.";
+"Tweet Us" = "Tweetez-nous";
+"Stay up to date." = "Restez à jour à propos de Dialer.";
 
 "Translation Suggestion" = "Suggestion sur la traduction";
 "Improve our localization." = "Améliorez notre traduction de language.";
 "Version information." = "Information sur la version.";
-
+"Review Dialer" = "Notez Dialer";
 "Let us know how we are doing." = "Dites-nous comment nous faisons.";
 "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later." = "Voulez-vous vraiment supprimer votre code PIN ?.\nVous devrez le saisir à nouveau manuellement ultérieurement.";
 "Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Voulez-vous vraiment supprimer vos codes USSD enregistrés ?\nCette action est irréversible.";
@@ -141,8 +147,14 @@
 "History" = "Historique";
 "My Space" = "Mon Espace";
 "Done" = "Terminé";
-"Colophon" = "Colophon";
 "Transfer/Pay" = "Envoyer/Payer";
 "Buy Electricity" = "Acheter de l'électricité";
 "Delete" = "Supprimer";
 "Confirmation" = "Confirmation";
+"Close" = "Fermé";
+"Total" = "Totale";
+"Save" = "Enregister";
+"Cancel" = "Annuler";
+"Phone Number." = "Numéro de téléphone.";
+"Other" = "Autres";
+"Confirm" = "Confirmer";
