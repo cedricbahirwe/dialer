@@ -96,7 +96,10 @@
 "USSD Validation" = "Kwemeza USSD";
 "Save your own code" = "Bika kode yawe bwite";
 
-
+"USSD code is empty." = "Kode ya USSD irimo ubusa.";
+"USSD code should start with a *." = "Kode ya USSD igomba gutangirana na *.";
+"USSD code should end with a #." = "Kode ya USSD igomba kurangirana na #.";
+"Invalid USSD code, please check again your code." = "Kode ya USSD itemewe, nyamuneka reba kode yawe.";
 
 // Parameters Options
 "Change Language" = "Guhindura ururimi";

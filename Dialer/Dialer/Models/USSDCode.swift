@@ -8,8 +8,11 @@
 import Foundation
 
 struct USSDCode: Identifiable, Hashable, Codable {
+    private static let starSymbol: Character = "*"
+    private static let hashSymbol: Character = "#"
+
     static func == (lhs: USSDCode, rhs: USSDCode) -> Bool {
-        lhs.ussd == rhs.ussd
+        lhs.ussd == rhs.ussd || lhs.title == lhs.title
     }
 
     public init(id: UUID = UUID(), title: String, ussd: String) throws {
@@ -21,12 +24,6 @@ struct USSDCode: Identifiable, Hashable, Codable {
     public let id: UUID
     public let title: String
     public let ussd: String
-
-    static let example: USSDCode = try! USSDCode(title: "Check Airtime", ussd: "*131#")
-
-    static let starSymbol: Character = "*"
-
-    static let hashSymbol: Character = "#"
 }
 
 // MARK: Validation
@@ -37,16 +34,14 @@ extension USSDCode {
         case invalidLastCharacter
         case invalidUSSD
 
-//        localize
-
         var description: String {
             switch self {
             case .emptyUSSD:
                 return "USSD code is empty."
             case .invalidFirstCharacter:
-                return "USSD code should start with a * symbol."
+                return "USSD code should start with a *."
             case .invalidLastCharacter:
-                return "USSD code should end with a # symbol."
+                return "USSD code should end with a #."
             case .invalidUSSD:
                 return "Invalid USSD code, please check again your code."
             }

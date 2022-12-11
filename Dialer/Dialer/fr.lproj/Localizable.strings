@@ -98,7 +98,7 @@
 
 // 13. My Space View
 "Add USSD Code" = "Ajouter un code USSD";
-"Check Mobile Balance" = "Vérifier le solde mobile";
+"Check Mobile Balance" = "Vérifier Mon solde";
 "Most Popular" = "Les Plus Populaires";
 "This name is already used by another USSD code." = "Ce nom est déjà utilisé par un autre code USSD.";
 "What's your USSD code name?" = "Quel est le nom de votre code USSD?";
@@ -108,6 +108,10 @@
 "USSD Validation" = "Validation USSD";
 "Save your own code" = "Ajouter votre code";
 
+"USSD code is empty." = "Le code USSD est vide.";
+"USSD code should start with a *." = "Le code USSD doit commencer par un *.";
+"USSD code should end with a #." = "Le code USSD doit se terminer par un #.";
+"Invalid USSD code, please check again your code." = "Code USSD invalide, veuillez revérifier votre code.";
 // Parameters Options
 "Change Language" = "Changer de langue";
 "Select your desired language." = "Selectionez votre langue préferée.";
@@ -142,7 +146,6 @@
 "History" = "Historique";
 "My Space" = "Mon Espace";
 "Done" = "Terminé";
-"Colophon" = "Colophon";
 "Transfer/Pay" = "Envoyer/Payer";
 "Buy Electricity" = "Acheter de l'électricité";
 "Delete" = "Supprimer";
