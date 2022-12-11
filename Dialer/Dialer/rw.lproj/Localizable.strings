@@ -8,7 +8,6 @@
 
 // 1. DashBoardView
 "Buy airtime" = "Kugura airtime";
-"Transfer/Pay" = "Kohereza/Kwishyura";
 "History" = "Ibyashize";
 "My Space" = "Umwanya wanjye";
 "Quick Dial" = "Gukanda bundi bushya";
@@ -127,13 +126,19 @@
 "Do you really want to remove your saved USSD codes?\nThis action can not be undone." = "Urashaka rwose gukuraho code yawe ya USSD wabitswe? \ NIki gikorwa ntigishobora gusubirwaho.";
 
 // Commons
+"Airtime" = "Ikirere";
+"Continue" = "Komeza";
+"History" = "Amateka";
+"My Space" = "Umwanya wanjye";
+"Done" = "Byarangiye";
+"Transfer/Pay" = "Kohereza/Kwishyura";
+"Buy Electricity" = "Gura Amashanyarazi";
 "Delete" = "Gusiba";
-"Confirm" = "Emeza";
 "Confirmation" = "Kwemeza";
 "Close" = "Funga";
-"Cancel" = "Kuburizamo";
-"Done" = "Byarangiye";
 "Total" = "Igiteranyo";
 "Save" = "Bika";
+"Cancel" = "Kuburizamo";
 "Phone Number." = "Nimero ya Terefone.";
 "Other" = "Obindi";
+"Confirm" = "Emeza";

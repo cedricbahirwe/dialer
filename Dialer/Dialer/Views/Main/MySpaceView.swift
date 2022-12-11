@@ -50,7 +50,7 @@ struct MySpaceView: View, UtilitiesDelegate {
             if !store.ussdCodes.isEmpty {
                 Section("Other") {
                     ForEach(store.ussdCodes) { code in
-                        TappeableText(code.title) {
+                        TappeableText(LocalizedStringKey(code.title)) {
                             MainViewModel.performQuickDial(for: .other(code.ussd))
                         }
                     }
@@ -65,7 +65,6 @@ struct MySpaceView: View, UtilitiesDelegate {
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-//                EditButton()
                 Button {
                     presentNewDial.toggle()
                 } label: {

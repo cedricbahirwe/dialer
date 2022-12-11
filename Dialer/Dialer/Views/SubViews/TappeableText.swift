@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct TappeableText: View {
-    init(_ title: String, onTap action: @escaping () -> Void) {
+    init(_ title: LocalizedStringKey, onTap action: @escaping () -> Void) {
         self.title = title
         self.action = action
     }
     
-    let title: String
+    let title: LocalizedStringKey
     var action: () -> Void
     var body: some View {
         Text(title)

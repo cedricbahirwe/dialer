@@ -30,7 +30,6 @@
 // 5. PurchaseDetailView
 "Enter Pin" = "Entrer le Pin";
 "Your pin will not be saved unless you manually save it." = "Votre PIN ne sera pas enregistré automatiquement.";
-"Confirm" = "Confirmer";
 
 "We've got your back 🎉\n Enter the amount and you're good to go✌🏾" = "Nous nous souvenons de vous🎉\n Entrez le montant et nous nous occupons du reste✌🏾";
 
@@ -154,3 +153,4 @@
 "Cancel" = "Annuler";
 "Phone Number." = "Numéro de téléphone.";
 "Other" = "Autres";
+"Confirm" = "Confirmer";
