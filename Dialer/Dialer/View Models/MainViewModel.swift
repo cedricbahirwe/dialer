@@ -314,6 +314,15 @@ extension MainViewModel {
         saveUSSDCodesLocally(ussdCodes)
     }
 
+    /// Update an existing `USSDCode` locally.
+    /// - Parameter code: the code to be updated
+    public func updateUSSD(_ code: USSDCode) {
+        if let index = ussdCodes.firstIndex(of: code) {
+            ussdCodes[index] = code
+        }
+        saveUSSDCodesLocally(ussdCodes)
+    }
+
     /// Save USSDCode(s) locally.
     private func saveUSSDCodesLocally(_ codes: [USSDCode]) {
         do {

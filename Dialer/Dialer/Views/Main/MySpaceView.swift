@@ -8,25 +8,26 @@
 
 import SwiftUI
 
-struct MySpaceView: View, UtilitiesDelegate {
-    private enum USSDFilterOption {
-        case system
-        case custom
-        case all
-    }
+struct MySpaceView: View {
     // MARK: - Environment Properties
     @EnvironmentObject private var store: MainViewModel
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.editMode) private var editMode
 
     // MARK: - Private Properties
     @State private var didCopyToClipBoard = false
     @State private var showUserCustomCodes = false
-    @State private var presentNewDial = false
     @State private var filterOption: USSDFilterOption = .all
+    @State private var editedUSSDModel: NewDialingView.UIModel?
 
     private var rowBackground: Color {
         Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
     }
+
+    private var isEditingMode: Bool {
+        editMode?.wrappedValue == .active
+    }
+
     var body: some View {
         List {
             Section {
@@ -50,8 +51,29 @@ struct MySpaceView: View, UtilitiesDelegate {
             if !store.ussdCodes.isEmpty {
                 Section("Other") {
                     ForEach(store.ussdCodes) { code in
-                        TappeableText(LocalizedStringKey(code.title)) {
-                            MainViewModel.performQuickDial(for: .other(code.ussd))
+                        HStack {
+                            Text(LocalizedStringKey(code.title))
+
+                            Spacer()
+                            if editMode?.wrappedValue.isEditing == true {
+                                Text("Edit")
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .frame(maxHeight: .infinity)
+                                    .frame(width: 60)
+                                    .background(Color.blue)
+                                    .clipShape(Capsule())
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if isEditingMode {
+                                editedUSSDModel = .init(code)
+                            } else {
+                                MainViewModel.performQuickDial(for: .other(code.ussd))
+
+                            }
                         }
                     }
                     .onDelete(perform: store.deleteUSSD)
@@ -61,16 +83,20 @@ struct MySpaceView: View, UtilitiesDelegate {
         }
         .background(Color.primaryBackground)
         .navigationTitle("My Space")
-        .sheet(isPresented: $presentNewDial) {
-            NewDialingView(store: store)
+        .sheet(item: $editedUSSDModel.onChange(observeUSSDChange)) { newCode in
+            NewDialingView(store: store,
+                           model: newCode,
+                           isEditing: isEditingMode)
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
-                    presentNewDial.toggle()
+                    editedUSSDModel = .init()
                 } label: {
                     Label("Add USSD Code", systemImage: "plus")
                 }
+
+                EditButton()
             }
         }
         .onAppear() {
@@ -78,8 +104,10 @@ struct MySpaceView: View, UtilitiesDelegate {
         }
     }
 
-    func didSelectOption(with code: DialerQuickCode) {
-        copyToClipBoard(fullCode: code.ussd)
+    private func observeUSSDChange(_ editedUSSD: NewDialingView.UIModel?) {
+        if editedUSSD == nil {
+            editMode?.wrappedValue = .inactive
+        }
     }
 
     private func copyToClipBoard(fullCode: String) {
@@ -94,12 +122,26 @@ struct MySpaceView: View, UtilitiesDelegate {
     }
 }
 
+extension MySpaceView: UtilitiesDelegate {
+    func didSelectOption(with code: DialerQuickCode) {
+        copyToClipBoard(fullCode: code.ussd)
+    }
+}
+
+private extension MySpaceView {
+    enum USSDFilterOption {
+        case system
+        case custom
+        case all
+    }
+}
+
 struct MySpaceView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             MySpaceView()
                 .environmentObject(MainViewModel())
-//                .preferredColorScheme(.dark)
+            //                .preferredColorScheme(.dark)
         }
     }
 }

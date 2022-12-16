@@ -11,7 +11,7 @@ struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
     var body: some View {
         NavigationView {
-            TestingView()
+            DashBoardView()
         }
         .navigationViewStyle(.stack)
         .onAppear(perform: setupAppearance)

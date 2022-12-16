@@ -9,11 +9,12 @@ import SwiftUI
 
 struct NewDialingView: View {
     @ObservedObject var store: MainViewModel
+    @State var model: UIModel = UIModel()
+    var isEditing = false
+     
     @Environment(\.dismiss) private var dismiss
-    @State private var model: UIModel = UIModel()
 
-    @State private var alertItem: (status: Bool, message: String) = (false, "")
-    
+    @State private var alertItem: (status: Bool, message: String) = (false, "")    
     @FocusState  private var focusedField: Field?
     
     var body: some View {
@@ -67,7 +68,7 @@ struct NewDialingView: View {
                 }
                 
                 Button(action: saveUSSD) {
-                    Text("Save USSD")
+                    Text("\(isEditing ? "Edit" : "Save") USSD")
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
@@ -85,7 +86,7 @@ struct NewDialingView: View {
                 Text(LocalizedStringKey(alertItem.message))
             })
             .padding()
-            .navigationTitle("Save your own code")
+            .navigationTitle("\(isEditing ? "Edit" : "Save") your own code")
             .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
             .onSubmit(manageKeyboardFocus)
             .onAppear() {
@@ -126,11 +127,27 @@ extension NewDialingView {
     }
 
     private func titleAlreadyExists() -> Bool {
-        store.ussdCodes.contains { $0.title.lowercased() == cleanedTitle(model.label.lowercased()) }
+        if isEditing {
+            return store.ussdCodes.contains {
+                $0.id != model.id &&
+                cleanedTitle($0.title.lowercased()) == cleanedTitle(model.label.lowercased())
+            }
+        } else {
+           return store.ussdCodes.contains {
+               cleanedTitle($0.title.lowercased()) == cleanedTitle(model.label.lowercased())
+           }
+        }
     }
 
     private func ussdAlreadyExists() -> Bool {
-        store.ussdCodes.contains { $0.ussd == model.editedCode }
+        if isEditing {
+            return store.ussdCodes.contains {
+                $0.id != model.id &&
+                $0.ussd == model.editedCode
+            }
+        } else {
+            return store.ussdCodes.contains { $0.ussd == model.editedCode }
+        }
     }
 
     private func isUSSDValid() -> Bool {
@@ -141,7 +158,11 @@ extension NewDialingView {
         do {
             let newCode = try USSDCode(title: model.label,
                                        ussd: model.editedCode)
-            store.storeUSSD(newCode)
+            if isEditing {
+                store.updateUSSD(newCode)
+            } else {
+                store.storeUSSD(newCode)
+            }
             dismiss()
         } catch let error as USSDCode.USSDCodeValidationError  {
             alertItem = (true, error.description)
@@ -152,9 +173,22 @@ extension NewDialingView {
 }
 
 extension NewDialingView {
-    struct UIModel {
-        var editedCode: String = ""
-        var label: String = ""
+    struct UIModel: Identifiable {
+        var id: UUID
+        var editedCode: String
+        var label: String
+
+        init(editedCode: String = "", label: String = "") {
+            self.id = UUID()
+            self.editedCode = editedCode
+            self.label = label
+        }
+
+        init(_ ussdCode: USSDCode) {
+            self.id = ussdCode.id
+            self.editedCode = ussdCode.ussd
+            self.label = ussdCode.title
+        }
     }
 }
 
@@ -163,4 +197,3 @@ struct NewDialingView_Previews: PreviewProvider {
         NewDialingView(store: MainViewModel())
     }
 }
-
