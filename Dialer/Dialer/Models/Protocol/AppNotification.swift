@@ -13,5 +13,5 @@ protocol AppNotification {
     var message: String { get }
     var info: [String: Any] { get }
     var imageUrl: URL? { get }
-    var scheduledDate: Date { get }
+    var scheduledDate: DateComponents { get }
 }

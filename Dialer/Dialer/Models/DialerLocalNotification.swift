@@ -18,6 +18,6 @@ struct DialerLocalNotification: AppNotification {
     
     var imageUrl: URL?
 
-    var scheduledDate: Date
+    var scheduledDate: DateComponents
     
 }

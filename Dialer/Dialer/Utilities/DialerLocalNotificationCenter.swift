@@ -31,7 +31,7 @@ final class DialerNotificationCenter {
         }
     }
 
-    func createNotificaton(_ notification: AppNotification, repeats: Bool = false) async throws {
+    func createNotification(_ notification: AppNotification, repeats: Bool = false) async throws {
         guard try await isNotificationAuthorized() else { return }
 
         let content = UNMutableNotificationContent()
@@ -45,9 +45,7 @@ final class DialerNotificationCenter {
             content.attachments = [attachement]
         }
 
-        let launchDateTime = notification.scheduledDate
-        let dateComponents = Calendar.current.dateComponents([.second], from: launchDateTime)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: repeats)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: notification.scheduledDate, repeats: repeats)
 
         let request = UNNotificationRequest(identifier: notification.id.uuidString, content: content, trigger: trigger)
 
@@ -65,27 +63,62 @@ final class DialerNotificationCenter {
     }
 
     func scheduleMorningReminder() {
-        let nextDay9AM = getNextDate()
+        let nextDay9AMComponents = getNextDateComponents()
         let dailyNotification: DialerLocalNotification
         dailyNotification = .init(id: UUID(),
                                   title: "Good morning!, Have a Great Day",
                                   message: "Buy airtime, transfer money and do more with Dialer!",
                                   info: [:],
-                                  scheduledDate: nextDay9AM)
+                                  scheduledDate: nextDay9AMComponents)
         Task {
-            try? await createNotificaton(dailyNotification, repeats: true)
+            try? await createNotification(dailyNotification, repeats: true)
         }
     }
 
-    private func getNextDate(from date: Date = .now) -> Date {
+    func scheduleChristmas() {
+        guard let christmasComponents = getNextChristmasComponents() else { return }
+        let christmas = DialerLocalNotification(id: UUID(),
+                                            title: "Merry Christmas!",
+                                            message: "Dialer wish you a merry christmas!",
+                                            info: [:],
+                                            imageUrl: Bundle.main.url(forResource: "christmas", withExtension: "png"),
+                                            scheduledDate: christmasComponents)
+        Task {
+            try? await DialerNotificationCenter.shared.createNotification(christmas)
+        }
+    }
+}
+
+private extension DialerNotificationCenter {
+    func getNextChristmasComponents() -> DateComponents? {
+        var components = DateComponents()
+        components.day = 25
+        components.month = 12
+        components.hour = 8
+        components.minute = 0
+
+        guard let christmas = Calendar.current.date(from: components) else { return nil }
+
+        let dateComponents = getComponents([.day, .month, .hour, .minute], from: christmas)
+
+        return dateComponents
+    }
+
+    func getNextDateComponents(from date: Date = .now) -> DateComponents {
         var components = DateComponents()
         components.hour = 9
         components.minute = 0
         let todayDay9AM = Calendar.current.date(from: components) ?? .now
+
         let tomorrowDay9AM = Calendar.current.date(byAdding: .day, value: 1, to: todayDay9AM)
 
+        let dateComponents = getComponents([.hour, .minute], from: tomorrowDay9AM ?? .now)
 
-        return tomorrowDay9AM ?? .now
+        return dateComponents
+    }
+
+    func getComponents(_ components: Set<Calendar.Component>, from date: Date) -> DateComponents {
+        return Calendar.current.dateComponents(components, from: date)
     }
 }
 
