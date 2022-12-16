@@ -105,6 +105,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         viewModel.retrieveCodes()
         viewModel.retrieveUSSDCodes()
         DialerStorage.shared.storeSyncDate()
+
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -114,6 +115,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         viewModel.saveRecentCodesLocally()
 
+        // Schedule Morning Daily Reminder
+        DialerNotificationCenter.shared.scheduleMorningReminder()
     }
     
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
