@@ -16,8 +16,8 @@ struct MySpaceView: View {
 
     // MARK: - Private Properties
     @State private var didCopyToClipBoard = false
-    @State private var showUserCustomCodes = false
-    @State private var filterOption: USSDFilterOption = .all
+//    @State private var showUserCustomCodes = false
+//    @State private var filterOption: USSDFilterOption = .all
     @State private var editedUSSDModel: NewDialingView.UIModel?
 
     private var rowBackground: Color {
@@ -128,13 +128,13 @@ extension MySpaceView: UtilitiesDelegate {
     }
 }
 
-private extension MySpaceView {
-    enum USSDFilterOption {
-        case system
-        case custom
-        case all
-    }
-}
+//private extension MySpaceView {
+//    enum USSDFilterOption {
+//        case system
+//        case custom
+//        case all
+//    }
+//}
 
 struct MySpaceView_Previews: PreviewProvider {
     static var previews: some View {

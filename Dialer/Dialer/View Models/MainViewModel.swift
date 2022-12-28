@@ -163,21 +163,6 @@ class MainViewModel: ObservableObject {
     }
     
     /// Perform an independent dial, without storing or tracking.
-    /// - Parameter code: the `string` code to be dialed.
-    @available(*, deprecated, message: "This method now accepts a built-in param of type DialerQuickCode")
-    static func performQuickDial(for code: String) {
-        if let telUrl = URL(string: "tel://\(code)"),
-           UIApplication.shared.canOpenURL(telUrl) {
-            UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
-                print("Successfully Dialed")
-            })
-            
-        } else {
-            print("Can not dial this code")
-        }
-    }
-    
-    /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
     static func performQuickDial(for code: DialerQuickCode) {
         if let telUrl = URL(string: "tel://\(code.ussd)"),
@@ -256,7 +241,7 @@ extension MainViewModel {
 // MARK: - Extension used for Error, Models, etc
 extension MainViewModel {
     enum DialingError: Error {
-        case canNotDial, emptyPin, unknownFormat(String),  other
+        case canNotDial, emptyPin, unknownFormat(String)
         var message: String {
             switch self {
             case .canNotDial:
@@ -265,8 +250,6 @@ extension MainViewModel {
                 return "Can not decode this format: \(format)"
             case .emptyPin:
                 return "Pin Code not found, configure pin and try again"
-            default:
-                return "Unknown error occured"
             }
         }
     }

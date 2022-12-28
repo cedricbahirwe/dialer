@@ -127,13 +127,13 @@ extension DialerNotificationCenter {
         case notAuthorized
         case notAdded
 
-        var explanation: String {
-            switch self {
-            case .notAuthorized:
-                return "Notification not authorized: \(localizedDescription)"
-            case .notAdded:
-                return "Unable to add notification: \(localizedDescription)"
-            }
-        }
+//        var explanation: String {
+//            switch self {
+//            case .notAuthorized:
+//                return "Notification not authorized: \(localizedDescription)"
+//            case .notAdded:
+//                return "Unable to add notification: \(localizedDescription)"
+//            }
+//        }
     }
 }

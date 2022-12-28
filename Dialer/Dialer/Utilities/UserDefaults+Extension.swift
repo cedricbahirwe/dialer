@@ -14,7 +14,6 @@ extension UserDefaults {
     enum Keys {
         static let recentCodes = "recentCodes"
         static let pinCode = "pinCode"
-        static let purchaseDetails = "purchaseDetails"
         static let lastSyncDate = "lastSyncDate"
 
         // Onboarding
