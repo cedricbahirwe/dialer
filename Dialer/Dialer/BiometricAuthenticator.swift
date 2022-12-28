@@ -27,7 +27,7 @@ final class BiometricAuthenticator {
     }
 
     /// Observe biometrics authentication changes
-    public func onStateChanged(_ completion: @escaping (Bool) -> Void) {
+    func onStateChanged(_ completion: @escaping (Bool) -> Void) {
         // Get a fresh context for each login. If you use the same context on multiple attempts
         //  (by commenting out the next line), then a previously successful authentication
         //  causes the next policy evaluation to succeed without testing biometry again.

@@ -12,7 +12,6 @@ struct Transaction: Identifiable {
     var amount: String
     var number: String
     var type: Transactiontype
-    var date: Date { Date() }
     
     var trailingCode: String {
         // Need strategy to deal with country code

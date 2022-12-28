@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 
-var shortcutItemToProcess: UIApplicationShortcutItem?
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // List of known shortcut actions.

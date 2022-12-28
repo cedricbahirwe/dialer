@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum SettingsOption {
+enum SettingsOption {
     case changeLanguage
     case biometrics
     case getStarted
@@ -18,10 +18,8 @@ public enum SettingsOption {
     case review
     case deletePin
     case deleteUSSDs
-//    case deleteRencentCodes
-//    case deleteElectricityMeters
-        
-    public func getSettingsItem() -> SettingsItem {
+    
+    func getSettingsItem() -> SettingsItem {
         switch self {
         case .changeLanguage:
             return .init(icon: "language", color: .main.opacity(0.7), title: "Change Language", subtitle: "Select your desired language.")

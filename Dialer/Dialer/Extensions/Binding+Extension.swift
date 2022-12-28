@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Binding {
-    public func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
         Binding(
             get: { wrappedValue },
             set: { newValue in

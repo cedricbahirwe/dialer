@@ -7,43 +7,20 @@
 
 import SwiftUI
 
-fileprivate enum DragState {
-    case open
-    case closed
-    case dragging(position: CGFloat)
-}
-
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
-    @Environment(\.colorScheme) private var colorScheme
 
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
     @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
 
-    @State private var dragState: DragState = .closed
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
-    @State private var isSpeaking = false
+//    @State private var isSpeaking = false
 
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
-    
-    private var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                let position = value.startLocation.y + value.translation.height
-                dragState = .dragging(position: position)
-            }
-            .onEnded { value in
-                let snapDistance = 600 * CGFloat(0.25)
-                showPurchaseSheet = value.translation.height < snapDistance
-                withAnimation {
-                    dragState = showPurchaseSheet ? .open : .closed
-                }
-            }
-    }
     
     var body: some View {
             ZStack(alignment: .bottom) {

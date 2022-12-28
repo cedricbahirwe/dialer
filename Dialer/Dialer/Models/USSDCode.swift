@@ -15,7 +15,7 @@ struct USSDCode: Identifiable, Equatable, Codable {
         lhs.ussd == rhs.ussd || lhs.title == rhs.title
     }
 
-    public init(id: UUID = UUID(), title: String, ussd: String) throws {
+    init(id: UUID = UUID(), title: String, ussd: String) throws {
         self.id = id
         guard !title.isEmpty else {
             throw USSDCodeValidationError.emptyTitle
@@ -24,9 +24,9 @@ struct USSDCode: Identifiable, Equatable, Codable {
         self.ussd = try Self.validateUSSD(from: ussd)
     }
 
-    public let id: UUID
-    public let title: String
-    public let ussd: String
+    let id: UUID
+    let title: String
+    let ussd: String
 }
 
 // MARK: Validation

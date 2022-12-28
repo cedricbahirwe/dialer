@@ -9,17 +9,9 @@ import Foundation
 import SwiftUI
 
 extension String {
-    func localized(with arguments: [CVarArg]) -> LocalizedStringKey {
-        LocalizedStringKey(String(format: self, arguments: arguments))
-    }
-
-    func percentEncoded() -> String? {
-        return (self as NSString).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
-    }
-
     /// Check for the validity of the `MTN` number (078 && 079)
     /// This is a agnostic approach, since it does not handle all the edge cases
-    public var isMtnNumber: Bool {
+    var isMtnNumber: Bool {
         var number = trimmingCharacters(in: .whitespacesAndNewlines)
         number = number.replacingOccurrences(of: " ", with: "")
         return number.hasPrefix("+25078") || number.hasPrefix("25078") || number.hasPrefix("078") ||
@@ -27,7 +19,7 @@ extension String {
     }
 
     /// Removes the `Rwanda` country code and return a pure  `MTN` number format
-    public func asMtnNumber() -> String {
+    func asMtnNumber() -> String {
         var mtnNumber = self
         if mtnNumber.hasPrefix("25") {
             mtnNumber.removeFirst(2)

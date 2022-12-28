@@ -27,17 +27,14 @@ struct MailView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
     
-    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeCoordinator() -> Coordinator { Coordinator() }
     
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        let parent: MailView
-        
-        init(_ parent: MailView) {
-            self.parent = parent
-        }
+
         func mailComposeController(_ controller: MFMailComposeViewController,
                                    didFinishWith result: MFMailComposeResult,
                                    error: Error?) {
+
             controller.dismiss(animated: true)
         }
     }

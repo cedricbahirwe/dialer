@@ -8,13 +8,12 @@
 import Foundation
 
 typealias UserDefaultsKeys = UserDefaults.Keys
-public extension UserDefaults {
+extension UserDefaults {
 
     /// Storing the used UserDefaults keys for safety.
     enum Keys {
         static let recentCodes = "recentCodes"
         static let pinCode = "pinCode"
-        static let purchaseDetails = "purchaseDetails"
         static let lastSyncDate = "lastSyncDate"
 
         // Onboarding
