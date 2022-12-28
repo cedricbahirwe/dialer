@@ -9,8 +9,6 @@ import SwiftUI
 
 extension UIColor {
     static let primaryBackground = UIColor(Color.primaryBackground)
-    static let mainColor = UIColor(Color.main)
-    static let mainRed = UIColor(Color.mainRed)
 }
 
 extension Color {
@@ -19,5 +17,4 @@ extension Color {
     static var darkShadow = Color("darkShadow")
     static let main = Color("main")
     static let mainRed = Color("mainRed")
-    static let offWhite = Color(red: 225 / 255, green: 225 / 255, blue: 235 / 255)
 }

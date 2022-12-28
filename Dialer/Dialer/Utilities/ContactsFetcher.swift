@@ -9,7 +9,7 @@ import Foundation
 import Contacts
 
 private enum PhonePermission: Error {
-    case notDetermined, emptyContacts, containerError
+    case emptyContacts, containerError
 }
 
 class PhoneContacts {
@@ -57,7 +57,7 @@ class PhoneContacts {
         return results
     }
     
-    class public func getMtnContacts() async throws -> [Contact] {
+    class func getMtnContacts() async throws -> [Contact] {
         var contacts: [CNContact] = []
         do {
             contacts = try await PhoneContacts.getContacts()

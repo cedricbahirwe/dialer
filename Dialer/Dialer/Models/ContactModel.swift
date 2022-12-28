@@ -16,14 +16,7 @@ struct Contact: Identifiable {
         self.names = names
         self.phoneNumbers = phoneNumbers
     }
-    
-    init(firstName: String,
-         lastName: String,
-         phoneNumbers: [String]) {
-        self.names = "\(firstName) \(lastName)"
-        self.phoneNumbers = phoneNumbers
-    }
-    
+
     mutating func updatePhones(_ numbers: [String]) {
         phoneNumbers = numbers
     }
@@ -31,29 +24,4 @@ struct Contact: Identifiable {
                                  phoneNumbers: ["(555) 564-8583", "(415) 555-3695"])
     static let example1 = Contact(names: "John Smith",
                                  phoneNumbers: ["(415) 555-3695"])
-}
-
-extension Contact {
-    var initials: String {
-        if names.isEmpty {
-            return "···"
-        } else {
-            let names = names.split(separator: " ")
-            if names.count >= 2 {
-                let first = names[0].first!
-                let second = names[1].first!
-                
-                return String(first) + String(second)
-            } else if names.count == 1  {
-                return names[0].count >= 1 ? String(names[0].first!) :  "···"
-            } else {
-                if let name = names.first {
-                    return name.isEmpty ? "" : String(name.first!)
-                    
-                } else {
-                    return "···"
-                }
-            }
-        }
-    }
 }

@@ -58,16 +58,6 @@ extension CodePin {
     enum ValidationError: Error {
         case invalidCharacters
         case invalidCount(Int)
-
-
-        var message: String {
-            switch self {
-            case .invalidCharacters:
-                return "The Code Pin should only contain numbers"
-            case .invalidCount(let count):
-                return "The Code Pin should only be 5 digits, not \(count)"
-            }
-        }
     }
 }
 

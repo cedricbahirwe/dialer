@@ -55,13 +55,13 @@ class MainViewModel: ObservableObject {
     }
     
     
-    public func containsMeter(with number: String) -> Bool {
+    func containsMeter(with number: String) -> Bool {
         guard let meter = try? ElectricityMeter(number) else { return false }
         return elecMeters.contains(meter)
     }
     
     /// Save RecentCode(s) locally.
-    public func saveRecentCodesLocally() {
+    func saveRecentCodesLocally() {
         do {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
@@ -70,23 +70,23 @@ class MainViewModel: ObservableObject {
     }
     
     ///  Delete locally the Pin Code.
-    public func removePin() {
+    func removePin() {
         DialerStorage.shared.removePinCode()
         pinCode = nil
     }
 
     /// Has user saved Code Pin
-    public func hasStoredCodePin() -> Bool {
+    func hasStoredCodePin() -> Bool {
         DialerStorage.shared.hasSavedCodePin()
     }
     
     /// Retrieve all locally stored recent codes.
-    public func retrieveCodes() {
+    func retrieveCodes() {
         recentCodes = DialerStorage.shared.getRecentCodes()
     }
     
     /// Confirm and Purchase an entered Code.
-    public func confirmPurchase() {
+    func confirmPurchase() {
         let purchase = purchaseDetail
         dialCode(from: purchaseDetail, completion: { result in
             switch result {
@@ -104,14 +104,14 @@ class MainViewModel: ObservableObject {
     
     /// Delete locally the used Code(s).
     /// - Parameter offSets: the offsets to be deleted
-    public func deletePastCode(at offSets: IndexSet) {
+    func deletePastCode(at offSets: IndexSet) {
         recentCodes.remove(atOffsets: offSets)
         saveRecentCodesLocally()
     }
     
     /// Save locally the Code Pin
     /// - Parameter value: the pin value to be saved.
-    public func saveCodePin(_ value: CodePin) {
+    func saveCodePin(_ value: CodePin) {
         pinCode = value
         do {
             try DialerStorage.shared.saveCodePin(value)
@@ -152,12 +152,12 @@ class MainViewModel: ObservableObject {
 
     }
 
-    public func getPurchaseDetailUSSDCode() -> String {
+    func getPurchaseDetailUSSDCode() -> String {
         getFullUSSDCode(from: purchaseDetail)
     }
     
     /// Returns a `RecentDialCode` that matches the input identifier.
-    public func rencentDialCode(_ identifier: String) -> RecentDialCode? {
+    func rencentDialCode(_ identifier: String) -> RecentDialCode? {
         let foundCode = recentCodes.first(where: { $0.id.uuidString == identifier})
         return foundCode
     }
@@ -193,7 +193,7 @@ class MainViewModel: ObservableObject {
     
     /// Perfom a quick dialing from the `History View Row.`
     /// - Parameter recentCode: the row code to be performed.
-    public func performRecentDialing(for recentCode: RecentDialCode) {
+    func performRecentDialing(for recentCode: RecentDialCode) {
         let recent = recentCode
         dialCode(from: recentCode.detail) { result in
             switch result {
@@ -205,15 +205,15 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    public func showSettingsView() {
+    func showSettingsView() {
         showSettingsSheet = true
     }
     
-    public func dismissSettingsView() {
+    func dismissSettingsView() {
         showSettingsSheet = false
     }
     
-    public func settingsAndHistorySheetBinding() -> Binding<Bool> {
+    func settingsAndHistorySheetBinding() -> Binding<Bool> {
         let setter = { [weak self] (value: Bool) in
             guard let strongSelf = self else { return }
             if strongSelf.showSettingsSheet {
@@ -242,11 +242,11 @@ extension MainViewModel {
         }
     }
 
-    public func checkMobileWalletBalance() {
+    func checkMobileWalletBalance() {
         performQuickDial(for: .mobileWalletBalance(code: pinCode))
     }
 
-    public func getElectricity(for meterNumber: String, amount: Int) {
+    func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
         performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
     }
@@ -278,7 +278,7 @@ extension MainViewModel {
 
     /// Store a given  `MeterNumber`  locally.
     /// - Parameter code: the code to be added.
-    public func storeMeter(_ number: ElectricityMeter) {
+    func storeMeter(_ number: ElectricityMeter) {
         guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
         elecMeters.append(number)
         saveMeterNumbersLocally(elecMeters)
@@ -294,11 +294,11 @@ extension MainViewModel {
     }
 
     /// Retrieve all locally stored Meter Numbers codes
-    public func retrieveMeterNumbers() {
+    func retrieveMeterNumbers() {
         elecMeters = DialerStorage.shared.getMeterNumbers()
     }
 
-    public func deleteMeter(at offSets: IndexSet) {
+    func deleteMeter(at offSets: IndexSet) {
         elecMeters.remove(atOffsets: offSets)
         saveMeterNumbersLocally(elecMeters)
     }
@@ -308,7 +308,7 @@ extension MainViewModel {
 extension MainViewModel {
     /// Store a given  `USSDCode`  locally.
     /// - Parameter code: the code to be added.
-    public func storeUSSD(_ code: USSDCode) {
+    func storeUSSD(_ code: USSDCode) {
         guard ussdCodes.contains(where: { $0 == code }) == false else { return }
         ussdCodes.append(code)
         saveUSSDCodesLocally(ussdCodes)
@@ -316,7 +316,7 @@ extension MainViewModel {
 
     /// Update an existing `USSDCode` locally.
     /// - Parameter code: the code to be updated
-    public func updateUSSD(_ code: USSDCode) {
+    func updateUSSD(_ code: USSDCode) {
         if let index = ussdCodes.firstIndex(of: code) {
             ussdCodes[index] = code
         }
@@ -333,16 +333,16 @@ extension MainViewModel {
     }
 
     /// Retrieve all locally stored Meter Numbers codes
-    public func retrieveUSSDCodes() {
+    func retrieveUSSDCodes() {
         ussdCodes = DialerStorage.shared.getUSSDCodes()
     }
 
-    public func deleteUSSD(at offSets: IndexSet) {
+    func deleteUSSD(at offSets: IndexSet) {
         ussdCodes.remove(atOffsets: offSets)
         saveUSSDCodesLocally(ussdCodes)
     }
 
-    public func removeAllUSSDs() {
+    func removeAllUSSDs() {
         DialerStorage.shared.removeAllUSSDCodes()
         ussdCodes = []
     }

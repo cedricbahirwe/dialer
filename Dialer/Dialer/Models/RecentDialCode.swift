@@ -12,7 +12,7 @@ struct RecentDialCode: Identifiable, Hashable, Codable {
         lhs.id == rhs.id
     }
     
-    public init(id: UUID = UUID(), detail: PurchaseDetailModel, count: Int = 1) {
+    init(id: UUID = UUID(), detail: PurchaseDetailModel, count: Int = 1) {
         self.id = id
         self.detail = detail
         self.count = count
