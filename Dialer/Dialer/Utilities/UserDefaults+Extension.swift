@@ -8,7 +8,7 @@
 import Foundation
 
 typealias UserDefaultsKeys = UserDefaults.Keys
-public extension UserDefaults {
+extension UserDefaults {
 
     /// Storing the used UserDefaults keys for safety.
     enum Keys {

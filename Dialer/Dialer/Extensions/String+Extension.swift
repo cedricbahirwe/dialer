@@ -11,7 +11,7 @@ import SwiftUI
 extension String {
     /// Check for the validity of the `MTN` number (078 && 079)
     /// This is a agnostic approach, since it does not handle all the edge cases
-    public var isMtnNumber: Bool {
+    var isMtnNumber: Bool {
         var number = trimmingCharacters(in: .whitespacesAndNewlines)
         number = number.replacingOccurrences(of: " ", with: "")
         return number.hasPrefix("+25078") || number.hasPrefix("25078") || number.hasPrefix("078") ||

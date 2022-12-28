@@ -35,7 +35,7 @@ class MainViewModel: ObservableObject {
         recentCodes.map(\.totalPrice).reduce(0, +)
     }
     
-    @Published public var purchaseDetail = PurchaseDetailModel()
+    @Published var purchaseDetail = PurchaseDetailModel()
     
     @Published private(set) var recentCodes: [RecentDialCode] = []
     
@@ -165,7 +165,7 @@ class MainViewModel: ObservableObject {
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: the `string` code to be dialed.
     @available(*, deprecated, message: "This method now accepts a built-in param of type DialerQuickCode")
-    public static func performQuickDial(for code: String) {
+    static func performQuickDial(for code: String) {
         if let telUrl = URL(string: "tel://\(code)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
@@ -179,7 +179,7 @@ class MainViewModel: ObservableObject {
     
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
-    public static func performQuickDial(for code: DialerQuickCode) {
+    static func performQuickDial(for code: DialerQuickCode) {
         if let telUrl = URL(string: "tel://\(code.ussd)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PinView: View {
     @Binding var input: String
-    public var isFullMode: Bool = false
-    public var btnSize: CGFloat = 60
+    var isFullMode: Bool = false
+    var btnSize: CGFloat = 60
 
     private var buttons: [String] {
         var defaults: [String] = ["1","2","3","4","5","6","7","8","9","*","0"]
