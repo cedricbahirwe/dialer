@@ -5,7 +5,7 @@
 Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
 
-## Features:
+## ✅ Dones:
 * Beautiful UI with Light/Dark Mode support.
 * History View to Track Past dialings.
 * Incognito mode for dialings (No track will be stored).
@@ -15,14 +15,26 @@ Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 * Settings
 * Transaction Amount Limit 
 
+## ✨ TODOs :
+
+* Good Local Storage (Core Data)
+* Siri Commands Support (Intents and IntentsUI)
+* Transaction History
+
 ## TakeAways 🚀
 
-- **Understand what makes a great app**
-- **Understand the SDLC (Software Development Life Cycle)**
-- **Following Apple Human Interface Guidelines**
-- **Deep Dive into Home Screen Quick Actions**
-- **Management of Local DataBase in SwiftUI**
-- **Light / Dark Mode Support**
+- What makes a great app!
+- SDLC(Software Development Life Cycle) in practice
+- Following Apple Human Interface Guidelines
+- Deep Dive into Home Screen Quick Actions
+- Local DataBase Management at Scale in iOS
+
+## Technology 🧑🏽‍💻 
+- SwiftUI & UIKit
+- UserNotifications & LocalAuthentication
+- StoreKit
+- Contacts & CoreTelephony
+- XCTest
 
 ## Screenshots
 
@@ -37,8 +49,11 @@ Transfer                    |  Settings
 Utilities                  |  Electricity Payment
 :-------------------------:|:-------------------------:
 ![](Shots/utilities.png)  |  ![](Shots/electricity.png)
-## ✨ Upcoming features:
 
-* ### Good Local Storage (Core Data)
-* ### Siri Commands Support (Intents and IntentsUI)
-* ### Transaction History
+## Contributing
+
+- PRs are very welcome!✨
+
+## Authors
+
+* **Cedric Bahirwe** - *iOS Engineer* - [cedricbahirwe](https://github.com/cedricbahirwe)
