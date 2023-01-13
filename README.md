@@ -2,6 +2,7 @@
 
 ### An intuitive USSD client to handle most of the common actions for you.
 ### Access Rwanda Network providers USSD codes, and simplify packages activation nightmare.
+Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
 
 ## Features:
