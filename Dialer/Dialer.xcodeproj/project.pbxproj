@@ -50,6 +50,7 @@
 		CB3B81E029ABC591001FAFF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */; };
 		CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E129ABC742001FAFF6 /* Merchant.swift */; };
 		CB3B81E429ABC84A001FAFF6 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */; };
+		CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */; };
 		CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */; };
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
@@ -151,6 +152,7 @@
 		CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CB3B81E129ABC742001FAFF6 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
+		CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDialingView.swift; sourceTree = "<group>"; };
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
 		CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */,
 				CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */,
 				CBAEE52029AB7EFA00A6B2AD /* LocationManager.swift */,
+				CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */,
 				825F996526720B46009E4A7B /* ContactsFetcher.swift */,
 				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
 				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
@@ -597,6 +600,7 @@
 				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
+				CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */,
 				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,
 				CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,

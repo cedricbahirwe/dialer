@@ -12,6 +12,7 @@ import SwiftUI
 final class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
+    private let merchantProvider: MerchantProtocol
 
     var permissionStatus: LocationStatus {
         switch authorisationStatus {
@@ -20,7 +21,8 @@ final class LocationManager: NSObject, ObservableObject {
         }
     }
 
-    override init() {
+    init(_ merchantProvider: MerchantProtocol = FirebaseManager()) {
+        self.merchantProvider = merchantProvider
         super.init()
         self.locationManager.delegate = self
     }
@@ -57,7 +59,7 @@ final class LocationManager: NSObject, ObservableObject {
 extension LocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let newAuthorizationStatus = manager.authorizationStatus
-//        let accuracy = manager.accuracyAuthorization
+        //        let accuracy = manager.accuracyAuthorization
         DispatchQueue.main.async {
             self.authorisationStatus = newAuthorizationStatus
 
@@ -81,8 +83,10 @@ extension LocationManager: CLLocationManagerDelegate {
 // MARK: - Merchant Side
 extension LocationManager {
     /// MARK:  - Get merchants near user location
-    func getNearbyMerchants() -> [Merchant] {
+    func getNearbyMerchants() async -> [Merchant] {
         guard let location = getLastKnownLocation() else { return [] }
-        return []
+        return merchantProvider.getMerchantsNear(
+            lat: location.latitude,
+            long: location.longitude)
     }
 }
