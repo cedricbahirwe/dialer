@@ -7,21 +7,26 @@
 
 import Foundation
 import CoreLocation
+import SwiftUI
 
 final class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
-    var status: LocationStatus {
+
+    private var permissionStatus: LocationStatus {
         switch authorisationStatus {
-        case .denied: return .denied
-        case .authorizedAlways: return .authorizedAlways
-        case .authorizedWhenInUse: return .authorizedWhenInUse
-        default: return .unknown
+        case .authorizedAlways, .authorizedWhenInUse: return .granted
+        default: return .denied
         }
     }
+
     override init() {
         super.init()
         self.locationManager.delegate = self
+    }
+
+    private func getLastKnownLocation() -> UserLocation? {
+        DialerStorage.shared.getLastKnownLocation()
     }
 
     public func requestAuthorisation(always: Bool = false) async {
@@ -36,31 +41,38 @@ final class LocationManager: NSObject, ObservableObject {
         }
     }
 
+    public func getLatestLocation() -> UserLocation? {
+        guard permissionStatus == .granted,
+              let location = locationManager.location
+        else { return getLastKnownLocation() }
+        return UserLocation(location)
+    }
+
     enum LocationStatus: String, Codable {
-        case authorizedAlways
-        case authorizedWhenInUse
+        case granted
         case denied
-        case unknown
     }
 }
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let newAuthorizationStatus = manager.authorizationStatus
-        let accuracy = manager.accuracyAuthorization
+//        let accuracy = manager.accuracyAuthorization
         DispatchQueue.main.async {
             self.authorisationStatus = newAuthorizationStatus
 
-            print(manager.location, "Coordinate")
             if newAuthorizationStatus == .authorizedWhenInUse || newAuthorizationStatus == .authorizedAlways {
                 manager.startUpdatingLocation()
             }
         }
-        print(self.status, accuracy.rawValue)
     }
 
-
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("User Locations", locations.last)
+
+        DispatchQueue.main.async {
+            guard let lastLocation = locations.last else { return }
+            let userLocation = UserLocation(lastLocation)
+            DialerStorage.shared.saveLastKnownLocation(userLocation)
+        }
     }
 }

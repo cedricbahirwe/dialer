@@ -15,6 +15,8 @@ struct DashBoardView: View {
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
     @AppStorage(UserDefaults.Keys.allowBiometrics)
+    @AppStorage(UserDefaults.Keys.lastUserLocation)
+    private var lastUserLocation: UserLocation?
     private var allowBiometrics = false
 
     @State private var presentQuickDial = false
