@@ -13,7 +13,7 @@ final class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
 
-    private var permissionStatus: LocationStatus {
+    var permissionStatus: LocationStatus {
         switch authorisationStatus {
         case .authorizedAlways, .authorizedWhenInUse: return .granted
         default: return .denied
@@ -72,7 +72,7 @@ extension LocationManager: CLLocationManagerDelegate {
         DispatchQueue.main.async {
             guard let lastLocation = locations.last else { return }
             let userLocation = UserLocation(lastLocation)
-            DialerStorage.shared.saveLastKnownLocation(userLocation)
+            try? DialerStorage.shared.saveLastKnownLocation(userLocation)
         }
     }
 }
