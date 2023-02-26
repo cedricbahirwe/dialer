@@ -11,7 +11,7 @@ struct Merchant: Codable {
     let id: UUID
     let name: String
     let address: String
-    let merchant: Int
+    let code: Int
     let latitude: Double
     let longitude: Double
 }

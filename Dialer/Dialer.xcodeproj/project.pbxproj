@@ -51,6 +51,7 @@
 		CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E129ABC742001FAFF6 /* Merchant.swift */; };
 		CB3B81E429ABC84A001FAFF6 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */; };
 		CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */; };
+		CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */; };
 		CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */; };
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
@@ -153,6 +154,7 @@
 		CB3B81E129ABC742001FAFF6 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMerchantView.swift; sourceTree = "<group>"; };
 		CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDialingView.swift; sourceTree = "<group>"; };
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
 		CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				CBC262BE2784C7D3000B8E0E /* MailView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
+				CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */,
 				CBA429DE29AB85E70041D578 /* Reusable */,
 				8218DBA72694644600E3C025 /* SubViews */,
 			);
@@ -584,6 +587,7 @@
 				CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
+				CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */,
 				821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */,
 				CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */,
 				8255E691269395EE00657EFB /* CongratsViewController.swift in Sources */,
