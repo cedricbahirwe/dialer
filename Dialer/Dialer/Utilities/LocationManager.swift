@@ -41,7 +41,7 @@ final class LocationManager: NSObject, ObservableObject {
         }
     }
 
-    public func getLatestLocation() -> UserLocation? {
+    private func getLatestLocation() -> UserLocation? {
         guard permissionStatus == .granted,
               let location = locationManager.location
         else { return getLastKnownLocation() }
@@ -74,5 +74,15 @@ extension LocationManager: CLLocationManagerDelegate {
             let userLocation = UserLocation(lastLocation)
             try? DialerStorage.shared.saveLastKnownLocation(userLocation)
         }
+    }
+}
+
+
+// MARK: - Merchant Side
+extension LocationManager {
+    /// MARK:  - Get merchants near user location
+    func getNearbyMerchants() -> [Merchant] {
+        guard let location = getLastKnownLocation() else { return [] }
+        return []
     }
 }
