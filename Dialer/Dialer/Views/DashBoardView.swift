@@ -120,14 +120,6 @@ struct DashBoardView: View {
             }
             .background(Color.primaryBackground)
             .navigationTitle("Dialer")
-            .overlay(content: {
-                ZStack {
-                    Color.black.opacity(0.4)
-                    Text("\(locationManager.permissionStatus.rawValue)")
-                        .font(.largeTitle)
-                        .foregroundColor(.red)
-                }
-            })
             .onAppear(perform: {
                 Task {
                     await locationManager.requestAuthorisation()
