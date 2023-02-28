@@ -17,6 +17,7 @@
 "Transfer Money" = "Kohereza Amafaranga";
 "Estimated fee: amount RWF" = "Ikiguzi cyo kohereza: %d RWF";
 "We can not estimate the fee for this amount." = "Ntidushobora kugereranya ikiguzi kuri uwo mubare w’ amafaranga.";
+"Nearby Merchants" = "Abacuruzi hafi";
  
 // 3. History View
 "No History Yet" = "Nta mateka aracyafite";

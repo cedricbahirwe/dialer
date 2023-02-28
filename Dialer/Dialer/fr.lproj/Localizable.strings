@@ -15,6 +15,7 @@
 "Transfer Money" = "Envoyer de l'argent";
 "Estimated fee: amount RWF" = "Frais de tranfer: %d RWF";
 "We can not estimate the fee for this amount." = "Nous ne pouvons pas estimer le frais pour ce montant.";
+"Nearby Merchants" = "Marchands à proximité";
 
 // 3. History View
 "No History Yet" = "Pas encore d'historique";
