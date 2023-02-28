@@ -16,8 +16,6 @@ struct MySpaceView: View {
 
     // MARK: - Private Properties
     @State private var didCopyToClipBoard = false
-//    @State private var showUserCustomCodes = false
-//    @State private var filterOption: USSDFilterOption = .all
     @State private var editedUSSDModel: NewDialingView.UIModel?
 
     private var rowBackground: Color {

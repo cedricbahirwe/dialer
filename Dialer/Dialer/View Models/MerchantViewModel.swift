@@ -6,6 +6,7 @@
 //
 
 import FirebaseFirestore
+import CoreLocation
 
 
 final class MerchantStore: ObservableObject {
@@ -104,6 +105,16 @@ final class MerchantStore: ObservableObject {
                     }
                 }
             }
+    }
+
+    func getNearbyMerchants(_ userLocation: UserLocation) -> [Merchant] {
+        let userLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+        let sortedMerchants = merchants.sorted {
+            let location1 = CLLocation(latitude: $0.location.latitude, longitude: $0.location.longitude)
+            let location2 = CLLocation(latitude: $1.location.latitude, longitude: $1.location.longitude)
+            return userLocation.distance(from: location1) < userLocation.distance(from: location2)
+        }
+        return sortedMerchants
     }
 
     enum Collection {
