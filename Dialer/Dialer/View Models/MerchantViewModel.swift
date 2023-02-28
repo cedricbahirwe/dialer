@@ -15,6 +15,11 @@ final class MerchantStore: ObservableObject {
 
     private lazy var db = Firestore.firestore()
 
+
+    init() {
+        getAllMerchants()
+    }
+
     func saveMerchant(_ merchant: Merchant) async -> Bool {
         do {
             isFetching = true
@@ -101,6 +106,7 @@ final class MerchantStore: ObservableObject {
                     }
 
                     DispatchQueue.main.async {
+                        print(result )
                         self.merchants = result
                     }
                 }

@@ -75,3 +75,15 @@ extension View {
     }
     #endif
 }
+
+
+extension List {
+    @ViewBuilder
+    func hideListBackground() -> some View {
+        if #available(iOS 16.0, *) {
+            self.scrollContentBackground(.hidden)
+        } else {
+            self
+        }
+    }
+}

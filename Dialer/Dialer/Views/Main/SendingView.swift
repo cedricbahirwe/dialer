@@ -11,7 +11,8 @@ struct SendingView: View {
     @EnvironmentObject private var merchantStore: MerchantStore
     @EnvironmentObject private var locationManager: LocationManager
     @Environment(\.colorScheme) private var colorScheme
-    @State private var nearbyMerchants: [Merchant] = []
+
+    @State private var nearbyMerchants: [Merchant] = Merchant.sample// []
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
@@ -120,40 +121,47 @@ struct SendingView: View {
                 CopiedUSSDLabel()
             }
 
-            if !nearbyMerchants.isEmpty {
-                Section("Other") {
-                    ForEach(nearbyMerchants) { merchant in
-                        HStack {
-                            Text(merchant.name)
+            if transaction.type == .merchant && !nearbyMerchants.isEmpty ||  true {
+                List {
+                    Section {
+                        ForEach(nearbyMerchants) { merchant in
+                            HStack {
+                                HStack(spacing: 4) {
+                                    if merchant.code == transaction.number {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.blue)
+                                            .font(.body.weight(.semibold))
+                                    }
 
-                            Spacer()
-                            Text(merchant.code)
-//                            if editMode?.wrappedValue.isEditing == true {
-//                                Text("Edit")
-//                                    .font(.caption)
-//                                    .foregroundColor(.white)
-//                                    .frame(maxHeight: .infinity)
-//                                    .frame(width: 60)
-//                                    .background(Color.blue)
-//                                    .clipShape(Capsule())
-//                            }
+                                    Text(merchant.name)
+                                        .lineLimit(1)
+                                }
+                                Spacer()
+                                Text("#\(merchant.code)")
+                                    .font(.callout)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.blue)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation {
+                                    transaction.number = merchant.code
+                                }
+                            }
+                            .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
-//                        .onTapGesture {
-//                            if isEditingMode {
-//                                editedUSSDModel = .init(code)
-//                            } else {
-//                                MainViewModel.performQuickDial(for: .other(code.ussd))
-//
-//                            }
-//                        }
+
+                    } header: {
+                        Text("Nearby Merchants")
+                            .font(.system(.body, design: .rounded))
+                            .fontWeight(.semibold)
                     }
-//                    .onDelete(perform: store.deleteUSSD)
                 }
-                .listRowBackground(rowBackground)
+                .hideListBackground()
+            } else {
+                Spacer()
             }
-            Spacer()
         }
         .padding()
          
@@ -161,7 +169,7 @@ struct SendingView: View {
             ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
-        .onAppear(perform: initialization)
+//        .onAppear(perform: initialization)
         .navigationTitle("Transfer Money")
         .toolbar {
             Button(action: switchPaymentType) {
@@ -190,6 +198,8 @@ extension SendingView {
     func getNearbyMerchants() {
         if let userLocation = locationManager.userLocation {
             nearbyMerchants = merchantStore.getNearbyMerchants(userLocation)
+        } else {
+            nearbyMerchants = merchantStore.merchants
         }
     }
 
@@ -246,6 +256,8 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
+                .environmentObject(LocationManager())
+                .environmentObject(MerchantStore())
 //                .preferredColorScheme(.dark)
         }
     }
