@@ -21,6 +21,10 @@ struct DashBoardView: View {
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
 
+    #if DEBUG
+    @State private var showMerchantsList = false
+    #endif
+
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
     var body: some View {
@@ -184,9 +188,17 @@ extension DashBoardView {
             .padding(10)
             .background(Color.white)
             .cornerRadius(10)
+            .onTapGesture(count: 3) {
+                #if DEBUG
+                showMerchantsList = true
+                #endif
+            }
         }
         .padding(.horizontal)
         .padding(.bottom,8)
+        .fullScreenCover(isPresented: $showMerchantsList) {
+            MerchantsListView()
+        }
     }
 }
 

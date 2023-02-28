@@ -7,12 +7,11 @@
 
 import CoreLocation
 
-struct UserLocation: Codable {
+struct UserLocation: Equatable, Codable {
     let latitude: Double
     let longitude: Double
 
-    init(_ location: CLLocation) {
-        let coordinate = location.coordinate
+    init(_ coordinate: CLLocationCoordinate2D) {
         self.latitude = coordinate.latitude
         self.longitude = coordinate.longitude
     }

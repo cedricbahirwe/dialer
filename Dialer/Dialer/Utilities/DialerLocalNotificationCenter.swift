@@ -51,7 +51,6 @@ final class DialerNotificationCenter {
 
         do {
             try await UNUserNotificationCenter.current().add(request)
-            print("Scheduled")
         } catch {
             print("Unable to add notification: ", error.localizedDescription)
             throw NotificationError.notAdded

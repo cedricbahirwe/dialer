@@ -12,6 +12,7 @@ import SwiftUI
 final class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
+    @Published private(set) var userLocation: UserLocation?
     private let merchantProvider: MerchantProtocol
 
     var permissionStatus: LocationStatus {
@@ -43,11 +44,11 @@ final class LocationManager: NSObject, ObservableObject {
         }
     }
 
-    private func getLatestLocation() -> UserLocation? {
+    func getLatestLocation() -> UserLocation? {
         guard permissionStatus == .granted,
               let location = locationManager.location
         else { return getLastKnownLocation() }
-        return UserLocation(location)
+        return UserLocation(location.coordinate)
     }
 
     enum LocationStatus: String, Codable {
@@ -73,8 +74,8 @@ extension LocationManager: CLLocationManagerDelegate {
 
         DispatchQueue.main.async {
             guard let lastLocation = locations.last else { return }
-            let userLocation = UserLocation(lastLocation)
-            try? DialerStorage.shared.saveLastKnownLocation(userLocation)
+            self.userLocation = UserLocation(lastLocation.coordinate)
+            try? DialerStorage.shared.saveLastKnownLocation(self.userLocation!)
         }
     }
 }
