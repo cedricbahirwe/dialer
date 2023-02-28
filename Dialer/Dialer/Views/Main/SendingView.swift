@@ -12,7 +12,7 @@ struct SendingView: View {
     @EnvironmentObject private var locationManager: LocationManager
     @Environment(\.colorScheme) private var colorScheme
 
-    @State private var nearbyMerchants: [Merchant] = Merchant.sample// []
+    @State private var nearbyMerchants: [Merchant] = []
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
@@ -121,7 +121,7 @@ struct SendingView: View {
                 CopiedUSSDLabel()
             }
 
-            if transaction.type == .merchant && !nearbyMerchants.isEmpty ||  true {
+            if transaction.type == .merchant && !nearbyMerchants.isEmpty {
                 List {
                     Section {
                         ForEach(nearbyMerchants) { merchant in
@@ -169,7 +169,7 @@ struct SendingView: View {
             ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
-//        .onAppear(perform: initialization)
+        .onAppear(perform: initialization)
         .navigationTitle("Transfer Money")
         .toolbar {
             Button(action: switchPaymentType) {
