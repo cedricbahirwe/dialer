@@ -8,7 +8,6 @@
 import FirebaseFirestore
 import CoreLocation
 
-
 final class MerchantStore: ObservableObject {
     @Published private(set) var merchants: [Merchant] = []
     @Published private(set) var isFetching = false
@@ -81,8 +80,6 @@ final class MerchantStore: ObservableObject {
     func getAllMerchants() {
         isFetching = true
         db.collection(Collection.merchants)
-//            .order
-        //            .order(by: "createdDate", descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     debugPrint("Firestore error: \(error).")

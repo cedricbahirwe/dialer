@@ -20,7 +20,7 @@ struct SendingView: View {
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
 
     private var rowBackground: Color {
-        Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
+        Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
 
     private var feeHintView: Text {
@@ -162,6 +162,7 @@ struct SendingView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
+                    .listRowBackground(rowBackground)
                 }
                 .hideListBackground()
             } else {

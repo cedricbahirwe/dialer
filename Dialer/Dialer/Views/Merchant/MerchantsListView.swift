@@ -46,7 +46,6 @@ struct MerchantsListView: View {
                     }
                 }
             }
-            .onAppear(perform: merchantStore.getAllMerchants)
         }
     }
 }
