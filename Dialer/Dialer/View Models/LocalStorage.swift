@@ -105,6 +105,14 @@ final class DialerStorage {
         return userLocation
     }
 
+    func saveLastAskedDateToUpdate(_ date: Date?) {
+        userDefaults.set(date, forKey: LocalKeys.lastAskedDateToUpdate)
+    }
+
+    func getLastAskedDateToUpdate() -> Date? {
+        userDefaults.value(forKey: LocalKeys.lastAskedDateToUpdate) as? Date
+    }
+
     func removeAllUSSDCodes() {
         userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
     }
