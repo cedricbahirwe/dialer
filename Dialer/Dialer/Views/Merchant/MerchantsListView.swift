@@ -17,6 +17,7 @@ struct MerchantsListView: View {
                 ForEach(merchantStore.merchants) { merchant in
                     MerchantRow(merchant)
                 }
+                .onDelete(perform: merchantStore.deleteMerchants)
             }
             .overlay {
                 if merchantStore.isFetching {
@@ -61,11 +62,17 @@ private extension MerchantsListView {
                 Text(merchant.name)
                     .font(.title3.weight(.semibold))
                 Text("Address: \(merchant.address)")
-                    .font(.callout)
                 Text("Merchant Code: **\(merchant.code)**")
                 HStack {
                     Text("Lat: \(merchant.location.latitude), Long: \(merchant.location.longitude)")
+                        .font(.callout)
                 }
+                Text(merchant.hashCode.uuidString)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .italic()
+                    .lineLimit(1)
+                    .truncationMode(.middle)
             }
         }
     }

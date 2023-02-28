@@ -16,6 +16,8 @@ final class MerchantStore: ObservableObject {
 
     func saveMerchant(_ merchant: Merchant) async -> Bool {
         do {
+            isFetching = true
+            
             return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Bool, Error>) in
                 do {
                     _ = try db.collection(Collection.merchants).addDocument(from: merchant) { error in
@@ -39,10 +41,42 @@ final class MerchantStore: ObservableObject {
         }
     }
 
+    func deleteMerchants(at offsets: IndexSet) {
+        guard let first = offsets.first else { return }
+        let merchant = merchants[first]
+
+        Task {
+            await deleteMerchant(merchant, at: first)
+        }
+    }
+
+    private func deleteMerchant(_ merchant: Merchant, at index: IndexSet.Element) async {
+        guard let merchantID = merchant.id else { return }
+        
+        DispatchQueue.main.async {
+            self.isFetching = true
+            self.merchants.remove(at: index)
+        }
+        do {
+            try await db.collection(Collection.merchants)
+                .document(merchantID)
+                .delete()
+            DispatchQueue.main.async {
+                self.isFetching = false
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.merchants.insert(merchant, at: index)
+                self.isFetching = false
+            }
+        }
+    }
+
     func getAllMerchants() {
         isFetching = true
-        db.collection("merchants")
-//            .order(by: "createdDate", descending: false)
+        db.collection(Collection.merchants)
+//            .order
+        //            .order(by: "createdDate", descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     debugPrint("Firestore error: \(error).")
@@ -72,8 +106,7 @@ final class MerchantStore: ObservableObject {
             }
     }
 
-
-enum Collection {
-    static let merchants = "merchants"
-}
+    enum Collection {
+        static let merchants = "merchants"
+    }
 }

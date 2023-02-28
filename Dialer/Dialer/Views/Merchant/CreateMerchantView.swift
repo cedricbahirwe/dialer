@@ -111,7 +111,8 @@ struct CreateMerchantView: View {
                 dismiss()
             }
         } catch {
-            print("Error \(error.localizedDescription)")
+            let validationError = error as? Model.Error
+            print("Error: \(validationError?.message ?? "")")
         }
     }
 }
@@ -126,6 +127,11 @@ private extension CreateMerchantView {
 
         enum Error: Swift.Error {
             case invalidInput(String)
+            var message: String {
+                switch self {
+                case .invalidInput(let msg): return msg
+                }
+            }
         }
 
         func getMerchant() throws -> Merchant {
