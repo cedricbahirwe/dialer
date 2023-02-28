@@ -18,6 +18,8 @@
 "Estimated fee: amount RWF" = "Ikiguzi cyo kohereza: %d RWF";
 "We can not estimate the fee for this amount." = "Ntidushobora kugereranya ikiguzi kuri uwo mubare w’ amafaranga.";
 "Nearby Merchants" = "Abacuruzi hafi";
+"Report a problem" = "Menyesha ikibazo";
+"If you encounter any issues with the suggested merchant codes, please do not hesitate to report them to us." = "Niba uhuye n'ikibazo na kode y'abacuruzi yatanzwe, nyamuneka ntutindiganye kubitumenyesha.";
  
 // 3. History View
 "No History Yet" = "Nta mateka aracyafite";

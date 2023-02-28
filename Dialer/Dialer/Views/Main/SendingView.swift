@@ -13,6 +13,7 @@ struct SendingView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var nearbyMerchants: [Merchant] = []
+    @State private var showReportSheet = false
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
@@ -158,9 +159,21 @@ struct SendingView: View {
                         }
 
                     } header: {
-                        Text("Nearby Merchants")
-                            .font(.system(.body, design: .rounded))
-                            .fontWeight(.semibold)
+                        HStack {
+                            Text("Nearby Merchants")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+
+                            Spacer()
+
+                            Button("Report a problem", role: .destructive) {
+                                showReportSheet.toggle()
+                            }
+                            .textCase(nil)
+                            .font(.caption)
+                        }
+                    } footer: {
+                        Text("If you encounter any issues with the suggested merchant codes, please do not hesitate to report them to us.")
                     }
                     .listRowBackground(rowBackground)
                 }
@@ -171,6 +184,10 @@ struct SendingView: View {
         }
         .sheet(isPresented: $showContactPicker) {
             ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+        }
+        .actionSheet(isPresented: $showReportSheet) {
+            ActionSheet(title: Text("Report a problem."),
+                        buttons: alertButtons)
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .onAppear(perform: initialization)
@@ -183,6 +200,14 @@ struct SendingView: View {
                     .padding(5)
             }
         }
+    }
+
+    private var alertButtons: [ActionSheet.Button] {
+        return [
+            .default(Text("This merchant code is incorrect"), action: {
+
+            }),
+            .cancel()]
     }
 }
 
