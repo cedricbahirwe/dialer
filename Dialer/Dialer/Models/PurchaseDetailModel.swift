@@ -8,17 +8,18 @@
 import Foundation
 
 struct PurchaseDetailModel: Hashable, Codable {
+    private var prefixCode: String { "*18*2*2*1*1*1*" }
     var amount: Int = 0
     var type: CodeType = .momo
     var fullCode: String {
-        "*182*2*1*1*1*\(amount)*PIN#"
+        "\(prefixCode)\(amount)*PIN#"
     }
     
     func getDialCode(pin: String) -> String {
         if pin.isEmpty {
-            return "*182*2*1*1*1*\(amount)#"
+            return "\(prefixCode)\(amount)#"
         } else {
-            return "*182*2*1*1*1*\(amount)*\(pin)#"
+            return "\(prefixCode)\(amount)*\(pin)#"
         }
     }
     static let example = PurchaseDetailModel()

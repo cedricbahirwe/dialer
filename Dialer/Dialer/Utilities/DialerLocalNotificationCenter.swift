@@ -58,10 +58,6 @@ final class DialerNotificationCenter {
         }
     }
 
-//    func removeDeliveredNotifications() {
-//        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-//    }
-
     func scheduleMorningReminder() {
         let nextDay9AMComponents = getNextDateComponents()
         let dailyNotification: DialerLocalNotification
