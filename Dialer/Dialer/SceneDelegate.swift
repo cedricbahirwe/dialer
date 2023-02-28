@@ -22,7 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var savedShortCutItem: UIApplicationShortcutItem!
 
-
     /// Environment Objects
     let viewModel = MainViewModel()
     let locationManager = LocationManager()
@@ -44,9 +43,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView().environmentObject(viewModel).environmentObject(locationManager)
+        let contentView = ContentView()
+            .environmentObject(viewModel)
+            .environmentObject(locationManager)
             .environmentObject(forceUpdateManager)
-
+        
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

@@ -13,7 +13,7 @@ protocol RemoteConfigsProtocol: AnyObject {
     func bool(for key: RemoteConfigsFlag) -> Bool?
 }
 
-final class SBFirebaseRemoteConfig {
+final class FirebaseRemoteConfig {
 
     private let fetchTimeout: Double = 0.0 // seconds
     private var firebaseRemoteConfig: RemoteConfig!
@@ -30,9 +30,8 @@ final class SBFirebaseRemoteConfig {
     }
 }
 
-extension SBFirebaseRemoteConfig: RemoteConfigsProtocol {
+extension FirebaseRemoteConfig: RemoteConfigsProtocol {
     func fetchRemoteValues() async {
-        let timeoutInterval = TimeInterval(fetchTimeout)
         do {
             let status = try await firebaseRemoteConfig.fetch(withExpirationDuration: fetchTimeout)
             if status == .success {
@@ -61,7 +60,7 @@ extension SBFirebaseRemoteConfig: RemoteConfigsProtocol {
 final class RemoteConfigs {
     private init() { }
     class var shared: RemoteConfigsProtocol {
-        SBFirebaseRemoteConfig()
+        FirebaseRemoteConfig()
     }
 }
 
