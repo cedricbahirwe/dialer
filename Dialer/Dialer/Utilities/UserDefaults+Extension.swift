@@ -37,5 +37,7 @@ extension UserDefaults {
 
         // Last Date the app asked the user to update
         static let lastAskedDateToUpdate = "lastAskedDateToUpdate"
+
+        static let deviceAccount = "deviceAccount"
     }
 }

@@ -28,20 +28,13 @@ protocol AnalyticsEventType {
 }
 
 enum AppAnalyticsEventType: String, AnalyticsEventType {
-    case subscriptionPurchase = "subscription_purchase"
-    case songDownloaded = "song_downloaded"
-    case wawChange = "waw_change"
-    case accountCreated = "sign_up"
-    case login
-    case accountDeleted = "delete_account"
-    case songPlayed = "song_played"
-    case share = "share"
-    case pageView = "page_view"
-    case emitedCoupon = "coupon_emited"
-    case usedCoupon = "coupon_used"
-    case adsImpression = "ads_impression"
+    case dashboard
+    case settingsOpened = "settings_opened"
+    case transaction
+    case send
+    case history
+    case mySpace = "my_space"
     case screenSessionLength = "screen_session_length"
-    case screenView = "screen_view"
 
     var stringValue: String {
         self.rawValue
@@ -49,28 +42,21 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
 }
 
 enum EventParameterKey: String {
-    case subscriptionType = "subscription_type"
-    case paymentType = "payment_type"
-    case price = "price"
-    case networkMode = "network_mode"
-    case songName = "song_name"
-    case songId = "song_id"
-    case albumId = "album_id"
-    case albumName = "album_name"
-    case artistName = "artist_name"
-    case artistId = "artist_id"
-    case genre
-    case jukebox
-    case playlistId = "playlist_id"
-    case userId = "user_id"
-    case accountType = "account_type"
-    case value
-    case type
-    case couponType = "coupon_type"
+    // General
     case name
     case length
-    case formatted
-    case songTitle = "song_title"
+
+    // Transaction
+    case transId = "tran_id"
+    case transAmount = "tran_amount"
+    case transType = "tran_type"
+    case transCode = "tran_code"
+    case transTime = "tran_timestamp"
+
+    // Device
+    case devId = "device_id"
+    case devHash = "device_hash"
+    case devVersion = "device_version"
 }
 
 enum LogEvent: String, AnalyticsEventType {
@@ -88,12 +74,29 @@ struct DeviceAccount: Identifiable, Codable {
     var name: String
     let model: String
     let systemVersion: String
-    let sytemName: String
+    let systemName: String
     let batteryLevel: Int
-    let batterState: String
+    let batteryState: String
 
-    let deviceIdentifier: String
+    let deviceHash: String
     let appVersion: String?
     let bundleVersion: String?
     let bundleId: String?
+    let lastVisitedDate: String?
+
+    func toDictionary() -> [String: Any] {
+        var dictionary: [String: Any] = [:]
+        dictionary["name"] = name
+        dictionary["model"] = model
+        dictionary["system_version"] = systemVersion
+        dictionary["system_name"] = systemName
+        dictionary["battery_level"] = batteryLevel
+        dictionary["battery_state"] = batteryState
+        dictionary["device_hash"] = deviceHash
+        dictionary["app_version"] = appVersion
+        dictionary["bundle_version"] = bundleVersion
+        dictionary["bundle_id"] = bundleId
+        dictionary["last_visited_date"] = lastVisitedDate
+        return dictionary
+    }
 }

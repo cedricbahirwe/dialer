@@ -28,122 +28,122 @@ struct DashBoardView: View {
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
     var body: some View {
-            ZStack(alignment: .bottom) {
-                VStack {
-                    VStack(spacing: 29) {
-                        HStack(spacing: 20) {
-                            DashItemView(
-                                title: "Buy airtime",
-                                icon: "wallet.pass")
-                                .momoDisability()
-                                .onTapGesture {
-                                    withAnimation {
-                                        showPurchaseSheet.toggle()
-                                    }
-                                }
-                            
-                            DashItemView(
-                                title: "Transfer/Pay",
-                                icon: "paperplane.circle")
-                            .onTapForBiometrics {
-                                presentSendingView = $0
-                            }
-                        }
-                        
-                        HStack(spacing: 15) {
-                            DashItemView(
-                                title: "History",
-                                icon: "clock.arrow.circlepath")
-                                .onTapGesture {
-                                    data.showHistorySheet.toggle()
-                                }
-                            
-                            NavigationLink {
-                                MySpaceView()
-                            } label: {
-                                DashItemView(
-                                    title: "My Space",
-                                    icon: "person.crop.circle.badge")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            
-                        }
-                    }
-                    .padding()
-                    
-                    NavigationLink(isActive: $presentSendingView) {
-                        SendingView()
-                    } label: { EmptyView() }
-                    
-                    Spacer()
-                    
-                    if checkCellularProvider.status == false {
-                        HStack {
-                            Text("Sim card is required to unlock all the features.")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                .foregroundColor(.red)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(.ultraThickMaterial)
-                        .hidden()
-                    }
-                    
-                    bottomBarView
-                }
-                .blur(radius: showPurchaseSheet ? 3 : 0)
-                .allowsHitTesting(!showPurchaseSheet)
-
-                if showPurchaseSheet {
-                    Color.black.opacity(0.001)
+        ZStack(alignment: .bottom) {
+            VStack {
+                VStack(spacing: 29) {
+                    HStack(spacing: 20) {
+                        DashItemView(
+                            title: "Buy airtime",
+                            icon: "wallet.pass")
+                        .momoDisability()
                         .onTapGesture {
-                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
-                                showPurchaseSheet = false
+                            withAnimation {
+                                showPurchaseSheet.toggle()
                             }
                         }
-                }
-                PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
 
+                        DashItemView(
+                            title: "Transfer/Pay",
+                            icon: "paperplane.circle")
+                        .onTapForBiometrics {
+                            presentSendingView = $0
+                        }
+                    }
+
+                    HStack(spacing: 15) {
+                        DashItemView(
+                            title: "History",
+                            icon: "clock.arrow.circlepath")
+                        .onTapGesture {
+                            data.showHistorySheet.toggle()
+                        }
+
+                        NavigationLink {
+                            MySpaceView()
+                        } label: {
+                            DashItemView(
+                                title: "My Space",
+                                icon: "person.crop.circle.badge")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+
+                    }
+                }
+                .padding()
+
+                NavigationLink(isActive: $presentSendingView) {
+                    SendingView()
+                } label: { EmptyView() }
+
+                Spacer()
+
+                if checkCellularProvider.status == false {
+                    HStack {
+                        Text("Sim card is required to unlock all the features.")
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .foregroundColor(.red)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(.ultraThickMaterial)
+                    .hidden()
+                }
+
+                bottomBarView
             }
-            .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
-                if showWelcomeView {
-                    WhatsNewView(isPresented: $showWelcomeView)
+            .blur(radius: showPurchaseSheet ? 3 : 0)
+            .allowsHitTesting(!showPurchaseSheet)
+
+            if showPurchaseSheet {
+                Color.black.opacity(0.001)
+                    .onTapGesture {
+                        withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                            showPurchaseSheet = false
+                        }
+                    }
+            }
+            PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
+
+        }
+        .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
+            if showWelcomeView {
+                WhatsNewView(isPresented: $showWelcomeView)
+            } else {
+                if data.showSettingsSheet {
+                    SettingsView()
+                        .environmentObject(data)
                 } else {
-                    if data.showSettingsSheet {
-                        SettingsView()
-                            .environmentObject(data)
-                    } else {
-                        DialingsHistoryView(data: data)
-                    }
+                    DialingsHistoryView(data: data)
                 }
             }
-            .fullScreenCover(isPresented: $presentQuickDial) {
-                QuickDialingView()
+        }
+        .fullScreenCover(isPresented: $presentQuickDial) {
+            QuickDialingView()
+        }
+        .background(Color.primaryBackground)
+        .navigationTitle("Dialer")
+        .onAppear {
+            Task {
+                await locationManager.requestAuthorisation()
             }
-            .background(Color.primaryBackground)
-            .navigationTitle("Dialer")
-            .onAppear(perform: {
-
-                Task {
-                    await locationManager.requestAuthorisation()
-                }
-            })
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    if allowBiometrics {
-                        gearGradient
-                            .onTapForBiometrics {
-                                if $0 {
-                                    data.showSettingsView()
-                                }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if allowBiometrics {
+                    gearGradient
+                        .onTapForBiometrics {
+                            if $0 {
+                                data.showSettingsView()
                             }
-                    } else {
-                        Button(action: data.showSettingsView) { gearGradient }
-                    }
+                        }
+                } else {
+                    Button(action: data.showSettingsView) { gearGradient }
                 }
             }
+        }
+        .trackAppearance(.dashboard)
     }
     
     private var gearGradient: some View {
@@ -216,3 +216,15 @@ struct DashBoardView_Previews: PreviewProvider {
     }
 }
 #endif
+
+extension View {
+    func trackAppearance(_ screen: ScreenName) -> some View {
+        self
+            .onAppear {
+                Tracker.shared.startSession(for: screen)
+            }
+            .onDisappear() {
+                Tracker.shared.stopSession(for: screen)
+            }
+    }
+}

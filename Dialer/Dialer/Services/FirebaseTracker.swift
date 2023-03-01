@@ -7,34 +7,43 @@
 
 import Foundation
 import FirebaseAnalytics
-import DeviceCheck
 
 class FirebaseTracker {
     private var sessions: [ScreenName: Date] = [:]
+    private let deviceProvider: DeviceProtocol
 
-    init() {
+    init(_ deviceProvider: DeviceProtocol = FirebaseManager()) {
+        self.deviceProvider = deviceProvider
         setAnalyticUserInfo()
     }
 
     private func setAnalyticUserInfo() {
         let device = getDeviceAccount()
 
-        Analytics.setUserID(device.deviceIdentifier)
+        Analytics.setUserID(device.deviceHash)
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
         Analytics.setUserProperty(device.name, forName: "name")
         Analytics.setUserProperty(device.systemVersion, forName: "system_version")
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
 
-
-
+        Task {
+            let isSaved = await deviceProvider.updateDevice(device)
+            if isSaved {
+                do {
+                    try DialerStorage.shared.saveDevice(device)
+                } catch {
+                    logError(error: error)
+                }
+            }
+        }
     }
 
     // MARK: - Session tracker
     enum Screen: String {
-        case TeaserScreen // done
-        case NotificationDeveloperSettingsScreen // not possible
-        case AlbumScreen // done
-        case SingleScreen // done
+        case DashBoardScreen
+        case SendingScreen
+        case MySpaceScreen
+        case HistoryScreen
     }
 
     /// Creates a start time for a screen session.
@@ -54,24 +63,24 @@ class FirebaseTracker {
         }
         /// 2. get the session length and format it as string and miliseconds
         let interval = start.timeIntervalSinceNow * (-1)
-//        let formatted = interval.formattedString()
+        let formatted = interval.formattedString()
         let seconds: Int = Int(interval)
-//        debugPrint("screen session time for: \(screen.rawValue) is \(formatted) seconds: \(seconds)")
+        debugPrint("screen session time for: \(screen.rawValue) is \(formatted) seconds: \(seconds)")
 
         /// 3. log event on firebase
         // screen_session_length - Name of the Event
         // name - Name of the screen parameter
         // length - The session time in milliseconds
-//        logEvent(name: AppAnalyticsEventType.screenSessionLength,
-//                 parameters: [
-//                    EventParameterKey.name.rawValue: screen.rawValue,
-//                    EventParameterKey.length.rawValue: seconds
-//                 ])
+        logEvent(name: AppAnalyticsEventType.screenSessionLength,
+                 parameters: [
+                    EventParameterKey.name.rawValue: screen.rawValue,
+                    EventParameterKey.length.rawValue: seconds
+                 ])
         /// 4. remove start date from cache
         sessions.removeValue(forKey: screen)
     }
 
-    func getDeviceAccount() -> DeviceAccount {
+    private func getDeviceAccount() -> DeviceAccount {
         let device = UIDevice.current
         let deviceName = device.name
         let deviceModel = device.model
@@ -85,17 +94,18 @@ class FirebaseTracker {
         let bundleID = Bundle.main.bundleIdentifier
 
 
-        let deviceAccount = DeviceAccount(
-            name: deviceName,
-            model: deviceModel,
-            systemVersion: deviceSystemVersion,
-            sytemName: deviceSystemName,
-            batteryLevel: Int(batteryLevel*100),
-            batterState: batteryState,
-            deviceIdentifier: deviceIdentifier,
-            appVersion: appVersion,
-            bundleVersion: bundleVersion,
-            bundleId: bundleID)
+        let deviceAccount = DeviceAccount(id: deviceIdentifier,
+                                          name: deviceName,
+                                          model: deviceModel,
+                                          systemVersion: deviceSystemVersion,
+                                          systemName: deviceSystemName,
+                                          batteryLevel: Int(batteryLevel*100),
+                                          batteryState: batteryState,
+                                          deviceHash: deviceIdentifier,
+                                          appVersion: appVersion,
+                                          bundleVersion: bundleVersion,
+                                          bundleId: bundleID,
+                                          lastVisitedDate: Date.now.formatted())
         return deviceAccount
     }
 }

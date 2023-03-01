@@ -6,27 +6,53 @@
 //
 
 import Foundation
-
+import FirebaseAnalytics
 
 extension FirebaseTracker: TrackerProtocol {
     func logEvent(name: AnalyticsEventType, parameters: [String : Any]?) {
-
+        var completeParameters: [String : Any] = parameters ?? [:]
+        completeParameters[AnalyticsParameterExtendSession] = true
+        Analytics.logEvent(name.stringValue, parameters: completeParameters)
     }
 
     func logTransaction(transaction: Transaction) {
+        let params: [EventParameterKey: Any] = [
+            .transId : transaction.id,
+            .transAmount : transaction.id,
+            .transType : transaction.type.rawValue,
+            .transCode : transaction.fullCode,
+            .transTime : Date.now.formatted()
+        ]
 
+        let objectParams = Dictionary(uniqueKeysWithValues: params.map { key, value in (key.rawValue, value) })
+
+        logEvent(name: AppAnalyticsEventType.transaction,
+                 parameters: objectParams)
     }
 
     func logTransaction(transaction: Transaction, user: DeviceAccount) {
+        let params: [EventParameterKey: Any] = [
+            .transId : transaction.id,
+            .transAmount : transaction.id,
+            .transType : transaction.type.rawValue,
+            .transCode : transaction.fullCode,
+            .transTime : Date.now.formatted(),
+            .devId: user.id as Any,
+            .devHash: user.deviceHash
+        ]
 
+        let objectParams = Dictionary(uniqueKeysWithValues: params.map { key, value in (key.rawValue, value) })
+
+        logEvent(name: AppAnalyticsEventType.transaction,
+                 parameters: objectParams)
     }
 
     func logSignIn(account: DeviceAccount) {
-
+        logEvent(name: AppAnalyticsEventType.dashboard,
+                 parameters: account.toDictionary())
     }
 
     func logError(error: Error) {
-        
+        Log.add("Error: ", type: .error, error.localizedDescription)
     }
-
 }

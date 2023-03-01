@@ -113,6 +113,17 @@ final class DialerStorage {
         userDefaults.value(forKey: LocalKeys.lastAskedDateToUpdate) as? Date
     }
 
+    func saveDevice(_ device: DeviceAccount) throws {
+        let data = try encodeData(device)
+        userDefaults.setValue(data, forKey: LocalKeys.deviceAccount)
+    }
+
+    func getSavedDevice() -> DeviceAccount? {
+        guard let userLocation = decodeData(key: LocalKeys.deviceAccount, as: DeviceAccount.self)
+        else { return nil }
+        return userLocation
+    }
+
     func removeAllUSSDCodes() {
         userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
     }

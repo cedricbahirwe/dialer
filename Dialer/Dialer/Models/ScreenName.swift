@@ -8,7 +8,7 @@
 import Foundation
 
 enum ScreenName: String, Codable {
-    case home
+    case dashboard
     case buyAirtime
     case transfer
     case history
