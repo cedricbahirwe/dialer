@@ -10,7 +10,8 @@ import FirebaseFirestore
 
 protocol MerchantProtocol {
     func createMerchant(_ merchant: Merchant) async -> Bool
-    func getMerchant(by id: UUID) -> Merchant?
+    func getMerchant(by id: String) async -> Merchant?
+    func updateMerchant(_ merchant: Merchant) async -> Bool
     func deleteMerchant(_ merchantID: String) async throws
     func getAllMerchants() async -> [Merchant]
     func getMerchantsNear(lat: Double, long: Double) -> [Merchant]
@@ -43,8 +44,37 @@ final class FirebaseManager: MerchantProtocol {
         }
     }
 
-    func getMerchant(by id: UUID) -> Merchant? {
-        nil
+    func getMerchant(by merchantID: String) async -> Merchant? {
+        do {
+            let snapshot = try await db.collection(Collection.merchants)
+                .document(merchantID)
+                .getDocument()
+
+            let merchant = try snapshot.data(as: Merchant.self)
+
+            return merchant
+        } catch {
+            debugPrint("Error getting Merchant: \(error)")
+            return nil
+        }
+    }
+
+    func updateMerchant(_ merchant: Merchant) async -> Bool {
+        guard let merchantID = merchant.id else { return false }
+
+        return await withCheckedContinuation { (continuation: CheckedContinuation<Bool, Never>) in
+            do {
+
+                try db.collection(Collection.merchants)
+                    .document(merchantID)
+                    .setData(from: merchant)
+
+                continuation.resume(returning: true)
+            } catch {
+                debugPrint("Error updating Merchant: \(error)")
+                continuation.resume(returning: false)
+            }
+        }
     }
 
     func deleteMerchant(_ merchantID: String) async throws {
@@ -87,18 +117,7 @@ final class FirebaseManager: MerchantProtocol {
         return []
     }
 
-
     enum Collection {
         static let merchants = "merchants"
     }
 }
-
-// MARK: - Merchant Side
-//extension MerchantStore {
-//    func getNearbyMerchants() async -> [Merchant] {
-//        guard let location = getLastKnownLocation() else { return [] }
-//        return merchantProvider.getMerchantsNear(
-//            lat: location.latitude,
-//            long: location.longitude)
-//    }
-//}
