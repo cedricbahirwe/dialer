@@ -10,7 +10,7 @@ import CoreLocation
 import CoreLocationUI
 
 struct CreateMerchantView: View {
-    @StateObject private var merchantStore = MerchantStore()
+    @EnvironmentObject private var merchantStore: MerchantStore
     @EnvironmentObject private var locationManager: LocationManager
     
     @Environment(\.dismiss) private var dismiss

@@ -23,10 +23,11 @@ final class MerchantStore: ObservableObject {
     /// - Parameter merchant: new merchant to be saved
     /// - Returns: Whether or not the merchant was saved
     func saveMerchant(_ merchant: Merchant) async -> Bool {
-        isFetching = true
+        startFetch()
         let isMerchantSaved = await merchantProvider.createMerchant(merchant)
 
-        isFetching = false
+        stopFetch()
+        await  getAllMerchants()
 
         return isMerchantSaved
     }
@@ -46,21 +47,19 @@ final class MerchantStore: ObservableObject {
     ///   - index: the index of the merchant element in the collection
     private func deleteMerchant(_ merchant: Merchant, at index: IndexSet.Element) async {
         guard let merchantID = merchant.id else { return }
-        
+
+        startFetch()
         DispatchQueue.main.async {
-            self.isFetching = true
             self.merchants.remove(at: index)
         }
 
         do {
             try await merchantProvider.deleteMerchant(merchantID)
-            DispatchQueue.main.async {
-                self.isFetching = false
-            }
+            stopFetch()
         } catch {
+            stopFetch()
             DispatchQueue.main.async {
                 self.merchants.insert(merchant, at: index)
-                self.isFetching = false
             }
         }
     }
@@ -68,12 +67,12 @@ final class MerchantStore: ObservableObject {
 
     /// Get All Merchants Available
     func getAllMerchants() async {
-        isFetching = true
+        startFetch()
 
         let result = await merchantProvider.getAllMerchants()
 
+        stopFetch()
         DispatchQueue.main.async {
-            self.isFetching = false
             self.merchants = result
         }
     }
@@ -91,5 +90,17 @@ final class MerchantStore: ObservableObject {
             return userLocation.distance(from: location1) < userLocation.distance(from: location2)
         }
         return sortedMerchants
+    }
+
+    func startFetch() {
+        DispatchQueue.main.async {
+            self.isFetching = true
+        }
+    }
+
+    func stopFetch() {
+        DispatchQueue.main.async {
+            self.isFetching = false
+        }
     }
 }

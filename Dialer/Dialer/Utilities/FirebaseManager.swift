@@ -25,8 +25,12 @@ protocol DeviceProtocol {
     func getAllDevices() async -> [DeviceAccount]
 }
 
-actor FirebaseManager {
+class FirebaseManager {
     private lazy var db = Firestore.firestore()
+
+
+    private var completionContinuation: CheckedContinuation<[Decodable], Error>?
+
 
 }
 
@@ -100,7 +104,8 @@ extension FirebaseManager: DeviceProtocol {
     }
 
     func getAllDevices() async -> [DeviceAccount] {
-        await getAll(in: .devices)
+        return []
+//        await getAll(in: .devices)
     }
 
 }
@@ -133,37 +138,19 @@ extension FirebaseManager {
 
     func getAll<T: Decodable>(in collection: CollectionName) async -> [T] {
         do {
-
-            return try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<[T], Error>) in
-                db.collection(collection.rawValue)
-                    .addSnapshotListener { querySnapshot, error in
-                        if let error = error {
-                            continuation.resume(throwing: error)
-                            return
-                        }
-
-                        if let querySnapshot = querySnapshot {
-                            let result = querySnapshot.documents.compactMap { document -> T? in
-                                do {
-                                    return try document.data(as: T.self)
-                                } catch {
-                                    debugPrint("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
-                                    return nil
-                                }
-                            }
-
-                            print("Trying here")
-
-                            continuation.resume(returning: result)
-                            return
-                        } else {
-                            continuation.resume(returning: [])
-                            return
-                        }
-                    }
+            let querySnapshot = try await db.collection(collection.rawValue)
+                .getDocuments()
+            let result = querySnapshot.documents.compactMap { document -> T? in
+                do {
+                    return try document.data(as: T.self)
+                } catch {
+                    debugPrint("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
+                    return nil
+                }
             }
+            return result
         } catch {
-            debugPrint("Can not get \(type(of: T.self)) Error: \(error).")
+            debugPrint("Can not get \(type(of: Merchant.self)) Error: \(error).")
             return []
         }
     }
