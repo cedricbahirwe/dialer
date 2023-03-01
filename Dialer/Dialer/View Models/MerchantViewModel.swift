@@ -19,7 +19,6 @@ final class MerchantStore: ObservableObject {
         }
     }
 
-
     /// Save a new Merchant
     /// - Parameter merchant: new merchant to be saved
     /// - Returns: Whether or not the merchant was saved

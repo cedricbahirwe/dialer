@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MerchantsListView: View {
-    @StateObject private var merchantStore = MerchantStore()
+    @EnvironmentObject var merchantStore: MerchantStore
     @State private var showCreateView = false
     @Environment(\.dismiss) private var dismiss
     var body: some View {
@@ -77,8 +77,11 @@ private extension MerchantsListView {
     }
 }
 
+#if DEBUG
 struct MerchantsListView_Previews: PreviewProvider {
     static var previews: some View {
         MerchantsListView()
+            .environmentObject(MerchantStore())
     }
 }
+#endif

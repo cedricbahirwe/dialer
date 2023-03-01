@@ -10,6 +10,8 @@ import SwiftUI
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
 
+    @EnvironmentObject private var merchantStore: MerchantStore
+
     @EnvironmentObject private var locationManager: LocationManager
 
     @AppStorage(UserDefaults.Keys.showWelcomeView)
@@ -125,7 +127,9 @@ struct DashBoardView: View {
             .background(Color.primaryBackground)
             .navigationTitle("Dialer")
             .onAppear(perform: {
+
                 Task {
+                    await merchantStore.getAllMerchants()
                     await locationManager.requestAuthorisation()
                 }
             })

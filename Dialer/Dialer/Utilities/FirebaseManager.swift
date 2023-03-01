@@ -25,7 +25,7 @@ protocol DeviceProtocol {
     func getAllDevices() async -> [DeviceAccount]
 }
 
-final class FirebaseManager {
+actor FirebaseManager {
     private lazy var db = Firestore.firestore()
 
 }
@@ -133,7 +133,8 @@ extension FirebaseManager {
 
     func getAll<T: Decodable>(in collection: CollectionName) async -> [T] {
         do {
-            return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[T], Error>) in
+
+            return try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<[T], Error>) in
                 db.collection(collection.rawValue)
                     .addSnapshotListener { querySnapshot, error in
                         if let error = error {
@@ -151,7 +152,13 @@ extension FirebaseManager {
                                 }
                             }
 
+                            print("Trying here")
+
                             continuation.resume(returning: result)
+                            return
+                        } else {
+                            continuation.resume(returning: [])
+                            return
                         }
                     }
             }
