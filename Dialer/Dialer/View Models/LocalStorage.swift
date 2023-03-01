@@ -94,6 +94,25 @@ final class DialerStorage {
         decodeDatasArray(key: LocalKeys.customUSSDCodes, type: USSDCodes.self)
     }
 
+    func saveLastKnownLocation(_ userLocation: UserLocation) throws {
+        let data = try encodeData(userLocation)
+        userDefaults.setValue(data, forKey: LocalKeys.lastUserLocation)
+    }
+
+    func getLastKnownLocation() -> UserLocation? {
+        guard let userLocation = decodeData(key: LocalKeys.lastUserLocation, as: UserLocation.self)
+        else { return nil }
+        return userLocation
+    }
+
+    func saveLastAskedDateToUpdate(_ date: Date?) {
+        userDefaults.set(date, forKey: LocalKeys.lastAskedDateToUpdate)
+    }
+
+    func getLastAskedDateToUpdate() -> Date? {
+        userDefaults.value(forKey: LocalKeys.lastAskedDateToUpdate) as? Date
+    }
+
     func removeAllUSSDCodes() {
         userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
     }

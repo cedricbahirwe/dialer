@@ -49,9 +49,6 @@ struct CodePin: Codable {
     var asString: String { "\(a)\(b)\(c)\(d)\(e)" }
 
     var asDigits: Int { Int(asString) ?? 0 }
-
-    var description: String { asString }
-
 }
 
 extension CodePin {

@@ -9,14 +9,32 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
+
+    @EnvironmentObject private var forceUpdate: ForceUpdateManager
     var body: some View {
         NavigationView {
             DashBoardView()
         }
         .navigationViewStyle(.stack)
         .onAppear(perform: setupAppearance)
+        .alert(Text("App Update"),
+               isPresented: forceUpdate.isPresented,
+               presenting: forceUpdate.updateAlert) { alert in
+
+            ForEach(alert.buttons) {
+                Button($0.title, action: $0.action)
+            }
+        } message: {
+            Text($0.message)
+        }
         .fullScreenCover(isPresented: $data.hasReachSync) {
             CongratulationsView(isPresented: $data.hasReachSync)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) {
+            print("applicationDidBecomeActive \($0.name)")
+            Task {
+                await RemoteConfigs.shared.fetchRemoteValues()
+            }
         }
     }
     

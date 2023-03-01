@@ -21,8 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var savedShortCutItem: UIApplicationShortcutItem!
-    
-    let viewModel = MainViewModel()
+
+    /// Environment Objects
+    let dialingStore = MainViewModel()
+    let locationManager = LocationManager()
+    let forceUpdateManager = ForceUpdateManager()
+    let merchantStore = MerchantStore()
+
     
     /// - Tag: willConnectTo
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -40,8 +45,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView().environmentObject(viewModel)
-
+        let contentView = ContentView()
+            .environmentObject(dialingStore)
+            .environmentObject(merchantStore)
+            .environmentObject(locationManager)
+            .environmentObject(forceUpdateManager)
+        
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
@@ -78,7 +87,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Transform most used command into a UIApplicationShortcutItem.
         let application = UIApplication.shared
         
-        let codes = viewModel.recentCodes.filter({ $0.count >= 10 })
+        let codes = dialingStore.recentCodes.filter({ $0.count >= 10 })
         
         application.shortcutItems = codes.map({ code -> UIApplicationShortcutItem in
             return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue,
@@ -101,8 +110,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        viewModel.retrieveCodes()
-        viewModel.retrieveUSSDCodes()
+        dialingStore.retrieveCodes()
+        dialingStore.retrieveUSSDCodes()
         DialerStorage.shared.storeSyncDate()
 
     }
@@ -112,7 +121,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        viewModel.saveRecentCodesLocally()
+        dialingStore.saveRecentCodesLocally()
 
         // Schedule Morning Daily Reminder
         DialerNotificationCenter.shared.scheduleMorningReminder()
@@ -125,14 +134,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let actionTypeValue = ActionType(rawValue: shortcutItem.type) {
             switch actionTypeValue {
             case .balanceAction:
-                viewModel.checkMobileWalletBalance()
+                dialingStore.checkMobileWalletBalance()
                 
             case .dialAction:
                 // Go to that particular code shortcut.
                 if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
                     // Find the code from the userInfo identifier.
-                    if let foundRecentCode = viewModel.rencentDialCode(codeIdentifier) {
-                        viewModel.performRecentDialing(for: foundRecentCode)
+                    if let foundRecentCode = dialingStore.rencentDialCode(codeIdentifier) {
+                        dialingStore.performRecentDialing(for: foundRecentCode)
                     }
                 }
                 

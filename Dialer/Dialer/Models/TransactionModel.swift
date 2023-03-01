@@ -11,7 +11,7 @@ struct Transaction: Identifiable {
     var id: String { Date().description }
     var amount: String
     var number: String
-    var type: Transactiontype
+    var type: TransactionType
     
     var trailingCode: String {
         // Need strategy to deal with country code
@@ -58,7 +58,7 @@ struct Transaction: Identifiable {
         }
     }
     
-    enum Transactiontype {
+    enum TransactionType {
         case client, merchant
         
         mutating func toggle() {

@@ -51,16 +51,11 @@ final class DialerNotificationCenter {
 
         do {
             try await UNUserNotificationCenter.current().add(request)
-            print("Scheduled")
         } catch {
             print("Unable to add notification: ", error.localizedDescription)
             throw NotificationError.notAdded
         }
     }
-
-//    func removeDeliveredNotifications() {
-//        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-//    }
 
     func scheduleMorningReminder() {
         let nextDay9AMComponents = getNextDateComponents()
@@ -74,36 +69,9 @@ final class DialerNotificationCenter {
             try? await createNotification(dailyNotification, repeats: true)
         }
     }
-
-//    func scheduleChristmas() {
-//        guard let christmasComponents = getNextChristmasComponents() else { return }
-//        let christmas = DialerLocalNotification(id: UUID(),
-//                                            title: "Merry Christmas!",
-//                                            message: "Dialer wish you a merry christmas!",
-//                                            info: [:],
-//                                            imageUrl: Bundle.main.url(forResource: "christmas", withExtension: "png"),
-//                                            scheduledDate: christmasComponents)
-//        Task {
-//            try? await DialerNotificationCenter.shared.createNotification(christmas)
-//        }
-//    }
 }
 
 private extension DialerNotificationCenter {
-//    func getNextChristmasComponents() -> DateComponents? {
-//        var components = DateComponents()
-//        components.day = 25
-//        components.month = 12
-//        components.hour = 8
-//        components.minute = 0
-//
-//        guard let christmas = Calendar.current.date(from: components) else { return nil }
-//
-//        let dateComponents = getComponents([.day, .month, .hour, .minute], from: christmas)
-//
-//        return dateComponents
-//    }
-
     func getNextDateComponents() -> DateComponents {
         var components = DateComponents()
         components.hour = 9
@@ -126,14 +94,5 @@ extension DialerNotificationCenter {
     enum NotificationError: Error {
         case notAuthorized
         case notAdded
-
-//        var explanation: String {
-//            switch self {
-//            case .notAuthorized:
-//                return "Notification not authorized: \(localizedDescription)"
-//            case .notAdded:
-//                return "Unable to add notification: \(localizedDescription)"
-//            }
-//        }
     }
 }

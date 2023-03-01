@@ -8,12 +8,22 @@
 import SwiftUI
 
 struct SendingView: View {
+    @EnvironmentObject private var merchantStore: MerchantStore
+    @EnvironmentObject private var locationManager: LocationManager
+    @Environment(\.colorScheme) private var colorScheme
+
+    @State private var nearbyMerchants: [Merchant] = []
+    @State private var showReportSheet = false
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
-        
+
+    private var rowBackground: Color {
+        Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
+    }
+
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
@@ -24,103 +34,163 @@ struct SendingView: View {
     }
     
     var body: some View {
-        VStack(spacing: 15) {
-            
-            VStack(spacing: 10) {
-                if transaction.type == .client && !transaction.amount.isEmpty {
-                    feeHintView
-                        .font(.caption).foregroundColor(.blue)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .animation(.default, value: transaction.estimatedFee)
+        VStack(spacing: 0) {
+
+            VStack(spacing: 15) {
+
+                VStack(spacing: 10) {
+                    if transaction.type == .client && !transaction.amount.isEmpty {
+                        feeHintView
+                            .font(.caption).foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: transaction.estimatedFee)
+                    }
+
+                    NumberField("Enter Amount", text: $transaction.amount.animation())
                 }
-                
-                NumberField("Enter Amount", text: $transaction.amount.animation())
+
+                VStack(spacing: 10) {
+                    if transaction.type == .client {
+                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: transaction.type)
+                    }
+                    NumberField(transaction.type == .client ?
+                                "Enter Receiver's number" :
+                                    "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
+
+                    if transaction.type == .merchant {
+                        Text("The code should be a 5-6 digits number")
+                            .font(.caption).foregroundColor(.blue)
+                    }
+                }
+
+                VStack(spacing: 18) {
+                    if transaction.type == .client {
+                        Button(action: {
+                            showContactPicker.toggle()
+                        }) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                Text("Pick a contact")
+                            }
+                            .font(.subheadline.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(8)
+                            .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
+                            .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
+                        }                 }
+
+                    HStack {
+                        if UIApplication.hasSupportForUSSD {
+                            Button(action: transferMoney) {
+                                Text("Dial USSD")
+                                    .font(.subheadline.bold())
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
+                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(Color.white)
+                            }
+                            .disabled(transaction.isValid == false)
+
+                            Button(action: copyToClipBoard) {
+                                Image(systemName: "doc.on.doc.fill")
+                                    .frame(width: 48, height: 48)
+                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(.white)
+                            }
+                            .disabled(transaction.isValid == false || didCopyToClipBoard)
+                        } else {
+                            Button(action: copyToClipBoard) {
+                                Label("Copy USSD code", systemImage: "doc.on.doc.fill")
+                                    .foregroundColor(.white)
+                                    .font(.subheadline.bold())
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
+                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(Color.white)
+                            }
+                            .disabled(transaction.isValid == false || didCopyToClipBoard)
+                        }
+                    }
+                }
+                .padding(.top)
+
+                if didCopyToClipBoard {
+                    CopiedUSSDLabel()
+                }
             }
-            VStack(spacing: 10) {
-                if transaction.type == .client {
-                    Text(selectedContact.names).font(.caption).foregroundColor(.blue)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .animation(.default, value: transaction.type)
-                }
-                NumberField(transaction.type == .client ?
-                            "Enter Receiver's number" :
-                                "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
-                
-                if transaction.type == .merchant {
-                    Text("The code should be a 5-6 digits number")
-                        .font(.caption).foregroundColor(.blue)
-                }
-            }
-            
-            VStack(spacing: 18) {
-                if transaction.type == .client {
-                    Button(action: {
-                        showContactPicker.toggle()
-                    }) {
+            .padding()
+
+            if transaction.type == .merchant && !nearbyMerchants.isEmpty {
+                List {
+                    Section {
+                        ForEach(nearbyMerchants) { merchant in
+                            HStack {
+                                HStack(spacing: 4) {
+                                    if merchant.code == transaction.number {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.blue)
+                                            .font(.body.weight(.semibold))
+                                    }
+
+                                    Text(merchant.name)
+                                        .lineLimit(1)
+                                }
+                                Spacer()
+                                Text("#\(merchant.code)")
+                                    .font(.callout)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.blue)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation {
+                                    transaction.number = merchant.code
+                                }
+                            }
+                            .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                        }
+
+                    } header: {
                         HStack {
-                            Image(systemName: "person.fill")
-                            Text("Pick a contact")
+                            Text("Nearby Merchants")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+
+                            Spacer()
+
+                            Button("Report a problem", role: .destructive) {
+                                showReportSheet.toggle()
+                            }
+                            .textCase(nil)
+                            .font(.caption)
                         }
-                        .font(.subheadline.bold())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 48)
-                        .background(Color(.systemBackground))
-                        .cornerRadius(8)
-                        .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
-                        .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
+                    } footer: {
+                        Text("If you encounter any issues with the suggested merchant codes, please do not hesitate to report them to us.")
                     }
+                    .listRowBackground(rowBackground)
                 }
-                
-                HStack {
-                    if UIApplication.hasSupportForUSSD {
-                        Button(action: transferMoney) {
-                            Text("Dial USSD")
-                                .font(.subheadline.bold())
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 48)
-                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(Color.white)
-                        }
-                        .disabled(transaction.isValid == false)
-                        
-                        Button(action: copyToClipBoard) {
-                            Image(systemName: "doc.on.doc.fill")
-                                .frame(width: 48, height: 48)
-                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(.white)
-                        }
-                        .disabled(transaction.isValid == false || didCopyToClipBoard)
-                    } else {
-                        Button(action: copyToClipBoard) {
-                            Label("Copy USSD code", systemImage: "doc.on.doc.fill")
-                                .foregroundColor(.white)
-                                .font(.subheadline.bold())
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 48)
-                                .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                .cornerRadius(8)
-                                .foregroundColor(Color.white)
-                        }
-                        .disabled(transaction.isValid == false || didCopyToClipBoard)
-                    }
-                }
+                .hideListBackground()
+            } else {
+                Spacer()
             }
-            .padding(.top)
-            
-            if didCopyToClipBoard {
-                CopiedUSSDLabel()
-            }
-            Spacer()
         }
-        .padding()
-        
         .sheet(isPresented: $showContactPicker) {
             ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
         }
+        .actionSheet(isPresented: $showReportSheet) {
+            ActionSheet(title: Text("Report a problem."),
+                        buttons: alertButtons)
+        }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
-        .onAppear(perform: requestContacts)
+        .onAppear(perform: initialization)
         .navigationTitle("Transfer Money")
         .toolbar {
             Button(action: switchPaymentType) {
@@ -132,12 +202,37 @@ struct SendingView: View {
         }
     }
 
-    private func switchPaymentType() {
+    private var alertButtons: [ActionSheet.Button] {
+        return [
+            .default(Text("This merchant code is incorrect"), action: {
+
+            }),
+            .cancel()]
+    }
+}
+
+extension SendingView {
+
+    func initialization() {
+        getNearbyMerchants()
+        requestContacts()
+    }
+
+    func switchPaymentType() {
         withAnimation {
             transaction.type.toggle()
         }
     }
-    private func requestContacts() {
+
+    func getNearbyMerchants() {
+        if let userLocation = locationManager.userLocation {
+            nearbyMerchants = merchantStore.getNearbyMerchants(userLocation)
+        } else {
+            nearbyMerchants = merchantStore.merchants
+        }
+    }
+
+    func requestContacts() {
         Task {
             do {
                 allContacts = try await PhoneContacts.getMtnContacts()
@@ -190,6 +285,8 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
+                .environmentObject(LocationManager())
+                .environmentObject(MerchantStore())
 //                .preferredColorScheme(.dark)
         }
     }

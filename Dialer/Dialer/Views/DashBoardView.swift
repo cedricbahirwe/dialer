@@ -10,6 +10,8 @@ import SwiftUI
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
 
+    @EnvironmentObject private var locationManager: LocationManager
+
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
     @AppStorage(UserDefaults.Keys.allowBiometrics)
@@ -18,7 +20,10 @@ struct DashBoardView: View {
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
-//    @State private var isSpeaking = false
+
+    #if DEBUG
+    @State private var showMerchantsList = false
+    #endif
 
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
@@ -101,23 +106,6 @@ struct DashBoardView: View {
                 }
                 PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
 
-//                VStack {
-//
-//                    LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
-//                        .frame(width: 50, height: 50)
-//                        .mask(
-//                            Image(systemName: isSpeaking ? "waveform.circle.fill" : "mic.circle.fill")
-//                                .resizable()
-//                                .scaledToFit()
-//                        )
-//                        .scaleEffect(isSpeaking ? 1.3 : 1)
-//                        .animation(.spring(), value: isSpeaking)
-//                        .padding(.bottom, isSpeaking ? 70 : 60)
-//                        .onTapGesture {
-//                            isSpeaking.toggle()
-//                        }
-//                        .hidden()
-//                }
             }
             .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
                 if showWelcomeView {
@@ -136,6 +124,11 @@ struct DashBoardView: View {
             }
             .background(Color.primaryBackground)
             .navigationTitle("Dialer")
+            .onAppear(perform: {
+                Task {
+                    await locationManager.requestAuthorisation()
+                }
+            })
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if allowBiometrics {
@@ -195,19 +188,30 @@ extension DashBoardView {
             .padding(10)
             .background(Color.white)
             .cornerRadius(10)
+            .onTapGesture(count: 3) {
+                #if DEBUG
+                showMerchantsList = true
+                #endif
+            }
         }
         .padding(.horizontal)
         .padding(.bottom,8)
+        .fullScreenCover(isPresented: $showMerchantsList) {
+            MerchantsListView()
+        }
     }
 }
 
 #if DEBUG
 struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
-        DashBoardView()
-            .environmentObject(MainViewModel())
-            .previewIn(.fr)
-//            .previewLayout(.sizeThatFits)
+        NavigationView {
+            DashBoardView()
+                .environmentObject(MainViewModel())
+                .environmentObject(LocationManager())
+            //            .previewIn(.fr)
+            //            .previewLayout(.sizeThatFits)
+        }
     }
 }
 #endif
