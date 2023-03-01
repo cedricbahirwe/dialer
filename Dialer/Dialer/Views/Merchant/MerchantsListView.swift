@@ -66,7 +66,7 @@ private extension MerchantsListView {
                     Text("Lat: \(merchant.location.latitude), Long: \(merchant.location.longitude)")
                         .font(.callout)
                 }
-                Text(merchant.hashCode.uuidString)
+                Text("ID: \(merchant.hashCode.uuidString)")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .italic()
