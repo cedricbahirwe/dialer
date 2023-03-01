@@ -94,7 +94,7 @@ struct MySpaceView: View {
                     Label("Add USSD Code", systemImage: "plus")
                 }
 
-                if !rstore.ussdCodes.isEmpty {
+                if !store.ussdCodes.isEmpty {
                     EditButton()
                 }
             }
