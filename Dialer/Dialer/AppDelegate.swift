@@ -12,7 +12,23 @@ import FirebaseCore
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
+
+        configureFirebase()
         return true
+    }
+
+    private func configureFirebase() {
+        let fileName = AppConfiguration.firebaseConfigFileName()
+        guard
+            let filePath = Bundle.main.path(forResource: fileName, ofType: "plist"),
+            let options = FirebaseOptions(contentsOfFile: filePath)
+        else {
+            debugPrint("Could not find Firebase config file")
+            return
+        }
+
+        FirebaseApp.configure(options: options)
+
+        _ = Tracker.shared
     }
 }

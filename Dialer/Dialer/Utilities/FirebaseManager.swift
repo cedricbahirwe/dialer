@@ -5,7 +5,7 @@
 //  Created by Cédric Bahirwe on 26/02/2023.
 //
 
-import Foundation
+import CoreLocation
 import FirebaseFirestore
 
 protocol MerchantProtocol {
@@ -14,18 +14,105 @@ protocol MerchantProtocol {
     func updateMerchant(_ merchant: Merchant) async -> Bool
     func deleteMerchant(_ merchantID: String) async throws
     func getAllMerchants() async -> [Merchant]
-    func getMerchantsNear(lat: Double, long: Double) -> [Merchant]
+    func getMerchantsNear(lat: Double, long: Double) async -> [Merchant]
 }
 
-final class FirebaseManager: MerchantProtocol {
+protocol DeviceProtocol {
+    func saveDevice(_ device: DeviceAccount) async -> Bool
+    func getDevice(by id: String) async -> DeviceAccount?
+    func updateDevice(_ device: DeviceAccount) async -> Bool
+    func deleteDevice(_ deviceID: String) async throws
+    func getAllDevices() async -> [DeviceAccount]
+}
+
+final class FirebaseManager {
     private lazy var db = Firestore.firestore()
 
+}
+
+// MARK: - Merchant Provider
+extension FirebaseManager: MerchantProtocol {
+
     func createMerchant(_ merchant: Merchant) async -> Bool {
+        await create(merchant, in: .merchants)
+    }
+
+    func getMerchant(by merchantID: String) async -> Merchant? {
+        await getItemWithID(merchantID, in: .merchants)
+
+    }
+
+    func updateMerchant(_ merchant: Merchant) async -> Bool {
+        guard let merchantID = merchant.id else { return false }
+        return await updateItemWithID(merchantID,
+                                      content: merchant,
+                                      in: .merchants)
+    }
+
+    func deleteMerchant(_ merchantID: String) async throws {
+        try await deleteItemWithID(merchantID, in: .merchants)
+    }
+
+    func getAllMerchants() async -> [Merchant] {
+        await getAll(in: .merchants)
+    }
+
+    func getMerchantsNear(lat: Double, long: Double) async -> [Merchant] {
+        let merchants = await getAllMerchants()
+
+        let userLocation = CLLocation(latitude: lat, longitude: long)
+
+        let sortedMerchants = merchants.sorted {
+            let location1 = CLLocation(latitude: $0.location.latitude,
+                                       longitude: $0.location.longitude)
+
+            let location2 = CLLocation(latitude: $1.location.latitude,
+                                       longitude: $1.location.longitude)
+
+            return userLocation.distance(from: location1) < userLocation.distance(from: location2)
+        }
+        return sortedMerchants
+    }
+
+    enum CollectionName: String {
+        case merchants
+        case devices
+    }
+}
+
+// MARK: - Device Provider
+extension FirebaseManager: DeviceProtocol {
+    func saveDevice(_ device: DeviceAccount) async -> Bool {
+        await create(device, in: .devices)
+    }
+
+    func getDevice(by id: String) async -> DeviceAccount? {
+        await getItemWithID(id, in: .devices)
+    }
+
+    func updateDevice(_ device: DeviceAccount) async -> Bool {
+        guard let deviceID = device.id else { return false }
+        return await updateItemWithID(deviceID, content: device, in: .devices)
+    }
+
+    func deleteDevice(_ deviceID: String) async throws {
+        try await deleteItemWithID(deviceID, in: .devices)
+    }
+
+    func getAllDevices() async -> [DeviceAccount] {
+        await getAll(in: .devices)
+    }
+
+}
+
+// MARK: - Helper Methods
+extension FirebaseManager {
+    func create<T: Encodable>(_ element: T, in collection: CollectionName) async -> Bool {
         do {
 
             return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Bool, Error>) in
                 do {
-                    _ = try db.collection(Collection.merchants).addDocument(from: merchant) { error in
+                    _ = try db.collection(collection.rawValue).addDocument(from: element) { error in
 
                         if let error {
                             continuation.resume(throwing: error)
@@ -34,59 +121,20 @@ final class FirebaseManager: MerchantProtocol {
                         }
                     }
                 } catch {
-                    debugPrint("Could not save merchant: \(error.localizedDescription).")
+                    debugPrint("Could not save \(type(of: element)): \(error.localizedDescription).")
                     continuation.resume(throwing: error)
                 }
             }
         } catch {
-            debugPrint("Could not save merchant: \(error.localizedDescription).")
+            debugPrint("Error on saving \(type(of: element)): \(error.localizedDescription).")
             return false
         }
     }
 
-    func getMerchant(by merchantID: String) async -> Merchant? {
+    func getAll<T: Decodable>(in collection: CollectionName) async -> [T] {
         do {
-            let snapshot = try await db.collection(Collection.merchants)
-                .document(merchantID)
-                .getDocument()
-
-            let merchant = try snapshot.data(as: Merchant.self)
-
-            return merchant
-        } catch {
-            debugPrint("Error getting Merchant: \(error)")
-            return nil
-        }
-    }
-
-    func updateMerchant(_ merchant: Merchant) async -> Bool {
-        guard let merchantID = merchant.id else { return false }
-
-        return await withCheckedContinuation { (continuation: CheckedContinuation<Bool, Never>) in
-            do {
-
-                try db.collection(Collection.merchants)
-                    .document(merchantID)
-                    .setData(from: merchant)
-
-                continuation.resume(returning: true)
-            } catch {
-                debugPrint("Error updating Merchant: \(error)")
-                continuation.resume(returning: false)
-            }
-        }
-    }
-
-    func deleteMerchant(_ merchantID: String) async throws {
-        try await db.collection(Collection.merchants)
-            .document(merchantID)
-            .delete()
-    }
-
-    func getAllMerchants() async -> [Merchant] {
-        do {
-            return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[Merchant], Error>) in
-                db.collection(Collection.merchants)
+            return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[T], Error>) in
+                db.collection(collection.rawValue)
                     .addSnapshotListener { querySnapshot, error in
                         if let error = error {
                             continuation.resume(throwing: error)
@@ -94,9 +142,9 @@ final class FirebaseManager: MerchantProtocol {
                         }
 
                         if let querySnapshot = querySnapshot {
-                            let result = querySnapshot.documents.compactMap { document -> Merchant? in
+                            let result = querySnapshot.documents.compactMap { document -> T? in
                                 do {
-                                    return try document.data(as: Merchant.self)
+                                    return try document.data(as: T.self)
                                 } catch {
                                     debugPrint("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
                                     return nil
@@ -108,16 +156,50 @@ final class FirebaseManager: MerchantProtocol {
                     }
             }
         } catch {
-            debugPrint("Firestore Merchant Error: \(error).")
+            debugPrint("Can not get \(type(of: T.self)) Error: \(error).")
             return []
         }
     }
 
-    func getMerchantsNear(lat: Double, long: Double) -> [Merchant] {
-        return []
+    func getItemWithID<T: Decodable>(_ itemID: String,
+                                     in collection: CollectionName) async -> T? {
+        do {
+            let snapshot = try await db.collection(collection.rawValue)
+                .document(itemID)
+                .getDocument()
+
+            let item = try snapshot.data(as: T.self)
+
+            return item
+        } catch {
+            debugPrint("Error getting \(T.self): \(error)")
+            return nil
+        }
     }
 
-    enum Collection {
-        static let merchants = "merchants"
+    func deleteItemWithID(_ itemID: String,
+                          in collection: CollectionName) async throws  {
+        try await db.collection(collection.rawValue)
+            .document(itemID)
+            .delete()
+    }
+
+    func updateItemWithID<T: Encodable>(_ itemID: String,
+                                        content: T,
+                                        in collection: CollectionName) async -> Bool {
+        return await withCheckedContinuation {
+            (continuation: CheckedContinuation<Bool, Never>) in
+            do {
+
+                try db.collection(collection.rawValue)
+                    .document(itemID)
+                    .setData(from: content)
+
+                continuation.resume(returning: true)
+            } catch {
+                debugPrint("Error updating Merchant: \(error)")
+                continuation.resume(returning: false)
+            }
+        }
     }
 }

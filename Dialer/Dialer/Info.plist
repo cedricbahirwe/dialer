@@ -85,5 +85,7 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Dialer would like to access your location to provide merchants codes of shops, restaurants and stores nearby</string>
+	<key>DIALER_FIREBASE_FILE_NAME</key>
+	<string>$(DIALER_FIREBASE_FILE_NAME)</string>
 </dict>
 </plist>
