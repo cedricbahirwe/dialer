@@ -79,15 +79,3 @@ extension LocationManager: CLLocationManagerDelegate {
         }
     }
 }
-
-
-// MARK: - Merchant Side
-extension LocationManager {
-    /// MARK:  - Get merchants near user location
-    func getNearbyMerchants() async -> [Merchant] {
-        guard let location = getLastKnownLocation() else { return [] }
-        return merchantProvider.getMerchantsNear(
-            lat: location.latitude,
-            long: location.longitude)
-    }
-}
