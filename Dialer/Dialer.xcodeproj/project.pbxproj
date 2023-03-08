@@ -48,6 +48,7 @@
 		CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */; };
 		CB18BD5729AE929F00A7B45C /* MerchantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5629AE929F00A7B45C /* MerchantsListView.swift */; };
 		CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */; };
+		CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */; };
 		CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD329AF626500BEAD9A /* Tracker.swift */; };
 		CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */; };
 		CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD729AF668300BEAD9A /* FirebaseTracker+Extensions.swift */; };
@@ -179,6 +180,7 @@
 		CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewModel.swift; sourceTree = "<group>"; };
 		CB18BD5629AE929F00A7B45C /* MerchantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantsListView.swift; sourceTree = "<group>"; };
 		CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
+		CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModelTests.swift; sourceTree = "<group>"; };
 		CB338CD329AF626500BEAD9A /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTracker.swift; sourceTree = "<group>"; };
 		CB338CD729AF668300BEAD9A /* FirebaseTracker+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseTracker+Extensions.swift"; sourceTree = "<group>"; };
@@ -466,6 +468,15 @@
 			path = Merchant;
 			sourceTree = "<group>";
 		};
+		CB1FE61E29B7C4ED000F8444 /* ModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */,
+				CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */,
+			);
+			path = ModelTests;
+			sourceTree = "<group>";
+		};
 		CB338CD229AF625800BEAD9A /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,7 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */,
-				CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */,
+				CB1FE61E29B7C4ED000F8444 /* ModelTests */,
 			);
 			path = "Test Cases";
 			sourceTree = "<group>";
@@ -755,6 +766,7 @@
 				CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */,
 				CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */,
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
+				CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */,
 				CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */,
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
 				CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */,
