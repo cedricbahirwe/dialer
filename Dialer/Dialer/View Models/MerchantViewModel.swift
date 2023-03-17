@@ -24,12 +24,16 @@ final class MerchantStore: ObservableObject {
     /// - Returns: Whether or not the merchant was saved
     func saveMerchant(_ merchant: Merchant) async -> Bool {
         startFetch()
-        let isMerchantSaved = await merchantProvider.createMerchant(merchant)
-
-        stopFetch()
-        await  getAllMerchants()
-
-        return isMerchantSaved
+        do {
+            let isMerchantSaved = try await merchantProvider.createMerchant(merchant)
+            
+            stopFetch()
+            await  getAllMerchants()
+            return isMerchantSaved
+        } catch {
+            print("Could not save merchant: ", error)
+            return false
+        }
     }
 
     func deleteMerchants(at offsets: IndexSet) {

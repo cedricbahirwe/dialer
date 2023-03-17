@@ -10,9 +10,9 @@ import FirebaseAnalytics
 
 class FirebaseTracker {
     private var sessions: [ScreenName: Date] = [:]
-    private let deviceProvider: DeviceProtocol
+    private let deviceProvider: DeviceManagerProtocol
 
-    init(_ deviceProvider: DeviceProtocol = FirebaseManager()) {
+    init(_ deviceProvider: DeviceManagerProtocol = FirebaseManager()) {
         self.deviceProvider = deviceProvider
         setAnalyticUserInfo()
     }
@@ -27,12 +27,14 @@ class FirebaseTracker {
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
 
         Task {
-            let isSaved = await deviceProvider.updateDevice(device)
-            if isSaved {
-                do {
-                    try DialerStorage.shared.saveDevice(device)
-                } catch {
-                    logError(error: error)
+            do {
+                let isSaved = try await deviceProvider.updateDevice(device)
+                if isSaved {
+                    do {
+                        try DialerStorage.shared.saveDevice(device)
+                    } catch {
+                        logError(error: error)
+                    }
                 }
             }
         }
