@@ -163,6 +163,8 @@ struct SendingView: View {
                             Text("Nearby Merchants")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
 
                             Spacer()
 
