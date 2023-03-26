@@ -220,6 +220,7 @@ private extension PurchaseDetailView {
         switch editedField {
         case .amount:
             return Binding {
+                data.purchaseDetail.amount == 0 ? "" :
                 String(data.purchaseDetail.amount)
             } set: {
                 data.purchaseDetail.amount = Int($0) ?? 0
