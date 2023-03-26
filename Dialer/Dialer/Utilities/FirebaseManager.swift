@@ -6,7 +6,7 @@
 //
 
 import Foundation
- Firestore
+import FirebaseFirestore
 
 protocol MerchantProtocol {
     func createMerchant(_ merchant: Merchant) async -> Bool
