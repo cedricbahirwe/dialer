@@ -107,18 +107,18 @@ struct DashBoardView: View {
             PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             
         }
-        //            .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
-        //                if showWelcomeView {
-        //                    WhatsNewView(isPresented: $showWelcomeView)
-        //                } else {
-        //                    if data.showSettingsSheet {
-        //                        SettingsView()
-        //                            .environmentObject(data)
-        //                    } else {
-        //                        DialingsHistoryView(data: data)
-        //                    }
-        //                }
-        //            }
+        .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
+            if showWelcomeView {
+                WhatsNewView(isPresented: $showWelcomeView)
+            } else {
+                if data.showSettingsSheet {
+                    SettingsView()
+                        .environmentObject(data)
+                } else {
+                    DialingsHistoryView(data: data)
+                }
+            }
+        }
         .fullScreenCover(isPresented: $presentQuickDial) {
             QuickDialingView()
         }
