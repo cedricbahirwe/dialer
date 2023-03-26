@@ -20,10 +20,7 @@ struct DashBoardView: View {
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
-    
-#if DEBUG
     @State private var showMerchantsList = false
-#endif
     
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
