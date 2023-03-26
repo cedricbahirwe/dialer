@@ -10,9 +10,6 @@ import SwiftUI
 struct PurchaseDetailView: View {
     @Binding var isPresented: Bool
     @ObservedObject var data: MainViewModel
-    private enum EditedField {
-        case amount, code
-    }
     @State private var editedField: EditedField = .amount
     @State private var codepin: String = ""
     @State private var didCopyToClipBoard: Bool = false
@@ -47,15 +44,15 @@ struct PurchaseDetailView: View {
                 .fill(Color.gray)
                 .frame(width: 50, height: 5)
                 .padding(.vertical, 8)
-
-            VStack(spacing: 15) {
+            
+            VStack(spacing: 10) {
                 
                 Text(validAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
                     .opacity(validAmount ? 1 : 0.6)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
-                    
+                
                     .background(
                         Color.green.opacity(editedField == .amount ? 0.04 : 0)
                     )
@@ -78,53 +75,53 @@ struct PurchaseDetailView: View {
                         Text(
                             NSLocalizedString(codepin.isEmpty ? "Enter Pin" : codepin.description,
                                               comment: "")
-                            )
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 40)
-                            .background(Color.primary.opacity(0.06))
-                            
-                            .background(
-                                Color.green.opacity(editedField == .code ? 0.04 : 0.0)
-                            )
-                            .cornerRadius(8)
-                            .overlay(
-                                ZStack {
-                                    if editedField == .code {
-                                        fieldBorder
-                                    }
-                                }
-                            )
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                withAnimation {
-                                    editedField = .code
+                        )
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 40)
+                        .background(Color.primary.opacity(0.06))
+                        
+                        .background(
+                            Color.green.opacity(editedField == .code ? 0.04 : 0.0)
+                        )
+                        .cornerRadius(8)
+                        .overlay(
+                            ZStack {
+                                if editedField == .code {
+                                    fieldBorder
                                 }
                             }
-                            .overlay(
-                                Button(action: {
-                                    guard let codepin = try? CodePin(codepin) else { return }
-                                    data.saveCodePin(codepin)
-                                    self.codepin = ""
-                                }){
-                                    Text("Save")
-                                        .font(.caption)
-                                        .fontWeight(.semibold)
-                                        .padding(.horizontal, 10)
-                                        .frame(height: 40)
-                                        .background(Color.primary)
-                                        .cornerRadius(8)
-                                        .foregroundColor(Color(.systemBackground))
-                                }
+                        )
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation {
+                                editedField = .code
+                            }
+                        }
+                        .overlay(
+                            Button(action: {
+                                guard let codepin = try? CodePin(codepin) else { return }
+                                data.saveCodePin(codepin)
+                                self.codepin = ""
+                            }){
+                                Text("Save")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .padding(.horizontal, 10)
+                                    .frame(height: 40)
+                                    .background(Color.primary)
+                                    .cornerRadius(8)
+                                    .foregroundColor(Color(.systemBackground))
+                            }
                                 .disabled(!validCode)
                                 .opacity(validCode ? 1 : 0.4)
-                                , alignment: .trailing
+                            , alignment: .trailing
                         )
                         
                         Text("Your pin will not be saved unless you manually save it.")
                             .font(.caption)
                             .foregroundColor(.red)
                             .lineLimit(1)
-                            .minimumScaleFactor(0.6)
+                            .minimumScaleFactor(0.8)
                     }
                     
                 } else {
@@ -135,7 +132,7 @@ struct PurchaseDetailView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 5)
                 }
-
+                
                 if UIApplication.hasSupportForUSSD {
                     Button(action: data.confirmPurchase) {
                         Text("Confirm")
@@ -169,7 +166,7 @@ struct PurchaseDetailView: View {
             
             PinView(input: inputBinding())
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .padding(.bottom, 20)
+                .padding(.bottom)
         }
         .padding([.horizontal, .bottom])
         .frame(maxWidth: .infinity, alignment: .top)
@@ -183,7 +180,6 @@ struct PurchaseDetailView: View {
         .offset(x: 0, y: isPresented ? 0 : 800)
         .offset(y: max(0, bottomState.height))
         .blur(radius: show ? 20 : 0)
-
         .gesture(
             DragGesture()
                 .onChanged { value in
@@ -211,12 +207,16 @@ struct PurchaseDetailView: View {
                 }
         )
     }
-    private func filterPin(_ value: String) {
+}
+
+// MARK: - Private Methods
+private extension PurchaseDetailView {
+    func filterPin(_ value: String) {
         codepin = String(value.prefix(5))
         data.pinCode = try? CodePin(codepin)
     }
     
-    private func inputBinding() -> Binding<String> {
+    func inputBinding() -> Binding<String> {
         switch editedField {
         case .amount:
             return Binding {
@@ -228,8 +228,8 @@ struct PurchaseDetailView: View {
             return $codepin.onChange(filterPin)
         }
     }
-
-    private func copyToClipBoard() {
+    
+    func copyToClipBoard() {
         let fullCode = data.getPurchaseDetailUSSDCode()
         UIPasteboard.general.string = fullCode
         withAnimation {
@@ -241,6 +241,10 @@ struct PurchaseDetailView: View {
                 didCopyToClipBoard = false
             }
         }
+    }
+    
+    enum EditedField {
+        case amount, code
     }
 }
 

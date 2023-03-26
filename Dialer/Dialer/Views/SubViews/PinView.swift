@@ -10,7 +10,7 @@ import SwiftUI
 struct PinView: View {
     @Binding var input: String
     var isFullMode: Bool = false
-    var btnSize: CGFloat = 60
+    var btnSize: CGFloat = 50
 
     private var buttons: [String] {
         var defaults: [String] = ["1","2","3","4","5","6","7","8","9","*","0"]
@@ -18,20 +18,20 @@ struct PinView: View {
         defaults += isFullMode ? ["#"] : ["X"]
         return defaults
     }
-    
     var body: some View {
-        LazyVGrid(columns: [
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-        ], spacing: 16) {
+        LazyVGrid(
+            columns: Array(
+                repeating: .init(.flexible(),
+                                 spacing: 10),
+                count: 3),
+            spacing: 8
+        ) {
             ForEach(buttons, id: \.self) { button in
                 CircleButton(button, size: btnSize,
                              action: { addKey(button)})
                 .foregroundColor(
                     button == "X" ?
-                        Color.red :
-                        Color(.label)
+                    Color.red : Color(.label)
                 )
                 .opacity(!isFullMode && button == "*" ? 0 : 1)
                 .opacity(input.isEmpty && button == "X" ? 0 : 1)
