@@ -103,7 +103,7 @@
 "This USSD code is already saved under another name" = "Iyi code ya USSD yamaze kubikwa ku rindi zina.";
 "Save USSD" = "Bika USSD";
 "USSD Validation" = "Kwemeza USSD";
-"Save your own code" = "Bika kode yawe bwite";
+"Create your own USSD code" = "Kora kode yawe ya USSD";
 
 "USSD code is empty." = "Kode ya USSD irimo ubusa.";
 "USSD title is Empty." = "Umutwe wa USSD ni ubusa.";

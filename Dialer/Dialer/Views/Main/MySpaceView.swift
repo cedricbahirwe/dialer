@@ -94,7 +94,9 @@ struct MySpaceView: View {
                     Label("Add USSD Code", systemImage: "plus")
                 }
 
-                EditButton()
+                if !store.ussdCodes.isEmpty {
+                    EditButton()
+                }
             }
         }
         .onAppear() {
@@ -126,14 +128,7 @@ extension MySpaceView: UtilitiesDelegate {
     }
 }
 
-//private extension MySpaceView {
-//    enum USSDFilterOption {
-//        case system
-//        case custom
-//        case all
-//    }
-//}
-
+#if DEBUG
 struct MySpaceView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -143,3 +138,4 @@ struct MySpaceView_Previews: PreviewProvider {
         }
     }
 }
+#endif

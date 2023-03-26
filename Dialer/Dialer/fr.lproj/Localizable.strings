@@ -109,7 +109,7 @@
 "This USSD code is already saved under another name" = "Ce code USSD est déjà enregistré sous un autre nom";
 "Save USSD" = "Sauvegarder le code USSD";
 "USSD Validation" = "Validation USSD";
-"Save your own code" = "Ajouter votre code";
+"Create your own USSD code" = "Créer votre propre code USSD";
 
 "USSD code is empty." = "Le code USSD est vide.";
 "USSD title is Empty." = "Le titre USSD est vide.";
