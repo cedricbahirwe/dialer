@@ -86,7 +86,8 @@ struct NewDialingView: View {
                 Text(LocalizedStringKey(alertItem.message))
             })
             .padding()
-            .navigationTitle("\(isEditing ? "Edit" : "Save") your own code")
+            .navigationTitle("\(isEditing ? "Edit" : "Create") your own USSD code")
+            .navigationBarTitleDisplayMode(.inline)
             .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
             .onSubmit(manageKeyboardFocus)
             .onAppear() {

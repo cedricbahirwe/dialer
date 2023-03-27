@@ -88,7 +88,7 @@
 "Ability to quickly generate USSD for buying airtime." = "Générer rapidement des codes USSD pour l'achat d'unités.";
 "Get direct access to your frequently used USSD codes." = "Accédez directement à vos codes USSD fréquemment utilisés.";
 "Get the right USSD code for transfering to your friend or paying to the store." = "Obtenez le correct code USSD pour transférer à votre ami ou payer au magasin.";
-"Your personalized space to save your favorite USSD codes for buying electricity, Voice packs, Internet bundles and more." = "Votre espace personnalisé pour garder vos codes USSD préférés pour acheter de l'électricité, des packs Voix, des forfaits Internet et plus encore.";
+"A unified space for buying electricity, Voice packs, Internet and more." = "Votre espace personnalisé pour acheter de l'électricité, des packs Voix, des forfaits Internet et plus encore.";
 
 // 12. Electricity View
 "Saved Meters" = "Compteurs enregistrés";
@@ -109,7 +109,7 @@
 "This USSD code is already saved under another name" = "Ce code USSD est déjà enregistré sous un autre nom";
 "Save USSD" = "Sauvegarder le code USSD";
 "USSD Validation" = "Validation USSD";
-"Save your own code" = "Ajouter votre code";
+"Create your own USSD code" = "Créer votre propre code USSD";
 
 "USSD code is empty." = "Le code USSD est vide.";
 "USSD title is Empty." = "Le titre USSD est vide.";

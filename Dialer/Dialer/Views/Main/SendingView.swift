@@ -163,17 +163,19 @@ struct SendingView: View {
                             Text("Nearby Merchants")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
 
-                            Spacer()
+                            Spacer(minLength: 1)
 
-                            Button("Report a problem", role: .destructive) {
-                                showReportSheet.toggle()
-                            }
-                            .textCase(nil)
-                            .font(.caption)
+//                            Button("Report a problem", role: .destructive) {
+//                                showReportSheet.toggle()
+//                            }
+//                            .textCase(nil)
+//                            .font(.caption)
                         }
                     } footer: {
-                        Text("If you encounter any issues with the suggested merchant codes, please do not hesitate to report them to us.")
+                        Text("If you encounter any issues with the suggested merchant codes, please do not hesitate to report them to us. Go to ***Settings > Contact Us***")
                     }
                     .listRowBackground(rowBackground)
                 }

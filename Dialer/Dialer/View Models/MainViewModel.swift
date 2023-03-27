@@ -127,8 +127,8 @@ class MainViewModel: ObservableObject {
     private func dialCode(from purchase: PurchaseDetailModel,
                           completion: @escaping (Result<String, DialingError>) -> Void) {
         
-
         let newUrl = getFullUSSDCode(from: purchase)
+        debugPrint("Dialing", newUrl)
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
