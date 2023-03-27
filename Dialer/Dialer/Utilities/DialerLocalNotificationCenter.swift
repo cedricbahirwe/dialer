@@ -42,7 +42,7 @@ final class DialerNotificationCenter: NSObject {
         Task {
             do {
                 try await createNotification(dailyNotification, repeats: true)
-                DialerStorage.shared.setDailyNotification(to: true)
+                DialerStorage.shared.setDailyNotificationStatus(to: true)
             } catch {
                 debugPrint("Issue with notification", error.localizedDescription)
             }
@@ -94,7 +94,7 @@ extension DialerNotificationCenter {
     func deleteNotifications() {
         debugPrint(#function)
         notificationCenter.removeAllPendingNotificationRequests()
-        DialerStorage.shared.setDailyNotification(to: false)
+        DialerStorage.shared.setDailyNotificationStatus(to: false)
     }
     
     ///Prints to console schduled notifications
