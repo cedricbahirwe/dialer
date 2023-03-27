@@ -37,5 +37,8 @@ extension UserDefaults {
 
         // Last Date the app asked the user to update
         static let lastAskedDateToUpdate = "lastAskedDateToUpdate"
+        
+        // Daily local notification scheduled
+        static let dailyNotificationEnabled = "dailyNotificationEnabled"
     }
 }

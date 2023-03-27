@@ -9,13 +9,6 @@ import UserNotifications
 
 final class DialerNotificationCenter: NSObject {
     private let notificationCenter = UNUserNotificationCenter.current()
-
-    private override init() {
-        super.init()
-        notificationCenter.delegate = self
-    }
-    
-
     private static var _shared: DialerNotificationCenter?
 
     static let shared: DialerNotificationCenter = {
@@ -26,8 +19,40 @@ final class DialerNotificationCenter: NSObject {
         }
         return _shared!
     }()
+    
+    private override init() {
+        super.init()
+        notificationCenter.delegate = self
+    }
 
-    private func isNotificationAuthorized() async throws -> Bool {
+    func scheduleMorningNotification() {
+        
+        guard !DialerStorage.shared.isDailyNotificationEnabled() else { return }
+        
+        var dateComponents = DateComponents()
+        dateComponents.hour = 9
+        dateComponents.minute = 0
+        let dailyNotification = DialerLocalNotification(
+            id: UUID(),
+            title: "Good morning!, Have a Great Day☀️",
+            message: "Buy airtime, Transfer money and Do more with Dialer!",
+            info: [:],
+            scheduledDate: dateComponents
+        )
+        Task {
+            do {
+                try await createNotification(dailyNotification, repeats: true)
+                DialerStorage.shared.setDailyNotification(to: true)
+            } catch {
+                debugPrint("Issue with notification", error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Helper Methods
+private extension DialerNotificationCenter {
+    func isNotificationAuthorized() async throws -> Bool {
         debugPrint(#function)
         do {
             return try await notificationCenter.requestAuthorization(options: [.alert, .sound])
@@ -36,8 +61,8 @@ final class DialerNotificationCenter: NSObject {
             throw NotificationError.notAuthorized
         }
     }
-
-    func createNotification(_ notification: AppNotification, repeats: Bool = false) async throws {
+    
+    func createNotification(_ notification: AppNotification, repeats: Bool) async throws {
         debugPrint(#function)
         guard try await isNotificationAuthorized() else { return }
 
@@ -63,27 +88,13 @@ final class DialerNotificationCenter: NSObject {
             throw NotificationError.notAdded
         }
     }
-
-    func scheduleMorningReminder() {
-        var dateComponents = DateComponents()
-        dateComponents.hour = 9
-        dateComponents.minute = 0
-        let dailyNotification: DialerLocalNotification
-        dailyNotification = .init(id: UUID(),
-                                  title: "Good morning!, Have a Great Day☀️",
-                                  message: "Buy airtime, Transfer money and Do more with Dialer!",
-                                  info: [:],
-                                  scheduledDate: dateComponents)
-        Task {
-            try? await createNotification(dailyNotification, repeats: true)
-        }
-    }
 }
 
 extension DialerNotificationCenter {
     func deleteNotifications() {
         debugPrint(#function)
         notificationCenter.removeAllPendingNotificationRequests()
+        DialerStorage.shared.setDailyNotification(to: false)
     }
     
     ///Prints to console schduled notifications
@@ -92,14 +103,14 @@ extension DialerNotificationCenter {
         Task {
             let pendingNotifs = await notificationCenter.pendingNotificationRequests()
             
-            debugPrint("We have", pendingNotifs.count)
+            debugPrint("Pending Notifications Count: ", pendingNotifs.count)
             
         }
     }
 }
 
+//MARK: UNUserNotificationCenterDelegate
 extension DialerNotificationCenter: UNUserNotificationCenterDelegate {
-    //MARK: UNUserNotificationCenterDelegate
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         completionHandler(.banner)

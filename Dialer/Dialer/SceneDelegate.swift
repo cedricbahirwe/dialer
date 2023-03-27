@@ -125,7 +125,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Schedule Morning Daily Reminder
         DialerNotificationCenter.shared.scheduleMorningNotification()
-        DialerNotificationCenter.shared.printNotifications()
     }
     
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
