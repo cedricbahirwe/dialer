@@ -14,7 +14,7 @@ struct MerchantsListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(merchantStore.merchants) { merchant in
+                ForEach(merchantStore.allMerchants) { merchant in
                     MerchantRow(merchant)
                 }
                 .onDelete(perform: merchantStore.deleteMerchants)

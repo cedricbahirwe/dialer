@@ -11,14 +11,14 @@ struct SendingView: View {
     @EnvironmentObject private var merchantStore: MerchantStore
     @Environment(\.colorScheme) private var colorScheme
 
-    @State private var nearbyMerchants: [Merchant] = []
     @State private var showReportSheet = false
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
-
+    @State private var showMerchantsList = false
+    
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
@@ -126,10 +126,10 @@ struct SendingView: View {
             }
             .padding()
 
-            if transaction.type == .merchant && !nearbyMerchants.isEmpty {
+            if transaction.type == .merchant && !merchantStore.userMerchants.isEmpty {
                 List {
                     Section {
-                        ForEach(nearbyMerchants) { merchant in
+                        ForEach(merchantStore.userMerchants) { merchant in
                             HStack {
                                 HStack(spacing: 4) {
                                     if merchant.code == transaction.number {
@@ -166,6 +166,13 @@ struct SendingView: View {
                                 .minimumScaleFactor(0.5)
 
                             Spacer(minLength: 1)
+                            
+                            Button {
+                                showMerchantsList.toggle()
+                            } label: {
+                                Image(systemName: "plus.circle.fill")
+                            }
+
                         }
                     } footer: {
                         Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
@@ -180,11 +187,15 @@ struct SendingView: View {
         .sheet(isPresented: $showContactPicker) {
             ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
         }
+        .fullScreenCover(isPresented: $showMerchantsList) {
+            MerchantsListView()
+        }
         .actionSheet(isPresented: $showReportSheet) {
             ActionSheet(title: Text("Report a problem."),
                         buttons: alertButtons)
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
+        .trackAppearance(.transfer)
         .onAppear(perform: initialization)
         .navigationTitle("Transfer Money")
         .toolbar {
@@ -195,7 +206,6 @@ struct SendingView: View {
                     .padding(5)
             }
         }
-        .trackAppearance(.transfer)
     }
 
     private var alertButtons: [ActionSheet.Button] {
@@ -210,19 +220,12 @@ struct SendingView: View {
 extension SendingView {
 
     func initialization() {
-        getUserMerchants()
         requestContacts()
     }
 
     func switchPaymentType() {
         withAnimation {
             transaction.type.toggle()
-        }
-    }
-
-    func getUserMerchants() {
-        Task {
-            nearbyMerchants = await merchantStore.getUserMerchants()
         }
     }
 

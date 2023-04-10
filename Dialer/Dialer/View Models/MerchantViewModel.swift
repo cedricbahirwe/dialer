@@ -8,7 +8,8 @@
 import CoreLocation
 
 final class MerchantStore: ObservableObject {
-    @Published private(set) var merchants: [Merchant] = []
+    @Published private(set) var userMerchants: [Merchant] = []
+    @Published private(set) var allMerchants: [Merchant] = []
     @Published private(set) var isFetching = false
     private let merchantProvider: MerchantProtocol
 
@@ -16,6 +17,7 @@ final class MerchantStore: ObservableObject {
         self.merchantProvider = merchantProvider
         Task {
             await getAllMerchants()
+            await getUserMerchants()
         }
     }
 
@@ -29,6 +31,7 @@ final class MerchantStore: ObservableObject {
             
             stopFetch()
             await getAllMerchants()
+            await getUserMerchants()
             return isMerchantSaved
         } catch {
             print("Could not save merchant: ", error)
@@ -38,7 +41,7 @@ final class MerchantStore: ObservableObject {
 
     func deleteMerchants(at offsets: IndexSet) {
         guard let first = offsets.first else { return }
-        let merchant = merchants[first]
+        let merchant = allMerchants[first]
 
         Task {
             await deleteMerchant(merchant, at: first)
@@ -54,7 +57,7 @@ final class MerchantStore: ObservableObject {
 
         startFetch()
         DispatchQueue.main.async {
-            self.merchants.remove(at: index)
+            self.allMerchants.remove(at: index)
         }
 
         do {
@@ -63,7 +66,7 @@ final class MerchantStore: ObservableObject {
         } catch {
             stopFetch()
             DispatchQueue.main.async {
-                self.merchants.insert(merchant, at: index)
+                self.allMerchants.insert(merchant, at: index)
             }
         }
     }
@@ -77,16 +80,17 @@ final class MerchantStore: ObservableObject {
 
         stopFetch()
         DispatchQueue.main.async {
-            self.merchants = result.sorted(by: { $0.name < $1.name })
+            self.allMerchants = result.sorted(by: { $0.name < $1.name })
         }
     }
     
     /// Get Filtered merchants near based of current user
     /// - Returns: Merchants sorted alphabetically
-    func getUserMerchants() async -> [Merchant] {
-        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash else { return [] }
+    @MainActor
+    func getUserMerchants() async {
+        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash else { return }
         let sortedMerchants = await merchantProvider.getMerchantsFor(userId)
-        return sortedMerchants
+        userMerchants = sortedMerchants
     }
 
     func startFetch() {
