@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import CoreLocation
-import CoreLocationUI
 
 struct CreateMerchantView: View {
-    @StateObject private var merchantStore = MerchantStore()
+    @EnvironmentObject private var merchantStore: MerchantStore
     
     @Environment(\.dismiss) private var dismiss
     @State private var model = Model()
@@ -28,7 +26,6 @@ struct CreateMerchantView: View {
 
                     TextField("Merchant Code", text: $model.code)
                         .keyboardType(.numberPad)
-
 
                     TextField("Merchant Address", text: $model.address)
                 }
@@ -116,6 +113,7 @@ private extension CreateMerchantView {
 struct CreateMerchantView_Previews: PreviewProvider {
     static var previews: some View {
         CreateMerchantView()
+            .environmentObject(MerchantStore())
     }
 }
 #endif

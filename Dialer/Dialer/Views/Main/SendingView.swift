@@ -12,12 +12,12 @@ struct SendingView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var showReportSheet = false
+    @State private var showCreateMerchantView = false
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
-    @State private var showMerchantsList = false
     
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
@@ -168,9 +168,10 @@ struct SendingView: View {
                             Spacer(minLength: 1)
                             
                             Button {
-                                showMerchantsList.toggle()
+                                showCreateMerchantView.toggle()
                             } label: {
                                 Image(systemName: "plus.circle.fill")
+                                    .imageScale(.large)
                             }
 
                         }
@@ -184,11 +185,12 @@ struct SendingView: View {
                 Spacer()
             }
         }
-        .sheet(isPresented: $showContactPicker) {
-            ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
-        }
-        .fullScreenCover(isPresented: $showMerchantsList) {
-            MerchantsListView()
+        .sheet(isPresented: showCreateMerchantView ? $showCreateMerchantView : $showContactPicker) {
+            if showCreateMerchantView {
+                CreateMerchantView()
+            } else {
+                ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+            }
         }
         .actionSheet(isPresented: $showReportSheet) {
             ActionSheet(title: Text("Report a problem."),
