@@ -127,11 +127,8 @@
 		821BE13426FB28CB00A3CA02 /* AppVersioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersioning.swift; sourceTree = "<group>"; };
 		821C0733264DD78F00DBD545 /* NewDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDialingView.swift; sourceTree = "<group>"; };
 		821C0737264DDFFB00DBD545 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
-		823B2F8A2704683800E686BE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		823B2F8E2704686400E686BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		823B2F902704686600E686BE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		823B2F9427047A3500E686BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		823B2F9627047A3C00E686BE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		823FA768261A556200ABE045 /* PurchaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailView.swift; sourceTree = "<group>"; };
 		8248440A26FDBB2300DB0643 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		8248440C26FDBB3200DB0643 /* SettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOption.swift; sourceTree = "<group>"; };
@@ -143,9 +140,6 @@
 		825F996226720AE6009E4A7B /* SendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingView.swift; sourceTree = "<group>"; };
 		825F996526720B46009E4A7B /* ContactsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFetcher.swift; sourceTree = "<group>"; };
 		825F996926720B7E009E4A7B /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
-		8276274327085AF700A5F4BC /* rw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = rw; path = rw.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		8276274427085AF700A5F4BC /* rw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = rw; path = rw.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8276274527085AF700A5F4BC /* rw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = rw; path = rw.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		828D79D626E1029800439F9A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -584,8 +578,6 @@
 			knownRegions = (
 				en,
 				Base,
-				fr,
-				rw,
 			);
 			mainGroup = 82D41FAA25D1C1FE00551D22;
 			packageReferences = (
@@ -747,8 +739,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				823B2F8E2704686400E686BE /* en */,
-				823B2F902704686600E686BE /* fr */,
-				8276274427085AF700A5F4BC /* rw */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -757,8 +747,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				823B2F9427047A3500E686BE /* en */,
-				823B2F9627047A3C00E686BE /* fr */,
-				8276274527085AF700A5F4BC /* rw */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -767,8 +755,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				82D41FC225D1C1FF00551D22 /* Base */,
-				823B2F8A2704683800E686BE /* fr */,
-				8276274327085AF700A5F4BC /* rw */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

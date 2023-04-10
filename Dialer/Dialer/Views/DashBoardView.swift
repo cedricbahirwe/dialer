@@ -10,8 +10,6 @@ import SwiftUI
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     
-    @EnvironmentObject private var locationManager: LocationManager
-    
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
     @AppStorage(UserDefaults.Keys.allowBiometrics)
@@ -121,11 +119,6 @@ struct DashBoardView: View {
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")
-        .onAppear(perform: {
-            Task {
-                await locationManager.requestAuthorisation()
-            }
-        })
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if allowBiometrics {
@@ -201,7 +194,6 @@ struct DashBoardView_Previews: PreviewProvider {
         NavigationView {
             DashBoardView()
                 .environmentObject(MainViewModel())
-                .environmentObject(LocationManager())
             //                        .previewIn(.fr)
             //            .previewLayout(.sizeThatFits)
         }

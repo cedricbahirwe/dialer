@@ -8,7 +8,6 @@
 import SwiftUI
 
 enum SettingsOption {
-    case changeLanguage
     case biometrics
     case getStarted
     case contactUs
@@ -21,8 +20,6 @@ enum SettingsOption {
     
     func getSettingsItem() -> SettingsItem {
         switch self {
-        case .changeLanguage:
-            return .init(icon: "language", color: .main.opacity(0.7), title: "Change Language", subtitle: "Select your desired language.")
         case .biometrics:
             return .init(sysIcon: "lock.fill", color: .green, title: "Biometric Authentication", subtitle: "For securing your activities on the app.")
         case .deletePin:

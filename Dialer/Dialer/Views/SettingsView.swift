@@ -25,9 +25,6 @@ struct SettingsView: View {
                     
                     Section(header: sectionHeader("General settings")) {
                         VStack {
-                            SettingsRow(.changeLanguage, exists: false) {
-                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                            }
 
                             HStack(spacing: 3) {
                                 SettingsRow(.biometrics, exists: false)
