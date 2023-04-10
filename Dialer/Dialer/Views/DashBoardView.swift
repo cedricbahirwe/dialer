@@ -134,6 +134,11 @@ struct DashBoardView: View {
             }
         }
         .trackAppearance(.dashboard)
+        .onAppear() {
+            FirebaseTracker().setAnalyticUserInfo()
+            
+            print(DialerStorage.shared.getSavedDevice(), "UserDevice")
+        }
     }
     
     private var gearGradient: some View {

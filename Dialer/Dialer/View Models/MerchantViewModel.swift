@@ -28,7 +28,7 @@ final class MerchantStore: ObservableObject {
             let isMerchantSaved = try await merchantProvider.createMerchant(merchant)
             
             stopFetch()
-            await  getAllMerchants()
+            await getAllMerchants()
             return isMerchantSaved
         } catch {
             print("Could not save merchant: ", error)

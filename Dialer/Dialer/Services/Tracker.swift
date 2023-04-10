@@ -95,4 +95,8 @@ struct DeviceAccount: Identifiable, Codable {
         dictionary["last_visited_date"] = lastVisitedDate
         return dictionary
     }
+    
+//    func toParamsDictionary() -> [String: Any] {
+//        var dictionary: [String: Any] = [:]
+//    }
 }

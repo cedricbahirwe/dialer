@@ -105,13 +105,13 @@ final class DialerStorage {
 
     func saveDevice(_ device: DeviceAccount) throws {
         let data = try encodeDataWithFirebase(device)
-        userDefaults.setValue(data, forKey: LocalKeys.deviceAccount)
+        userDefaults.set(data, forKey: LocalKeys.deviceAccount)
     }
 
     func getSavedDevice() -> DeviceAccount? {
-        guard let userLocation = decodeDataWithFirebase(key: LocalKeys.deviceAccount, as: DeviceAccount.self)
+        guard let userDevice = decodeDataWithFirebase(key: LocalKeys.deviceAccount, as: DeviceAccount.self)
         else { return nil }
-        return userLocation
+        return userDevice
     }
 
     func removeAllUSSDCodes() {
@@ -128,12 +128,10 @@ final class DialerStorage {
 }
 
 private extension DialerStorage {
-    func encodeDataWithFirebase<T>(_ value: T) throws -> Data where T: Codable {
+    func encodeDataWithFirebase<T>(_ value: T) throws -> [String: Any] where T: Codable {
         let dictionary = try Firestore.Encoder().encode(value)
         
-        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
-        return data
-
+        return dictionary
     }
     
     func encodeData<T>(_ value: T) throws -> Data where T: Codable {
@@ -153,19 +151,21 @@ private extension DialerStorage {
     }
     
     func decodeDataWithFirebase<T: Decodable>(key: String, as type: T.Type) -> T? {
-        guard let data = userDefaults.object(forKey: key) as? Data else {
+        guard let dictionary = userDefaults.object(forKey: key) as? [String: Any] else {
+            userDefaults.removeObject(forKey: key)
             return nil
         }
         do {
-            return  try Firestore.Decoder().decode(type, from: data)
+            return try Firestore.Decoder().decode(type, from: dictionary)
         } catch let error {
-            print("Couldn't decode the data of type \(type): ", error.localizedDescription)
+            print("Couldn't decode the firebase data of type \(type): ", error)
         }
         return nil
     }
 
     func decodeDatasArray<T: Codable>(key: String, type:  Array<T>.Type) -> [T] {
         guard let data = userDefaults.object(forKey: key) as? Data else {
+            userDefaults.removeObject(forKey: key)
             return []
         }
         do {

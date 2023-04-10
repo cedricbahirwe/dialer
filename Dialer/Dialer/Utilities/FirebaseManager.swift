@@ -11,9 +11,7 @@ import FirebaseFirestore
 class FirebaseManager: FirebaseCRUD {
     private(set) lazy var db = Firestore.firestore()
 
-
     private var completionContinuation: CheckedContinuation<[Decodable], Error>?
-
 
 }
 

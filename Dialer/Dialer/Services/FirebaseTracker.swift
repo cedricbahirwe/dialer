@@ -14,10 +14,10 @@ class FirebaseTracker {
 
     init(_ deviceProvider: DeviceManagerProtocol = FirebaseManager()) {
         self.deviceProvider = deviceProvider
-        setAnalyticUserInfo()
+//        setAnalyticUserInfo()
     }
 
-    private func setAnalyticUserInfo() {
+    func setAnalyticUserInfo() {
         let device = getDeviceAccount()
 
         Analytics.setUserID(device.deviceHash)
