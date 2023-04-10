@@ -42,10 +42,10 @@ struct QuickDialingView: View {
                 }
 
                 PinView(input: $composedCode.animation(),
-                        isFullMode: true, btnSize: 80)
+                        isFullMode: true, btnSize: 70)
                     .font(.title.bold())
                     .padding(.vertical, 10)
-                    .padding()
+                    .padding(.horizontal)
 
                 Button(action: {
                     dial(composedCode)
@@ -59,7 +59,7 @@ struct QuickDialingView: View {
                 })
                 .frame(maxWidth: .infinity)
                 .overlay(bottomNavigationView)
-                .padding(.bottom, 20)
+                .padding(.bottom)
             }
         }
         .preferredColorScheme(.dark)
@@ -124,9 +124,11 @@ struct QuickDialingView: View {
     }
 }
 
+#if DEBUG
 struct QuickDialingView_Previews: PreviewProvider {
     static var previews: some View {
         QuickDialingView()
         //        .previewLayout(.fixed(width: 850, height: 900))
     }
 }
+#endif

@@ -7,10 +7,8 @@
 
 import UserNotifications
 
-final class DialerNotificationCenter {
-
-    private init() {}
-
+final class DialerNotificationCenter: NSObject {
+    private let notificationCenter = UNUserNotificationCenter.current()
     private static var _shared: DialerNotificationCenter?
 
     static let shared: DialerNotificationCenter = {
@@ -21,24 +19,58 @@ final class DialerNotificationCenter {
         }
         return _shared!
     }()
+    
+    private override init() {
+        super.init()
+        notificationCenter.delegate = self
+    }
 
-    private func isNotificationAuthorized() async throws -> Bool {
+    func scheduleMorningNotification() {
+        
+        guard !DialerStorage.shared.isDailyNotificationEnabled() else { return }
+        
+        var dateComponents = DateComponents()
+        dateComponents.hour = 9
+        dateComponents.minute = 0
+        let dailyNotification = DialerLocalNotification(
+            id: UUID(),
+            title: "Good morning!, Have a Great Day☀️",
+            message: "Buy airtime, Transfer money and Do more with Dialer!",
+            info: [:],
+            scheduledDate: dateComponents
+        )
+        Task {
+            do {
+                try await createNotification(dailyNotification, repeats: true)
+                DialerStorage.shared.setDailyNotificationStatus(to: true)
+            } catch {
+                debugPrint("Issue with notification", error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Helper Methods
+private extension DialerNotificationCenter {
+    func isNotificationAuthorized() async throws -> Bool {
+        debugPrint(#function)
         do {
-            return try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+            return try await notificationCenter.requestAuthorization(options: [.alert, .sound])
         } catch {
             print("Not Authorized", error.localizedDescription)
             throw NotificationError.notAuthorized
         }
     }
-
-    func createNotification(_ notification: AppNotification, repeats: Bool = false) async throws {
+    
+    func createNotification(_ notification: AppNotification, repeats: Bool) async throws {
+        debugPrint(#function)
         guard try await isNotificationAuthorized() else { return }
 
         let content = UNMutableNotificationContent()
         content.title  = notification.title
         content.body = notification.message
         content.userInfo = notification.info
-        content.sound = .default
+        content.sound = UNNotificationSound.default
 
         if let imageURL = notification.imageUrl,
            let attachement = try? UNNotificationAttachment(identifier: "", url: imageURL, options: .none) {
@@ -50,43 +82,38 @@ final class DialerNotificationCenter {
         let request = UNNotificationRequest(identifier: notification.id.uuidString, content: content, trigger: trigger)
 
         do {
-            try await UNUserNotificationCenter.current().add(request)
+            try await notificationCenter.add(request)
         } catch {
-            print("Unable to add notification: ", error.localizedDescription)
+            debugPrint("Unable to add notification: ", error.localizedDescription)
             throw NotificationError.notAdded
-        }
-    }
-
-    func scheduleMorningReminder() {
-        let nextDay9AMComponents = getNextDateComponents()
-        let dailyNotification: DialerLocalNotification
-        dailyNotification = .init(id: UUID(),
-                                  title: "Good morning!, Have a Great Day",
-                                  message: "Buy airtime, transfer money and do more with Dialer!",
-                                  info: [:],
-                                  scheduledDate: nextDay9AMComponents)
-        Task {
-            try? await createNotification(dailyNotification, repeats: true)
         }
     }
 }
 
-private extension DialerNotificationCenter {
-    func getNextDateComponents() -> DateComponents {
-        var components = DateComponents()
-        components.hour = 9
-        components.minute = 0
-        let todayDay9AM = Calendar.current.date(from: components) ?? .now
-
-        let tomorrowDay9AM = Calendar.current.date(byAdding: .day, value: 1, to: todayDay9AM)
-
-        let dateComponents = getComponents([.hour, .minute], from: tomorrowDay9AM ?? .now)
-
-        return dateComponents
+extension DialerNotificationCenter {
+    func deleteNotifications() {
+        debugPrint(#function)
+        notificationCenter.removeAllPendingNotificationRequests()
+        DialerStorage.shared.setDailyNotificationStatus(to: false)
     }
+    
+    ///Prints to console schduled notifications
+    func printNotifications() {
+        debugPrint(#function)
+        Task {
+            let pendingNotifs = await notificationCenter.pendingNotificationRequests()
+            
+            debugPrint("Pending Notifications Count: ", pendingNotifs.count)
+            
+        }
+    }
+}
 
-    func getComponents(_ components: Set<Calendar.Component>, from date: Date) -> DateComponents {
-        return Calendar.current.dateComponents(components, from: date)
+//MARK: UNUserNotificationCenterDelegate
+extension DialerNotificationCenter: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler(.banner)
     }
 }
 

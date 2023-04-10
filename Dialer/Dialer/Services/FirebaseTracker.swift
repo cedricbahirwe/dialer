@@ -88,26 +88,23 @@ class FirebaseTracker {
         let deviceModel = device.model
         let deviceSystemVersion = device.systemVersion
         let deviceSystemName = device.systemName
-        let batteryLevel = UIDevice.current.batteryLevel
-        let batteryState = UIDevice.current.batteryState.status
         let deviceIdentifier = (device.identifierForVendor ?? .init()).uuidString
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let bundleID = Bundle.main.bundleIdentifier
-
-
-        let deviceAccount = DeviceAccount(id: deviceIdentifier,
-                                          name: deviceName,
-                                          model: deviceModel,
-                                          systemVersion: deviceSystemVersion,
-                                          systemName: deviceSystemName,
-                                          batteryLevel: Int(batteryLevel*100),
-                                          batteryState: batteryState,
-                                          deviceHash: deviceIdentifier,
-                                          appVersion: appVersion,
-                                          bundleVersion: bundleVersion,
-                                          bundleId: bundleID,
-                                          lastVisitedDate: Date.now.formatted())
+        
+        let deviceAccount = DeviceAccount(
+            id: deviceIdentifier,
+            name: deviceName,
+            model: deviceModel,
+            systemVersion: deviceSystemVersion,
+            systemName: deviceSystemName,
+            deviceHash: deviceIdentifier,
+            appVersion: appVersion,
+            bundleVersion: bundleVersion,
+            bundleId: bundleID,
+            lastVisitedDate: Date.now.formatted())
+        
         return deviceAccount
     }
 }

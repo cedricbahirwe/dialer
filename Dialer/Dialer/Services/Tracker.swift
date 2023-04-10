@@ -75,8 +75,6 @@ struct DeviceAccount: Identifiable, Codable {
     let model: String
     let systemVersion: String
     let systemName: String
-    let batteryLevel: Int
-    let batteryState: String
 
     let deviceHash: String
     let appVersion: String?
@@ -90,8 +88,6 @@ struct DeviceAccount: Identifiable, Codable {
         dictionary["model"] = model
         dictionary["system_version"] = systemVersion
         dictionary["system_name"] = systemName
-        dictionary["battery_level"] = batteryLevel
-        dictionary["battery_state"] = batteryState
         dictionary["device_hash"] = deviceHash
         dictionary["app_version"] = appVersion
         dictionary["bundle_version"] = bundleVersion

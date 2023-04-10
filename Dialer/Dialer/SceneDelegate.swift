@@ -18,13 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     static let codeIdentifierInfoKey = "CodeIdentifier"
 
-
     var window: UIWindow?
     var savedShortCutItem: UIApplicationShortcutItem!
 
     /// Environment Objects
     let dialingStore = MainViewModel()
-    let locationManager = LocationManager()
     let forceUpdateManager = ForceUpdateManager()
     let merchantStore = MerchantStore()
 
@@ -48,7 +46,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView()
             .environmentObject(dialingStore)
             .environmentObject(merchantStore)
-            .environmentObject(locationManager)
             .environmentObject(forceUpdateManager)
         
         // Use a UIHostingController as window root view controller.
@@ -124,7 +121,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         dialingStore.saveRecentCodesLocally()
 
         // Schedule Morning Daily Reminder
-        DialerNotificationCenter.shared.scheduleMorningReminder()
+        DialerNotificationCenter.shared.scheduleMorningNotification()
     }
     
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {

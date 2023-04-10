@@ -127,6 +127,14 @@ final class DialerStorage {
     func removeAllUSSDCodes() {
         userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
     }
+    
+    func setDailyNotificationStatus(to isEnabled: Bool) {
+        userDefaults.set(isEnabled, forKey: LocalKeys.dailyNotificationEnabled)
+    }
+    
+    func isDailyNotificationEnabled() -> Bool {
+        userDefaults.bool(forKey: LocalKeys.dailyNotificationEnabled)
+    }
 }
 
 private extension  DialerStorage {

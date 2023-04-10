@@ -9,20 +9,17 @@ import SwiftUI
 
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
-
-    @EnvironmentObject private var locationManager: LocationManager
-
+    
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
     @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
-
+    
     @State private var presentQuickDial = false
     @State private var presentSendingView = false
     @State private var showPurchaseSheet = false
-
     @State private var showMerchantsList = false
-
+    
     private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
     
     var body: some View {
@@ -39,7 +36,7 @@ struct DashBoardView: View {
                                 showPurchaseSheet.toggle()
                             }
                         }
-
+                        
                         DashItemView(
                             title: "Transfer/Pay",
                             icon: "paperplane.circle")
@@ -47,7 +44,7 @@ struct DashBoardView: View {
                             presentSendingView = $0
                         }
                     }
-
+                    
                     HStack(spacing: 15) {
                         DashItemView(
                             title: "History",
@@ -55,7 +52,7 @@ struct DashBoardView: View {
                         .onTapGesture {
                             data.showHistorySheet.toggle()
                         }
-
+                        
                         NavigationLink {
                             MySpaceView()
                         } label: {
@@ -64,17 +61,17 @@ struct DashBoardView: View {
                                 icon: "person.crop.circle.badge")
                         }
                         .buttonStyle(PlainButtonStyle())
-
+                        
                     }
                 }
                 .padding()
-
+                
                 NavigationLink(isActive: $presentSendingView) {
                     SendingView()
                 } label: { EmptyView() }
-
+                
                 Spacer()
-
+                
                 if checkCellularProvider.status == false {
                     HStack {
                         Text("Sim card is required to unlock all the features.")
@@ -88,12 +85,12 @@ struct DashBoardView: View {
                     .background(.ultraThickMaterial)
                     .hidden()
                 }
-
+                
                 bottomBarView
             }
             .blur(radius: showPurchaseSheet ? 3 : 0)
             .allowsHitTesting(!showPurchaseSheet)
-
+            
             if showPurchaseSheet {
                 Color.black.opacity(0.001)
                     .onTapGesture {
@@ -103,7 +100,7 @@ struct DashBoardView: View {
                     }
             }
             PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
-
+            
         }
         .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
             if showWelcomeView {
@@ -122,11 +119,6 @@ struct DashBoardView: View {
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")
-        .onAppear {
-            Task {
-                await locationManager.requestAuthorisation()
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if allowBiometrics {
@@ -164,21 +156,17 @@ extension DashBoardView {
                     presentQuickDial.toggle()
                 } label: {
                     Label("Quick Dial", systemImage: "plus.circle.fill")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
                 }
                 .foregroundColor(.mainRed)
             }
-
-            Spacer()
-
+            
+            Spacer(minLength: 5)
+            
             Label {
                 Text(LocalizedStringKey(checkCellularProvider.message))
-                    .font(
-                        .system(
-                            .body,
-                            design: .rounded)
-                        .weight(.medium)
-                    )
+                    .font(.system(.body, design: .rounded)
+                        .weight(.medium))
                     .multilineTextAlignment(.leading)
             } icon: {
                 Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
@@ -188,13 +176,13 @@ extension DashBoardView {
             .background(Color.white)
             .cornerRadius(10)
             .onTapGesture(count: 3) {
-                #if DEBUG
+#if DEBUG
                 showMerchantsList = true
-                #endif
+#endif
             }
         }
         .padding(.horizontal)
-        .padding(.bottom,8)
+        .padding(.bottom, 8)
         .fullScreenCover(isPresented: $showMerchantsList) {
             MerchantsListView()
         }
@@ -207,8 +195,7 @@ struct DashBoardView_Previews: PreviewProvider {
         NavigationView {
             DashBoardView()
                 .environmentObject(MainViewModel())
-                .environmentObject(LocationManager())
-            //            .previewIn(.fr)
+            //                        .previewIn(.fr)
             //            .previewLayout(.sizeThatFits)
         }
     }
