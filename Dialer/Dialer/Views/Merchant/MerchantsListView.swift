@@ -60,7 +60,7 @@ private extension MerchantsListView {
             VStack(alignment: .leading) {
                 Text(merchant.name)
                     .font(.title3.weight(.semibold))
-                Text("Address: \(merchant.address)")
+                Text("Address: \(merchant.address ?? "-")")
                 Text("Merchant Code: **\(merchant.code)**")
                 Text("Owner: \(merchant.ownerId ?? "-")")
                     .font(.callout)

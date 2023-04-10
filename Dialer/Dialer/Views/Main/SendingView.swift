@@ -168,7 +168,7 @@ struct SendingView: View {
                             Spacer(minLength: 1)
                         }
                     } footer: {
-                        Text("Make sure that the merchant codes is correct and up to date before dialing. Need Help?\nGo to ***Settings > Contact Us***")
+                        Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
                     }
                     .listRowBackground(rowBackground)
                 }
@@ -195,6 +195,7 @@ struct SendingView: View {
                     .padding(5)
             }
         }
+        .trackAppearance(.transfer)
     }
 
     private var alertButtons: [ActionSheet.Button] {

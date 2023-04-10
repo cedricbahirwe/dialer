@@ -99,6 +99,7 @@ struct MySpaceView: View {
                 }
             }
         }
+        .trackAppearance(.mySpace)
         .onAppear() {
             store.utilityDelegate = self
         }

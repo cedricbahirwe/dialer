@@ -12,12 +12,12 @@ import FirebaseFirestore
 struct Merchant: Codable, Identifiable {
     @DocumentID var id: String?
     let name: String
-    let address: String
+    let address: String?
     let code: String
     let ownerId: String?
     var hashCode = UUID()
 
-    init(name: String, address: String, code: String, ownerId: String) {
+    init(name: String, address: String?, code: String, ownerId: String) {
         self.name = name
         self.address = address
         self.code = code
@@ -25,7 +25,7 @@ struct Merchant: Codable, Identifiable {
         self.hashCode = UUID()
     }
 
-    init(_ id: String? = nil, name: String, address: String, code: String, ownerId: String) {
+    init(_ id: String? = nil, name: String, address: String?, code: String, ownerId: String) {
         self.id = id
         self.name = name
         self.address = address

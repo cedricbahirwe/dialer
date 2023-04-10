@@ -145,7 +145,7 @@ private extension DialerStorage {
         do {
             return try JSONDecoder().decode(type, from: data)
         } catch let error {
-            print("Couldn't decode the data of type \(type): ", error.localizedDescription)
+            debugPrint("Couldn't decode the data of type \(type): ", error.localizedDescription)
         }
         return nil
     }
@@ -158,7 +158,7 @@ private extension DialerStorage {
         do {
             return try Firestore.Decoder().decode(type, from: dictionary)
         } catch let error {
-            print("Couldn't decode the firebase data of type \(type): ", error)
+            debugPrint("Couldn't decode the firebase data of type \(type): ", error)
         }
         return nil
     }
@@ -171,7 +171,7 @@ private extension DialerStorage {
         do {
             return  try JSONDecoder().decode(type, from: data)
         } catch let error {
-            print("Couldn't decode the array of type \(type): ", error.localizedDescription)
+            debugPrint("Couldn't decode the array of type \(type): ", error.localizedDescription)
         }
         return []
     }

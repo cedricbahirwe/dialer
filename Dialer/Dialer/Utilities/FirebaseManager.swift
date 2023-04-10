@@ -46,7 +46,7 @@ extension FirebaseManager: MerchantProtocol {
     func getMerchantsFor(_ userID: String) async -> [Merchant] {
         do {
             let querySnapshot = try await db.collection(CollectionName.merchants.rawValue)
-                .whereField("ownerId", isEqualTo: "")
+                .whereField("ownerId", isEqualTo: userID)
                 .order(by: "name")
                 .getDocuments()
             

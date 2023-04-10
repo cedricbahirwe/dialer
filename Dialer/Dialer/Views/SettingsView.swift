@@ -138,6 +138,7 @@ struct SettingsView: View {
                     }.font(.body.bold())
                 }
             }
+            .trackAppearance(.settings)
         }
     }
 
