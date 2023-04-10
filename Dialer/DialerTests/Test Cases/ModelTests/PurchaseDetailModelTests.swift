@@ -27,7 +27,7 @@ final class PurchaseDetailModelTests: XCTestCase {
         let purchase = PurchaseDetailModel(amount: 1000)
         let expectedUnpinCode = "*182*2*2*1*1*1*1000#"
 
-        XCTAssertEqual(expectedUnpinCode, purchase.getDialCode())
+        XCTAssertEqual(expectedUnpinCode, purchase.getDialCode(pin: ""))
 
     }
 
