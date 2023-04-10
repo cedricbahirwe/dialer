@@ -39,33 +39,6 @@ struct CreateMerchantView: View {
                         .strokeBorder(Color.black, lineWidth: 1)
                 }
 
-                HStack {
-                    Group {
-                        TextField("Latitude", text: $model.latitude)
-
-                        TextField("Longitude", text: $model.longitude)
-                    }
-                    .padding(10)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 15)
-                            .strokeBorder(Color.black, lineWidth: 1)
-                    }
-
-                    Button {
-//                        if let userLocation = locationManager.userLocation {
-//                            model.latitude = String(userLocation.latitude)
-//                            model.longitude = String(userLocation.longitude)
-//                        }
-                    } label: {
-                        Image(systemName: "arrow.triangle.2.circlepath.circle")
-                            .imageScale(.large)
-                            .frame(width: 35, height: 35)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.roundedRectangle)
-
-                }
-
                 Button(action: saveMerchant) {
                     Text("Save Merchant")
                         .frame(maxWidth: .infinity)
@@ -93,12 +66,6 @@ struct CreateMerchantView: View {
                     .scaleEffect(2)
             }
         }
-        .onAppear() {
-//            if let userLocation = locationManager.userLocation {
-//                model.latitude = String(userLocation.latitude)
-//                model.longitude = String(userLocation.longitude)
-//            }
-        }
     }
 
     private func saveMerchant()  {
@@ -121,8 +88,6 @@ private extension CreateMerchantView {
         var name = ""
         var code = ""
         var address = ""
-        var latitude = ""
-        var longitude = ""
 
         enum Error: Swift.Error {
             case invalidInput(String)
@@ -140,15 +105,9 @@ private extension CreateMerchantView {
             else { throw Error.invalidInput("Code should be 5 or 6 digits")  }
             guard code.allSatisfy(\.isNumber)
             else { throw Error.invalidInput("Code contains only digits")  }
-            guard let lat = Double(latitude)
-            else { throw Error.invalidInput("Latitude invalid") }
-            guard let long = Double(longitude)
-            else { throw Error.invalidInput("Longitude invalid") }
-            let location = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            guard CLLocationCoordinate2DIsValid(location)
-            else { throw Error.invalidInput("Coordinate invalid") }
 
-            return Merchant(name: name, address: address, code: code, lat: lat, long: long)
+            let userId = DialerStorage.shared.getSavedDevice()?.deviceHash ?? "-"
+            return Merchant(name: name, address: address, code: code, ownerId: userId)
         }
     }
 }

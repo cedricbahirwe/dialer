@@ -40,19 +40,24 @@ extension FirebaseCRUD {
         do {
             let querySnapshot = try await db.collection(collection.rawValue)
                 .getDocuments()
-            let result = querySnapshot.documents.compactMap { document -> T? in
-                do {
-                    return try document.data(as: T.self)
-                } catch {
-                    debugPrint("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
-                    return nil
-                }
-            }
-            return result
+            
+            return await getAllWithQuery(querySnapshot)
         } catch {
             debugPrint("Can not get \(type(of: Merchant.self)) Error: \(error).")
             return []
         }
+    }
+    
+    func getAllWithQuery<T: Decodable>(_ querySnapshot: QuerySnapshot) async -> [T] {
+        let result = querySnapshot.documents.compactMap { document -> T? in
+            do {
+                return try document.data(as: T.self)
+            } catch {
+                debugPrint("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
+                return nil
+            }
+        }
+        return result
     }
     
     func getItemWithID<T: Decodable>(_ itemID: String,

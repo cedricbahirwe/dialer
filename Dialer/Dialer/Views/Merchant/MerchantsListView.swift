@@ -62,10 +62,8 @@ private extension MerchantsListView {
                     .font(.title3.weight(.semibold))
                 Text("Address: \(merchant.address)")
                 Text("Merchant Code: **\(merchant.code)**")
-                HStack {
-                    Text("Lat: \(merchant.location.latitude), Long: \(merchant.location.longitude)")
-                        .font(.callout)
-                }
+                Text("Owner: \(merchant.ownerId ?? "-")")
+                    .font(.callout)
                 Text("ID: \(merchant.hashCode.uuidString)")
                     .font(.caption)
                     .foregroundColor(.gray)

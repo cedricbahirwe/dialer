@@ -32,9 +32,6 @@ extension UserDefaults {
         // Custom USSD codes
         static let customUSSDCodes = "customUSSDCodes"
 
-        // Last Known user location
-        static let lastUserLocation = "lastUserLocation"
-
         // Last Date the app asked the user to update
         static let lastAskedDateToUpdate = "lastAskedDateToUpdate"
 

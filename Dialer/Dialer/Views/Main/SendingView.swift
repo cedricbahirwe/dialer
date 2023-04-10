@@ -209,7 +209,7 @@ struct SendingView: View {
 extension SendingView {
 
     func initialization() {
-        getNearbyMerchants()
+        getUserMerchants()
         requestContacts()
     }
 
@@ -219,12 +219,10 @@ extension SendingView {
         }
     }
 
-    func getNearbyMerchants() {
-//        if let userLocation = locationManager.userLocation {
-//            nearbyMerchants = merchantStore.getNearbyMerchants(userLocation)
-//        } else {
-//            nearbyMerchants = merchantStore.merchants
-//        }
+    func getUserMerchants() {
+        Task {
+            nearbyMerchants = await merchantStore.getUserMerchants()
+        }
     }
 
     func requestContacts() {

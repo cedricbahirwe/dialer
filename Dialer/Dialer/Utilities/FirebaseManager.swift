@@ -45,21 +45,19 @@ extension FirebaseManager: MerchantProtocol {
         await getAll(in: .merchants)
     }
 
-    func getMerchantsNear(lat: Double, long: Double) async -> [Merchant] {
-        let merchants = await getAllMerchants()
-
-        let userLocation = CLLocation(latitude: lat, longitude: long)
-
-        let sortedMerchants = merchants.sorted {
-            let location1 = CLLocation(latitude: $0.location.latitude,
-                                       longitude: $0.location.longitude)
-
-            let location2 = CLLocation(latitude: $1.location.latitude,
-                                       longitude: $1.location.longitude)
-
-            return userLocation.distance(from: location1) < userLocation.distance(from: location2)
+    func getMerchantsFor(_ userID: String) async -> [Merchant] {
+        do {
+            let querySnapshot = try await db.collection(CollectionName.merchants.rawValue)
+                .whereField("ownerId", isEqualTo: "")
+                .order(by: "name")
+                .getDocuments()
+            
+            return await getAllWithQuery(querySnapshot)
+            
+        } catch {
+            debugPrint("Can not get \(type(of: Merchant.self)), Error: \(error).")
+            return []
         }
-        return sortedMerchants
     }
 
 }
@@ -95,7 +93,7 @@ protocol MerchantProtocol {
     func updateMerchant(_ merchant: Merchant) async throws-> Bool
     func deleteMerchant(_ merchantID: String) async throws
     func getAllMerchants() async -> [Merchant]
-    func getMerchantsNear(lat: Double, long: Double) async -> [Merchant]
+    func getMerchantsFor(_ userID: String) async -> [Merchant]
 }
 
 protocol DeviceManagerProtocol {

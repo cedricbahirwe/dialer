@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 final class DialerStorage {
     typealias RecentCodes = [RecentDialCode]
@@ -94,17 +95,6 @@ final class DialerStorage {
         decodeDatasArray(key: LocalKeys.customUSSDCodes, type: USSDCodes.self)
     }
 
-    func saveLastKnownLocation(_ userLocation: UserLocation) throws {
-        let data = try encodeData(userLocation)
-        userDefaults.setValue(data, forKey: LocalKeys.lastUserLocation)
-    }
-
-    func getLastKnownLocation() -> UserLocation? {
-        guard let userLocation = decodeData(key: LocalKeys.lastUserLocation, as: UserLocation.self)
-        else { return nil }
-        return userLocation
-    }
-
     func saveLastAskedDateToUpdate(_ date: Date?) {
         userDefaults.set(date, forKey: LocalKeys.lastAskedDateToUpdate)
     }
@@ -114,12 +104,12 @@ final class DialerStorage {
     }
 
     func saveDevice(_ device: DeviceAccount) throws {
-        let data = try encodeData(device)
+        let data = try encodeDataWithFirebase(device)
         userDefaults.setValue(data, forKey: LocalKeys.deviceAccount)
     }
 
     func getSavedDevice() -> DeviceAccount? {
-        guard let userLocation = decodeData(key: LocalKeys.deviceAccount, as: DeviceAccount.self)
+        guard let userLocation = decodeDataWithFirebase(key: LocalKeys.deviceAccount, as: DeviceAccount.self)
         else { return nil }
         return userLocation
     }
@@ -137,7 +127,15 @@ final class DialerStorage {
     }
 }
 
-private extension  DialerStorage {
+private extension DialerStorage {
+    func encodeDataWithFirebase<T>(_ value: T) throws -> Data where T: Codable {
+        let dictionary = try Firestore.Encoder().encode(value)
+        
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+        return data
+
+    }
+    
     func encodeData<T>(_ value: T) throws -> Data where T: Codable {
         return try JSONEncoder().encode(value)
     }
@@ -147,7 +145,19 @@ private extension  DialerStorage {
             return nil
         }
         do {
-            return  try JSONDecoder().decode(type, from: data)
+            return try JSONDecoder().decode(type, from: data)
+        } catch let error {
+            print("Couldn't decode the data of type \(type): ", error.localizedDescription)
+        }
+        return nil
+    }
+    
+    func decodeDataWithFirebase<T: Decodable>(key: String, as type: T.Type) -> T? {
+        guard let data = userDefaults.object(forKey: key) as? Data else {
+            return nil
+        }
+        do {
+            return  try Firestore.Decoder().decode(type, from: data)
         } catch let error {
             print("Couldn't decode the data of type \(type): ", error.localizedDescription)
         }
@@ -161,7 +171,7 @@ private extension  DialerStorage {
         do {
             return  try JSONDecoder().decode(type, from: data)
         } catch let error {
-            print("Couldn't decode the data of type \(type): ", error.localizedDescription)
+            print("Couldn't decode the array of type \(type): ", error.localizedDescription)
         }
         return []
     }

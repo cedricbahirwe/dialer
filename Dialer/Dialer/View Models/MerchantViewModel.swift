@@ -77,22 +77,15 @@ final class MerchantStore: ObservableObject {
 
         stopFetch()
         DispatchQueue.main.async {
-            self.merchants = result
+            self.merchants = result.sorted(by: { $0.name < $1.name })
         }
     }
-
-    /// Get Filtered merchants near user's location
-    /// - Parameter userLocation: the current user's location
-    /// - Returns: Merchants sorted by their distance to the user
-    func getNearbyMerchants(_ userLocation: UserLocation) -> [Merchant] {
-        let userLocation = CLLocation(latitude: userLocation.latitude,
-                                      longitude: userLocation.longitude)
-
-        let sortedMerchants = merchants.sorted {
-            let location1 = CLLocation(latitude: $0.location.latitude, longitude: $0.location.longitude)
-            let location2 = CLLocation(latitude: $1.location.latitude, longitude: $1.location.longitude)
-            return userLocation.distance(from: location1) < userLocation.distance(from: location2)
-        }
+    
+    /// Get Filtered merchants near based of current user
+    /// - Returns: Merchants sorted alphabetically
+    func getUserMerchants() async -> [Merchant] {
+        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash else { return [] }
+        let sortedMerchants = await merchantProvider.getMerchantsFor(userId)
         return sortedMerchants
     }
 

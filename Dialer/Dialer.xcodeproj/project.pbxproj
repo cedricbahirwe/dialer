@@ -60,7 +60,6 @@
 		CB393A2B28121501009CA95E /* CopiedUSSDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */; };
 		CB3B81E029ABC591001FAFF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */; };
 		CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E129ABC742001FAFF6 /* Merchant.swift */; };
-		CB3B81E429ABC84A001FAFF6 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */; };
 		CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */; };
 		CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */; };
 		CB3B81EE29ABD34D001FAFF6 /* AnalyticProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */; };
@@ -186,7 +185,6 @@
 		CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopiedUSSDLabel.swift; sourceTree = "<group>"; };
 		CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CB3B81E129ABC742001FAFF6 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
-		CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMerchantView.swift; sourceTree = "<group>"; };
 		CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticProtocol.swift; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				CBE3D8A6290C147300DF5C09 /* CodePin.swift */,
 				CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */,
 				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
-				CB3B81E329ABC84A001FAFF6 /* UserLocation.swift */,
 				CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */,
 				CBA9BB01294C8F4500D95C82 /* Protocol */,
 			);
@@ -724,7 +721,6 @@
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */,
 				CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */,
-				CB3B81E429ABC84A001FAFF6 /* UserLocation.swift in Sources */,
 				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
 				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
