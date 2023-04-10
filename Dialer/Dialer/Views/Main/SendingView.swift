@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SendingView: View {
     @EnvironmentObject private var merchantStore: MerchantStore
-    @EnvironmentObject private var locationManager: LocationManager
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var nearbyMerchants: [Merchant] = []
@@ -160,22 +159,16 @@ struct SendingView: View {
 
                     } header: {
                         HStack {
-                            Text("Nearby Merchants")
+                            Text("Saved Merchants")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.5)
 
                             Spacer(minLength: 1)
-
-//                            Button("Report a problem", role: .destructive) {
-//                                showReportSheet.toggle()
-//                            }
-//                            .textCase(nil)
-//                            .font(.caption)
                         }
                     } footer: {
-                        Text("If you encounter any issues with the suggested merchant codes, please do not hesitate to report them to us. Go to ***Settings > Contact Us***")
+                        Text("Make sure that the merchant codes is correct and up to date before dialing. Need Help?\nGo to ***Settings > Contact Us***")
                     }
                     .listRowBackground(rowBackground)
                 }
@@ -227,11 +220,11 @@ extension SendingView {
     }
 
     func getNearbyMerchants() {
-        if let userLocation = locationManager.userLocation {
-            nearbyMerchants = merchantStore.getNearbyMerchants(userLocation)
-        } else {
-            nearbyMerchants = merchantStore.merchants
-        }
+//        if let userLocation = locationManager.userLocation {
+//            nearbyMerchants = merchantStore.getNearbyMerchants(userLocation)
+//        } else {
+//            nearbyMerchants = merchantStore.merchants
+//        }
     }
 
     func requestContacts() {
@@ -287,7 +280,6 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
-                .environmentObject(LocationManager())
                 .environmentObject(MerchantStore())
 //                .preferredColorScheme(.dark)
         }

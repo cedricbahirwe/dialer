@@ -11,7 +11,6 @@ import CoreLocationUI
 
 struct CreateMerchantView: View {
     @StateObject private var merchantStore = MerchantStore()
-    @EnvironmentObject private var locationManager: LocationManager
     
     @Environment(\.dismiss) private var dismiss
     @State private var model = Model()
@@ -53,10 +52,10 @@ struct CreateMerchantView: View {
                     }
 
                     Button {
-                        if let userLocation = locationManager.userLocation {
-                            model.latitude = String(userLocation.latitude)
-                            model.longitude = String(userLocation.longitude)
-                        }
+//                        if let userLocation = locationManager.userLocation {
+//                            model.latitude = String(userLocation.latitude)
+//                            model.longitude = String(userLocation.longitude)
+//                        }
                     } label: {
                         Image(systemName: "arrow.triangle.2.circlepath.circle")
                             .imageScale(.large)
@@ -95,10 +94,10 @@ struct CreateMerchantView: View {
             }
         }
         .onAppear() {
-            if let userLocation = locationManager.userLocation {
-                model.latitude = String(userLocation.latitude)
-                model.longitude = String(userLocation.longitude)
-            }
+//            if let userLocation = locationManager.userLocation {
+//                model.latitude = String(userLocation.latitude)
+//                model.longitude = String(userLocation.longitude)
+//            }
         }
     }
 
@@ -158,7 +157,6 @@ private extension CreateMerchantView {
 struct CreateMerchantView_Previews: PreviewProvider {
     static var previews: some View {
         CreateMerchantView()
-            .environmentObject(LocationManager())
     }
 }
 #endif
