@@ -206,7 +206,7 @@ struct PurchaseDetailView: View {
                     }
                 }
         )
-        .onChange(of: showPurchaseSheet, perform: { newValue in
+        .onChange(of: isPresented, perform: { newValue in
             if newValue {
                 Tracker.shared.startSession(for: .buyAirtime)
             } else {
