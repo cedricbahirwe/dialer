@@ -20,23 +20,32 @@ final class PurchaseDetailModelTests: XCTestCase {
 
     func testUSSDCodesSuit()  throws {
         try testPinLessPurchase()
-        try testPinnedPurchase()
+        try testPinnedPurchaseSmallAmount()
+        try testPinnedPurchaseBigAmount()
     }
 
     func testPinLessPurchase() throws {
         let purchase = PurchaseDetailModel(amount: 1000)
-        let expectedUnpinCode = "*182*2*2*1*1*1*1000#"
+        let expectedUnpinCode = "*182*2*1*1*1*1000#"
 
         XCTAssertEqual(expectedUnpinCode, purchase.getDialCode(pin: ""))
 
     }
 
-    func testPinnedPurchase() throws {
+    func testPinnedPurchaseSmallAmount() throws {
+        let pin = 22000
+        let purchase = PurchaseDetailModel(amount: 100)
+
+        let expectedPinnedCode = "*182*2*1*1*1*100*\(pin)#"
+        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: "\(pin)"))
+    }
+    
+    func testPinnedPurchaseBigAmount() throws {
         let pin = 22000
         let purchase = PurchaseDetailModel(amount: 1000)
 
-        let expectedPinnedCode =  "*182*2*2*1*1*1*1000*\(pin)#"
-        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: "\(pin)"))
+        let expectedPinnedCode = "*182*2*1*1*1*1000#"
+        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: String(pin)))
     }
 
 
