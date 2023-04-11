@@ -59,6 +59,7 @@ struct CreateMerchantView: View {
                     .scaleEffect(2)
             }
         }
+        .trackAppearance(.newMerchant)
     }
 
     private func saveMerchant()  {
@@ -100,7 +101,7 @@ private extension CreateMerchantView {
             else { throw Error.invalidInput("Code contains only digits")  }
 
             let userId = DialerStorage.shared.getSavedDevice()?.deviceHash ?? "-"
-            return Merchant(name: name, address: address, code: code, ownerId: userId)
+            return Merchant(name: name, address: address.isEmpty ? nil : address, code: code, ownerId: userId)
         }
     }
 }

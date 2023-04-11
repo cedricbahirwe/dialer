@@ -14,4 +14,8 @@ enum ScreenName: String, Codable {
     case history
     case mySpace
     case settings
+    
+    case newDialing
+    case newMerchant
+//    case merchantList
 }
