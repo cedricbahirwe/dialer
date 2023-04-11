@@ -58,7 +58,7 @@ struct Transaction: Identifiable {
         }
     }
     
-    enum TransactionType {
+    enum TransactionType: String {
         case client, merchant
         
         mutating func toggle() {

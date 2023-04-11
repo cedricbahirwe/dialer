@@ -30,8 +30,7 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $data.hasReachSync) {
             CongratulationsView(isPresented: $data.hasReachSync)
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) {
-            print("applicationDidBecomeActive \($0.name)")
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {
                 await RemoteConfigs.shared.fetchRemoteValues()
             }

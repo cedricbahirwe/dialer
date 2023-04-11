@@ -8,10 +8,19 @@
 import Foundation
 
 enum ScreenName: String, Codable {
-    case home
+    case dashboard
+    case settings
+    
     case buyAirtime
     case transfer
     case history
     case mySpace
-    case settings
+
+    case quickDialing
+    
+    case newDialing
+    case newMerchant
+    case merchantList
+    
+    case about
 }

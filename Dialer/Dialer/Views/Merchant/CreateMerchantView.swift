@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import CoreLocation
-import CoreLocationUI
 
 struct CreateMerchantView: View {
-    @StateObject private var merchantStore = MerchantStore()
+    @EnvironmentObject private var merchantStore: MerchantStore
     
     @Environment(\.dismiss) private var dismiss
     @State private var model = Model()
@@ -25,66 +23,34 @@ struct CreateMerchantView: View {
             VStack(alignment: .leading, spacing: 15) {
                 Group {
                     TextField("Merchant Name", text: $model.name)
+                    
 
                     TextField("Merchant Code", text: $model.code)
                         .keyboardType(.numberPad)
 
-
                     TextField("Merchant Address", text: $model.address)
                 }
                 .autocorrectionDisabled(true)
-                .padding(10)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 15)
-                        .strokeBorder(Color.black, lineWidth: 1)
-                }
-
-                HStack {
-                    Group {
-                        TextField("Latitude", text: $model.latitude)
-
-                        TextField("Longitude", text: $model.longitude)
-                    }
-                    .padding(10)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 15)
-                            .strokeBorder(Color.black, lineWidth: 1)
-                    }
-
-                    Button {
-//                        if let userLocation = locationManager.userLocation {
-//                            model.latitude = String(userLocation.latitude)
-//                            model.longitude = String(userLocation.longitude)
-//                        }
-                    } label: {
-                        Image(systemName: "arrow.triangle.2.circlepath.circle")
-                            .imageScale(.large)
-                            .frame(width: 35, height: 35)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.roundedRectangle)
-
-                }
+                .font(.callout)
+                .padding()
+                .frame(height: 48)
+                .background(Color.primaryBackground)
+                .withNeumorphStyle()
 
                 Button(action: saveMerchant) {
                     Text("Save Merchant")
+                        .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
-                        .frame(minHeight: 45)
-
+                        .frame(height: 48)
                 }
                 .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.roundedRectangle)
-                .tint(.main)
+                .buttonBorderShape(.roundedRectangle(radius: 8))
             }
             .frame(maxHeight: .infinity, alignment: .top)
         }
         .font(.title2)
         .padding(20)
-        .background(
-            Color(.secondarySystemBackground)
-                .ignoresSafeArea()
-                .onTapGesture(perform: hideKeyboard)
-        )
+        .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .overlay {
             if merchantStore.isFetching {
                 Color.black.opacity(0.8).ignoresSafeArea()
@@ -93,12 +59,7 @@ struct CreateMerchantView: View {
                     .scaleEffect(2)
             }
         }
-        .onAppear() {
-//            if let userLocation = locationManager.userLocation {
-//                model.latitude = String(userLocation.latitude)
-//                model.longitude = String(userLocation.longitude)
-//            }
-        }
+        .trackAppearance(.newMerchant)
     }
 
     private func saveMerchant()  {
@@ -121,8 +82,6 @@ private extension CreateMerchantView {
         var name = ""
         var code = ""
         var address = ""
-        var latitude = ""
-        var longitude = ""
 
         enum Error: Swift.Error {
             case invalidInput(String)
@@ -140,15 +99,9 @@ private extension CreateMerchantView {
             else { throw Error.invalidInput("Code should be 5 or 6 digits")  }
             guard code.allSatisfy(\.isNumber)
             else { throw Error.invalidInput("Code contains only digits")  }
-            guard let lat = Double(latitude)
-            else { throw Error.invalidInput("Latitude invalid") }
-            guard let long = Double(longitude)
-            else { throw Error.invalidInput("Longitude invalid") }
-            let location = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            guard CLLocationCoordinate2DIsValid(location)
-            else { throw Error.invalidInput("Coordinate invalid") }
 
-            return Merchant(name: name, address: address, code: code, lat: lat, long: long)
+            let userId = DialerStorage.shared.getSavedDevice()?.deviceHash ?? "-"
+            return Merchant(name: name, address: address.isEmpty ? nil : address, code: code, ownerId: userId)
         }
     }
 }
@@ -157,6 +110,7 @@ private extension CreateMerchantView {
 struct CreateMerchantView_Previews: PreviewProvider {
     static var previews: some View {
         CreateMerchantView()
+            .environmentObject(MerchantStore())
     }
 }
 #endif

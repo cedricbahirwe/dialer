@@ -15,7 +15,6 @@ struct AboutView: View {
     
     var body: some View {
         VStack(spacing: 30) {
-
             VStack {
                 Image("dialit.applogo")
                     .resizable()
@@ -34,7 +33,7 @@ struct AboutView: View {
             VStack(spacing: 2) {
                 Text("Designed and developed by")
                     .foregroundColor(.secondary)
-                Link("Cedric Bahirwe.", destination: URL(string: DialerlLinks.authorTwitter)!)
+                Link("Cedric Bahirwe.", destination: URL(string: DialerlLinks.authorLinkedIn)!)
             }
             .font(.body.weight(.semibold))
 
@@ -50,6 +49,7 @@ struct AboutView: View {
                 }.font(.body.bold())
             }
         }
+        .trackAppearance(.about)
     }
 }
 

@@ -30,13 +30,12 @@ final class ForceUpdateManager: ObservableObject {
     }
 
     func checkAppVersion() {
-        // Check if one full day has passed
+        // Check if half day has passed
         if let lastAskedDate = DialerStorage.shared.getLastAskedDateToUpdate() {
-            guard Date.now.timeIntervalSince(lastAskedDate) >= 86_400 else { return }
+            guard Date.now.timeIntervalSince(lastAskedDate) >= 43_200 else { return }
         }
 
         guard  let storeAppVersion = RemoteConfigs.shared.string(for: .latestAppVersion) else { fatalError() }
-        print("AppStore version", storeAppVersion)
         let update = getTypeOfUpdate(storeAppVersion: storeAppVersion)
         switch update {
         case .noUpdates:
@@ -69,8 +68,6 @@ final class ForceUpdateManager: ObservableObject {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         let currentVersionArray = version.components(separatedBy: ".")
         let storeVersionArray = storeAppVersion.components(separatedBy: ".")
-
-        print("Ours", version, storeAppVersion, currentVersionArray)
 
         if (currentVersionArray.count > minimalVersionNumbers && storeVersionArray.count > minimalVersionNumbers) {
             let currentMajorVersion = currentVersionArray[0]

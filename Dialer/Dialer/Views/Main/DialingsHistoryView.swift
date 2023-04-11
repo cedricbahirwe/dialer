@@ -100,6 +100,7 @@ struct DialingsHistoryView: View {
                     }
                 }
             }
+            .trackAppearance(.history)
         }
     }
 

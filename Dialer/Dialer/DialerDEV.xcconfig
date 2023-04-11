@@ -9,3 +9,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 DIALER_APP_NAME = Dialer DEV
+DIALER_FIREBASE_FILE_NAME = GoogleService-Info-DEV

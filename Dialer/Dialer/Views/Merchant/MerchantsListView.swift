@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MerchantsListView: View {
-    @StateObject private var merchantStore = MerchantStore()
+    @EnvironmentObject var merchantStore: MerchantStore
     @State private var showCreateView = false
     @Environment(\.dismiss) private var dismiss
     var body: some View {
@@ -46,6 +46,7 @@ struct MerchantsListView: View {
                     }
                 }
             }
+            .trackAppearance(.merchantList)
         }
     }
 }
@@ -60,13 +61,11 @@ private extension MerchantsListView {
             VStack(alignment: .leading) {
                 Text(merchant.name)
                     .font(.title3.weight(.semibold))
-                Text("Address: \(merchant.address)")
+                Text("Address: \(merchant.address ?? "-")")
                 Text("Merchant Code: **\(merchant.code)**")
-                HStack {
-                    Text("Lat: \(merchant.location.latitude), Long: \(merchant.location.longitude)")
-                        .font(.callout)
-                }
-                Text(merchant.hashCode.uuidString)
+                Text("Owner: \(merchant.ownerId ?? "-")")
+                    .font(.callout)
+                Text("ID: \(merchant.hashCode.uuidString)")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .italic()
@@ -77,8 +76,11 @@ private extension MerchantsListView {
     }
 }
 
+#if DEBUG
 struct MerchantsListView_Previews: PreviewProvider {
     static var previews: some View {
         MerchantsListView()
+            .environmentObject(MerchantStore())
     }
 }
+#endif

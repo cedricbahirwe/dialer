@@ -51,6 +51,13 @@ struct LanguagePreview: ViewModifier {
 #endif
 
 extension View {
+    /// Tracking screen appearance and disappearance
+    func trackAppearance(_ screen: ScreenName) -> some View {
+        self
+            .onAppear { Tracker.shared.startSession(for: screen) }
+            .onDisappear() { Tracker.shared.stopSession(for: screen) }
+    }
+    
     /// Handle  Tap Gesture for Biometrics Evaluation
     func onTapForBiometrics(onEvaluation: @escaping(Bool) -> Void) -> some View {
         ModifiedContent(content: self, modifier: BiometricsAccessibility(onEvaluation: onEvaluation))
@@ -61,7 +68,6 @@ extension View {
     func momoDisability() -> some View {
         ModifiedContent(content: self, modifier: MTNDisabling())
     }
-    
     
     /// Dismiss keyboard
     func hideKeyboard() {
@@ -74,6 +80,24 @@ extension View {
         ModifiedContent(content: self, modifier: LanguagePreview(language))
     }
     #endif
+    
+    func withNeumorphStyle() -> some View {
+        self
+            .overlay(
+                Rectangle()
+                    .stroke(Color.darkShadow, lineWidth: 4)
+                    .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
+                    .offset(x: 2, y: 2)
+                    .clipped()
+            )
+            .overlay(
+                Rectangle()
+                    .stroke(Color.lightShadow, lineWidth: 4)
+                    .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
+                    .offset(x: -2, y: -2)
+                    .clipped()
+            )
+    }
 }
 
 

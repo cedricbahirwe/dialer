@@ -54,7 +54,7 @@ class PhoneContacts {
             }
         }
     
-        return results
+        return Array(Set(results))
     }
     
     class func getMtnContacts() async throws -> [Contact] {

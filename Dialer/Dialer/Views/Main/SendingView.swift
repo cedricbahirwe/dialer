@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct SendingView: View {
-    @EnvironmentObject private var merchantStore: MerchantStore
+    @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
 
-    @State private var nearbyMerchants: [Merchant] = []
     @State private var showReportSheet = false
+    @State private var showCreateMerchantView = false
     @State private var didCopyToClipBoard = false
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
-
+    
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
@@ -67,7 +67,8 @@ struct SendingView: View {
                 VStack(spacing: 18) {
                     if transaction.type == .client {
                         Button(action: {
-                            showContactPicker.toggle()
+                            showContactPicker = true
+                            Tracker.shared.logEvent(.conctactsOpened)
                         }) {
                             HStack {
                                 Image(systemName: "person.fill")
@@ -126,10 +127,10 @@ struct SendingView: View {
             }
             .padding()
 
-            if transaction.type == .merchant && !nearbyMerchants.isEmpty {
+            if transaction.type == .merchant && !merchantStore.merchants.isEmpty {
                 List {
                     Section {
-                        ForEach(nearbyMerchants) { merchant in
+                        ForEach(merchantStore.merchants) { merchant in
                             HStack {
                                 HStack(spacing: 4) {
                                     if merchant.code == transaction.number {
@@ -153,9 +154,11 @@ struct SendingView: View {
                                 withAnimation {
                                     transaction.number = merchant.code
                                 }
+                                Tracker.shared.logEvent(.merchantCodeSelected)
                             }
                             .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                         }
+                        .onDelete(perform: deleteMerchant)
 
                     } header: {
                         HStack {
@@ -166,9 +169,17 @@ struct SendingView: View {
                                 .minimumScaleFactor(0.5)
 
                             Spacer(minLength: 1)
+                            
+                            Button {
+                                showCreateMerchantView.toggle()
+                            } label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .imageScale(.large)
+                            }
+
                         }
                     } footer: {
-                        Text("Make sure that the merchant codes is correct and up to date before dialing. Need Help?\nGo to ***Settings > Contact Us***")
+                        Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
                     }
                     .listRowBackground(rowBackground)
                 }
@@ -177,14 +188,19 @@ struct SendingView: View {
                 Spacer()
             }
         }
-        .sheet(isPresented: $showContactPicker) {
-            ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+        .sheet(isPresented: showCreateMerchantView ? $showCreateMerchantView : $showContactPicker) {
+            if showCreateMerchantView {
+                CreateMerchantView()
+            } else {
+                ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+            }
         }
         .actionSheet(isPresented: $showReportSheet) {
             ActionSheet(title: Text("Report a problem."),
                         buttons: alertButtons)
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
+        .trackAppearance(.transfer)
         .onAppear(perform: initialization)
         .navigationTitle("Transfer Money")
         .toolbar {
@@ -204,12 +220,15 @@ struct SendingView: View {
             }),
             .cancel()]
     }
+    
+    private func deleteMerchant(at offSets: IndexSet) {
+        merchantStore.deleteMerchants(at: offSets)
+    }
 }
 
-extension SendingView {
+private extension SendingView {
 
     func initialization() {
-        getNearbyMerchants()
         requestContacts()
     }
 
@@ -217,14 +236,6 @@ extension SendingView {
         withAnimation {
             transaction.type.toggle()
         }
-    }
-
-    func getNearbyMerchants() {
-//        if let userLocation = locationManager.userLocation {
-//            nearbyMerchants = merchantStore.getNearbyMerchants(userLocation)
-//        } else {
-//            nearbyMerchants = merchantStore.merchants
-//        }
     }
 
     func requestContacts() {
@@ -246,6 +257,7 @@ extension SendingView {
     private func transferMoney() {
         hideKeyboard()
         MainViewModel.performQuickDial(for: .other(transaction.fullCode))
+        Tracker.shared.logTransaction(transaction: transaction)
     }
     
     /// Create a validation for the  `Number` field value

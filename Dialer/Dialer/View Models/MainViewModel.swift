@@ -65,6 +65,7 @@ class MainViewModel: ObservableObject {
         do {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
+            Tracker.shared.logError(error: error)
             print("Could not save recent codes locally: ", error.localizedDescription)
         }
     }
@@ -128,7 +129,7 @@ class MainViewModel: ObservableObject {
                           completion: @escaping (Result<String, DialingError>) -> Void) {
         
         let newUrl = getFullUSSDCode(from: purchase)
-        debugPrint("Dialing", newUrl)
+
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
             UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
@@ -272,6 +273,7 @@ extension MainViewModel {
         do {
             try DialerStorage.shared.saveElectricityMeters(meters)
         } catch {
+            Tracker.shared.logError(error: error)
             print("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
@@ -311,6 +313,7 @@ extension MainViewModel {
         do {
             try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
+            Tracker.shared.logError(error: error)
             print("Could not save ussd codes locally: ", error.localizedDescription)
         }
     }

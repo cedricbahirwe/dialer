@@ -37,20 +37,7 @@ struct NewDialingView: View {
                         .padding()
                         .frame(height: 48)
                         .background(Color.primaryBackground)
-                        .overlay(
-                            Rectangle()
-                                .stroke(Color.darkShadow, lineWidth: 4)
-                                .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
-                                .offset(x: 2, y: 2)
-                                .clipped()
-                        )
-                        .overlay(
-                            Rectangle()
-                                .stroke(Color.lightShadow, lineWidth: 4)
-                                .rotation3DEffect(.degrees(3), axis: (-0.05,0,0), anchor: .bottom)
-                                .offset(x: -2, y: -2)
-                                .clipped()
-                        )
+                        .withNeumorphStyle()
                 }
                 VStack(spacing: 10) {
                     NumberField("Enter your USSD Code", text: $model.editedCode.animation(), keyboardType: .phonePad)
@@ -90,6 +77,7 @@ struct NewDialingView: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
             .onSubmit(manageKeyboardFocus)
+            .trackAppearance(.newDialing)
             .onAppear() {
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.6) {
                     focusedField = .title

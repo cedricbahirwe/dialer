@@ -206,6 +206,13 @@ struct PurchaseDetailView: View {
                     }
                 }
         )
+        .onChange(of: isPresented, perform: { newValue in
+            if newValue {
+                Tracker.shared.startSession(for: .buyAirtime)
+            } else {
+                Tracker.shared.stopSession(for: .buyAirtime)
+            }
+        })
     }
 }
 

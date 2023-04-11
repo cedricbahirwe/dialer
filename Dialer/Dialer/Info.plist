@@ -83,5 +83,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>DIALER_FIREBASE_FILE_NAME</key>
+	<string>$(DIALER_FIREBASE_FILE_NAME)</string>
 </dict>
 </plist>

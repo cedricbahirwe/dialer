@@ -27,7 +27,7 @@ struct SettingsView: View {
                         VStack {
 
                             HStack(spacing: 3) {
-                                SettingsRow(.biometrics, exists: false)
+                                SettingsRow(.biometrics)
                                 Toggle("Biometrics", isOn: $allowBiometrics)
                                     .toggleStyle(SwitchToggleStyle())
                                     .labelsHidden()
@@ -102,10 +102,10 @@ struct SettingsView: View {
                         
                         VStack {
                             NavigationLink(destination: AboutView()) {
-                                SettingsRow(.about)
+                                SettingsRow(.about, allowNavigation: true)
                             }
                             
-                            SettingsRow(.review, action: ReviewHandler.requestReviewManually)
+                            SettingsRow(.review, allowNavigation: true, action: ReviewHandler.requestReviewManually)
                         }
                         .padding(.bottom, 20)
                     }
@@ -138,6 +138,7 @@ struct SettingsView: View {
                     }.font(.body.bold())
                 }
             }
+            .trackAppearance(.settings)
         }
     }
 
@@ -214,20 +215,21 @@ extension SettingsView {
     struct SettingsRow: View {
         
         init(_ option: SettingsOption,
-             exists: Bool = true,
+             allowNavigation: Bool = false,
              action: @escaping () -> Void) {
             self.item = option.getSettingsItem()
-            self.exists = exists
+            self.allowNavigation = allowNavigation
             self.action = action
         }
-        init(_ option: SettingsOption, exists: Bool = true) {
+        
+        init(_ option: SettingsOption, allowNavigation: Bool = false) {
             self.item = option.getSettingsItem()
-            self.exists = exists
+            self.allowNavigation = allowNavigation
             self.action = nil
         }
         
         private let item: SettingsItem
-        private let exists: Bool
+        private let allowNavigation: Bool
         private let action: (() -> Void)?
         
         var body: some View {
@@ -263,7 +265,7 @@ extension SettingsView {
                 
                 Spacer(minLength: 1)
                 
-                if exists {
+                if allowNavigation {
                     Image(systemName: "chevron.right")
                         .foregroundColor(.secondary)
                 }

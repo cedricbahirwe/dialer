@@ -133,6 +133,7 @@ struct DashBoardView: View {
                 }
             }
         }
+        .trackAppearance(.dashboard)
     }
     
     private var gearGradient: some View {

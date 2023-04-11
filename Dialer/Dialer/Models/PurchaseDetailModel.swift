@@ -10,7 +10,6 @@ import Foundation
 struct PurchaseDetailModel: Hashable, Codable {
     private var prefixCode: String { "*182*2*1*1*1*" }
     var amount: Int = 0
-    var type: CodeType = .momo
     var fullCode: String {
         "\(prefixCode)\(amount)*PIN#"
     }
@@ -24,9 +23,8 @@ struct PurchaseDetailModel: Hashable, Codable {
         }
     }
     static let example = PurchaseDetailModel()
-    
-    
-    enum CodeType: String, Codable {
-        case momo, call, message, other
-    }
+}
+
+enum USSD {
+    static let momo = "*182*"
 }

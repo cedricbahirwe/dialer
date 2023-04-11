@@ -20,6 +20,11 @@ struct USSDCode: Identifiable, Equatable, Codable {
         guard !title.isEmpty else {
             throw USSDCodeValidationError.emptyTitle
         }
+
+        guard title.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3 else {
+            throw USSDCodeValidationError.shortTitle
+        }
+
         self.title = title
         self.ussd = try Self.validateUSSD(from: ussd)
     }
@@ -33,6 +38,7 @@ struct USSDCode: Identifiable, Equatable, Codable {
 extension USSDCode {
     enum USSDCodeValidationError: Error {
         case emptyTitle
+        case shortTitle
         case emptyUSSD
         case invalidFirstCharacter
         case invalidLastCharacter
@@ -41,7 +47,9 @@ extension USSDCode {
         var description: String {
             switch self {
             case .emptyTitle:
-                return "USSD title is Empty."
+                return "USSD name is Empty."
+            case .shortTitle:
+                return "USSD name should be at least 4 characters"
             case .emptyUSSD:
                 return "USSD code is empty."
             case .invalidFirstCharacter:

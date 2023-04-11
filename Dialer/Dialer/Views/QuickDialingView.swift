@@ -63,6 +63,7 @@ struct QuickDialingView: View {
             }
         }
         .preferredColorScheme(.dark)
+        .trackAppearance(.quickDialing)
     }
 
     private func dial(_ code: String) {
