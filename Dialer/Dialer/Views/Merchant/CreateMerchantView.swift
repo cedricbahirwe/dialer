@@ -23,6 +23,7 @@ struct CreateMerchantView: View {
             VStack(alignment: .leading, spacing: 15) {
                 Group {
                     TextField("Merchant Name", text: $model.name)
+                    
 
                     TextField("Merchant Code", text: $model.code)
                         .keyboardType(.numberPad)
@@ -30,31 +31,26 @@ struct CreateMerchantView: View {
                     TextField("Merchant Address", text: $model.address)
                 }
                 .autocorrectionDisabled(true)
-                .padding(10)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 15)
-                        .strokeBorder(Color.black, lineWidth: 1)
-                }
+                .font(.callout)
+                .padding()
+                .frame(height: 48)
+                .background(Color.primaryBackground)
+                .withNeumorphStyle()
 
                 Button(action: saveMerchant) {
                     Text("Save Merchant")
+                        .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
-                        .frame(minHeight: 45)
-
+                        .frame(height: 48)
                 }
                 .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.roundedRectangle)
-                .tint(.main)
+                .buttonBorderShape(.roundedRectangle(radius: 8))
             }
             .frame(maxHeight: .infinity, alignment: .top)
         }
         .font(.title2)
         .padding(20)
-        .background(
-            Color(.secondarySystemBackground)
-                .ignoresSafeArea()
-                .onTapGesture(perform: hideKeyboard)
-        )
+        .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .overlay {
             if merchantStore.isFetching {
                 Color.black.opacity(0.8).ignoresSafeArea()

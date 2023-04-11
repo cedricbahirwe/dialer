@@ -201,15 +201,3 @@ struct DashBoardView_Previews: PreviewProvider {
     }
 }
 #endif
-
-extension View {
-    func trackAppearance(_ screen: ScreenName) -> some View {
-        self
-            .onAppear {
-                Tracker.shared.startSession(for: screen)
-            }
-            .onDisappear() {
-                Tracker.shared.stopSession(for: screen)
-            }
-    }
-}
