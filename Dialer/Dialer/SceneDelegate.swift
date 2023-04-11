@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let dialingStore = MainViewModel()
     let forceUpdateManager = ForceUpdateManager()
     let merchantStore = MerchantStore()
+    let userMerchantStore = UserMerchantStore()
 
     
     /// - Tag: willConnectTo
@@ -46,6 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView()
             .environmentObject(dialingStore)
             .environmentObject(merchantStore)
+            .environmentObject(userMerchantStore)
             .environmentObject(forceUpdateManager)
         
         // Use a UIHostingController as window root view controller.

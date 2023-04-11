@@ -7,18 +7,21 @@
 
 import CoreLocation
 
-final class MerchantStore: ObservableObject {
-    @Published private(set) var userMerchants: [Merchant] = []
-    @Published private(set) var allMerchants: [Merchant] = []
+class MerchantStore: ObservableObject {
+    @Published private(set) var merchants: [Merchant]
     @Published private(set) var isFetching = false
-    private let merchantProvider: MerchantProtocol
+    let merchantProvider: MerchantProtocol
 
     init(_ merchantProvider: MerchantProtocol = FirebaseManager()) {
+        self.merchants = []
         self.merchantProvider = merchantProvider
         Task {
-            await getAllMerchants()
-            await getUserMerchants()
+            await getMerchants()
         }
+    }
+    
+    func setMerchants(to newMerchants: [Merchant]) {
+        self.merchants = newMerchants
     }
 
     /// Save a new Merchant
@@ -30,8 +33,7 @@ final class MerchantStore: ObservableObject {
             let isMerchantSaved = try await merchantProvider.createMerchant(merchant)
             
             stopFetch()
-            await getAllMerchants()
-            await getUserMerchants()
+            await getMerchants()
             return isMerchantSaved
         } catch {
             print("Could not save merchant: ", error)
@@ -39,15 +41,28 @@ final class MerchantStore: ObservableObject {
         }
     }
 
+    /// Get All Merchants Available
+    @MainActor
+    func getMerchants() async {
+        startFetch()
+
+        let result = await merchantProvider.getAllMerchants()
+        
+        stopFetch()
+        let sortedResult = result.sorted(by: { $0.name < $1.name })
+        self.setMerchants(to: sortedResult)
+    }
+    
+    /// Delete first selected Merchant
     func deleteMerchants(at offsets: IndexSet) {
         guard let first = offsets.first else { return }
-        let merchant = allMerchants[first]
+        let merchant = merchants[first]
 
         Task {
             await deleteMerchant(merchant, at: first)
         }
     }
-
+    
     /// Delete a specific Merchant
     /// - Parameters:
     ///   - merchant: merchant to be deleted
@@ -57,7 +72,7 @@ final class MerchantStore: ObservableObject {
 
         startFetch()
         DispatchQueue.main.async {
-            self.allMerchants.remove(at: index)
+            self.merchants.remove(at: index)
         }
 
         do {
@@ -66,32 +81,11 @@ final class MerchantStore: ObservableObject {
         } catch {
             stopFetch()
             DispatchQueue.main.async {
-                self.allMerchants.insert(merchant, at: index)
+                self.merchants.insert(merchant, at: index)
             }
         }
     }
-
-
-    /// Get All Merchants Available
-    func getAllMerchants() async {
-        startFetch()
-
-        let result = await merchantProvider.getAllMerchants()
-
-        stopFetch()
-        DispatchQueue.main.async {
-            self.allMerchants = result.sorted(by: { $0.name < $1.name })
-        }
-    }
     
-    /// Get Filtered merchants near based of current user
-    /// - Returns: Merchants sorted alphabetically
-    @MainActor
-    func getUserMerchants() async {
-        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash else { return }
-        let sortedMerchants = await merchantProvider.getMerchantsFor(userId)
-        userMerchants = sortedMerchants
-    }
 
     func startFetch() {
         DispatchQueue.main.async {

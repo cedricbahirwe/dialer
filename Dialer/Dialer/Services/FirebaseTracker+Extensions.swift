@@ -14,6 +14,10 @@ extension FirebaseTracker: TrackerProtocol {
         completeParameters[AnalyticsParameterExtendSession] = true
         Analytics.logEvent(name.stringValue, parameters: completeParameters)
     }
+    
+    func logEvent(name: AnalyticsEventType) {
+        logEvent(name: name, parameters: nil)
+    }
 
     func logTransaction(transaction: Transaction) {
         let params: [EventParameterKey: Any] = [

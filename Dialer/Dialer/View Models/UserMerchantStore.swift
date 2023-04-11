@@ -1,0 +1,17 @@
+//
+//  UserMerchantStore.swift
+//  Dialer
+//
+//  Created by Cédric Bahirwe on 11/04/2023.
+//
+
+import Foundation
+
+class UserMerchantStore: MerchantStore {
+    
+    override func getMerchants() async {
+        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash else { return }
+        let sortedMerchants = await merchantProvider.getMerchantsFor(userId)
+        setMerchants(to: sortedMerchants)
+    }
+}

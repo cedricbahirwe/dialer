@@ -84,6 +84,7 @@
 		CB582AFE29ABEB3100FAD610 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AFD29ABEB3100FAD610 /* FirebaseRemoteConfigSwift */; };
 		CB582B0029ABEB3100FAD610 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AFF29ABEB3100FAD610 /* FirebaseStorage */; };
 		CB582B0229ABEB3100FAD610 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CB582B0129ABEB3100FAD610 /* FirebaseStorageCombine-Community */; };
+		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
 		CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70429AFEC98004BBE32 /* TimeInterval+Extensions.swift */; };
@@ -198,6 +199,7 @@
 		CB544630289C5763009F3457 /* DialerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB544632289C5763009F3457 /* DialerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITests.swift; sourceTree = "<group>"; };
 		CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
 		CB92F70429AFEC98004BBE32 /* TimeInterval+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extensions.swift"; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
 				82EEBCF726C1391D00B1720A /* LocalStorage.swift */,
 				CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */,
+				CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */,
 				CBC262BF2784C7D3000B8E0E /* MailView.swift in Sources */,
 				CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */,
+				CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
 				CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */,

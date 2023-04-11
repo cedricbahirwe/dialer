@@ -14,7 +14,7 @@ class FirebaseTracker {
 
     init(_ deviceProvider: DeviceManagerProtocol = FirebaseManager()) {
         self.deviceProvider = deviceProvider
-//        setAnalyticUserInfo()
+        setAnalyticUserInfo()
     }
 
     func setAnalyticUserInfo() {
@@ -41,13 +41,7 @@ class FirebaseTracker {
     }
 
     // MARK: - Session tracker
-    enum Screen: String {
-        case DashBoardScreen
-        case SendingScreen
-        case MySpaceScreen
-        case HistoryScreen
-    }
-
+    
     /// Creates a start time for a screen session.
     /// Date will be used in stop session method to get the session length
     /// - Parameter screen: Screen enum that indicates the screen to measure the session.

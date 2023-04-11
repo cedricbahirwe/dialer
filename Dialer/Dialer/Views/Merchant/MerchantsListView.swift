@@ -14,7 +14,7 @@ struct MerchantsListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(merchantStore.allMerchants) { merchant in
+                ForEach(merchantStore.merchants) { merchant in
                     MerchantRow(merchant)
                 }
                 .onDelete(perform: merchantStore.deleteMerchants)
@@ -46,6 +46,7 @@ struct MerchantsListView: View {
                     }
                 }
             }
+            .trackAppearance(.merchantList)
         }
     }
 }

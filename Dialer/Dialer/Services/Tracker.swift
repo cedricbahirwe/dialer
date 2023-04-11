@@ -10,12 +10,20 @@ import FirebaseFirestoreSwift
 
 protocol TrackerProtocol: AnyObject {
     func logEvent(name: AnalyticsEventType, parameters: [String: Any]?)
+    func logEvent(name: AnalyticsEventType)
     func logTransaction(transaction: Transaction)
     func logTransaction(transaction: Transaction, user: DeviceAccount)
     func logSignIn(account: DeviceAccount)
     func logError(error: Error)
     func startSession(for screen: ScreenName)
     func stopSession(for screen: ScreenName)
+    func logEvent(_ name: AppAnalyticsEventType)
+}
+
+extension TrackerProtocol {
+    func logEvent(_ name: AppAnalyticsEventType) {
+        logEvent(name: name)
+    }
 }
 
 class Tracker {
@@ -28,6 +36,14 @@ protocol AnalyticsEventType {
 }
 
 enum AppAnalyticsEventType: String, AnalyticsEventType {
+    case conctactsOpened = "contact_opened"
+    case payMerchantSelected = "pay_merchant_option"
+    case sendMoneySelected = "send_money_option"
+    
+    case sendMoney = "send_money"
+
+    case merchantCodeSelected = "merchant_code_selected"
+    
     case dashboard
     case settingsOpened = "settings_opened"
     case transaction

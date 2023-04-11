@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SendingView: View {
-    @EnvironmentObject private var merchantStore: MerchantStore
+    @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var showReportSheet = false
@@ -67,7 +67,8 @@ struct SendingView: View {
                 VStack(spacing: 18) {
                     if transaction.type == .client {
                         Button(action: {
-                            showContactPicker.toggle()
+                            showContactPicker = true
+                            Tracker.shared.logEvent(.conctactsOpened)
                         }) {
                             HStack {
                                 Image(systemName: "person.fill")
@@ -126,10 +127,10 @@ struct SendingView: View {
             }
             .padding()
 
-            if transaction.type == .merchant && !merchantStore.userMerchants.isEmpty {
+            if transaction.type == .merchant && !merchantStore.merchants.isEmpty {
                 List {
                     Section {
-                        ForEach(merchantStore.userMerchants) { merchant in
+                        ForEach(merchantStore.merchants) { merchant in
                             HStack {
                                 HStack(spacing: 4) {
                                     if merchant.code == transaction.number {
@@ -153,9 +154,11 @@ struct SendingView: View {
                                 withAnimation {
                                     transaction.number = merchant.code
                                 }
+                                Tracker.shared.logEvent(.merchantCodeSelected)
                             }
                             .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                         }
+                        .onDelete(perform: deleteMerchant)
 
                     } header: {
                         HStack {
@@ -217,12 +220,17 @@ struct SendingView: View {
             }),
             .cancel()]
     }
+    
+    private func deleteMerchant(at offSets: IndexSet) {
+        merchantStore.deleteMerchants(at: offSets)
+    }
 }
 
-extension SendingView {
+private extension SendingView {
 
     func initialization() {
         requestContacts()
+        print("Items", merchantStore.merchants.count)
     }
 
     func switchPaymentType() {
@@ -250,6 +258,7 @@ extension SendingView {
     private func transferMoney() {
         hideKeyboard()
         MainViewModel.performQuickDial(for: .other(transaction.fullCode))
+        Tracker.shared.logTransaction(transaction: transaction)
     }
     
     /// Create a validation for the  `Number` field value
