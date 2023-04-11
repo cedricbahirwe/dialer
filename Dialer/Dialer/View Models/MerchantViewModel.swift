@@ -36,6 +36,7 @@ class MerchantStore: ObservableObject {
             await getMerchants()
             return isMerchantSaved
         } catch {
+            Tracker.shared.logError(error: error)
             print("Could not save merchant: ", error)
             return false
         }

@@ -36,7 +36,6 @@ final class ForceUpdateManager: ObservableObject {
         }
 
         guard  let storeAppVersion = RemoteConfigs.shared.string(for: .latestAppVersion) else { fatalError() }
-        print("AppStore version", storeAppVersion)
         let update = getTypeOfUpdate(storeAppVersion: storeAppVersion)
         switch update {
         case .noUpdates:
@@ -69,8 +68,6 @@ final class ForceUpdateManager: ObservableObject {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         let currentVersionArray = version.components(separatedBy: ".")
         let storeVersionArray = storeAppVersion.components(separatedBy: ".")
-
-        print("Ours", version, storeAppVersion, currentVersionArray)
 
         if (currentVersionArray.count > minimalVersionNumbers && storeVersionArray.count > minimalVersionNumbers) {
             let currentMajorVersion = currentVersionArray[0]

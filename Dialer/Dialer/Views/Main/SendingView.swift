@@ -230,7 +230,6 @@ private extension SendingView {
 
     func initialization() {
         requestContacts()
-        print("Items", merchantStore.merchants.count)
     }
 
     func switchPaymentType() {
