@@ -8,15 +8,15 @@
 import Foundation
 import FirebaseFirestore
 
-enum FBCollection {
+enum FBCollection: String {
     case merchants
     case devices
     
     var name: String {
         #if DEBUG
-            return "rawValue" + "-dev"
+            return rawValue + "-dev"
         #else
-            return "rawValue"
+            return rawValue
         #endif
     }
 }
