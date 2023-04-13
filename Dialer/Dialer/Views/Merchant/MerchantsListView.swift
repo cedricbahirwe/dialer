@@ -28,7 +28,7 @@ struct MerchantsListView: View {
                 }
             }
             .sheet(isPresented: $showCreateView) {
-                CreateMerchantView()
+                CreateMerchantView(merchantStore: merchantStore)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

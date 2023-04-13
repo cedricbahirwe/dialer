@@ -127,39 +127,46 @@ struct SendingView: View {
             }
             .padding()
 
-            if transaction.type == .merchant && !merchantStore.merchants.isEmpty {
+            if transaction.type == .merchant {
                 List {
                     Section {
-                        ForEach(merchantStore.merchants) { merchant in
-                            HStack {
-                                HStack(spacing: 4) {
-                                    if merchant.code == transaction.number {
-                                        Image(systemName: "checkmark")
-                                            .foregroundColor(.blue)
-                                            .font(.body.weight(.semibold))
+                        if merchantStore.merchants.isEmpty {
+                            Text("No Merchants Saved Yet.")
+                                .opacity(0.5)
+                                .frame(maxWidth: .infinity)
+                                .frame(minHeight: 50)
+                            
+                         } else {
+                            ForEach(merchantStore.merchants) { merchant in
+                                HStack {
+                                    HStack(spacing: 4) {
+                                        if merchant.code == transaction.number {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.blue)
+                                                .font(.body.weight(.semibold))
+                                        }
+                                        
+                                        Text(merchant.name)
+                                            .lineLimit(1)
                                     }
-
-                                    Text(merchant.name)
-                                        .lineLimit(1)
+                                    Spacer()
+                                    Text("#\(merchant.code)")
+                                        .font(.callout)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.blue)
                                 }
-                                Spacer()
-                                Text("#\(merchant.code)")
-                                    .font(.callout)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.blue)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                withAnimation {
-                                    transaction.number = merchant.code
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    withAnimation {
+                                        transaction.number = merchant.code
+                                    }
+                                    Tracker.shared.logEvent(.merchantCodeSelected)
                                 }
-                                Tracker.shared.logEvent(.merchantCodeSelected)
+                                .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             }
-                            .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            .onDelete(perform: deleteMerchant)
                         }
-                        .onDelete(perform: deleteMerchant)
-
                     } header: {
                         HStack {
                             Text("Saved Merchants")
@@ -179,7 +186,9 @@ struct SendingView: View {
 
                         }
                     } footer: {
-                        Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
+                        if !merchantStore.merchants.isEmpty {
+                            Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
+                        }
                     }
                     .listRowBackground(rowBackground)
                 }
@@ -190,7 +199,7 @@ struct SendingView: View {
         }
         .sheet(isPresented: showCreateMerchantView ? $showCreateMerchantView : $showContactPicker) {
             if showCreateMerchantView {
-                CreateMerchantView()
+                CreateMerchantView(merchantStore: merchantStore)
             } else {
                 ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
             }
@@ -292,7 +301,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
-                .environmentObject(MerchantStore())
+                .environmentObject(UserMerchantStore())
 //                .preferredColorScheme(.dark)
         }
     }
