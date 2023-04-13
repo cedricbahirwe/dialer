@@ -8,20 +8,34 @@
 import Foundation
 import FirebaseFirestore
 
-enum CollectionName: String {
+enum FBCollection {
     case merchants
     case devices
+    
+    var name: String {
+        #if DEBUG
+            return "rawValue" + "-dev"
+        #else
+            return "rawValue"
+        #endif
+    }
 }
 
 protocol FirebaseCRUD {
     var db: Firestore { get }
 }
 
+extension Firestore {
+    func collection(_ collection: FBCollection) -> CollectionReference {
+        self.collection(collection.name)
+    }
+}
+
 extension FirebaseCRUD {
-    func create<T: Encodable>(_ element: T, in collection: CollectionName) async throws -> Bool {
+    func create<T: Encodable>(_ element: T, in collection: FBCollection) async throws -> Bool {
         return try await withUnsafeThrowingContinuation { continuation in
             do {
-                _ = try db.collection(collection.rawValue).addDocument(from: element) { error in
+                _ = try db.collection(collection).addDocument(from: element) { error in
                     
                     if let error {
                         continuation.resume(throwing: error)
@@ -36,9 +50,9 @@ extension FirebaseCRUD {
         }
     }
     
-    func getAll<T: Decodable>(in collection: CollectionName) async -> [T] {
+    func getAll<T: Decodable>(in collection: FBCollection) async -> [T] {
         do {
-            let querySnapshot = try await db.collection(collection.rawValue)
+            let querySnapshot = try await db.collection(collection)
                 .getDocuments()
             
             return await getAllWithQuery(querySnapshot)
@@ -61,9 +75,9 @@ extension FirebaseCRUD {
     }
     
     func getItemWithID<T: Decodable>(_ itemID: String,
-                                     in collection: CollectionName) async -> T? {
+                                     in collection: FBCollection) async -> T? {
         do {
-            let snapshot = try await db.collection(collection.rawValue)
+            let snapshot = try await db.collection(collection)
                 .document(itemID)
                 .getDocument()
             
@@ -77,19 +91,19 @@ extension FirebaseCRUD {
     }
     
     func deleteItemWithID(_ itemID: String,
-                          in collection: CollectionName) async throws  {
-        try await db.collection(collection.rawValue)
+                          in collection: FBCollection) async throws  {
+        try await db.collection(collection)
             .document(itemID)
             .delete()
     }
     
     func updateItemWithID<T: Encodable>(_ itemID: String,
                                         content: T,
-                                        in collection: CollectionName) async throws -> Bool {
+                                        in collection: FBCollection) async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
             do {
                 
-                try db.collection(collection.rawValue)
+                try db.collection(collection)
                     .document(itemID)
                     .setData(from: content)
                 
@@ -97,7 +111,6 @@ extension FirebaseCRUD {
             } catch {
                 debugPrint("Error updating Merchant: \(error)")
                 continuation.resume(throwing: error)
-                
             }
         }
     }
