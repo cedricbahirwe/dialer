@@ -25,7 +25,7 @@ Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
 - What makes a great app!
 - SDLC(Software Development Life Cycle) in practice
-- Following Apple Human Interface Guidelines
+- Following Apple Human Interface Guidelines (HIG)
 - Deep Dive into Home Screen Quick Actions
 - Local DataBase Management at Scale in iOS
 
