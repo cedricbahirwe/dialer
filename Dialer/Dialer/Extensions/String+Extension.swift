@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public extension String {
+extension String {
     /// Check for the validity of the `MTN` number (078 && 079)
     /// This is a agnostic approach, since it does not handle all the edge cases
     var isMtnNumber: Bool {

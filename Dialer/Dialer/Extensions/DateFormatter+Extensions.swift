@@ -8,7 +8,7 @@
 import Foundation
 
 extension DateFormatter {
-    public convenience init(format: String, timeZone: TimeZone = .current, locale: String? = nil) {
+    convenience init(format: String, timeZone: TimeZone = .current, locale: String? = nil) {
         self.init()
         dateFormat = format
         self.timeZone = timeZone
