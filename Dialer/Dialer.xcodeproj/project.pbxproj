@@ -25,7 +25,7 @@
 		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
 		8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E68D2693959800657EFB /* CongratulationsView.swift */; };
 		8255E691269395EE00657EFB /* CongratsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E690269395EE00657EFB /* CongratsViewController.swift */; };
-		825F996326720AE6009E4A7B /* SendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996226720AE6009E4A7B /* SendingView.swift */; };
+		825F996326720AE6009E4A7B /* TransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996226720AE6009E4A7B /* TransferView.swift */; };
 		825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996526720B46009E4A7B /* ContactsFetcher.swift */; };
 		825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996926720B7E009E4A7B /* ContactModel.swift */; };
 		827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* MainViewModel.swift */; };
@@ -147,7 +147,7 @@
 		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		8255E68D2693959800657EFB /* CongratulationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsView.swift; sourceTree = "<group>"; };
 		8255E690269395EE00657EFB /* CongratsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsViewController.swift; sourceTree = "<group>"; };
-		825F996226720AE6009E4A7B /* SendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingView.swift; sourceTree = "<group>"; };
+		825F996226720AE6009E4A7B /* TransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferView.swift; sourceTree = "<group>"; };
 		825F996526720B46009E4A7B /* ContactsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFetcher.swift; sourceTree = "<group>"; };
 		825F996926720B7E009E4A7B /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		827F2CF125D9648900C7C40A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
-				825F996226720AE6009E4A7B /* SendingView.swift */,
+				825F996226720AE6009E4A7B /* TransferView.swift */,
 				CB45381528AB9C6500F3F24C /* MySpaceView.swift */,
 				825022E52673676B007ABB56 /* DialingsHistoryView.swift */,
 			);
@@ -726,7 +726,7 @@
 				CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */,
 				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
-				825F996326720AE6009E4A7B /* SendingView.swift in Sources */,
+				825F996326720AE6009E4A7B /* TransferView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,

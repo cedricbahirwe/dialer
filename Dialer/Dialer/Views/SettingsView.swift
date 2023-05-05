@@ -207,7 +207,6 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
             .environmentObject(MainViewModel())
-        //            .preferredColorScheme(.dark)
     }
 }
 extension SettingsView {

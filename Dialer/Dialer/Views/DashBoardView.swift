@@ -12,11 +12,12 @@ struct DashBoardView: View {
     
     @AppStorage(UserDefaults.Keys.showWelcomeView)
     private var showWelcomeView: Bool = true
+    
     @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
     
     @State private var presentQuickDial = false
-    @State private var presentSendingView = false
+    @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
     @State private var showMerchantsList = false
     
@@ -34,7 +35,7 @@ struct DashBoardView: View {
                         .onTapGesture {
                             withAnimation {
                                 showPurchaseSheet = true
-                                Tracker.shared.logEvent(.airtime)
+                                Tracker.shared.logEvent(.airtimeOpened)
                             }
                         }
                         
@@ -42,7 +43,8 @@ struct DashBoardView: View {
                             title: "Transfer/Pay",
                             icon: "paperplane.circle")
                         .onTapForBiometrics {
-                            presentSendingView = $0
+                            presentTransferView = $0
+                            Tracker.shared.logEvent(.transferOpened)
                         }
                     }
                     
@@ -52,6 +54,7 @@ struct DashBoardView: View {
                             icon: "clock.arrow.circlepath")
                         .onTapGesture {
                             data.showHistorySheet.toggle()
+                            Tracker.shared.logEvent(.historyOpened)
                         }
                         
                         NavigationLink {
@@ -60,6 +63,9 @@ struct DashBoardView: View {
                             DashItemView(
                                 title: "My Space",
                                 icon: "person.crop.circle.badge")
+                            .onAppear() {
+                                Tracker.shared.logEvent(.mySpaceOpened)
+                            }
                         }
                         .buttonStyle(PlainButtonStyle())
                         
@@ -67,8 +73,8 @@ struct DashBoardView: View {
                 }
                 .padding()
                 
-                NavigationLink(isActive: $presentSendingView) {
-                    SendingView()
+                NavigationLink(isActive: $presentTransferView) {
+                    TransferView()
                 } label: { EmptyView() }
                 
                 Spacer()
@@ -177,9 +183,8 @@ extension DashBoardView {
             .background(Color.white)
             .cornerRadius(10)
             .onTapGesture(count: 3) {
-#if DEBUG
+                guard AppConfiguration.isDebug else { return }
                 showMerchantsList = true
-#endif
             }
         }
         .padding(.horizontal)
@@ -196,7 +201,6 @@ struct DashBoardView_Previews: PreviewProvider {
         NavigationView {
             DashBoardView()
                 .environmentObject(MainViewModel())
-            //            .previewLayout(.sizeThatFits)
         }
     }
 }

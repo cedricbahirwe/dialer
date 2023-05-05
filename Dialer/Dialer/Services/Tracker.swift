@@ -37,23 +37,25 @@ protocol AnalyticsEventType {
 }
 
 enum AppAnalyticsEventType: String, AnalyticsEventType {
-    case conctactsOpened = "contact_opened"
     
-    case merchantCodeSelected
-    
-    case logIn = "app_login"
+    // Screens
     case settingsOpened
-    case transfer
-    case airtime
-    case history
-    case mySpace
+    case transferOpened
+    case airtimeOpened
+    case historyOpened
+    case mySpaceOpened
+    
+    // Activities
     case screenSessionLength
 
+    // Actions
     case transaction
-
+    case merchantCodeSelected
+    case conctactsOpened = "contact_opened"
+    case logIn = "app_login"
     
     var stringValue: String {
-        self.rawValue.camelToSnake()
+        rawValue.camelToSnake()
     }
 }
 
