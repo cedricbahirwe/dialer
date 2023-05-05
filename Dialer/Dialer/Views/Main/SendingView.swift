@@ -17,7 +17,7 @@ struct SendingView: View {
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
-    @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
+    @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
     
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
@@ -30,6 +30,10 @@ struct SendingView: View {
         } else {
             return Text(String(format: NSLocalizedString("Estimated fee: amount RWF", comment: ""), fee))
         }
+    }
+    
+    private var navigationTitle: String {
+        transaction.type == .merchant ? "Pay Merchant" : "Transfer momo"
     }
     
     var body: some View {
@@ -211,7 +215,7 @@ struct SendingView: View {
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
         .onAppear(perform: initialization)
-        .navigationTitle("Transfer Money")
+        .navigationTitle(navigationTitle)
         .toolbar {
             Button(action: switchPaymentType) {
                 Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
