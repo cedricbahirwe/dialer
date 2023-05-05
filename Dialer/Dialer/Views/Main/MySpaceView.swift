@@ -135,7 +135,6 @@ struct MySpaceView_Previews: PreviewProvider {
         NavigationView {
             MySpaceView()
                 .environmentObject(MainViewModel())
-            //                .preferredColorScheme(.dark)
         }
     }
 }

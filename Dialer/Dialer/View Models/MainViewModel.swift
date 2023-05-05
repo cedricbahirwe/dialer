@@ -193,6 +193,7 @@ class MainViewModel: ObservableObject {
     
     func showSettingsView() {
         showSettingsSheet = true
+        Tracker.shared.logEvent(.settingsOpened)
     }
     
     func dismissSettingsView() {

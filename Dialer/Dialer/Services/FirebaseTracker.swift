@@ -32,6 +32,7 @@ class FirebaseTracker {
                 if isSaved {
                     do {
                         try DialerStorage.shared.saveDevice(device)
+                        logSignIn(account: device)
                     } catch {
                         logError(error: error)
                     }

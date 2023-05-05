@@ -28,5 +28,23 @@ extension String {
         }
         return mtnNumber
     }
+    
+    func camelToSnake() -> String {
+        let pattern = "([a-z0-9])([A-Z])"
+        do {
+            let range = NSRange(location: 0, length: count)
+            let regex = try NSRegularExpression(pattern: pattern, options: [])
+            
+            return regex.stringByReplacingMatches(
+                in: self,
+                options: [],
+                range: range,
+                withTemplate: "$1_$2"
+            ).lowercased()
+        } catch {
+            Tracker.shared.logError(error: error)
+            return lowercased()
+        }
+    }
 
 }

@@ -138,43 +138,46 @@ private extension ContactsListView {
     }
 }
 
+#if DEBUG
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
             ContactsListView(contacts: .constant([.example, .example, .example1, .example, .example]),
                          selection: .constant(.example))
-            ContactRowView(contact: .example)
+            ContactsListView.ContactRowView(contact: .example)
                 .padding()
                 .previewLayout(.sizeThatFits)
         }
-        .preferredColorScheme(.dark)
     }
 }
+#endif
 
-struct ContactRowView: View {
-    let contact: Contact
-    var body: some View {
-        HStack {
-            Text(contact.names)
-                .font(.system(.callout, design: .rounded).weight(.medium))
-
-            Spacer()
-
-            VStack(alignment: .trailing) {
-                if contact.phoneNumbers.count == 1 {
-                    Text(contact.phoneNumbers[0])
-                } else {
-                    Text("\(Text(contact.phoneNumbers[0])), +\(contact.phoneNumbers.count-1)more")
+extension ContactsListView {
+    struct ContactRowView: View {
+        let contact: Contact
+        var body: some View {
+            HStack {
+                Text(contact.names)
+                    .font(.system(.callout, design: .rounded).weight(.medium))
+                
+                Spacer()
+                
+                VStack(alignment: .trailing) {
+                    if contact.phoneNumbers.count == 1 {
+                        Text(contact.phoneNumbers[0])
+                    } else {
+                        Text("\(Text(contact.phoneNumbers[0])), +\(contact.phoneNumbers.count-1)more")
+                    }
                 }
+                .font(.system(.footnote, design: .rounded))
+                .foregroundColor(.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
             }
-            .font(.system(.footnote, design: .rounded))
-            .foregroundColor(.secondary)
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        
     }
 }

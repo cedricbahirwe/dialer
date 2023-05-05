@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SendingView: View {
+struct TransferView: View {
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
 
@@ -165,7 +165,7 @@ struct SendingView: View {
                                     withAnimation {
                                         transaction.number = merchant.code
                                     }
-                                    Tracker.shared.logEvent(.merchantCodeSelected)
+                                    Tracker.shared.logMerchantSelection(merchant)
                                 }
                                 .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             }
@@ -239,7 +239,7 @@ struct SendingView: View {
     }
 }
 
-private extension SendingView {
+private extension TransferView {
 
     func initialization() {
         requestContacts()
@@ -304,9 +304,8 @@ private extension SendingView {
 struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SendingView()
+            TransferView()
                 .environmentObject(UserMerchantStore())
-//                .preferredColorScheme(.dark)
         }
     }
 }

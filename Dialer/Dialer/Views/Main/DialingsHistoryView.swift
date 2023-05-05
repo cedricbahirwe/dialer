@@ -120,6 +120,5 @@ struct DialingsHistoryView: View {
 struct DialingsHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         DialingsHistoryView(data: MainViewModel())
-        //            .preferredColorScheme(.dark)
     }
 }
