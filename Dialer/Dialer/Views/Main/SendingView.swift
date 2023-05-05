@@ -276,7 +276,7 @@ private extension SendingView {
     /// Create a validation for the  `Number` field value
     /// - Parameter value: the validated data
     private func handleNumberField(_ value: String) {
-        if transaction.type == .merchant{
+        if transaction.type == .merchant {
             transaction.number = String(value.prefix(6))
         } else {
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
