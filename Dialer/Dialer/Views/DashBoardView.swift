@@ -196,7 +196,6 @@ struct DashBoardView_Previews: PreviewProvider {
         NavigationView {
             DashBoardView()
                 .environmentObject(MainViewModel())
-            //                        .previewIn(.fr)
             //            .previewLayout(.sizeThatFits)
         }
     }
