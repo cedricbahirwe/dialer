@@ -33,7 +33,8 @@ struct DashBoardView: View {
                         .momoDisability()
                         .onTapGesture {
                             withAnimation {
-                                showPurchaseSheet.toggle()
+                                showPurchaseSheet = true
+                                Tracker.shared.logEvent(.airtime)
                             }
                         }
                         

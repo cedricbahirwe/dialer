@@ -165,7 +165,7 @@ struct SendingView: View {
                                     withAnimation {
                                         transaction.number = merchant.code
                                     }
-                                    Tracker.shared.logEvent(.merchantCodeSelected)
+                                    Tracker.shared.logMerchantSelection(merchant)
                                 }
                                 .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             }

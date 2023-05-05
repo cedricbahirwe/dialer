@@ -28,6 +28,11 @@ final class DialerQuickCodeTests: XCTestCase {
         try testMomoQuickCode()
         try testElectricityQuickCode()
         try testOtherQuickCode()
+        testCamelToSnake()
+    }
+    
+    func testCamelToSnake() {
+        CamelToSnakeTests().run()
     }
 
     func testMomoQuickCode() throws {

@@ -65,6 +65,7 @@
 		CB3B81EE29ABD34D001FAFF6 /* AnalyticProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */; };
 		CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */; };
 		CB3B81F229ABD438001FAFF6 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81F129ABD438001FAFF6 /* AppLogger.swift */; };
+		CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */; };
 		CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */; };
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
@@ -190,6 +191,7 @@
 		CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticProtocol.swift; sourceTree = "<group>"; };
 		CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenName.swift; sourceTree = "<group>"; };
 		CB3B81F129ABD438001FAFF6 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamelToSnakeTests.swift; sourceTree = "<group>"; };
 		CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDialingView.swift; sourceTree = "<group>"; };
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
 		CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 			children = (
 				CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */,
 				CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */,
+				CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */,
 			);
 			path = ModelTests;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
 				CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */,
 				CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */,
+				CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */,
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
 				CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */,
 				CB0A52912946159A0023370C /* USSDCode.swift in Sources */,

@@ -13,6 +13,7 @@ protocol TrackerProtocol: AnyObject {
     func logEvent(name: AnalyticsEventType)
     func logTransaction(transaction: Transaction)
     func logTransaction(transaction: Transaction, user: DeviceAccount)
+    func logMerchantSelection(_ merchant: Merchant)
     func logSignIn(account: DeviceAccount)
     func logError(error: Error)
     func startSession(for screen: ScreenName)
@@ -37,23 +38,22 @@ protocol AnalyticsEventType {
 
 enum AppAnalyticsEventType: String, AnalyticsEventType {
     case conctactsOpened = "contact_opened"
-    case payMerchantSelected = "pay_merchant_option"
-    case sendMoneySelected = "send_money_option"
     
-    case sendMoney = "send_money"
-
-    case merchantCodeSelected = "merchant_code_selected"
+    case merchantCodeSelected
     
-    case dashboard
-    case settingsOpened = "settings_opened"
-    case transaction
-    case send
+    case logIn = "app_login"
+    case settingsOpened
+    case transfer
+    case airtime
     case history
-    case mySpace = "my_space"
-    case screenSessionLength = "screen_session_length"
+    case mySpace
+    case screenSessionLength
 
+    case transaction
+
+    
     var stringValue: String {
-        self.rawValue
+        self.rawValue.camelToSnake()
     }
 }
 

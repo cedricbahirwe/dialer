@@ -50,9 +50,18 @@ extension FirebaseTracker: TrackerProtocol {
         logEvent(name: AppAnalyticsEventType.transaction,
                  parameters: objectParams)
     }
+    
+    func logMerchantSelection(_ merchant: Merchant) {
+        guard let ownerId = merchant.ownerId else { return }
+        logEvent(name: AppAnalyticsEventType.merchantCodeSelected,
+                 parameters: [
+                    "merchant_code": merchant.code,
+                    "owner_id": ownerId
+                 ])
+    }
 
     func logSignIn(account: DeviceAccount) {
-        logEvent(name: AppAnalyticsEventType.dashboard,
+        logEvent(name: AppAnalyticsEventType.logIn,
                  parameters: account.toDictionary())
     }
 
