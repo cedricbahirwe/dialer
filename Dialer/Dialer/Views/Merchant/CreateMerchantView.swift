@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateMerchantView: View {
-    @EnvironmentObject private var merchantStore: MerchantStore
+    @ObservedObject var merchantStore: MerchantStore
     
     @Environment(\.dismiss) private var dismiss
     @State private var model = Model()
@@ -109,8 +109,7 @@ private extension CreateMerchantView {
 #if DEBUG
 struct CreateMerchantView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateMerchantView()
-            .environmentObject(MerchantStore())
+        CreateMerchantView(merchantStore: MerchantStore())
     }
 }
 #endif

@@ -10,9 +10,6 @@ import FirebaseFirestore
 
 class FirebaseManager: FirebaseCRUD {
     private(set) lazy var db = Firestore.firestore()
-
-    private var completionContinuation: CheckedContinuation<[Decodable], Error>?
-
 }
 
 // MARK: - Merchant Provider
@@ -45,7 +42,7 @@ extension FirebaseManager: MerchantProtocol {
 
     func getMerchantsFor(_ userID: String) async -> [Merchant] {
         do {
-            let querySnapshot = try await db.collection(CollectionName.merchants.rawValue)
+            let querySnapshot = try await db.collection(.merchants)
                 .whereField("ownerId", isEqualTo: userID)
                 .order(by: "name")
                 .getDocuments()
@@ -54,6 +51,7 @@ extension FirebaseManager: MerchantProtocol {
             
         } catch {
             debugPrint("Can not get \(type(of: Merchant.self)), Error: \(error).")
+            Tracker.shared.logError(error: error)
             return []
         }
     }

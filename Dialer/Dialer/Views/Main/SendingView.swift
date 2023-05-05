@@ -17,7 +17,7 @@ struct SendingView: View {
     @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
-    @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .client)
+    @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
     
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
@@ -30,6 +30,10 @@ struct SendingView: View {
         } else {
             return Text(String(format: NSLocalizedString("Estimated fee: amount RWF", comment: ""), fee))
         }
+    }
+    
+    private var navigationTitle: String {
+        transaction.type == .merchant ? "Pay Merchant" : "Transfer momo"
     }
     
     var body: some View {
@@ -127,39 +131,46 @@ struct SendingView: View {
             }
             .padding()
 
-            if transaction.type == .merchant && !merchantStore.merchants.isEmpty {
+            if transaction.type == .merchant {
                 List {
                     Section {
-                        ForEach(merchantStore.merchants) { merchant in
-                            HStack {
-                                HStack(spacing: 4) {
-                                    if merchant.code == transaction.number {
-                                        Image(systemName: "checkmark")
-                                            .foregroundColor(.blue)
-                                            .font(.body.weight(.semibold))
+                        if merchantStore.merchants.isEmpty {
+                            Text("No Merchants Saved Yet.")
+                                .opacity(0.5)
+                                .frame(maxWidth: .infinity)
+                                .frame(minHeight: 50)
+                            
+                         } else {
+                            ForEach(merchantStore.merchants) { merchant in
+                                HStack {
+                                    HStack(spacing: 4) {
+                                        if merchant.code == transaction.number {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.blue)
+                                                .font(.body.weight(.semibold))
+                                        }
+                                        
+                                        Text(merchant.name)
+                                            .lineLimit(1)
                                     }
-
-                                    Text(merchant.name)
-                                        .lineLimit(1)
+                                    Spacer()
+                                    Text("#\(merchant.code)")
+                                        .font(.callout)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.blue)
                                 }
-                                Spacer()
-                                Text("#\(merchant.code)")
-                                    .font(.callout)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.blue)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                withAnimation {
-                                    transaction.number = merchant.code
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    withAnimation {
+                                        transaction.number = merchant.code
+                                    }
+                                    Tracker.shared.logEvent(.merchantCodeSelected)
                                 }
-                                Tracker.shared.logEvent(.merchantCodeSelected)
+                                .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             }
-                            .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                            .onDelete(perform: deleteMerchant)
                         }
-                        .onDelete(perform: deleteMerchant)
-
                     } header: {
                         HStack {
                             Text("Saved Merchants")
@@ -179,7 +190,9 @@ struct SendingView: View {
 
                         }
                     } footer: {
-                        Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
+                        if !merchantStore.merchants.isEmpty {
+                            Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
+                        }
                     }
                     .listRowBackground(rowBackground)
                 }
@@ -190,7 +203,7 @@ struct SendingView: View {
         }
         .sheet(isPresented: showCreateMerchantView ? $showCreateMerchantView : $showContactPicker) {
             if showCreateMerchantView {
-                CreateMerchantView()
+                CreateMerchantView(merchantStore: merchantStore)
             } else {
                 ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
             }
@@ -202,7 +215,7 @@ struct SendingView: View {
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
         .onAppear(perform: initialization)
-        .navigationTitle("Transfer Money")
+        .navigationTitle(navigationTitle)
         .toolbar {
             Button(action: switchPaymentType) {
                 Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
@@ -263,7 +276,7 @@ private extension SendingView {
     /// Create a validation for the  `Number` field value
     /// - Parameter value: the validated data
     private func handleNumberField(_ value: String) {
-        if transaction.type == .merchant{
+        if transaction.type == .merchant {
             transaction.number = String(value.prefix(6))
         } else {
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
@@ -292,7 +305,7 @@ struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SendingView()
-                .environmentObject(MerchantStore())
+                .environmentObject(UserMerchantStore())
 //                .preferredColorScheme(.dark)
         }
     }

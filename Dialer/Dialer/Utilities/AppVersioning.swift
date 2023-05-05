@@ -17,7 +17,7 @@ extension UIApplication {
     }
 
     static var hasSupportForUSSD: Bool {
-        !UIDevice.current.systemVersion.contains("15.4")
+        !UIDevice.current.systemVersion.contains("15.4") || !UIDevice.current.systemVersion.contains("16.0.1")
     }
 }
 

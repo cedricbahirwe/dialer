@@ -93,7 +93,6 @@
 		CBA429E029AB85F50041D578 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA429DF29AB85F50041D578 /* SpeakerView.swift */; };
 		CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB02294C8F4900D95C82 /* AppNotification.swift */; };
 		CBA9BB05294C8F7000D95C82 /* DialerLocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */; };
-		CBAEE52129AB7EFA00A6B2AD /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAEE52029AB7EFA00A6B2AD /* LocationManager.swift */; };
 		CBAF13172785A34800D32E1F /* ElectricityMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13162785A34800D32E1F /* ElectricityMeter.swift */; };
 		CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13182785A54100D32E1F /* TappeableText.swift */; };
 		CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13162785A34800D32E1F /* ElectricityMeter.swift */; };
@@ -208,7 +207,6 @@
 		CBA429DF29AB85F50041D578 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		CBA9BB02294C8F4900D95C82 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotification.swift; sourceTree = "<group>"; };
-		CBAEE52029AB7EFA00A6B2AD /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CBAF13162785A34800D32E1F /* ElectricityMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectricityMeter.swift; sourceTree = "<group>"; };
 		CBAF13182785A54100D32E1F /* TappeableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappeableText.swift; sourceTree = "<group>"; };
 		CBC262BE2784C7D3000B8E0E /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
@@ -395,7 +393,6 @@
 			children = (
 				82D7C19A266D2031003E0E0E /* CTCarrierDetector.swift */,
 				CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */,
-				CBAEE52029AB7EFA00A6B2AD /* LocationManager.swift */,
 				CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */,
 				CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */,
 				CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */,
@@ -691,7 +688,6 @@
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
-				CBAEE52129AB7EFA00A6B2AD /* LocationManager.swift in Sources */,
 				CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */,
 				CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */,
 				CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */,
@@ -957,7 +953,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.7.0;
+				MARKETING_VERSION = 4.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -984,7 +980,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.7.0;
+				MARKETING_VERSION = 4.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1118,7 +1114,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.7.0;
+				MARKETING_VERSION = 4.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1244,7 +1240,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.7.0;
+				MARKETING_VERSION = 4.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
