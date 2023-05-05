@@ -29,10 +29,6 @@ final class DialerQuickCodeTests: XCTestCase {
         try testElectricityQuickCode()
         try testOtherQuickCode()
     }
-    
-    func testCamelToSnake() {
-        CamelToSnakeTests().run()
-    }
 
     func testMomoQuickCode() throws {
         let pin = makeCodePin(20_000)
