@@ -8,6 +8,10 @@
 import Foundation
 import FirebaseFirestoreSwift
 
+protocol AnalyticsEventType {
+    var stringValue: String { get }
+}
+
 protocol TrackerProtocol: AnyObject {
     func logEvent(name: AnalyticsEventType, parameters: [String: Any]?)
     func logEvent(name: AnalyticsEventType)
@@ -27,13 +31,9 @@ extension TrackerProtocol {
     }
 }
 
-class Tracker {
+final class Tracker {
     private init() { }
     static let shared: TrackerProtocol = FirebaseTracker()
-}
-
-protocol AnalyticsEventType {
-    var stringValue: String { get }
 }
 
 enum AppAnalyticsEventType: String, AnalyticsEventType {
@@ -84,37 +84,4 @@ enum LogEvent: String, AnalyticsEventType {
     var stringValue: String {
         rawValue
     }
-}
-
-struct DeviceAccount: Identifiable, Codable {
-    @DocumentID var id: String?
-
-    var name: String
-    let model: String
-    let systemVersion: String
-    let systemName: String
-
-    let deviceHash: String
-    let appVersion: String?
-    let bundleVersion: String?
-    let bundleId: String?
-    let lastVisitedDate: String?
-
-    func toDictionary() -> [String: Any] {
-        var dictionary: [String: Any] = [:]
-        dictionary["name"] = name
-        dictionary["model"] = model
-        dictionary["system_version"] = systemVersion
-        dictionary["system_name"] = systemName
-        dictionary["device_hash"] = deviceHash
-        dictionary["app_version"] = appVersion
-        dictionary["bundle_version"] = bundleVersion
-        dictionary["bundle_id"] = bundleId
-        dictionary["last_visited_date"] = lastVisitedDate
-        return dictionary
-    }
-    
-//    func toParamsDictionary() -> [String: Any] {
-//        var dictionary: [String: Any] = [:]
-//    }
 }

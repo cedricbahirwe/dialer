@@ -12,7 +12,7 @@ private enum PhonePermission: Error {
     case emptyContacts, containerError
 }
 
-class PhoneContacts {
+final class PhoneContacts {
     
     private init() {}
     

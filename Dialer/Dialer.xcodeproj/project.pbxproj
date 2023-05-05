@@ -62,9 +62,7 @@
 		CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E129ABC742001FAFF6 /* Merchant.swift */; };
 		CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */; };
 		CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */; };
-		CB3B81EE29ABD34D001FAFF6 /* AnalyticProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */; };
 		CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */; };
-		CB3B81F229ABD438001FAFF6 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81F129ABD438001FAFF6 /* AppLogger.swift */; };
 		CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */; };
 		CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */; };
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
@@ -87,6 +85,7 @@
 		CB582B0229ABEB3100FAD610 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CB582B0129ABEB3100FAD610 /* FirebaseStorageCombine-Community */; };
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
+		CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
 		CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70429AFEC98004BBE32 /* TimeInterval+Extensions.swift */; };
 		CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70629AFF4F3004BBE32 /* Logger.swift */; };
@@ -188,9 +187,7 @@
 		CB3B81E129ABC742001FAFF6 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMerchantView.swift; sourceTree = "<group>"; };
-		CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticProtocol.swift; sourceTree = "<group>"; };
 		CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenName.swift; sourceTree = "<group>"; };
-		CB3B81F129ABD438001FAFF6 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamelToSnakeTests.swift; sourceTree = "<group>"; };
 		CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDialingView.swift; sourceTree = "<group>"; };
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
@@ -202,6 +199,7 @@
 		CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
+		CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAccount.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
 		CB92F70429AFEC98004BBE32 /* TimeInterval+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extensions.swift"; sourceTree = "<group>"; };
 		CB92F70629AFF4F3004BBE32 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -310,6 +308,7 @@
 				CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */,
 				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
 				CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */,
+				CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */,
 				CBA9BB01294C8F4500D95C82 /* Protocol */,
 			);
 			path = Models;
@@ -397,8 +396,6 @@
 				CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */,
 				CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */,
 				CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */,
-				CB3B81ED29ABD34D001FAFF6 /* AnalyticProtocol.swift */,
-				CB3B81F129ABD438001FAFF6 /* AppLogger.swift */,
 				825F996526720B46009E4A7B /* ContactsFetcher.swift */,
 				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
 				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
@@ -687,6 +684,7 @@
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
 				CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */,
+				CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				82D7C19B266D2031003E0E0E /* CTCarrierDetector.swift in Sources */,
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
@@ -736,7 +734,6 @@
 				CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
 				8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */,
-				CB3B81F229ABD438001FAFF6 /* AppLogger.swift in Sources */,
 				CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */,
 				CBA429E029AB85F50041D578 /* SpeakerView.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
@@ -746,7 +743,6 @@
 				CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */,
 				CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */,
 				8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */,
-				CB3B81EE29ABD34D001FAFF6 /* AnalyticProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
