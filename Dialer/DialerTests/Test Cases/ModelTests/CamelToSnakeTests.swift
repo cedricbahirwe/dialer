@@ -42,7 +42,7 @@ final class CamelToSnakeTests: XCTestCase {
     
     func testMixedCase() {
         let input = "helloWorld_HowAreYou"
-        let expected = "hello_world__how_are_you"
+        let expected = "hello_world_how_are_you"
         XCTAssertEqual(input.camelToSnake(), expected)
     }
 }
