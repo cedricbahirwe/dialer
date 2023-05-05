@@ -44,7 +44,7 @@ extension FirebaseManager: MerchantProtocol {
         do {
             let querySnapshot = try await db.collection(.merchants)
                 .whereField("ownerId", isEqualTo: userID)
-//                .order(by: "name")
+                .order(by: "name")
                 .getDocuments()
             
             return await getAllWithQuery(querySnapshot)
