@@ -15,9 +15,11 @@ struct DialingsHistoryView: View {
         NavigationView {
             ZStack {
                 VStack {
-                    if let recentCodes = data.recentCodes, !recentCodes.isEmpty {
+                    if data.recentCodes.isEmpty {
+                        emptyHistoryView
+                    } else {
                         List {
-                            ForEach(recentCodes) { recentCode in
+                            ForEach(data.recentCodes) { recentCode in
                                 HistoryRow(recentCode: recentCode)
                                     .onTapGesture {
                                         data.performRecentDialing(for: recentCode)
@@ -26,16 +28,6 @@ struct DialingsHistoryView: View {
                             }
                             .onDelete(perform: data.deletePastCode)
                         }
-                    } else {
-
-                        Spacer()
-                        Text("No History Yet")
-                            .font(.system(.title, design: .rounded).bold())
-                            .frame(maxWidth: .infinity)
-                            .padding(.horizontal)
-                        Text("Come back later.")
-                            .font(.system(.headline, design: .rounded))
-                        Spacer()
                     }
                 }
 
@@ -113,6 +105,19 @@ struct DialingsHistoryView: View {
             withAnimation {
                 didCopyToClipBoard = false
             }
+        }
+    }
+    
+    private var emptyHistoryView: some View {
+        Group {
+            Spacer()
+            Text("No History Yet")
+                .font(.system(.title, design: .rounded).bold())
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
+            Text("Come back later.")
+                .font(.system(.headline, design: .rounded))
+            Spacer()
         }
     }
 }
