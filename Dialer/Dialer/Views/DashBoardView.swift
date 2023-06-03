@@ -19,10 +19,7 @@ struct DashBoardView: View {
     @State private var presentQuickDial = false
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
-    @State private var showMerchantsList = false
-    
-    private let checkCellularProvider = CTCarrierDetector.shared.cellularProvider()
-    
+        
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -31,7 +28,6 @@ struct DashBoardView: View {
                         DashItemView(
                             title: "Buy airtime",
                             icon: "wallet.pass")
-                        .momoDisability()
                         .onTapGesture {
                             withAnimation {
                                 showPurchaseSheet = true
@@ -78,20 +74,6 @@ struct DashBoardView: View {
                 } label: { EmptyView() }
                 
                 Spacer()
-                
-                if checkCellularProvider.status == false {
-                    HStack {
-                        Text("Sim card is required to unlock all the features.")
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                            .foregroundColor(.red)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.6)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.ultraThickMaterial)
-                    .hidden()
-                }
                 
                 bottomBarView
             }
@@ -169,29 +151,9 @@ extension DashBoardView {
             }
             
             Spacer(minLength: 5)
-            
-            Label {
-                Text(LocalizedStringKey(checkCellularProvider.message))
-                    .font(.system(.body, design: .rounded)
-                        .weight(.medium))
-                    .multilineTextAlignment(.leading)
-            } icon: {
-                Image(systemName: checkCellularProvider.status ? "chart.bar.fill" : "chart.bar")
-            }
-            .foregroundColor(checkCellularProvider.status ? .main : .red)
-            .padding(10)
-            .background(Color.white)
-            .cornerRadius(10)
-            .onTapGesture(count: 3) {
-                guard AppConfiguration.isDebug else { return }
-                showMerchantsList = true
-            }
         }
         .padding(.horizontal)
         .padding(.bottom, 8)
-        .fullScreenCover(isPresented: $showMerchantsList) {
-            MerchantsListView()
-        }
     }
 }
 

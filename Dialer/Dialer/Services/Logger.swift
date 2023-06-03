@@ -26,4 +26,10 @@ enum Log {
         let logType: LogEvent = type == .error ? .error : .debugInfo
         Tracker.shared.logEvent(name: logType, parameters: logs)
     }
+    
+    static func debug(_ items: Any...) {
+        #if DEBUG
+        debugPrint(items)
+        #endif
+    }
 }
