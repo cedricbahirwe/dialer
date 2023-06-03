@@ -44,7 +44,7 @@ extension FirebaseCRUD {
                     }
                 }
             } catch {
-                debugPrint("Could not save \(type(of: element)): \(error.localizedDescription).")
+                Log.debug("Could not save \(type(of: element)): \(error.localizedDescription).")
                 continuation.resume(throwing: error)
             }
         }
@@ -57,7 +57,7 @@ extension FirebaseCRUD {
             
             return await getAllWithQuery(querySnapshot)
         } catch {
-            debugPrint("Can not get \(type(of: Merchant.self)) Error: \(error).")
+            Log.debug("Can not get \(type(of: Merchant.self)) Error: \(error).")
             return []
         }
     }
@@ -67,7 +67,7 @@ extension FirebaseCRUD {
             do {
                 return try document.data(as: T.self)
             } catch {
-                debugPrint("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
+                Log.debug("Firestore Decoding error: ", error, querySnapshot.documents.forEach { print($0.data()) } )
                 return nil
             }
         }
@@ -85,7 +85,7 @@ extension FirebaseCRUD {
             
             return item
         } catch {
-            debugPrint("Error getting \(T.self): \(error)")
+            Log.debug("Error getting \(T.self): \(error)")
             return nil
         }
     }
@@ -109,7 +109,7 @@ extension FirebaseCRUD {
                 
                 continuation.resume(returning: true)
             } catch {
-                debugPrint("Error updating Merchant: \(error)")
+                Log.debug("Error updating Merchant: \(error)")
                 continuation.resume(throwing: error)
             }
         }

@@ -50,7 +50,7 @@ extension FirebaseManager: MerchantProtocol {
             return await getAllWithQuery(querySnapshot)
             
         } catch {
-            debugPrint("Can not get \(type(of: Merchant.self)), Error: \(error).")
+            Log.debug("Can not get \(type(of: Merchant.self)), Error: \(error).")
             Tracker.shared.logError(error: error)
             return []
         }

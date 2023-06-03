@@ -35,7 +35,6 @@ extension FirebaseRemoteConfig: RemoteConfigsProtocol {
         do {
             let status = try await firebaseRemoteConfig.fetch(withExpirationDuration: fetchTimeout)
             if status == .success {
-                debugPrint("Remote config fetched!")
                 _ = try await firebaseRemoteConfig.activate()
       
             }

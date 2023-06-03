@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let filePath = Bundle.main.path(forResource: fileName, ofType: "plist"),
             let options = FirebaseOptions(contentsOfFile: filePath)
         else {
-            debugPrint("Could not find Firebase config file")
+            Log.debug("Could not find Firebase config file")
             return
         }
 
