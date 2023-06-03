@@ -11,6 +11,7 @@ struct TransferView: View {
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
 
+    @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
     @State private var showCreateMerchantView = false
     @State private var didCopyToClipBoard = false
@@ -50,6 +51,7 @@ struct TransferView: View {
                     }
 
                     NumberField("Enter Amount", text: $transaction.amount.animation())
+                        .focused($focusedState, equals: .amount)
                 }
 
                 VStack(spacing: 10) {
@@ -61,6 +63,7 @@ struct TransferView: View {
                     NumberField(transaction.type == .client ?
                                 "Enter Receiver's number" :
                                     "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
+                    .focused($focusedState, equals: .number)
 
                     if transaction.type == .merchant {
                         Text("The code should be a 5-6 digits number")
@@ -217,21 +220,31 @@ struct TransferView: View {
         .onAppear(perform: initialization)
         .navigationTitle(navigationTitle)
         .toolbar {
-            Button(action: switchPaymentType) {
-                Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
-                    .font(.system(size: 18, design: .rounded))
-                    .foregroundColor(.blue)
-                    .padding(5)
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                
+                Button(action: {
+                    focusedState = focusedState?.next()
+                }) {
+                    Text("Next")
+                        .font(.system(size: 18, design: .rounded))
+                        .foregroundColor(.blue)
+                        .padding(5)
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: switchPaymentType) {
+                    Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
+                        .font(.system(size: 18, design: .rounded))
+                        .foregroundColor(.blue)
+                        .padding(5)
+                }
             }
         }
     }
 
     private var alertButtons: [ActionSheet.Button] {
-        return [
-            .default(Text("This merchant code is incorrect"), action: {
-
-            }),
-            .cancel()]
+        [.default(Text("This merchant code is incorrect")), .cancel()]
     }
     
     private func deleteMerchant(at offSets: IndexSet) {
@@ -242,6 +255,10 @@ struct TransferView: View {
 private extension TransferView {
 
     func initialization() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+            focusedState = .amount
+        }
+        
         requestContacts()
     }
 
@@ -296,6 +313,13 @@ private extension TransferView {
             withAnimation {
                 didCopyToClipBoard = false
             }
+        }
+    }
+    
+    enum FocusField {
+        case amount, number
+        func next() -> Self? {
+            self == .amount ? .number : nil
         }
     }
 }
