@@ -35,16 +35,11 @@ extension FirebaseRemoteConfig: RemoteConfigsProtocol {
         do {
             let status = try await firebaseRemoteConfig.fetch(withExpirationDuration: fetchTimeout)
             if status == .success {
-                debugPrint("Remote config fetched!")
-                let isActivated = try await firebaseRemoteConfig.activate()
-                if isActivated {
-                    debugPrint("Remote Config Activated")
-                } else {
-                    debugPrint("Remote Config Not Activated")
-                }
+                _ = try await firebaseRemoteConfig.activate()
+      
             }
         } catch {
-            debugPrint("Error occured \(error.localizedDescription)")
+            Log.debug("Error occured \(error.localizedDescription)")
         }
     }
 

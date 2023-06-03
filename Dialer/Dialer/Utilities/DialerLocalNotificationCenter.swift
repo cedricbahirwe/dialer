@@ -44,7 +44,7 @@ final class DialerNotificationCenter: NSObject {
                 try await createNotification(dailyNotification, repeats: true)
                 DialerStorage.shared.setDailyNotificationStatus(to: true)
             } catch {
-                debugPrint("Issue with notification", error.localizedDescription)
+                Log.debug("Issue with notification", error.localizedDescription)
             }
         }
     }
@@ -53,7 +53,6 @@ final class DialerNotificationCenter: NSObject {
 // MARK: - Helper Methods
 private extension DialerNotificationCenter {
     func isNotificationAuthorized() async throws -> Bool {
-        debugPrint(#function)
         do {
             return try await notificationCenter.requestAuthorization(options: [.alert, .sound])
         } catch {
@@ -63,7 +62,6 @@ private extension DialerNotificationCenter {
     }
     
     func createNotification(_ notification: AppNotification, repeats: Bool) async throws {
-        debugPrint(#function)
         guard try await isNotificationAuthorized() else { return }
 
         let content = UNMutableNotificationContent()
@@ -84,7 +82,7 @@ private extension DialerNotificationCenter {
         do {
             try await notificationCenter.add(request)
         } catch {
-            debugPrint("Unable to add notification: ", error.localizedDescription)
+            Log.debug("Unable to add notification: ", error.localizedDescription)
             throw NotificationError.notAdded
         }
     }
@@ -92,18 +90,16 @@ private extension DialerNotificationCenter {
 
 extension DialerNotificationCenter {
     func deleteNotifications() {
-        debugPrint(#function)
         notificationCenter.removeAllPendingNotificationRequests()
         DialerStorage.shared.setDailyNotificationStatus(to: false)
     }
     
     ///Prints to console schduled notifications
     func printNotifications() {
-        debugPrint(#function)
         Task {
             let pendingNotifs = await notificationCenter.pendingNotificationRequests()
             
-            debugPrint("Pending Notifications Count: ", pendingNotifs.count)
+            Log.debug("Pending Notifications Count: ", pendingNotifs.count)
             
         }
     }

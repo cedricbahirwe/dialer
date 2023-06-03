@@ -55,14 +55,14 @@ class FirebaseTracker {
     func stopSession(for screen: ScreenName) {
         /// 1. get the start date of the session
         guard let start = sessions[screen] else {
-            debugPrint("could not get start time of the session for given screen: \(screen.rawValue)")
+            Log.debug("could not get start time of the session for given screen: \(screen.rawValue)")
             return
         }
         /// 2. get the session length and format it as string and miliseconds
         let interval = start.timeIntervalSinceNow * (-1)
         let formatted = interval.formattedString()
         let seconds: Int = Int(interval)
-        debugPrint("screen session time for: \(screen.rawValue) is \(formatted) seconds: \(seconds)")
+        Log.debug("screen session time for: \(screen.rawValue) is \(formatted) seconds: \(seconds)")
 
         /// 3. log event on firebase
         // screen_session_length - Name of the Event

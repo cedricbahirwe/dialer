@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct MTNDisabling: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .disabled(CTCarrierDetector.shared.cellularProvider().status == false)
-    }
-}
-
 struct BiometricsAccessibility: ViewModifier {
     private let biometrics = BiometricsAuth.shared
     var onEvaluation: (Bool) -> Void
@@ -45,12 +38,6 @@ extension View {
     /// Handle  Tap Gesture for Biometrics Evaluation
     func onTapForBiometrics(onEvaluation: @escaping(Bool) -> Void) -> some View {
         ModifiedContent(content: self, modifier: BiometricsAccessibility(onEvaluation: onEvaluation))
-    }
-    
-    /// Disable access if `Mtn` sim card is not detected
-    /// - Returns: a disabled view if mtn card is not detected (no interaction).
-    func momoDisability() -> some View {
-        ModifiedContent(content: self, modifier: MTNDisabling())
     }
     
     /// Dismiss keyboard

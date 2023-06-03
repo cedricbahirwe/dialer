@@ -138,9 +138,9 @@ struct PurchaseDetailView: View {
                         Text("Confirm")
                             .frame(maxWidth: .infinity)
                             .frame(height: 45)
-                            .background(Color.primary.opacity((!validCode || !validAmount) ? 0.5 : 1))
+                            .background(Color.blue.opacity((!validCode || !validAmount) ? 0.5 : 1))
                             .cornerRadius(8)
-                            .foregroundColor(Color(.systemBackground))
+                            .foregroundColor(.white)
                     }
                     .disabled(!validCode || !validAmount)
                 } else {
