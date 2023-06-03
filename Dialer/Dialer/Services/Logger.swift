@@ -18,7 +18,7 @@ enum Log {
         let logs: [String : Any] = [
             "date": formatter.string(from: Date()),
             "message": "\(message)",
-            "args:": "\(args)",
+            "args": "\(args)",
             "file": filename
         ]
         // 2. log an event depending on
