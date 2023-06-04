@@ -108,6 +108,7 @@
 		CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 		CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */; };
 		CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C602A2C789C00C7712B /* ContactRowView.swift */; };
+		CBE73C662A2C7BD600C7712B /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C652A2C7BD600C7712B /* SummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,6 +221,7 @@
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
 		CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreview.swift; sourceTree = "<group>"; };
 		CBE73C602A2C789C00C7712B /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
+		CBE73C652A2C7BD600C7712B /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,15 +416,11 @@
 			children = (
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
+				CBE73C642A2C7A8D00C7712B /* Widget */,
 				820C108B2766A4D400A7CADE /* Main */,
 				820C108C2766A51000A7CADE /* Details */,
 				CBE73C5F2A2C789200C7712B /* Contacts */,
-				CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */,
-				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
-				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
-				828D79D626E1029800439F9A /* SettingsView.swift */,
-				CBC262BE2784C7D3000B8E0E /* MailView.swift */,
-				821BE13226FB19F200A3CA02 /* AboutView.swift */,
+				CBE73C632A2C7A7D00C7712B /* Other */,
 				CB18BD5129AE913800A7B45C /* Merchant */,
 				CBA429DE29AB85E70041D578 /* Reusable */,
 				8218DBA72694644600E3C025 /* SubViews */,
@@ -523,6 +521,27 @@
 				CBE73C602A2C789C00C7712B /* ContactRowView.swift */,
 			);
 			path = Contacts;
+			sourceTree = "<group>";
+		};
+		CBE73C632A2C7A7D00C7712B /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
+				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
+				828D79D626E1029800439F9A /* SettingsView.swift */,
+				CBC262BE2784C7D3000B8E0E /* MailView.swift */,
+				821BE13226FB19F200A3CA02 /* AboutView.swift */,
+				CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		CBE73C642A2C7A8D00C7712B /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				CBE73C652A2C7BD600C7712B /* SummaryView.swift */,
+			);
+			path = Widget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -729,6 +748,7 @@
 				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
 				825F996326720AE6009E4A7B /* TransferView.swift in Sources */,
+				CBE73C662A2C7BD600C7712B /* SummaryView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,

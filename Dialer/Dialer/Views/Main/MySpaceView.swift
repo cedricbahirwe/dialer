@@ -69,7 +69,9 @@ struct MySpaceView: View {
                             if isEditingMode {
                                 editedUSSDModel = .init(code)
                             } else {
-                                MainViewModel.performQuickDial(for: .other(code.ussd))
+                                Task {
+                                    await MainViewModel.performQuickDial(for: .other(code.ussd))
+                                }
 
                             }
                         }

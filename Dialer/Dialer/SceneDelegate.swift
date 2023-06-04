@@ -139,7 +139,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // Go to that particular code shortcut.
                 if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
                     // Find the code from the userInfo identifier.
-                    if let foundRecentCode = dialingStore.rencentDialCode(codeIdentifier) {
+                    if let foundRecentCode = dialingStore.getRecentDialCode(with: codeIdentifier) {
                         dialingStore.performRecentDialing(for: foundRecentCode)
                     }
                 }

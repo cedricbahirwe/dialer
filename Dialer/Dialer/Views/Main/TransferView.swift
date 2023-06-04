@@ -286,8 +286,10 @@ private extension TransferView {
     
     private func transferMoney() {
         hideKeyboard()
-        MainViewModel.performQuickDial(for: .other(transaction.fullCode))
-        Tracker.shared.logTransaction(transaction: transaction)
+        Task {
+            await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
+            Tracker.shared.logTransaction(transaction: transaction)
+        }
     }
     
     /// Create a validation for the  `Number` field value

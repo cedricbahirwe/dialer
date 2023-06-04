@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecentDialCode: Identifiable, Hashable, Codable {
+struct RecentDialCode: Identifiable, Codable {
     static func == (lhs: RecentDialCode, rhs: RecentDialCode) -> Bool {
         lhs.id == rhs.id
     }
