@@ -6,18 +6,19 @@
 //
 
 import SwiftUI
+
 struct ContactsListView: View {
-    @Binding var allContacts: [Contact]
+    @Environment(\.dismiss) private var dismiss
+    
+    private let contacts: [Contact]
     @Binding var selectedContact: Contact
     
-    @State private var searchQuery: String = ""
-    @State private var isEditing = false
-    @State private var showNumberSelection: Bool = false
-    @Environment(\.dismiss)
-    private var dismiss
+    @State private var searchQuery = ""
+    @State private var isSearching = false
+    @State private var showPhoneNumberSelector: Bool = false
     
     private var resultedContacts: [Contact] {
-        let contacts = allContacts.sorted(by: { $0.names < $1.names })
+        let contacts = contacts.sorted(by: { $0.names < $1.names })
         if searchQuery.isEmpty {
             return contacts
         } else {
@@ -25,8 +26,8 @@ struct ContactsListView: View {
         }
     }
     
-    init(contacts: Binding<[Contact]>, selection: Binding<Contact>) {
-        _allContacts = contacts
+    init(contacts: [Contact], selection: Binding<Contact>) {
+        self.contacts = contacts
         _selectedContact = selection
         UITableView.appearance().backgroundColor = UIColor.primaryBackground
     }
@@ -40,11 +41,11 @@ struct ContactsListView: View {
                     .padding(.top)
 
                     .transition(.move(edge: .top))
-                    .animation(.spring(), value: isEditing)
+                    .animation(.spring(), value: isSearching)
                 searchBarView
             }
             .padding(.horizontal)
-            .padding(.top, isEditing ? -50 : 0)
+            .padding(.top, isSearching ? -50 : 0)
 
             List(resultedContacts) { contact in
                 ContactRowView(contact: contact)
@@ -55,7 +56,7 @@ struct ContactsListView: View {
         }
         .padding(.top, 10)
         .background(Color.primaryBackground)
-        .actionSheet(isPresented: $showNumberSelection) {
+        .actionSheet(isPresented: $showPhoneNumberSelector) {
             ActionSheet(title: Text("Phone Number."),
                         message: Text("Select a phone number to send to"),
                         buttons: alertButtons)
@@ -73,7 +74,7 @@ struct ContactsListView: View {
         if contact.phoneNumbers.count == 1 {
             dismiss()
         } else {
-            showNumberSelection.toggle()
+            showPhoneNumberSelector.toggle()
         }
     }
     
@@ -93,12 +94,12 @@ private extension ContactsListView {
 
                 TextField("Search name or phone", text: $searchQuery) { isEditing in
                     withAnimation {
-                        self.isEditing = isEditing
+                        self.isSearching = isEditing
                     }
                 }
                 .font(.system(.callout, design: .rounded))
 
-                if isEditing {
+                if isSearching {
                     Button(action: {
                         withAnimation {
                             if searchQuery.isEmpty {
@@ -118,7 +119,7 @@ private extension ContactsListView {
             .background(Color("offBackground"))
             .cornerRadius(6)
 
-            if isEditing {
+            if isSearching {
                 Button(action: endEditing) {
                     Text("Cancel")
                         .font(.system(.body, design: .rounded))
@@ -133,7 +134,7 @@ private extension ContactsListView {
         hideKeyboard()
         withAnimation {
             searchQuery = ""
-            isEditing = false
+            isSearching = false
         }
     }
 }
@@ -142,42 +143,9 @@ private extension ContactsListView {
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            
-            ContactsListView(contacts: .constant([.example, .example, .example1, .example, .example]),
-                         selection: .constant(.example))
-            ContactsListView.ContactRowView(contact: .example)
-                .padding()
-                .previewLayout(.sizeThatFits)
+            ContactsListView(contacts: [MockPreview.contact1, MockPreview.contact2],
+                             selection: .constant(MockPreview.contact1))
         }
     }
 }
 #endif
-
-extension ContactsListView {
-    struct ContactRowView: View {
-        let contact: Contact
-        var body: some View {
-            HStack {
-                Text(contact.names)
-                    .font(.system(.callout, design: .rounded).weight(.medium))
-                
-                Spacer()
-                
-                VStack(alignment: .trailing) {
-                    if contact.phoneNumbers.count == 1 {
-                        Text(contact.phoneNumbers[0])
-                    } else {
-                        Text("\(Text(contact.phoneNumbers[0])), +\(contact.phoneNumbers.count-1)more")
-                    }
-                }
-                .font(.system(.footnote, design: .rounded))
-                .foregroundColor(.secondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            
-        }
-    }
-}

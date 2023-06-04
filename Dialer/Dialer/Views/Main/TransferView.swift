@@ -208,7 +208,7 @@ struct TransferView: View {
             if showCreateMerchantView {
                 CreateMerchantView(merchantStore: merchantStore)
             } else {
-                ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+                ContactsListView(contacts: allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
             }
         }
         .actionSheet(isPresented: $showReportSheet) {

@@ -106,6 +106,8 @@
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
 		CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
+		CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */; };
+		CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C602A2C789C00C7712B /* ContactRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +218,8 @@
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
+		CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreview.swift; sourceTree = "<group>"; };
+		CBE73C602A2C789C00C7712B /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,8 +283,6 @@
 			children = (
 				8255E68D2693959800657EFB /* CongratulationsView.swift */,
 				8255E690269395EE00657EFB /* CongratsViewController.swift */,
-				821C0737264DDFFB00DBD545 /* PinView.swift */,
-				820C10892766A31400A7CADE /* NumberField.swift */,
 				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
 				CBAF13182785A54100D32E1F /* TappeableText.swift */,
 				CB393A2A28121501009CA95E /* CopiedUSSDLabel.swift */,
@@ -360,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */,
+				CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -409,15 +412,14 @@
 		82FBCC05261BB2F400F00FAE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
+				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
 				820C108B2766A4D400A7CADE /* Main */,
 				820C108C2766A51000A7CADE /* Details */,
-				CB18BD4629AE2FEE00A7B45C /* Map */,
-				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
+				CBE73C5F2A2C789200C7712B /* Contacts */,
 				CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */,
-				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
 				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
-				82E8E63A2676A7B300AB1723 /* ContactsListView.swift */,
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				CBC262BE2784C7D3000B8E0E /* MailView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
@@ -437,13 +439,6 @@
 				CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */,
 			);
 			path = "View Models";
-			sourceTree = "<group>";
-		};
-		CB18BD4629AE2FEE00A7B45C /* Map */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		CB18BD5129AE913800A7B45C /* Merchant */ = {
@@ -489,6 +484,8 @@
 			isa = PBXGroup;
 			children = (
 				CBA429DF29AB85F50041D578 /* SpeakerView.swift */,
+				821C0737264DDFFB00DBD545 /* PinView.swift */,
+				820C10892766A31400A7CADE /* NumberField.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -517,6 +514,15 @@
 				CB1FE61E29B7C4ED000F8444 /* ModelTests */,
 			);
 			path = "Test Cases";
+			sourceTree = "<group>";
+		};
+		CBE73C5F2A2C789200C7712B /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				82E8E63A2676A7B300AB1723 /* ContactsListView.swift */,
+				CBE73C602A2C789C00C7712B /* ContactRowView.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -680,6 +686,7 @@
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
+				CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */,
 				CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */,
 				CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
@@ -714,6 +721,7 @@
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */,
 				CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */,
+				CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */,
 				CB1CC86C29C4524200FF2116 /* FirebaseCRUD.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */,

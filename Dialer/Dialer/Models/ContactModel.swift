@@ -20,8 +20,4 @@ struct Contact: Identifiable {
     mutating func updatePhones(_ numbers: [String]) {
         phoneNumbers = numbers
     }
-    static let example = Contact(names: "Kate Bell",
-                                 phoneNumbers: ["(555) 564-8583", "(415) 555-3695"])
-    static let example1 = Contact(names: "John Smith",
-                                 phoneNumbers: ["(415) 555-3695"])
 }

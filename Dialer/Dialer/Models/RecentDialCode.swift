@@ -24,7 +24,4 @@ struct RecentDialCode: Identifiable, Hashable, Codable {
     var totalPrice: Int { detail.amount * count }
     
     mutating func increaseCount() { count += 1 }
-    
-    static let example = RecentDialCode(detail: .example)
-    
 }

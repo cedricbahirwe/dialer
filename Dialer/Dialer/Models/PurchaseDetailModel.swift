@@ -22,7 +22,6 @@ struct PurchaseDetailModel: Hashable, Codable {
             return "\(prefixCode)\(amount)*\(pin)#"
         }
     }
-    static let example = PurchaseDetailModel()
 }
 
 enum USSD {
