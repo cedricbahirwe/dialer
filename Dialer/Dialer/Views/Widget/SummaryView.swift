@@ -11,7 +11,7 @@ struct SummaryView: View {
     @StateObject private var summaryVM = SummaryViewModel()
     var body: some View {
         VStack {
-            Text("As")
+            Text("Aso")
             
         }
     }

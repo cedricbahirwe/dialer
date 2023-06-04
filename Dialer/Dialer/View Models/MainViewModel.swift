@@ -11,7 +11,8 @@ import SwiftUI
 protocol UtilitiesDelegate {
     func didSelectOption(with code: DialerQuickCode)
 }
-class MainViewModel: ObservableObject {
+
+@MainActor class MainViewModel: ObservableObject {
     
     @Published var pinCode: CodePin? = DialerStorage.shared.getCodePin()
     @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
