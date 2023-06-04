@@ -273,7 +273,8 @@ private extension TransferView {
             do {
                 allContacts = try await PhoneContacts.getMtnContacts()
             } catch {
-                print(error.localizedDescription)
+                Tracker.shared.logError(error: error)
+                Log.debug(error.localizedDescription)
             }
         }
     }

@@ -56,7 +56,7 @@ private extension DialerNotificationCenter {
         do {
             return try await notificationCenter.requestAuthorization(options: [.alert, .sound])
         } catch {
-            print("Not Authorized", error.localizedDescription)
+            Log.debug("Not Authorized", error.localizedDescription)
             throw NotificationError.notAuthorized
         }
     }

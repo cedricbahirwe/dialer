@@ -108,7 +108,6 @@
 		CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 		CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */; };
 		CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C602A2C789C00C7712B /* ContactRowView.swift */; };
-		CBE73C662A2C7BD600C7712B /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C652A2C7BD600C7712B /* SummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,7 +220,6 @@
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
 		CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreview.swift; sourceTree = "<group>"; };
 		CBE73C602A2C789C00C7712B /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
-		CBE73C652A2C7BD600C7712B /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -539,7 +537,6 @@
 		CBE73C642A2C7A8D00C7712B /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				CBE73C652A2C7BD600C7712B /* SummaryView.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -748,7 +745,6 @@
 				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
 				825F996326720AE6009E4A7B /* TransferView.swift in Sources */,
-				CBE73C662A2C7BD600C7712B /* SummaryView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,

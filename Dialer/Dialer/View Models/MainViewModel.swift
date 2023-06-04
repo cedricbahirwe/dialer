@@ -67,7 +67,7 @@ protocol UtilitiesDelegate {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
             Tracker.shared.logError(error: error)
-            print("Could not save recent codes locally: ", error.localizedDescription)
+            Log.debug("Could not save recent codes locally: ", error.localizedDescription)
         }
     }
     
@@ -115,7 +115,7 @@ protocol UtilitiesDelegate {
         do {
             try DialerStorage.shared.saveCodePin(value)
         } catch {
-            print("Storage: \(error.localizedDescription)")
+            Log.debug("Storage: \(error.localizedDescription)")
         }
     }
     
@@ -275,7 +275,7 @@ extension MainViewModel {
             try DialerStorage.shared.saveElectricityMeters(meters)
         } catch {
             Tracker.shared.logError(error: error)
-            print("Could not save meter numbers locally: ", error.localizedDescription)
+            Log.debug("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
 
@@ -315,7 +315,7 @@ extension MainViewModel {
             try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
             Tracker.shared.logError(error: error)
-            print("Could not save ussd codes locally: ", error.localizedDescription)
+            Log.debug("Could not save ussd codes locally: ", error.localizedDescription)
         }
     }
 

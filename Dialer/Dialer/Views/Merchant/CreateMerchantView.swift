@@ -72,7 +72,7 @@ struct CreateMerchantView: View {
             }
         } catch {
             let validationError = error as? Model.Error
-            print("Error: \(validationError?.message ?? "")")
+            Log.debug("Error: \(validationError?.message ?? "")")
         }
     }
 }

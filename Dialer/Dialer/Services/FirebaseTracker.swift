@@ -68,11 +68,15 @@ class FirebaseTracker {
         // screen_session_length - Name of the Event
         // name - Name of the screen parameter
         // length - The session time in milliseconds
+        #if DEBUG
+        #else
         logEvent(name: AppAnalyticsEventType.screenSessionLength,
                  parameters: [
                     EventParameterKey.name.rawValue: screen.rawValue,
                     EventParameterKey.length.rawValue: seconds
                  ])
+        #endif
+       
         /// 4. remove start date from cache
         sessions.removeValue(forKey: screen)
     }

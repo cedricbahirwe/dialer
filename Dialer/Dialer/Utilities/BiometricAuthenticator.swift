@@ -48,13 +48,13 @@ final class BiometricAuthenticator {
                         return
                     }
                 } else {
-                    print(error?.localizedDescription ?? "Failed to authenticate")
+                    Log.debug(error?.localizedDescription ?? "Failed to authenticate")
                     completion(false)
                     return
                 }
             }
         } else {
-            print(error?.localizedDescription ?? "Can't evaluate policy")
+            Log.debug(error?.localizedDescription ?? "Can't evaluate policy")
             completion(false)
             return
         }
