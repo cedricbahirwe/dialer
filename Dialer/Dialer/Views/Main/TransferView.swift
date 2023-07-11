@@ -227,7 +227,7 @@ struct TransferView: View {
                 Button(action: {
                     focusedState = focusedState?.next()
                 }) {
-                    Text("Next-")
+                    Text("Next")
                         .font(.system(size: 18, design: .rounded))
                         .foregroundColor(.blue)
                         .padding(5)
