@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 
+@MainActor
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // List of known shortcut actions.
@@ -70,14 +71,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         and the window scene is already connected.
     */
     /// - Tag: PerformAction
-    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        let handled = handleShortCutItem(shortcutItem: shortcutItem)
-        completionHandler(handled)
+//    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+//        let handled = handleShortCutItem(shortcutItem: shortcutItem)
+//        completionHandler(handled)
+//    }
+    
+    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async -> Bool {
+        await handleShortCutItem(shortcutItem: shortcutItem)
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         if savedShortCutItem != nil {
-            _ = handleShortCutItem(shortcutItem: savedShortCutItem)
+            Task {
+                _ = await handleShortCutItem(shortcutItem: savedShortCutItem)
+            }
         }
     }
 
@@ -126,7 +133,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         DialerNotificationCenter.shared.scheduleMorningNotification()
     }
     
-    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) async -> Bool {
         /** In this sample an alert is being shown to indicate that the action has been triggered,
             but in real code the functionality for the quick action would be triggered.
         */

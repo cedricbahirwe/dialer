@@ -20,7 +20,10 @@ struct BiometricsAccessibility: ViewModifier {
     
     private func manageBiometrics() {
         if allowBiometrics {
-            biometrics.onStateChanged(onEvaluation)
+            Task { @MainActor in
+                let state = await biometrics.onStateChanged()
+                onEvaluation(state)
+            }
         } else {
             onEvaluation(true)
         }

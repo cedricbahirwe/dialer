@@ -125,9 +125,9 @@ protocol UtilitiesDelegate {
     private func dialCode(from purchase: PurchaseDetailModel) async throws {
         
         let newUrl = getFullUSSDCode(from: purchase)
-
+        
         if let telUrl = URL(string: "tel://\(newUrl)"),
-           await UIApplication.shared.canOpenURL(telUrl) {
+           UIApplication.shared.canOpenURL(telUrl) {
             let isCompleted = await UIApplication.shared.open(telUrl)
             if !isCompleted {
                 throw DialingError.canNotDial
@@ -161,7 +161,7 @@ protocol UtilitiesDelegate {
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
     static func performQuickDial(for code: DialerQuickCode) async {
         if let telUrl = URL(string: "tel://\(code.ussd)"),
-           await UIApplication.shared.canOpenURL(telUrl) {
+           UIApplication.shared.canOpenURL(telUrl) {
             
             let isCompleted = await UIApplication.shared.open(telUrl)
             if isCompleted {
