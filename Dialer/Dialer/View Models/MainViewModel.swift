@@ -11,7 +11,8 @@ import SwiftUI
 protocol UtilitiesDelegate {
     func didSelectOption(with code: DialerQuickCode)
 }
-class MainViewModel: ObservableObject {
+
+@MainActor class MainViewModel: ObservableObject {
     
     @Published var pinCode: CodePin? = DialerStorage.shared.getCodePin()
     @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
@@ -66,7 +67,7 @@ class MainViewModel: ObservableObject {
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
             Tracker.shared.logError(error: error)
-            print("Could not save recent codes locally: ", error.localizedDescription)
+            Log.debug("Could not save recent codes locally: ", error.localizedDescription)
         }
     }
     
@@ -89,18 +90,15 @@ class MainViewModel: ObservableObject {
     /// Confirm and Purchase an entered Code.
     func confirmPurchase() {
         let purchase = purchaseDetail
-        dialCode(from: purchaseDetail, completion: { result in
-            switch result {
-            case .success(_):
+        Task {
+            do {
+                try await dialCode(from: purchase)
                 self.storeCode(code: RecentDialCode(detail: purchase))
                 self.purchaseDetail = PurchaseDetailModel()
-                
-                break;
-            case .failure(let error):
-                print(error.message)
+            } catch let error as DialingError {
+                Log.debug(error.message)
             }
-        })
-        
+        }
     }
     
     /// Delete locally the used Code(s).
@@ -117,28 +115,25 @@ class MainViewModel: ObservableObject {
         do {
             try DialerStorage.shared.saveCodePin(value)
         } catch {
-            print("Storage: \(error.localizedDescription)")
+            Log.debug("Storage: \(error.localizedDescription)")
         }
     }
     
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
-    ///   - completion: closue to return a success message or a error of type   `DialingError`.
-    private func dialCode(from purchase: PurchaseDetailModel,
-                          completion: @escaping (Result<String, DialingError>) -> Void) {
+    private func dialCode(from purchase: PurchaseDetailModel) async throws {
         
         let newUrl = getFullUSSDCode(from: purchase)
-
+        
         if let telUrl = URL(string: "tel://\(newUrl)"),
            UIApplication.shared.canOpenURL(telUrl) {
-            UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
-                completion(.success("Successfully Dialed"))
-            })
-            
+            let isCompleted = await UIApplication.shared.open(telUrl)
+            if !isCompleted {
+                throw DialingError.canNotDial
+            }
         } else {
-            // Can not dial this code
-            completion(.failure(.canNotDial))
+            throw DialingError.canNotDial
         }
     }
 
@@ -157,23 +152,26 @@ class MainViewModel: ObservableObject {
         getFullUSSDCode(from: purchaseDetail)
     }
     
-    /// Returns a `RecentDialCode` that matches the input identifier.
-    func rencentDialCode(_ identifier: String) -> RecentDialCode? {
-        let foundCode = recentCodes.first(where: { $0.id.uuidString == identifier})
-        return foundCode
+    /// Returns a `RecentDialCode` that matches the identifier.
+    func getRecentDialCode(with identifier: String) -> RecentDialCode? {
+        recentCodes.first(where: { $0.id.uuidString == identifier })
     }
     
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
-    static func performQuickDial(for code: DialerQuickCode) {
+    static func performQuickDial(for code: DialerQuickCode) async {
         if let telUrl = URL(string: "tel://\(code.ussd)"),
            UIApplication.shared.canOpenURL(telUrl) {
-            UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in
-                print("Successfully Dialed")
-            })
+            
+            let isCompleted = await UIApplication.shared.open(telUrl)
+            if isCompleted {
+                Log.debug("Successfully Dialed")
+            } else {
+                Log.debug("Failed Dialed")
+            }
             
         } else {
-            print("Can not dial this code")
+            Log.debug("Can not dial this code")
         }
     }
     
@@ -181,12 +179,12 @@ class MainViewModel: ObservableObject {
     /// - Parameter recentCode: the row code to be performed.
     func performRecentDialing(for recentCode: RecentDialCode) {
         let recent = recentCode
-        dialCode(from: recentCode.detail) { result in
-            switch result {
-            case .success(_):
+        Task {
+            do {
+                try await dialCode(from: recent.detail)
                 self.storeCode(code: recent)
-            case .failure(let error):
-                print(error.message)
+            } catch let error as DialingError {
+                Log.debug(error.message)
             }
         }
     }
@@ -223,7 +221,9 @@ class MainViewModel: ObservableObject {
 extension MainViewModel {
     private func performQuickDial(for quickCode: DialerQuickCode) {
         if UIApplication.hasSupportForUSSD {
-            Self.performQuickDial(for: quickCode)
+            Task {
+                await Self.performQuickDial(for: quickCode)
+            }
         } else {
             utilityDelegate?.didSelectOption(with: quickCode)
         }
@@ -275,7 +275,7 @@ extension MainViewModel {
             try DialerStorage.shared.saveElectricityMeters(meters)
         } catch {
             Tracker.shared.logError(error: error)
-            print("Could not save meter numbers locally: ", error.localizedDescription)
+            Log.debug("Could not save meter numbers locally: ", error.localizedDescription)
         }
     }
 
@@ -315,7 +315,7 @@ extension MainViewModel {
             try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
             Tracker.shared.logError(error: error)
-            print("Could not save ussd codes locally: ", error.localizedDescription)
+            Log.debug("Could not save ussd codes locally: ", error.localizedDescription)
         }
     }
 

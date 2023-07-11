@@ -190,7 +190,7 @@ struct SettingsView: View {
     private func openTwitter() {
         
         guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url)
     }
     
     private func openMail() {

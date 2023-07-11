@@ -74,6 +74,7 @@ struct TransferView: View {
                 VStack(spacing: 18) {
                     if transaction.type == .client {
                         Button(action: {
+                            hideKeyboard()
                             showContactPicker = true
                             Tracker.shared.logEvent(.conctactsOpened)
                         }) {
@@ -208,7 +209,7 @@ struct TransferView: View {
             if showCreateMerchantView {
                 CreateMerchantView(merchantStore: merchantStore)
             } else {
-                ContactsListView(contacts: $allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+                ContactsListView(contacts: allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
             }
         }
         .actionSheet(isPresented: $showReportSheet) {
@@ -273,7 +274,8 @@ private extension TransferView {
             do {
                 allContacts = try await PhoneContacts.getMtnContacts()
             } catch {
-                print(error.localizedDescription)
+                Tracker.shared.logError(error: error)
+                Log.debug(error.localizedDescription)
             }
         }
     }
@@ -286,8 +288,10 @@ private extension TransferView {
     
     private func transferMoney() {
         hideKeyboard()
-        MainViewModel.performQuickDial(for: .other(transaction.fullCode))
-        Tracker.shared.logTransaction(transaction: transaction)
+        Task {
+            await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
+            Tracker.shared.logTransaction(transaction: transaction)
+        }
     }
     
     /// Create a validation for the  `Number` field value

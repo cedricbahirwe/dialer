@@ -48,7 +48,9 @@ struct QuickDialingView: View {
                     .padding(.horizontal)
 
                 Button(action: {
-                    dial(composedCode)
+                    Task {
+                     await dial(composedCode)
+                    }
                 }, label: {
                     Image(systemName: "phone.circle.fill")
                         .resizable()
@@ -66,12 +68,13 @@ struct QuickDialingView: View {
         .trackAppearance(.quickDialing)
     }
 
-    private func dial(_ code: String) {
+    private func dial(_ code: String) async {
         // Basic Checks
         // This can be removed when user wants to dial a phone number ....
         if code.contains("*") && code.contains("#") && code.count >= 5 {
-            if let telUrl = URL(string: "tel://\(code)"), UIApplication.shared.canOpenURL(telUrl) {
-                UIApplication.shared.open(telUrl, options: [:], completionHandler: { _ in})
+            if let telUrl = URL(string: "tel://\(code)"),
+                await UIApplication.shared.canOpenURL(telUrl) {
+                await UIApplication.shared.open(telUrl)
 
             } else {
                 // Can not dial this code

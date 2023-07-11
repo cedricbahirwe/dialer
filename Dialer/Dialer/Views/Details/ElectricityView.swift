@@ -68,8 +68,9 @@ struct ElectricityView: View {
                                 let meter = try ElectricityMeter(meterNumber)
                                 store.storeMeter(meter)
 
-                            } catch  {
-                                print(error, "Meter Error")
+                            } catch {
+                                Tracker.shared.logError(error: error)
+                                Log.debug(error, "Meter Error")
                             }
                         }){
                             Text("Save")

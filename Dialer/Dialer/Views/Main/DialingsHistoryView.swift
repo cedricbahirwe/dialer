@@ -23,7 +23,9 @@ struct DialingsHistoryView: View {
                                 HistoryRow(recentCode: recentCode)
                                     .onTapGesture {
                                         data.performRecentDialing(for: recentCode)
-                                        copyToClipBoard(recentCode)
+                                        if !UIApplication.hasSupportForUSSD {
+                                            copyToClipBoard(recentCode)
+                                        }
                                     }
                             }
                             .onDelete(perform: data.deletePastCode)

@@ -6,46 +6,39 @@
 //
 
 import SwiftUI
+
 struct ContactsListView: View {
-    @Binding var allContacts: [Contact]
+    @Environment(\.dismiss) private var dismiss
+    
+    private let contacts: [Contact]
     @Binding var selectedContact: Contact
     
-    @State private var searchQuery: String = ""
-    @State private var isEditing = false
-    @State private var showNumberSelection: Bool = false
-    @Environment(\.dismiss)
-    private var dismiss
+    @State private var searchQuery = ""
+    @FocusState private var isSearching: Bool
+    @State private var showPhoneNumberSelector: Bool = false
     
     private var resultedContacts: [Contact] {
-        let contacts = allContacts.sorted(by: { $0.names < $1.names })
+        let contacts = contacts.sorted(by: { $0.names < $1.names })
         if searchQuery.isEmpty {
             return contacts
         } else {
-            return contacts.filter({ $0.names.lowercased().contains(searchQuery.lowercased())})
+            return contacts.filter {
+                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+            }
         }
     }
     
-    init(contacts: Binding<[Contact]>, selection: Binding<Contact>) {
-        _allContacts = contacts
+    init(contacts: [Contact], selection: Binding<Contact>) {
+        self.contacts = contacts
         _selectedContact = selection
         UITableView.appearance().backgroundColor = UIColor.primaryBackground
     }
     
     var body: some View {
+        NavigationView {
         VStack {
-
-            VStack(alignment: .leading) {
-                Text("Contacts List")
-                    .font(.system(.title2, design: .rounded).bold())
-                    .padding(.top)
-
-                    .transition(.move(edge: .top))
-                    .animation(.spring(), value: isEditing)
-                searchBarView
-            }
-            .padding(.horizontal)
-            .padding(.top, isEditing ? -50 : 0)
-
+            searchBarView
+            
             List(resultedContacts) { contact in
                 ContactRowView(contact: contact)
                     .onTapGesture {
@@ -55,11 +48,34 @@ struct ContactsListView: View {
         }
         .padding(.top, 10)
         .background(Color.primaryBackground)
-        .actionSheet(isPresented: $showNumberSelection) {
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                
+                Button(action: {
+                    isSearching = false
+                }) {
+                    Text("Search")
+                        .font(.system(size: 18, design: .rounded))
+                        .foregroundColor(.blue)
+                        .padding(5)
+                }
+            }
+        }
+        .actionSheet(isPresented: $showPhoneNumberSelector) {
             ActionSheet(title: Text("Phone Number."),
                         message: Text("Select a phone number to send to"),
                         buttons: alertButtons)
         }
+        .onAppear() {
+            DispatchQueue.main.asyncAfter(deadline: .now() ) {
+                withAnimation {
+                    isSearching = true
+                }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+    }
     }
     private var alertButtons: [ActionSheet.Button] {
         var buttons: [ActionSheet.Button] = selectedContact.phoneNumbers.map({ phoneNumber in
@@ -73,7 +89,7 @@ struct ContactsListView: View {
         if contact.phoneNumbers.count == 1 {
             dismiss()
         } else {
-            showNumberSelection.toggle()
+            showPhoneNumberSelector.toggle()
         }
     }
     
@@ -91,14 +107,16 @@ private extension ContactsListView {
                     .foregroundColor(.secondary)
                     .padding(9)
 
-                TextField("Search name or phone", text: $searchQuery) { isEditing in
+                TextField("Search by name or phone", text: $searchQuery) { isEditing in
                     withAnimation {
-                        self.isEditing = isEditing
+                        self.isSearching = isEditing
                     }
                 }
                 .font(.system(.callout, design: .rounded))
+                .focused($isSearching)
+                .submitLabel(.done)
 
-                if isEditing {
+                if isSearching {
                     Button(action: {
                         withAnimation {
                             if searchQuery.isEmpty {
@@ -118,22 +136,22 @@ private extension ContactsListView {
             .background(Color("offBackground"))
             .cornerRadius(6)
 
-            if isEditing {
+            if isSearching {
                 Button(action: endEditing) {
                     Text("Cancel")
                         .font(.system(.body, design: .rounded))
                 }
-                .padding(.trailing, 10)
             }
         }
+        .animation(.default, value: isSearching)
+        .padding(.horizontal)
     }
 
-
     private func endEditing() {
-        hideKeyboard()
         withAnimation {
             searchQuery = ""
-            isEditing = false
+            isSearching = false
+            hideKeyboard()
         }
     }
 }
@@ -142,42 +160,9 @@ private extension ContactsListView {
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            
-            ContactsListView(contacts: .constant([.example, .example, .example1, .example, .example]),
-                         selection: .constant(.example))
-            ContactsListView.ContactRowView(contact: .example)
-                .padding()
-                .previewLayout(.sizeThatFits)
+            ContactsListView(contacts: [MockPreview.contact1, MockPreview.contact2],
+                             selection: .constant(MockPreview.contact1))
         }
     }
 }
 #endif
-
-extension ContactsListView {
-    struct ContactRowView: View {
-        let contact: Contact
-        var body: some View {
-            HStack {
-                Text(contact.names)
-                    .font(.system(.callout, design: .rounded).weight(.medium))
-                
-                Spacer()
-                
-                VStack(alignment: .trailing) {
-                    if contact.phoneNumbers.count == 1 {
-                        Text(contact.phoneNumbers[0])
-                    } else {
-                        Text("\(Text(contact.phoneNumbers[0])), +\(contact.phoneNumbers.count-1)more")
-                    }
-                }
-                .font(.system(.footnote, design: .rounded))
-                .foregroundColor(.secondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            
-        }
-    }
-}

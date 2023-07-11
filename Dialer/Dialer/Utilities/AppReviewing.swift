@@ -33,6 +33,6 @@ enum ReviewHandler {
     static func requestReviewManually() {
         guard let writeReviewURL = URL(string: DialerlLinks.dialerAppReview)
         else { return }
-        UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
+        UIApplication.shared.open(writeReviewURL)
     }
 }

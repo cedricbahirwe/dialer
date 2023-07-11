@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecentDialCode: Identifiable, Hashable, Codable {
+struct RecentDialCode: Identifiable, Codable {
     static func == (lhs: RecentDialCode, rhs: RecentDialCode) -> Bool {
         lhs.id == rhs.id
     }
@@ -24,7 +24,4 @@ struct RecentDialCode: Identifiable, Hashable, Codable {
     var totalPrice: Int { detail.amount * count }
     
     mutating func increaseCount() { count += 1 }
-    
-    static let example = RecentDialCode(detail: .example)
-    
 }

@@ -36,7 +36,7 @@ final class PhoneContacts {
         do {
             allContainers = try contactStore.containers(matching: nil)
         } catch {
-            print("Error fetching containers")
+            Log.debug("Error fetching containers")
             throw PhonePermission.containerError
         }
         
@@ -49,7 +49,7 @@ final class PhoneContacts {
                 let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
                 results.append(contentsOf: containerResults)
             } catch {
-                print("Error fetching unified containers")
+                Log.debug("Error fetching unified containers")
                 throw PhonePermission.emptyContacts
             }
         }
@@ -62,7 +62,7 @@ final class PhoneContacts {
         do {
             contacts = try await PhoneContacts.getContacts()
         } catch {
-            print(error.localizedDescription)
+            Log.debug(error.localizedDescription)
             throw PhonePermission.emptyContacts
         }
         

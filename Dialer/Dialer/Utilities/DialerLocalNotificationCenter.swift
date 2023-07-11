@@ -56,7 +56,7 @@ private extension DialerNotificationCenter {
         do {
             return try await notificationCenter.requestAuthorization(options: [.alert, .sound])
         } catch {
-            print("Not Authorized", error.localizedDescription)
+            Log.debug("Not Authorized", error.localizedDescription)
             throw NotificationError.notAuthorized
         }
     }
@@ -107,9 +107,8 @@ extension DialerNotificationCenter {
 
 //MARK: UNUserNotificationCenterDelegate
 extension DialerNotificationCenter: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        completionHandler(.banner)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        return .banner
     }
 }
 
