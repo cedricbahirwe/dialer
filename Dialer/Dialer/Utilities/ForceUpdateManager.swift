@@ -87,7 +87,7 @@ final class ForceUpdateManager: ObservableObject {
     private func openAppOnStore() {
         guard let appLink = URL(string: DialerlLinks.dialerAppStoreURL)
         else { return }
-        UIApplication.shared.open(appLink, options: [:], completionHandler: nil)
+        UIApplication.shared.open(appLink)
     }
 }
 

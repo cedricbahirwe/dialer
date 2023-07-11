@@ -107,9 +107,8 @@ extension DialerNotificationCenter {
 
 //MARK: UNUserNotificationCenterDelegate
 extension DialerNotificationCenter: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        completionHandler(.banner)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        return .banner
     }
 }
 

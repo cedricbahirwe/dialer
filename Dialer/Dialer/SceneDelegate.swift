@@ -71,11 +71,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         and the window scene is already connected.
     */
     /// - Tag: PerformAction
-//    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-//        let handled = handleShortCutItem(shortcutItem: shortcutItem)
-//        completionHandler(handled)
-//    }
-    
     func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem) async -> Bool {
         await handleShortCutItem(shortcutItem: shortcutItem)
     }
