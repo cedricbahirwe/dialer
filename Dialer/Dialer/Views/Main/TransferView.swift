@@ -74,6 +74,7 @@ struct TransferView: View {
                 VStack(spacing: 18) {
                     if transaction.type == .client {
                         Button(action: {
+                            hideKeyboard()
                             showContactPicker = true
                             Tracker.shared.logEvent(.conctactsOpened)
                         }) {
@@ -226,7 +227,7 @@ struct TransferView: View {
                 Button(action: {
                     focusedState = focusedState?.next()
                 }) {
-                    Text("Next")
+                    Text("Next-")
                         .font(.system(size: 18, design: .rounded))
                         .foregroundColor(.blue)
                         .padding(5)

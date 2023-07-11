@@ -14,7 +14,7 @@ struct ContactsListView: View {
     @Binding var selectedContact: Contact
     
     @State private var searchQuery = ""
-    @State private var isSearching = false
+    @FocusState private var isSearching: Bool
     @State private var showPhoneNumberSelector: Bool = false
     
     private var resultedContacts: [Contact] {
@@ -22,7 +22,9 @@ struct ContactsListView: View {
         if searchQuery.isEmpty {
             return contacts
         } else {
-            return contacts.filter({ $0.names.lowercased().contains(searchQuery.lowercased())})
+            return contacts.filter {
+                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+            }
         }
     }
     
@@ -33,20 +35,10 @@ struct ContactsListView: View {
     }
     
     var body: some View {
+        NavigationView {
         VStack {
-
-            VStack(alignment: .leading) {
-                Text("Contacts List")
-                    .font(.system(.title2, design: .rounded).bold())
-                    .padding(.top)
-
-                    .transition(.move(edge: .top))
-                    .animation(.spring(), value: isSearching)
-                searchBarView
-            }
-            .padding(.horizontal)
-            .padding(.top, isSearching ? -50 : 0)
-
+            searchBarView
+            
             List(resultedContacts) { contact in
                 ContactRowView(contact: contact)
                     .onTapGesture {
@@ -56,11 +48,34 @@ struct ContactsListView: View {
         }
         .padding(.top, 10)
         .background(Color.primaryBackground)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                
+                Button(action: {
+                    isSearching = false
+                }) {
+                    Text("Search")
+                        .font(.system(size: 18, design: .rounded))
+                        .foregroundColor(.blue)
+                        .padding(5)
+                }
+            }
+        }
         .actionSheet(isPresented: $showPhoneNumberSelector) {
             ActionSheet(title: Text("Phone Number."),
                         message: Text("Select a phone number to send to"),
                         buttons: alertButtons)
         }
+        .onAppear() {
+            DispatchQueue.main.asyncAfter(deadline: .now() ) {
+                withAnimation {
+                    isSearching = true
+                }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+    }
     }
     private var alertButtons: [ActionSheet.Button] {
         var buttons: [ActionSheet.Button] = selectedContact.phoneNumbers.map({ phoneNumber in
@@ -92,12 +107,14 @@ private extension ContactsListView {
                     .foregroundColor(.secondary)
                     .padding(9)
 
-                TextField("Search name or phone", text: $searchQuery) { isEditing in
+                TextField("Search by name or phone", text: $searchQuery) { isEditing in
                     withAnimation {
                         self.isSearching = isEditing
                     }
                 }
                 .font(.system(.callout, design: .rounded))
+                .focused($isSearching)
+                .submitLabel(.done)
 
                 if isSearching {
                     Button(action: {
@@ -124,17 +141,17 @@ private extension ContactsListView {
                     Text("Cancel")
                         .font(.system(.body, design: .rounded))
                 }
-                .padding(.trailing, 10)
             }
         }
+        .animation(.default, value: isSearching)
+        .padding(.horizontal)
     }
 
-
     private func endEditing() {
-        hideKeyboard()
         withAnimation {
             searchQuery = ""
             isSearching = false
+            hideKeyboard()
         }
     }
 }
