@@ -22,7 +22,6 @@ struct CircleView: View {
                     
                     Text("%")
                 }
-                .fontWeight(.black)
                 
                 Text("Intime")
                     .foregroundColor(.secondary)
