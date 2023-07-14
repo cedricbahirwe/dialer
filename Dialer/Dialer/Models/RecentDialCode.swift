@@ -25,10 +25,3 @@ struct RecentDialCode: Identifiable, Codable {
     
     mutating func increaseCount() { count += 1 }
 }
-
-
-extension RecentDialCode {
-    func getFormatedMessage() -> String {
-        return "You bought \(detail.amount) RWF of airtime"
-    }
-}

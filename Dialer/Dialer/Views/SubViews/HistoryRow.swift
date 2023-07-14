@@ -21,7 +21,7 @@ struct HistoryRow: View {
             }
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(recentCode.getFormatedMessage())
+                Text("You bought \(recentCode.detail.amount) RWF of airtime")
                     .fontWeight(.medium)
                     .minimumScaleFactor(0.9)
                 
