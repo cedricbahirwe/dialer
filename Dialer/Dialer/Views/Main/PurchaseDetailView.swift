@@ -16,7 +16,7 @@ struct PurchaseDetailView: View {
     
     private var validCode: Bool {
         if let pin = data.pinCode {
-            return String(pin).count == 5
+            return pin.digits == 5
         }
         return false
     }

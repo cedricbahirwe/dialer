@@ -49,10 +49,7 @@ struct DashBoardView: View {
                         DashItemView(
                             title: "History",
                             icon: "clock.arrow.circlepath")
-                        .onTapGesture {
-                            data.showHistorySheet.toggle()
-                            Tracker.shared.logEvent(.historyOpened)
-                        }
+                        .onTapGesture(perform: data.showHistoryView)
                         
 //                        NavigationLink {
 //                            MySpaceView()
@@ -70,7 +67,6 @@ struct DashBoardView: View {
                             title: "My Space",
                             icon: "person.crop.circle.badge")
                         .onTapGesture {
-                            print(Bundle.main.bundleIdentifier)
                             paywallPresented.toggle()
                         }
                         
@@ -100,18 +96,30 @@ struct DashBoardView: View {
             PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             
         }
-        .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
-            if showWelcomeView {
-                WhatsNewView(isPresented: $showWelcomeView)
-            } else {
-                if data.showSettingsSheet {
-                    SettingsView()
-                        .environmentObject(data)
-                } else {
-                    DialingsHistoryView(data: data)
-                }
+        .sheet(isPresented: $showWelcomeView) {
+            WhatsNewView(isPresented: $showWelcomeView)
+        }
+        .sheet(item: $data.presentedSheet) { sheet in
+            switch sheet {
+            case .settings:
+                SettingsView()
+                    .environmentObject(data)
+            case .history:
+                DialingsHistoryView(data: data.history)
             }
         }
+//        .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
+//            if showWelcomeView {
+//                WhatsNewView(isPresented: $showWelcomeView)
+//            } else {
+//                if data.showSettingsSheet {
+//                    SettingsView()
+//                        .environmentObject(data)
+//                } else {
+//                    DialingsHistoryView(data: data.history)
+//                }
+//            }
+//        }
         .fullScreenCover(isPresented: paywallPresented ? $paywallPresented : $presentQuickDial) {
             if paywallPresented {
                 PaywallView(isPresented: $paywallPresented)

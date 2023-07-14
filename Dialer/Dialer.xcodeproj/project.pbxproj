@@ -47,6 +47,8 @@
 		CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099492A6155B500E99555 /* ScanModels.swift */; };
 		CB10994E2A6165E000E99555 /* MerchantCodeExtractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */; };
 		CB1099502A616EFA00E99555 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */; };
+		CB1099522A6201A600E99555 /* DialingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099512A6201A600E99555 /* DialingError.swift */; };
+		CB1099542A6201D300E99555 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099532A6201D300E99555 /* HistoryViewModel.swift */; };
 		CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */; };
 		CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */; };
 		CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */; };
@@ -185,6 +187,8 @@
 		CB1099492A6155B500E99555 /* ScanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanModels.swift; sourceTree = "<group>"; };
 		CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCodeExtractionTests.swift; sourceTree = "<group>"; };
 		CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		CB1099512A6201A600E99555 /* DialingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingError.swift; sourceTree = "<group>"; };
+		CB1099532A6201D300E99555 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateManager.swift; sourceTree = "<group>"; };
 		CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfig.swift; sourceTree = "<group>"; };
 		CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewModel.swift; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
 				CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */,
 				CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */,
+				CB1099512A6201A600E99555 /* DialingError.swift */,
 				CBA9BB01294C8F4500D95C82 /* Protocol */,
 			);
 			path = Models;
@@ -457,6 +462,7 @@
 			children = (
 				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
 				CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */,
+				CB1099532A6201D300E99555 /* HistoryViewModel.swift */,
 				82EEBCF726C1391D00B1720A /* LocalStorage.swift */,
 				CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */,
 				CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */,
@@ -791,6 +797,7 @@
 				CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */,
 				CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */,
 				CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */,
+				CB1099542A6201D300E99555 /* HistoryViewModel.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
@@ -816,6 +823,7 @@
 				CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
 				827F2CF225D9648900C7C40A /* MainViewModel.swift in Sources */,
+				CB1099522A6201A600E99555 /* DialingError.swift in Sources */,
 				CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */,
 				821BE13326FB19F200A3CA02 /* AboutView.swift in Sources */,
 				CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */,

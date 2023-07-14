@@ -88,7 +88,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Transform most used command into a UIApplicationShortcutItem.
         let application = UIApplication.shared
         
-        let codes = dialingStore.recentCodes.filter({ $0.count >= 10 })
+        let codes = dialingStore.history.recentCodes.filter({ $0.count >= 10 })
         
         application.shortcutItems = codes.map({ code -> UIApplicationShortcutItem in
             return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue,
@@ -111,7 +111,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        dialingStore.retrieveCodes()
+        dialingStore.history.retrieveHistoryCodes()
         dialingStore.retrieveUSSDCodes()
         DialerStorage.shared.storeSyncDate()
 
@@ -122,7 +122,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        dialingStore.saveRecentCodesLocally()
+        dialingStore.history.saveRecentCodesLocally()
 
         // Schedule Morning Daily Reminder
         DialerNotificationCenter.shared.scheduleMorningNotification()
@@ -141,8 +141,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // Go to that particular code shortcut.
                 if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
                     // Find the code from the userInfo identifier.
-                    if let foundRecentCode = dialingStore.getRecentDialCode(with: codeIdentifier) {
-                        dialingStore.performRecentDialing(for: foundRecentCode)
+                    if let foundRecentCode = dialingStore.history.getRecentDialCode(with: codeIdentifier) {
+                        dialingStore.history.performRecentDialing(for: foundRecentCode)
                     }
                 }
                 

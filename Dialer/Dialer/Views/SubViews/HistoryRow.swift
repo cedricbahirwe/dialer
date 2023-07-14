@@ -29,7 +29,7 @@ struct HistoryRow: View {
                     if (0..<10).contains(recentCode.count) {
                         Text("^[\(recentCode.count) time](inflect: true)")
                     } else {
-                        Text("More than 10 + times")
+                        Text("More than 10+ times")
                             .italic()
                     }
                     Spacer()

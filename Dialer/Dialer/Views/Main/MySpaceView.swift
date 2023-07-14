@@ -125,7 +125,7 @@ struct MySpaceView: View {
     }
 }
 
-extension MySpaceView: UtilitiesDelegate {
+extension MySpaceView: ClipBoardDelegate {
     func didSelectOption(with code: DialerQuickCode) {
         copyToClipBoard(fullCode: code.ussd)
     }
