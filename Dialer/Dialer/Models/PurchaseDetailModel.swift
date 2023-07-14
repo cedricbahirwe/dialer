@@ -17,23 +17,21 @@ struct PurchaseDetailModel: Hashable, Codable {
 }
 
 extension PurchaseDetailModel {
-    func getDialCode(pin: String) -> String {
+    
+    func getFullUSSDCode(with pinCode: CodePin?) -> String {
+        let pin: String
+        if let pinCode, pinCode.digits >= 5 {
+            pin = pinCode.asString
+        } else {
+            pin = ""
+        }
+        
         /// `27/03/2023`: MTN disabled the ability to dial airtime USSD that includes Momo PIN for an amount greater than 100.
         if amount > 100 || pin.isEmpty {
             return "\(prefixCode)\(amount)#"
         } else {
             return "\(prefixCode)\(amount)*\(pin)#"
         }
-    }
-    
-    func getFullUSSDCode(with pinCode: CodePin?) -> String {
-        let code: String
-        if let pinCode, pinCode.digits >= 5 {
-            code = pinCode.asString
-        } else {
-            code = ""
-        }
-        return getDialCode(pin: code)
 
     }
     

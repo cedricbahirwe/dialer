@@ -49,7 +49,9 @@ struct DashBoardView: View {
                         DashItemView(
                             title: "History",
                             icon: "clock.arrow.circlepath")
-                        .onTapGesture(perform: data.showHistoryView)
+                        .onTapGesture {
+                            data.showHistoryView()
+                        }
                         
 //                        NavigationLink {
 //                            MySpaceView()
@@ -108,18 +110,6 @@ struct DashBoardView: View {
                 DialingsHistoryView(data: data.history)
             }
         }
-//        .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
-//            if showWelcomeView {
-//                WhatsNewView(isPresented: $showWelcomeView)
-//            } else {
-//                if data.showSettingsSheet {
-//                    SettingsView()
-//                        .environmentObject(data)
-//                } else {
-//                    DialingsHistoryView(data: data.history)
-//                }
-//            }
-//        }
         .fullScreenCover(isPresented: paywallPresented ? $paywallPresented : $presentQuickDial) {
             if paywallPresented {
                 PaywallView(isPresented: $paywallPresented)

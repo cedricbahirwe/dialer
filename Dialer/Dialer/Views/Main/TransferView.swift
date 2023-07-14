@@ -19,9 +19,7 @@ struct TransferView: View {
     
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
-//    @State private var showCreateMerchantView = false
     @State private var didCopyToClipBoard = false
-//    @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
@@ -63,11 +61,11 @@ struct TransferView: View {
                 }
                 
                 VStack(spacing: 10) {
-                    if transaction.type == .client {
-                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .animation(.default, value: transaction.type)
-                    }
+//                    if transaction.type == .client {
+//                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                            .animation(.default, value: transaction.type)
+//                    }
                     HStack {
                         NumberField(transaction.type == .client ?
                                     "Enter Receiver's number" :
@@ -98,7 +96,6 @@ struct TransferView: View {
                         Button(action: {
                             hideKeyboard()
                             presentedSheet = .contacts
-//                            showContactPicker = true
                             Tracker.shared.logEvent(.conctactsOpened)
                         }) {
                             HStack {

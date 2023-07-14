@@ -29,7 +29,7 @@ extension String {
         return mtnNumber
     }
     
-    /// Used to Analytics purpose
+    /// Used for Analytics purpose
     func camelToSnake() -> String {
         let pattern = "([a-z0-9])([A-Z])"
         do {
