@@ -73,12 +73,8 @@ final class DialerStorage {
         userDefaults.setValue(data, forKey: LocalKeys.recentCodes)
     }
     
-    func getRecentCodes() -> RecentCodes {
-        decodeDatasArray(key: LocalKeys.recentCodes, type: RecentCodes.self)
-    }
-    
     func getSortedRecentCodes() -> RecentCodes {
-        getRecentCodes()
+        decodeDatasArray(key: LocalKeys.recentCodes, type: RecentCodes.self)
             .sorted { $0.detail.purchaseDate > $1.detail.purchaseDate }
     }
     
