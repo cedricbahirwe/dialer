@@ -12,38 +12,12 @@ struct ContactsListView: View {
     
     @StateObject private var contactsVM: ContactsViewModel
     
-//    var completion: (Contact) -> Void
-    
-//    private let contacts: [Contact]
-//    private let dictionary: [ContactsDictionary]
-//    @Binding var selectedContact: Contact
-    
-//    @State private var searchQuery = ""
     @FocusState private var isSearching: Bool
-//    @State private var showPhoneNumberSelector: Bool = false
-    
-//    private var resultedContacts: [Contact] {
-//        let contacts = contacts.sorted(by: { $0.names < $1.names })
-//        if searchQuery.isEmpty {
-//            return contacts
-//        } else {
-//            return contacts.filter {
-//                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil ||
-//                $0.phoneNumbers.reduce("", +).contains(searchQuery)
-//            }
-//        }
-//    }
-    
     
     init(contacts: [Contact],
          selection: Contact,
          completion: @escaping (Contact) -> Void) {
-//    init(contacts: [Contact], selection: Binding<Contact>) {
         self._contactsVM = StateObject(wrappedValue: ContactsViewModel(contacts, selection: selection, completion: completion))
-//        self.completion = completion
-//        self.contacts = contacts
-//        _selectedContact = selection
-//        dictionary = ContactsDictionary.transform(contacts)
         UITableView.appearance().backgroundColor = UIColor.primaryBackground
     }
     
@@ -68,12 +42,6 @@ struct ContactsListView: View {
                         }
                     }
                 }
-//                List(resultedContacts) { contact in
-//                    ContactRowView(contact: contact)
-//                        .onTapGesture {
-//                            manageContact(contact)
-//                        }
-//                }
             }
         }
         .padding(.top, 10)

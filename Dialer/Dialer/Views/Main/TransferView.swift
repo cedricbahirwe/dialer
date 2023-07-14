@@ -239,6 +239,7 @@ struct TransferView: View {
                     completion: {
                         selectedContact = $0
                         cleanPhoneNumber(selectedContact)
+                        presentedSheet = nil
                     })
             }
         }
@@ -318,7 +319,7 @@ private extension TransferView {
     
     private func cleanPhoneNumber(_ value: Contact?) {
         guard let contact = value else { return }
-        let firstNumber  = contact.phoneNumbers.first!
+        let firstNumber = contact.phoneNumbers.first!
         transaction.number = firstNumber
     }
     
@@ -334,22 +335,21 @@ private extension TransferView {
     /// Create a validation for the  `Number` field value
     /// - Parameter value: the validated data
     private func handleNumberField(_ value: String) {
-        guard !value.allSatisfy(\.isNumber) else { return }
         let value = String(value.filter(\.isNumber))
+        
         if transaction.type == .merchant {
             transaction.number = String(value.prefix(6))
         } else {
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
-            if matchedContacts.isEmpty == false {
-                selectedContact = matchedContacts.first!
-            } else {
+            if matchedContacts.isEmpty {
                 selectedContact = .init(names: "", phoneNumbers: [])
+            } else {
+                selectedContact = matchedContacts.first!
             }
         }
     }
     
     private func handleAmountChange(_ value: String) {
-        guard !value.allSatisfy(\.isNumber) else { return }
         let cleanAmount = String(value.filter(\.isNumber))
         transaction.amount = cleanAmount
     }
