@@ -45,6 +45,7 @@
 		CB1099462A61557A00E99555 /* CodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099452A61557A00E99555 /* CodeScannerView.swift */; };
 		CB1099482A61559500E99555 /* CodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099472A61559500E99555 /* CodeScannerViewController.swift */; };
 		CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099492A6155B500E99555 /* ScanModels.swift */; };
+		CB10994E2A6165E000E99555 /* MerchantCodeExtractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */; };
 		CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */; };
 		CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */; };
 		CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */; };
@@ -181,6 +182,7 @@
 		CB1099452A61557A00E99555 /* CodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeScannerView.swift; sourceTree = "<group>"; };
 		CB1099472A61559500E99555 /* CodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeScannerViewController.swift; sourceTree = "<group>"; };
 		CB1099492A6155B500E99555 /* ScanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanModels.swift; sourceTree = "<group>"; };
+		CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCodeExtractionTests.swift; sourceTree = "<group>"; };
 		CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateManager.swift; sourceTree = "<group>"; };
 		CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfig.swift; sourceTree = "<group>"; };
 		CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewModel.swift; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 				CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */,
 				CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */,
 				CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */,
+				CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */,
 			);
 			path = ModelTests;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
 				CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */,
 				CB0A52912946159A0023370C /* USSDCode.swift in Sources */,
+				CB10994E2A6165E000E99555 /* MerchantCodeExtractionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

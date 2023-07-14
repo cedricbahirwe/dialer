@@ -23,7 +23,8 @@ struct ContactsListView: View {
             return contacts
         } else {
             return contacts.filter {
-                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil ||
+                $0.phoneNumbers.reduce("", +).contains(searchQuery)
             }
         }
     }
@@ -39,11 +40,15 @@ struct ContactsListView: View {
         VStack {
             searchBarView
             
-            List(resultedContacts) { contact in
-                ContactRowView(contact: contact)
-                    .onTapGesture {
-                        manageContact(contact)
-                    }
+            if resultedContacts.isEmpty {
+                emptyResultsView
+            } else {
+                List(resultedContacts) { contact in
+                    ContactRowView(contact: contact)
+                        .onTapGesture {
+                            manageContact(contact)
+                        }
+                }
             }
         }
         .padding(.top, 10)
@@ -84,6 +89,23 @@ struct ContactsListView: View {
         buttons.append(.cancel())
         return buttons
     }
+    
+    private var emptyResultsView: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "magnifyingglass.circle")
+                .resizable()
+                .frame(width: 100, height: 100)
+            
+            Text("No Results found")
+                .font(.title2)
+            Text("Try a different name or\nphone number")
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+        }
+        .frame(maxHeight: .infinity)
+    }
+    
     private func manageContact(_ contact: Contact) {
         selectedContact = contact
         if contact.phoneNumbers.count == 1 {
