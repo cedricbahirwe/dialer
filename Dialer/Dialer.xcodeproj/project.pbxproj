@@ -42,6 +42,9 @@
 		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
 		CB0A52912946159A0023370C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */; };
+		CB1099462A61557A00E99555 /* CodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099452A61557A00E99555 /* CodeScannerView.swift */; };
+		CB1099482A61559500E99555 /* CodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099472A61559500E99555 /* CodeScannerViewController.swift */; };
+		CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099492A6155B500E99555 /* ScanModels.swift */; };
 		CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */; };
 		CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */; };
 		CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */; };
@@ -175,6 +178,9 @@
 		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		CB0A52902944EBA30023370C /* DialerDEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DialerDEV.xcconfig; sourceTree = "<group>"; };
 		CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUSSDCodeTests.swift; sourceTree = "<group>"; };
+		CB1099452A61557A00E99555 /* CodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeScannerView.swift; sourceTree = "<group>"; };
+		CB1099472A61559500E99555 /* CodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeScannerViewController.swift; sourceTree = "<group>"; };
+		CB1099492A6155B500E99555 /* ScanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanModels.swift; sourceTree = "<group>"; };
 		CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateManager.swift; sourceTree = "<group>"; };
 		CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfig.swift; sourceTree = "<group>"; };
 		CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewModel.swift; sourceTree = "<group>"; };
@@ -453,6 +459,16 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		CB1099442A61556F00E99555 /* QRScanner */ = {
+			isa = PBXGroup;
+			children = (
+				CB1099452A61557A00E99555 /* CodeScannerView.swift */,
+				CB1099472A61559500E99555 /* CodeScannerViewController.swift */,
+				CB1099492A6155B500E99555 /* ScanModels.swift */,
+			);
+			path = QRScanner;
+			sourceTree = "<group>";
+		};
 		CB18BD5129AE913800A7B45C /* Merchant */ = {
 			isa = PBXGroup;
 			children = (
@@ -495,6 +511,7 @@
 		CBA429DE29AB85E70041D578 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				CB1099442A61556F00E99555 /* QRScanner */,
 				CBA429DF29AB85F50041D578 /* SpeakerView.swift */,
 				821C0737264DDFFB00DBD545 /* PinView.swift */,
 				820C10892766A31400A7CADE /* NumberField.swift */,
@@ -788,6 +805,7 @@
 				CB393A2728120A59009CA95E /* String+Extension.swift in Sources */,
 				CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */,
 				CBC262BF2784C7D3000B8E0E /* MailView.swift in Sources */,
+				CB1099462A61557A00E99555 /* CodeScannerView.swift in Sources */,
 				CBC262C62784D243000B8E0E /* PurchaseDetailModel.swift in Sources */,
 				CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */,
 				8201D9B4261A3C94007D6892 /* DashBoardView.swift in Sources */,
@@ -821,6 +839,7 @@
 				CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
 				8211528626E4EB1B00BA7BA2 /* Color+Extension.swift in Sources */,
+				CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */,
 				CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */,
 				CBA429E029AB85F50041D578 /* SpeakerView.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
@@ -831,6 +850,7 @@
 				CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */,
 				CBA66BB22A5EB3820082C8CE /* UserViewModel.swift in Sources */,
 				8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */,
+				CB1099482A61559500E99555 /* CodeScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

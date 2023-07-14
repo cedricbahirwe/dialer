@@ -10,7 +10,7 @@ import SwiftUI
 struct TransferView: View {
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
-
+    
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
     @State private var showCreateMerchantView = false
@@ -20,10 +20,12 @@ struct TransferView: View {
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
     
+    @State private var showScanner = false
+    
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
-
+    
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
@@ -39,9 +41,9 @@ struct TransferView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-
+            
             VStack(spacing: 15) {
-
+                
                 VStack(spacing: 10) {
                     if transaction.type == .client && !transaction.amount.isEmpty {
                         feeHintView
@@ -49,11 +51,11 @@ struct TransferView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.estimatedFee)
                     }
-
+                    
                     NumberField("Enter Amount", text: $transaction.amount.onChange(handleAmountChange).animation())
                         .focused($focusedState, equals: .amount)
                 }
-
+                
                 VStack(spacing: 10) {
                     if transaction.type == .client {
                         Text(selectedContact.names).font(.caption).foregroundColor(.blue)
@@ -64,13 +66,13 @@ struct TransferView: View {
                                 "Enter Receiver's number" :
                                     "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
                     .focused($focusedState, equals: .number)
-
+                    
                     if transaction.type == .merchant {
                         Text("The code should be a 5-6 digits number")
                             .font(.caption).foregroundColor(.blue)
                     }
                 }
-
+                
                 VStack(spacing: 18) {
                     if transaction.type == .client {
                         Button(action: {
@@ -90,7 +92,7 @@ struct TransferView: View {
                             .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
                             .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
                         }                 }
-
+                    
                     HStack {
                         if UIApplication.hasSupportForUSSD {
                             Button(action: transferMoney) {
@@ -103,15 +105,15 @@ struct TransferView: View {
                                     .foregroundColor(Color.white)
                             }
                             .disabled(transaction.isValid == false)
-
-                            Button(action: copyToClipBoard) {
-                                Image(systemName: "doc.on.doc.fill")
+                            
+                            Button(action: openScanner) {
+                                Image(systemName: "qrcode.viewfinder")
                                     .frame(width: 48, height: 48)
-                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                                    .background(Color.accentColor)
                                     .cornerRadius(8)
                                     .foregroundColor(.white)
                             }
-                            .disabled(transaction.isValid == false || didCopyToClipBoard)
+                            
                         } else {
                             Button(action: copyToClipBoard) {
                                 Label("Copy USSD code", systemImage: "doc.on.doc.fill")
@@ -128,13 +130,13 @@ struct TransferView: View {
                     }
                 }
                 .padding(.top)
-
+                
                 if didCopyToClipBoard {
                     CopiedUSSDLabel()
                 }
             }
             .padding()
-
+            
             if transaction.type == .merchant {
                 List {
                     Section {
@@ -144,7 +146,7 @@ struct TransferView: View {
                                 .frame(maxWidth: .infinity)
                                 .frame(minHeight: 50)
                             
-                         } else {
+                        } else {
                             ForEach(merchantStore.merchants) { merchant in
                                 HStack {
                                     HStack(spacing: 4) {
@@ -182,7 +184,7 @@ struct TransferView: View {
                                 .fontWeight(.semibold)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.5)
-
+                            
                             Spacer(minLength: 1)
                             
                             Button {
@@ -191,7 +193,7 @@ struct TransferView: View {
                                 Image(systemName: "plus.circle.fill")
                                     .imageScale(.large)
                             }
-
+                            
                         }
                     } footer: {
                         if !merchantStore.merchants.isEmpty {
@@ -204,6 +206,19 @@ struct TransferView: View {
             } else {
                 Spacer()
             }
+        }
+        .sheet(isPresented: $showScanner) {
+            CodeScannerView(codeTypes: [.qr], completion: handleScan)
+                .ignoresSafeArea()
+//                .ignoresSafeArea()
+//            if #available(iOS 16.0, *) {
+//                CodeScannerView(codeTypes: [.qr], completion: handleScan)
+//                    .ignoresSafeArea()
+//                    .presentationDetents([.medium, .large])
+//
+//            } else {
+//                CodeScannerView(codeTypes: [.qr], completion: handleScan)
+//            }
         }
         .sheet(isPresented: showCreateMerchantView ? $showCreateMerchantView : $showContactPicker) {
             if showCreateMerchantView {
@@ -243,7 +258,7 @@ struct TransferView: View {
             }
         }
     }
-
+    
     private var alertButtons: [ActionSheet.Button] {
         [.default(Text("This merchant code is incorrect")), .cancel()]
     }
@@ -254,7 +269,7 @@ struct TransferView: View {
 }
 
 private extension TransferView {
-
+    
     func initialization() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             focusedState = .amount
@@ -262,13 +277,13 @@ private extension TransferView {
         
         requestContacts()
     }
-
+    
     func switchPaymentType() {
         withAnimation {
             transaction.type.toggle()
         }
     }
-
+    
     func requestContacts() {
         Task {
             do {
@@ -314,16 +329,72 @@ private extension TransferView {
         let cleanAmount = String(value.filter(\.isNumber))
         transaction.amount = cleanAmount
     }
-
+    
     private func copyToClipBoard() {
         UIPasteboard.general.string = transaction.fullCode
         withAnimation { didCopyToClipBoard = true }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             withAnimation {
                 didCopyToClipBoard = false
             }
         }
+    }
+    
+    private func openScanner() {
+        showScanner.toggle()
+    }
+    
+    
+    func handleScan(result: Result<ScanResult, ScanError>) {
+        showScanner = false
+        
+        switch result {
+        case .success(let scan):
+            // Handle the scanned code
+            print("Scanned code: \(scan.string)")
+            
+            // Call the completion handler with the scanned code
+            completion(scan.string)
+            
+        case .failure(let error):
+            // Handle the scan error
+            print("Scanning failed: \(error)")
+            
+            // Call the completion handler with an error message
+            completion(error.localizedDescription)
+        }
+    }
+    
+    func completion(_ qrCode: String) {
+        // Handle the scanned code here
+        if let code = extractMerchantCode(from: qrCode) {
+            self.transaction.number = code
+        } else {
+            
+        }
+    }
+    
+    func extractMerchantCode(from urlString: String) -> String? {
+        // Check if the URL string starts with the expected scheme
+        guard urlString.hasPrefix("tel://*182*8*1*") else {
+            return nil
+        }
+        
+        // Remove the scheme and prefix from the URL string
+        let prefixLength = "tel://*182*8*1*".count
+        let codeStartIndex = urlString.index(urlString.startIndex, offsetBy: prefixLength)
+        let codeEndIndex = urlString.index(before: urlString.endIndex)
+        let codeRange = codeStartIndex...codeEndIndex
+        let merchantCode = String(urlString[codeRange])
+        
+        // Remove any percent encoding and trailing character (%23)
+        let decodedMerchantCode = merchantCode
+            .replacingOccurrences(of: "%23", with: "")
+            .removingPercentEncoding ?? merchantCode
+        
+        // Return the extracted merchant code
+        return decodedMerchantCode
     }
     
     enum FocusField {
