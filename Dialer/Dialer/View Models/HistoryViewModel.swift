@@ -41,7 +41,7 @@ final class HistoryViewModel: ObservableObject {
     
     /// Retrieve all locally stored recent codes.
     func retrieveHistoryCodes() {
-        recentCodes = DialerStorage.shared.getRecentCodes()
+        recentCodes = DialerStorage.shared.getSortedRecentCodes()
     }
     
     /// Delete locally the used Code(s).

@@ -24,7 +24,7 @@ final class PurchaseDetailModelTests: XCTestCase {
     }
     
     func testPinnedPurchaseSmallAmount() throws {
-        let pin = makeCodePin(22000)
+        let pin = try Dialer.CodePin(22000)
         let purchase = PurchaseDetailModel(amount: 100)
         
         let expectedPinnedCode = "*182*2*1*1*1*100*\(pin)#"
@@ -38,9 +38,4 @@ final class PurchaseDetailModelTests: XCTestCase {
         let expectedPinnedCode = "*182*2*1*1*1*1000#"
         XCTAssertEqual(expectedPinnedCode, purchase.getFullUSSDCode(with: .some(pin)))
     }
-    
-    private func makeCodePin(_ value: Int) -> CodePin {
-        try! CodePin(value)
-    }
-    
 }
