@@ -21,6 +21,10 @@ struct DashBoardView: View {
     @State private var showPurchaseSheet = false
     @State private var paywallPresented = false
         
+    var isIOS16AndPlus: Bool {
+        guard #available(iOS 16.0, *) else { return false }
+        return true
+    }
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -87,16 +91,24 @@ struct DashBoardView: View {
             .blur(radius: showPurchaseSheet ? 3 : 0)
             .allowsHitTesting(!showPurchaseSheet)
             
-            if showPurchaseSheet {
-                Color.black.opacity(0.001)
-                    .onTapGesture {
-                        withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
-                            showPurchaseSheet = false
+            if !isIOS16AndPlus {
+                if showPurchaseSheet {
+                    Color.black.opacity(0.001)
+                        .onTapGesture {
+                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                                showPurchaseSheet = false
+                            }
                         }
-                    }
+                }
+                PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             }
-            PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             
+        }
+        .sheet(isPresented: isIOS16AndPlus ? $showPurchaseSheet : .constant(false)) {
+            if #available(iOS 16.0, *) {
+                PurchaseDetailView(isPresented: $showPurchaseSheet, isIOS16: true, data: data)
+                    .presentationDetents([.medium])
+            }
         }
         .sheet(isPresented: $showWelcomeView) {
             WhatsNewView(isPresented: $showWelcomeView)
