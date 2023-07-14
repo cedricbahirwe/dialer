@@ -233,7 +233,13 @@ struct TransferView: View {
             case .merchants:
                 CreateMerchantView(merchantStore: merchantStore)
             case .contacts:
-                ContactsListView(contacts: allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+                ContactsListView(
+                    contacts: allContacts,
+                    selection: selectedContact,
+                    completion: {
+                        selectedContact = $0
+                        cleanPhoneNumber(selectedContact)
+                    })
             }
         }
         .actionSheet(isPresented: $showReportSheet) {

@@ -10,28 +10,40 @@ import SwiftUI
 struct ContactsListView: View {
     @Environment(\.dismiss) private var dismiss
     
-    private let contacts: [Contact]
-    @Binding var selectedContact: Contact
+    @StateObject private var contactsVM: ContactsViewModel
     
-    @State private var searchQuery = ""
+//    var completion: (Contact) -> Void
+    
+//    private let contacts: [Contact]
+//    private let dictionary: [ContactsDictionary]
+//    @Binding var selectedContact: Contact
+    
+//    @State private var searchQuery = ""
     @FocusState private var isSearching: Bool
-    @State private var showPhoneNumberSelector: Bool = false
+//    @State private var showPhoneNumberSelector: Bool = false
     
-    private var resultedContacts: [Contact] {
-        let contacts = contacts.sorted(by: { $0.names < $1.names })
-        if searchQuery.isEmpty {
-            return contacts
-        } else {
-            return contacts.filter {
-                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil ||
-                $0.phoneNumbers.reduce("", +).contains(searchQuery)
-            }
-        }
-    }
+//    private var resultedContacts: [Contact] {
+//        let contacts = contacts.sorted(by: { $0.names < $1.names })
+//        if searchQuery.isEmpty {
+//            return contacts
+//        } else {
+//            return contacts.filter {
+//                $0.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil ||
+//                $0.phoneNumbers.reduce("", +).contains(searchQuery)
+//            }
+//        }
+//    }
     
-    init(contacts: [Contact], selection: Binding<Contact>) {
-        self.contacts = contacts
-        _selectedContact = selection
+    
+    init(contacts: [Contact],
+         selection: Contact,
+         completion: @escaping (Contact) -> Void) {
+//    init(contacts: [Contact], selection: Binding<Contact>) {
+        self._contactsVM = StateObject(wrappedValue: ContactsViewModel(contacts, selection: selection, completion: completion))
+//        self.completion = completion
+//        self.contacts = contacts
+//        _selectedContact = selection
+//        dictionary = ContactsDictionary.transform(contacts)
         UITableView.appearance().backgroundColor = UIColor.primaryBackground
     }
     
@@ -40,15 +52,28 @@ struct ContactsListView: View {
         VStack {
             searchBarView
             
-            if resultedContacts.isEmpty {
+            if contactsVM.searchedContacts.isEmpty {
                 emptyResultsView
             } else {
-                List(resultedContacts) { contact in
-                    ContactRowView(contact: contact)
-                        .onTapGesture {
-                            manageContact(contact)
+                
+                List {
+                    ForEach(contactsVM.searchedContacts) { section in
+                        Section(String(section.letter)) {
+                            ForEach(section.contacts) { contact in
+                                ContactRowView(contact: contact)
+                                    .onTapGesture {
+                                        contactsVM.handleSelection(contact)
+                                    }
+                            }
                         }
+                    }
                 }
+//                List(resultedContacts) { contact in
+//                    ContactRowView(contact: contact)
+//                        .onTapGesture {
+//                            manageContact(contact)
+//                        }
+//                }
             }
         }
         .padding(.top, 10)
@@ -67,7 +92,7 @@ struct ContactsListView: View {
                 }
             }
         }
-        .actionSheet(isPresented: $showPhoneNumberSelector) {
+        .actionSheet(isPresented: $contactsVM.showPhoneNumberSelector) {
             ActionSheet(title: Text("Phone Number."),
                         message: Text("Select a phone number to send to"),
                         buttons: alertButtons)
@@ -83,8 +108,10 @@ struct ContactsListView: View {
     }
     }
     private var alertButtons: [ActionSheet.Button] {
-        var buttons: [ActionSheet.Button] = selectedContact.phoneNumbers.map({ phoneNumber in
-                .default(Text(phoneNumber)) { managePhoneNumber(phoneNumber) }
+        var buttons: [ActionSheet.Button] = contactsVM.selectedContact.phoneNumbers.map({
+            phoneNumber in
+                .default(Text(phoneNumber)) { contactsVM.managePhoneNumber(phoneNumber)
+                }
         })
         buttons.append(.cancel())
         return buttons
@@ -106,19 +133,7 @@ struct ContactsListView: View {
         .frame(maxHeight: .infinity)
     }
     
-    private func manageContact(_ contact: Contact) {
-        selectedContact = contact
-        if contact.phoneNumbers.count == 1 {
-            dismiss()
-        } else {
-            showPhoneNumberSelector.toggle()
-        }
-    }
-    
-    private func managePhoneNumber(_ phone: String) {
-        selectedContact.updatePhones([phone])
-        dismiss()
-    }
+
 }
 
 private extension ContactsListView {
@@ -129,7 +144,7 @@ private extension ContactsListView {
                     .foregroundColor(.secondary)
                     .padding(9)
 
-                TextField("Search by name or phone", text: $searchQuery) { isEditing in
+                TextField("Search by name or phone", text: $contactsVM.searchQuery) { isEditing in
                     withAnimation {
                         self.isSearching = isEditing
                     }
@@ -139,16 +154,7 @@ private extension ContactsListView {
                 .submitLabel(.done)
 
                 if isSearching {
-                    Button(action: {
-                        withAnimation {
-                            if searchQuery.isEmpty {
-                                endEditing()
-                            } else {
-                                searchQuery = ""
-                            }
-                        }
-
-                    }) {
+                    Button(action: clearSearch) {
                         Image(systemName: "multiply.circle.fill")
                             .foregroundColor(.secondary)
                             .padding(.trailing, 9)
@@ -169,9 +175,20 @@ private extension ContactsListView {
         .padding(.horizontal)
     }
 
+    private func clearSearch() {
+        withAnimation {
+            if contactsVM.searchQuery.isEmpty {
+                endEditing()
+            } else {
+                contactsVM.searchQuery = ""
+            }
+        }
+        
+    }
+    
     private func endEditing() {
         withAnimation {
-            searchQuery = ""
+            contactsVM.searchQuery = ""
             isSearching = false
             hideKeyboard()
         }
@@ -182,8 +199,9 @@ private extension ContactsListView {
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContactsListView(contacts: [MockPreview.contact1, MockPreview.contact2],
-                             selection: .constant(MockPreview.contact1))
+            ContactsListView(
+                contacts: [MockPreview.contact1, MockPreview.contact2],
+                selection: MockPreview.contact1) { _ in }
         }
     }
 }
