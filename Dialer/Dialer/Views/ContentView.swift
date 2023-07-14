@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RevenueCat
 
 struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
@@ -14,6 +15,13 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             DashBoardView()
+                .task {
+                    do {
+                        UserViewModel.shared.offerings = try await Purchases.shared.offerings()
+                    } catch {
+                        print("Error fetching offerings: \(error)")
+                    }
+                }
         }
         .navigationViewStyle(.stack)
         .onAppear(perform: setupAppearance)

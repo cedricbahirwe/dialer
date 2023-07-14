@@ -50,7 +50,7 @@ struct TransferView: View {
                             .animation(.default, value: transaction.estimatedFee)
                     }
 
-                    NumberField("Enter Amount", text: $transaction.amount.animation())
+                    NumberField("Enter Amount", text: $transaction.amount.onChange(handleAmountChange).animation())
                         .focused($focusedState, equals: .amount)
                 }
 
@@ -307,6 +307,12 @@ private extension TransferView {
                 selectedContact = .init(names: "", phoneNumbers: [])
             }
         }
+    }
+    
+    private func handleAmountChange(_ value: String) {
+        guard !value.allSatisfy(\.isNumber) else { return }
+        let cleanAmount = String(value.filter(\.isNumber))
+        transaction.amount = cleanAmount
     }
 
     private func copyToClipBoard() {

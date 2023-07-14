@@ -19,6 +19,7 @@ struct DashBoardView: View {
     @State private var presentQuickDial = false
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
+    @State private var paywallPresented = false
         
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -53,17 +54,25 @@ struct DashBoardView: View {
                             Tracker.shared.logEvent(.historyOpened)
                         }
                         
-                        NavigationLink {
-                            MySpaceView()
-                        } label: {
-                            DashItemView(
-                                title: "My Space",
-                                icon: "person.crop.circle.badge")
-                            .onAppear() {
-                                Tracker.shared.logEvent(.mySpaceOpened)
-                            }
+//                        NavigationLink {
+//                            MySpaceView()
+//                        } label: {
+//                            DashItemView(
+//                                title: "My Space",
+//                                icon: "person.crop.circle.badge")
+//                            .onAppear() {
+//                                Tracker.shared.logEvent(.mySpaceOpened)
+//                            }
+//                        }
+//                        .buttonStyle(PlainButtonStyle())
+                        
+                        DashItemView(
+                            title: "My Space",
+                            icon: "person.crop.circle.badge")
+                        .onTapGesture {
+                            print(Bundle.main.bundleIdentifier)
+                            paywallPresented.toggle()
                         }
-                        .buttonStyle(PlainButtonStyle())
                         
                     }
                 }
@@ -103,8 +112,12 @@ struct DashBoardView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $presentQuickDial) {
-            QuickDialingView()
+        .fullScreenCover(isPresented: paywallPresented ? $paywallPresented : $presentQuickDial) {
+            if paywallPresented {
+                PaywallView(isPresented: $paywallPresented)
+            } else {
+                QuickDialingView()
+            }
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")

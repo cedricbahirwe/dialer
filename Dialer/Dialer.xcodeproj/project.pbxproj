@@ -91,6 +91,12 @@
 		CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70629AFF4F3004BBE32 /* Logger.swift */; };
 		CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */; };
 		CBA429E029AB85F50041D578 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA429DF29AB85F50041D578 /* SpeakerView.swift */; };
+		CBA66BA82A5EB18D0082C8CE /* InAppPurchaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BA72A5EB18D0082C8CE /* InAppPurchaseConstants.swift */; };
+		CBA66BAC2A5EB2600082C8CE /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BAB2A5EB2600082C8CE /* PaywallView.swift */; };
+		CBA66BAF2A5EB3250082C8CE /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = CBA66BAE2A5EB3250082C8CE /* RevenueCat */; };
+		CBA66BB22A5EB3820082C8CE /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BB12A5EB3820082C8CE /* UserViewModel.swift */; };
+		CBA66BBA2A5EC76F0082C8CE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BB92A5EC76F0082C8CE /* Extensions.swift */; };
+		CBA66BBC2A5EC94D0082C8CE /* PurchasesDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BBB2A5EC94D0082C8CE /* PurchasesDelegateHandler.swift */; };
 		CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB02294C8F4900D95C82 /* AppNotification.swift */; };
 		CBA9BB05294C8F7000D95C82 /* DialerLocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */; };
 		CBAF13172785A34800D32E1F /* ElectricityMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13162785A34800D32E1F /* ElectricityMeter.swift */; };
@@ -207,6 +213,11 @@
 		CB92F70629AFF4F3004BBE32 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		CBA429DF29AB85F50041D578 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
+		CBA66BA72A5EB18D0082C8CE /* InAppPurchaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseConstants.swift; sourceTree = "<group>"; };
+		CBA66BAB2A5EB2600082C8CE /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		CBA66BB12A5EB3820082C8CE /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		CBA66BB92A5EC76F0082C8CE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		CBA66BBB2A5EC94D0082C8CE /* PurchasesDelegateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesDelegateHandler.swift; sourceTree = "<group>"; };
 		CBA9BB02294C8F4900D95C82 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotification.swift; sourceTree = "<group>"; };
 		CBAF13162785A34800D32E1F /* ElectricityMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectricityMeter.swift; sourceTree = "<group>"; };
@@ -238,6 +249,7 @@
 				CB582AF629ABEB3100FAD610 /* FirebaseFunctions in Frameworks */,
 				CB582AFE29ABEB3100FAD610 /* FirebaseRemoteConfigSwift in Frameworks */,
 				CB582B0029ABEB3100FAD610 /* FirebaseStorage in Frameworks */,
+				CBA66BAF2A5EB3250082C8CE /* RevenueCat in Frameworks */,
 				CB582AEE29ABEB3100FAD610 /* FirebaseDatabase in Frameworks */,
 				CB582B0229ABEB3100FAD610 /* FirebaseStorageCombine-Community in Frameworks */,
 				CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -342,6 +354,7 @@
 				82550129263B3BDF00CB1BC2 /* Dialer.entitlements */,
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
+				CBA66BA62A5EB1760082C8CE /* In App Purchase */,
 				CB0A52902944EBA30023370C /* DialerDEV.xcconfig */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				825F996826720B75009E4A7B /* Models */,
@@ -489,6 +502,50 @@
 			path = Reusable;
 			sourceTree = "<group>";
 		};
+		CBA66BA62A5EB1760082C8CE /* In App Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				CBA66BA72A5EB18D0082C8CE /* InAppPurchaseConstants.swift */,
+				CBA66BBB2A5EC94D0082C8CE /* PurchasesDelegateHandler.swift */,
+				CBA66BA92A5EB23F0082C8CE /* Sources */,
+			);
+			path = "In App Purchase";
+			sourceTree = "<group>";
+		};
+		CBA66BA92A5EB23F0082C8CE /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CBA66BB62A5EC7630082C8CE /* Helpers */,
+				CBA66BB02A5EB37B0082C8CE /* ViewModels */,
+				CBA66BAA2A5EB24C0082C8CE /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		CBA66BAA2A5EB24C0082C8CE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CBA66BAB2A5EB2600082C8CE /* PaywallView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CBA66BB02A5EB37B0082C8CE /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				CBA66BB12A5EB3820082C8CE /* UserViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CBA66BB62A5EC7630082C8CE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CBA66BB92A5EC76F0082C8CE /* Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		CBA9BB01294C8F4500D95C82 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +630,7 @@
 				CB582AFD29ABEB3100FAD610 /* FirebaseRemoteConfigSwift */,
 				CB582AFF29ABEB3100FAD610 /* FirebaseStorage */,
 				CB582B0129ABEB3100FAD610 /* FirebaseStorageCombine-Community */,
+				CBA66BAE2A5EB3250082C8CE /* RevenueCat */,
 			);
 			productName = Dialer;
 			productReference = 82D41FB325D1C1FE00551D22 /* Dialer.app */;
@@ -647,6 +705,7 @@
 			mainGroup = 82D41FAA25D1C1FE00551D22;
 			packageReferences = (
 				CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CBA66BAD2A5EB3240082C8CE /* XCRemoteSwiftPackageReference "purchases-ios" */,
 			);
 			productRefGroup = 82D41FB425D1C1FE00551D22 /* Products */;
 			projectDirPath = "";
@@ -714,10 +773,12 @@
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
 				CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */,
 				CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */,
+				CBA66BBA2A5EC76F0082C8CE /* Extensions.swift in Sources */,
 				CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */,
 				825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */,
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
+				CBA66BBC2A5EC94D0082C8CE /* PurchasesDelegateHandler.swift in Sources */,
 				CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */,
 				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
 				CBCAE5CE294A88630061C273 /* DialerLocalNotificationCenter.swift in Sources */,
@@ -751,6 +812,8 @@
 				825F996326720AE6009E4A7B /* TransferView.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
+				CBA66BA82A5EB18D0082C8CE /* InAppPurchaseConstants.swift in Sources */,
+				CBA66BAC2A5EB2600082C8CE /* PaywallView.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,
 				CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */,
 				8255E68E2693959800657EFB /* CongratulationsView.swift in Sources */,
@@ -766,6 +829,7 @@
 				8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */,
 				CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */,
 				CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */,
+				CBA66BB22A5EB3820082C8CE /* UserViewModel.swift in Sources */,
 				8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1409,6 +1473,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		CBA66BAD2A5EB3240082C8CE /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1471,6 +1543,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		CBA66BAE2A5EB3250082C8CE /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBA66BAD2A5EB3240082C8CE /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
