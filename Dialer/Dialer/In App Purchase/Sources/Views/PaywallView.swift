@@ -88,12 +88,11 @@ private struct PaywallContent: View {
                                         .frame(maxWidth: .infinity)
                                         .background(linearGradient)
                                         .cornerRadius(15)
-                                        .shadow(color: .purple, radius: isAnimating ? 5 : 0)
+                                        .shadow(color: .purple, radius: isAnimating ? 3 : 0)
                                         .scaleEffect(isAnimating ? 0.97 : 1.0)
+                                        .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
                                         .onAppear {
-                                            withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
-                                                self.isAnimating = true
-                                            }
+                                            self.isAnimating = true
                                         }
                                 }
                                 
@@ -140,6 +139,22 @@ private struct PaywallContent: View {
                     }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isPresented.wrappedValue = false
+                    } label: {
+                        
+                        Image(systemName: "x.circle.fill")
+                            .resizable()
+                            .symbolRenderingMode(SymbolRenderingMode.hierarchical)
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                    }
+                    .tint(.primary.opacity(0.8))
+
+                }
+            }
 
         }
         .navigationViewStyle(StackNavigationViewStyle())
