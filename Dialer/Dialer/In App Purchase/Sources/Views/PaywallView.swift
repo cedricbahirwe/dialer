@@ -22,60 +22,111 @@ struct PaywallView: View {
     private var offering: Offering? {
         userViewModel.offerings?.current
     }
-
+    
     var body: some View {
         PaywallContent(offering: self.offering, isPresented: self.$isPresented)
     }
-
+    
 }
 
 private struct PaywallContent: View {
-
+    
     var offering: Offering?
     var isPresented: Binding<Bool>
-
+    
     /// - State for displaying an overlay view
     @State private var isPurchasing: Bool = false
     @State private var error: NSError?
     @State private var displayError: Bool = false
+    @State private var isAnimating = false
 
+    private let linearGradient = LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+    
     var body: some View {
         NavigationView {
             ZStack {
-                /// - The paywall view list displaying each package
-                List {
-                    Section(header: Text("\nMagic Weather Premium"), footer: Text(Self.footerText)) {
-                        ForEach(offering?.availablePackages ?? []) { package in
-                            PackageCellView(package: package) { (package) in
+                VStack(alignment: .leading) {
+                    
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Dialer +")
+                            .font(.system(size: 050, design: .rounded))
+                            .fontWeight(.bold)
+                        
+                        Text("Get access to unlimited transfers, payments, reporting and more!")
+                            .font(.headline)
+                    }
+                    .padding()
 
-                                /// - Set 'isPurchasing' state to `true`
-                                isPurchasing = true
+                    
+                    /// - The paywall view list displaying each package
+                    List {
 
-                                /// - Purchase a package
-                                do {
-                                    let result = try await Purchases.shared.purchase(package: package)
-
-                                    /// - Set 'isPurchasing' state to `false`
-                                    self.isPurchasing = false
-
-                                    if !result.userCancelled {
-                                        self.isPresented.wrappedValue = false
+                        Section(header: Text(""), footer: Text(Self.footerText)) {
+                            ForEach(offering?.availablePackages ?? []) { package in
+                                PackageCellView(package: package) { (package) in
+                                    Task {
+                                        await purchasePackage(package)
                                     }
-                                } catch {
-                                    self.isPurchasing = false
-                                    self.error = error as NSError
-                                    self.displayError = true
                                 }
                             }
                         }
                     }
+                    .listStyle(InsetGroupedListStyle())
+                    .safeAreaInset(edge: .bottom) {
+                        if let package = offering?.availablePackages.last {
+                            VStack(spacing: 25) {
+                                Button {
+                                    Task {
+                                        await purchasePackage(package)
+                                    }
+                                } label: {
+                                    Text("Get Lifetime Access for \(package.localizedPriceString)")
+                                        .font(.system(.title3, design: .rounded))
+                                        .bold()
+                                        .foregroundColor(.white)
+                                        .frame(height: 60)
+                                        .frame(maxWidth: .infinity)
+                                        .background(linearGradient)
+                                        .cornerRadius(15)
+                                        .shadow(color: .purple, radius: isAnimating ? 5 : 0)
+                                        .scaleEffect(isAnimating ? 0.97 : 1.0)
+                                        .onAppear {
+                                            withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                                                self.isAnimating = true
+                                            }
+                                        }
+                                }
+                                
+                                Button {
+                                    Task {
+                                        do {
+                                           _ = try await Purchases.shared.restorePurchases()
+                                        } catch {
+                                            
+                                        }
+                                    }
+                                } label: {
+                                    Text("Restore purchase")
+                                        .font(.system(.title3, design: .rounded))
+                                        .bold()
+                                        .foregroundColor(.white)
+                                        .frame(height: 60)
+                                        .frame(maxWidth: .infinity)
+                                        .background(linearGradient.opacity(0.1))
+                                        .cornerRadius(15)
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .stroke(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topLeading, endPoint: .trailing), lineWidth: 2)
+                                        }
+                                }
+                            }
+                            .padding()
+                            .background(.ultraThinMaterial)
+                        }
+                    }
                 }
-                .listStyle(InsetGroupedListStyle())
-                .navigationBarTitle("✨ Magic Weather Premium")
-                .navigationBarTitleDisplayMode(.inline)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.bottom)
-
+                
+                
                 /// - Display an overlay during a purchase
                 Rectangle()
                     .foregroundColor(Color.black)
@@ -88,6 +139,8 @@ private struct PaywallContent: View {
                         }
                     }
             }
+            .navigationBarTitleDisplayMode(.inline)
+
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .colorScheme(.dark)
@@ -102,14 +155,36 @@ private struct PaywallContent: View {
             message: { Text($0.recoverySuggestion ?? "Please try again") }
         )
     }
-
-    private static let footerText = "Don't forget to add your subscription terms and conditions. Read more about this here: https://www.revenuecat.com/blog/schedule-2-section-3-8-b"
-
+    
+    private static let footerText: LocalizedStringKey = "The purchase will be billed to your Apple ID account. By activating the subscription, you agree to Dialer's Privacy Policy. For more information, see our [Terms of Service](https://cedricbahirwe.github.io/html/dialit/tos.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)."
+    
+    private func purchasePackage(_ package: Package) async {
+        
+        /// - Set 'isPurchasing' state to `true`
+        isPurchasing = true
+        
+        /// - Purchase a package
+        do {
+            let result = try await Purchases.shared.purchase(package: package)
+            
+            /// - Set 'isPurchasing' state to `false`
+            self.isPurchasing = false
+            
+            if !result.userCancelled {
+                self.isPresented.wrappedValue = false
+            }
+        } catch {
+            self.isPurchasing = false
+            self.error = error as NSError
+            self.displayError = true
+        }
+    }
+    
 }
 
 /* The cell view for each package */
 private struct PackageCellView: View {
-
+    
     let package: Package
     let onSelection: (Package) async -> Void
     
@@ -123,7 +198,7 @@ private struct PackageCellView: View {
         }
         .buttonStyle(.plain)
     }
-
+    
     private var buttonLabel: some View {
         HStack {
             VStack {
@@ -151,19 +226,19 @@ private struct PackageCellView: View {
         }
         .contentShape(Rectangle()) // Make the whole cell tappable
     }
-
+    
 }
 
 extension NSError: LocalizedError {
-
+    
     public var errorDescription: String? {
         return self.localizedDescription
     }
-
+    
 }
 
 struct PaywallView_Previews: PreviewProvider {
-
+    
     private static let product1 = TestStoreProduct(
         localizedTitle: "PRO monthly",
         price: 3.99,
@@ -185,29 +260,29 @@ struct PaywallView_Previews: PreviewProvider {
         discounts: []
     )
     private static let product2 = TestStoreProduct(
-        localizedTitle: "PRO annual",
-        price: 34.99,
-        localizedPriceString: "$34.99",
+        localizedTitle: "Dialer Plus (Lifetime",
+        price: 19.99,
+        localizedPriceString: "$19.99",
         productIdentifier: "com.revenuecat.product",
-        productType: .autoRenewableSubscription,
-        localizedDescription: "Description",
+        productType: .nonConsumable,
+        localizedDescription: "Get Lifetime access for $19.99",
         subscriptionGroupIdentifier: "group",
         subscriptionPeriod: .init(value: 1, unit: .year),
         introductoryDiscount: nil,
         discounts: []
     )
-
+    
     private static let offering = Offering(
         identifier: Self.offeringIdentifier,
         serverDescription: "Main offering",
         metadata: [:],
         availablePackages: [
-            .init(
-                identifier: "monthly",
-                packageType: .monthly,
-                storeProduct: product1.toStoreProduct(),
-                offeringIdentifier: Self.offeringIdentifier
-            ),
+            //            .init(
+            //                identifier: "monthly",
+            //                packageType: .monthly,
+            //                storeProduct: product1.toStoreProduct(),
+            //                offeringIdentifier: Self.offeringIdentifier
+            //            ),
             .init(
                 identifier: "annual",
                 packageType: .annual,
@@ -216,11 +291,11 @@ struct PaywallView_Previews: PreviewProvider {
             )
         ]
     )
-
+    
     private static let offeringIdentifier = "offering"
-
+    
     static var previews: some View {
         PaywallContent(offering: Self.offering, isPresented: .constant(true))
     }
-
+    
 }

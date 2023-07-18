@@ -12,7 +12,7 @@ protocol ClipBoardDelegate {
     func didSelectOption(with code: DialerQuickCode)
 }
 
-@MainActor class MainViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
     
     @Published private(set) var history = HistoryViewModel()
     
@@ -81,7 +81,7 @@ protocol ClipBoardDelegate {
         let newUrl = purchase.getFullUSSDCode(with: pinCode)
         
         if let telUrl = URL(string: "tel://\(newUrl)"),
-           UIApplication.shared.canOpenURL(telUrl) {
+           await UIApplication.shared.canOpenURL(telUrl) {
             let isCompleted = await UIApplication.shared.open(telUrl)
             if !isCompleted {
                 throw DialingError.canNotDial
@@ -99,7 +99,7 @@ protocol ClipBoardDelegate {
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
     static func performQuickDial(for code: DialerQuickCode) async {
         if let telUrl = URL(string: "tel://\(code.ussd)"),
-           UIApplication.shared.canOpenURL(telUrl) {
+           await UIApplication.shared.canOpenURL(telUrl) {
             
             let isCompleted = await UIApplication.shared.open(telUrl)
             if isCompleted {

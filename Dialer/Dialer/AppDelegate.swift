@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Purchases.configure(
             with:
                 Configuration.Builder(withAPIKey: RevenueCatConstants.apiKey)
-                .with(usesStoreKit2IfAvailable: true)
                 .build()
         )
         
