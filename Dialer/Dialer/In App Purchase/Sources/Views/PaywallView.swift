@@ -59,19 +59,19 @@ private struct PaywallContent: View {
                         .frame(maxWidth: .infinity)
                     
                     //                        Text("Upgrade to Dialer Pro for amazing custom USSD experience")
-                    Text("Upgrade to Dialer Pro for unlimited\ntransfers, payments and insights!")
+                    Text("Upgrade to Dialer Pro for unlimited transfers, payments and insights!")
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .layoutPriority(2)
                 }
-                .padding([.horizontal, .bottom], 20)
+                .padding([.horizontal, .bottom], 25)
                 
                 
                 if let package = offering?.availablePackages.last {
                     VStack {
                         VStack(spacing: 20) {
-                            Text("Dialer Plus")
+                            Text("Dialer Pro")
                                 .font(.system(.title, design: .rounded))
                                 .fontWeight(.bold)
                                 .font(.headline)
@@ -87,7 +87,7 @@ private struct PaywallContent: View {
                         VStack(alignment: .leading, spacing: 15) {
                             OfferringLabel("Unlimited USSDs usage")
                             
-                            OfferringLabel("USSDs Saved by you")
+                            OfferringLabel("USSDs saved by you")
                             
                             OfferringLabel("Customized Insights andd tips")
                             
@@ -134,11 +134,7 @@ private struct PaywallContent: View {
                         
                         Button("Restore purchase") {
                             Task {
-                                do {
-                                    _ = try await Purchases.shared.restorePurchases()
-                                } catch {
-                                    
-                                }
+                                await restorePurchase()
                             }
                         }
                         
@@ -148,6 +144,7 @@ private struct PaywallContent: View {
                              destination: URL(string: "https://cedricbahirwe.github.io/html/privacy.html")!)
                         
                     }
+                    .font(.callout)
                     .tint(.primary.opacity(0.7))
                     .padding(.vertical, 25)
                 }
@@ -183,7 +180,7 @@ private struct PaywallContent: View {
                         .frame(width: 40, height: 40)
                 }
                 .tint(.primary.opacity(0.8))
-                .padding(30)
+                .padding()
             }
             
             /// - Display an overlay during a purchase
@@ -226,6 +223,25 @@ private struct PaywallContent: View {
             if !result.userCancelled {
                 self.isPresented.wrappedValue = false
             }
+        } catch {
+            self.isPurchasing = false
+            self.error = error as NSError
+            self.displayError = true
+        }
+    }
+    
+    private func restorePurchase() async {
+        isPurchasing = true
+        
+        do {
+            let result = try await Purchases.shared.restorePurchases()
+            
+            self.isPurchasing = false
+            
+            if result.originalPurchaseDate != nil {
+                self.isPresented.wrappedValue = false
+            }
+            
         } catch {
             self.isPurchasing = false
             self.error = error as NSError
@@ -331,7 +347,7 @@ struct PaywallView_Previews: PreviewProvider {
         discounts: []
     )
     private static let product2 = TestStoreProduct(
-        localizedTitle: "Dialer Plus (Lifetime",
+        localizedTitle: "Dialer Pro (Lifetime",
         price: 4.99,
         localizedPriceString: "$4.99",
         productIdentifier: "com.revenuecat.product",
