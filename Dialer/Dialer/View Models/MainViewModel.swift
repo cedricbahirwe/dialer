@@ -12,7 +12,7 @@ protocol ClipBoardDelegate {
     func didSelectOption(with code: DialerQuickCode)
 }
 
-class MainViewModel: ObservableObject {
+final class MainViewModel: ObservableObject {
     
     @Published private(set) var history = HistoryViewModel()
     

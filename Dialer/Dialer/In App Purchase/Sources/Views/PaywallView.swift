@@ -43,122 +43,151 @@ private struct PaywallContent: View {
     private let linearGradient = LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                VStack(alignment: .leading) {
+        ZStack {
+            VStack {
+                
+                VStack(spacing: 25) {
+                    Image("dialer.icon")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(6)
+                        .frame(width: 140, height: 140)
+                        .background(.ultraThickMaterial)
+                        .cornerRadius(40, antialiased: false)
+                        .shadow(color: .gray, radius: 2)
+                        .foregroundColor(.mainRed)
+                        .frame(maxWidth: .infinity)
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Dialer +")
-                            .font(.system(size: 050, design: .rounded))
-                            .fontWeight(.bold)
-                        
-                        Text("Get access to unlimited transfers, payments, reporting and more!")
-                            .font(.headline)
-                    }
-                    .padding()
-
-                    
-                    /// - The paywall view list displaying each package
-                    List {
-
-                        Section(header: Text(""), footer: Text(Self.footerText)) {
-                            ForEach(offering?.availablePackages ?? []) { package in
-                                PackageCellView(package: package) { (package) in
-                                    Task {
-                                        await purchasePackage(package)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .listStyle(InsetGroupedListStyle())
-                    .safeAreaInset(edge: .bottom) {
-                        if let package = offering?.availablePackages.last {
-                            VStack(spacing: 25) {
-                                Button {
-                                    Task {
-                                        await purchasePackage(package)
-                                    }
-                                } label: {
-                                    Text("Get Lifetime Access for \(package.localizedPriceString)")
-                                        .font(.system(.title3, design: .rounded))
-                                        .bold()
-                                        .foregroundColor(.white)
-                                        .frame(height: 60)
-                                        .frame(maxWidth: .infinity)
-                                        .background(linearGradient)
-                                        .cornerRadius(15)
-                                        .shadow(color: .purple, radius: isAnimating ? 3 : 0)
-                                        .scaleEffect(isAnimating ? 0.97 : 1.0)
-                                        .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
-                                        .onAppear {
-                                            self.isAnimating = true
-                                        }
-                                }
-                                
-                                Button {
-                                    Task {
-                                        do {
-                                           _ = try await Purchases.shared.restorePurchases()
-                                        } catch {
-                                            
-                                        }
-                                    }
-                                } label: {
-                                    Text("Restore purchase")
-                                        .font(.system(.title3, design: .rounded))
-                                        .bold()
-                                        .foregroundColor(.white)
-                                        .frame(height: 60)
-                                        .frame(maxWidth: .infinity)
-                                        .background(linearGradient.opacity(0.1))
-                                        .cornerRadius(15)
-                                        .overlay {
-                                            RoundedRectangle(cornerRadius: 15)
-                                                .stroke(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topLeading, endPoint: .trailing), lineWidth: 2)
-                                        }
-                                }
-                            }
-                            .padding()
-                            .background(.ultraThinMaterial)
-                        }
-                    }
+                    //                        Text("Upgrade to Dialer Pro for amazing custom USSD experience")
+                    Text("Upgrade to Dialer Pro for unlimited\ntransfers, payments and insights!")
+                        .font(.system(.title2, design: .rounded))
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .layoutPriority(2)
                 }
+                .padding([.horizontal, .bottom], 20)
                 
                 
-                /// - Display an overlay during a purchase
-                Rectangle()
-                    .foregroundColor(Color.black)
-                    .opacity(isPurchasing ? 0.5: 0.0)
-                    .edgesIgnoringSafeArea(.all)
+                if let package = offering?.availablePackages.last {
+                    VStack {
+                        VStack(spacing: 20) {
+                            Text("Dialer Plus")
+                                .font(.system(.title, design: .rounded))
+                                .fontWeight(.bold)
+                                .font(.headline)
+                            
+                            Text(package.localizedPriceString)
+                                .font(.system(.title2, design: .rounded))
+                                .fontWeight(.bold) +  Text(" forever").font(.headline)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.bottom, 30)
+                        
+                        
+                        VStack(alignment: .leading, spacing: 15) {
+                            OfferringLabel("Exposures from 5 to 30 seconds")
+                            
+                            OfferringLabel("Exclusive Icon")
+                            
+                            OfferringLabel("Huge discounts on our other apps")
+                            
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        
+                        VStack(spacing: 25) {
+                            Button {
+                                Task {
+                                    await purchasePackage(package)
+                                }
+                            } label: {
+                                Text("Buy Now Lifetime Access")
+                                    .font(.system(.title3, design: .rounded))
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .frame(height: 60)
+                                    .frame(maxWidth: .infinity)
+                                    .background(linearGradient)
+                                    .cornerRadius(15)
+                                    .shadow(color: .purple, radius: isAnimating ? 3 : 0)
+                                    .scaleEffect(isAnimating ? 0.97 : 1.0)
+                                    .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
+                                    .onAppear {
+                                        self.isAnimating = true
+                                    }
+                            }
+                            .padding(.bottom)
+                            
+                        }
+                    }
+                    .padding(20)
+                    .background(.ultraThickMaterial)
+                    .cornerRadius(30)
                     .overlay {
-                        if isPurchasing {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                        }
+                        RoundedRectangle(cornerRadius: 30)
+                            .stroke(.ultraThinMaterial, lineWidth: 3)
                     }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isPresented.wrappedValue = false
-                    } label: {
+                    
+                    HStack {
                         
-                        Image(systemName: "x.circle.fill")
-                            .resizable()
-                            .symbolRenderingMode(SymbolRenderingMode.hierarchical)
-                            .scaledToFit()
-                            .frame(width: 40, height: 40)
+                        Link("Terms of Use",
+                             destination: URL(string: "https://cedricbahirwe.github.io/html/dialit/tos.html")!)
+                        
+                        Spacer()
+                        
+                        Button("Restore purchase") {
+                            Task {
+                                do {
+                                    _ = try await Purchases.shared.restorePurchases()
+                                } catch {
+                                    
+                                }
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Link("Privacy Policy",
+                             destination: URL(string: "https://cedricbahirwe.github.io/html/privacy.html")!)
+                        
                     }
-                    .tint(.primary.opacity(0.8))
-
+                    .tint(.primary.opacity(0.7))
+                    .padding(.vertical)
                 }
+                
+                //
+                //                    /// - The paywall view list displaying each package
+                //                    List {
+                //
+                //                        Section(header: Text(""), footer: Text(Self.footerText)) {
+                //                            ForEach(offering?.availablePackages ?? []) { package in
+                //                                PackageCellView(package: package) { (package) in
+                //                                    Task {
+                //                                        await purchasePackage(package)
+                //                                    }
+                //                                }
+                //                            }
+                //                        }
+                //                    }
+                //                    .listStyle(InsetGroupedListStyle())
             }
-
+            .padding(.horizontal)
+            
+            
+            /// - Display an overlay during a purchase
+            Rectangle()
+                .foregroundColor(Color.black)
+                .opacity(isPurchasing ? 0.5: 0.0)
+                .edgesIgnoringSafeArea(.all)
+                .overlay {
+                    if isPurchasing {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    }
+                }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .colorScheme(.dark)
+        .preferredColorScheme(.dark)
         .alert(
             isPresented: self.$displayError,
             error: self.error,
@@ -170,8 +199,6 @@ private struct PaywallContent: View {
             message: { Text($0.recoverySuggestion ?? "Please try again") }
         )
     }
-    
-    private static let footerText: LocalizedStringKey = "The purchase will be billed to your Apple ID account. By activating the subscription, you agree to Dialer's Privacy Policy. For more information, see our [Terms of Service](https://cedricbahirwe.github.io/html/dialit/tos.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html)."
     
     private func purchasePackage(_ package: Package) async {
         
@@ -195,6 +222,24 @@ private struct PaywallContent: View {
         }
     }
     
+}
+
+private struct OfferringLabel: View {
+    let title: LocalizedStringKey
+    init(_ title: LocalizedStringKey) {
+        self.title = title
+    }
+    
+    var body: some View {
+        Label(title: {
+            Text(title)
+        }, icon: {
+            Image(systemName: "checkmark.circle.fill")
+                .renderingMode(.template)
+                .imageScale(.large)
+                .foregroundColor(.mainRed)
+        } )
+    }
 }
 
 /* The cell view for each package */
@@ -311,6 +356,7 @@ struct PaywallView_Previews: PreviewProvider {
     
     static var previews: some View {
         PaywallContent(offering: Self.offering, isPresented: .constant(true))
+            .previewLayout(.fixed(width: 416, height: 750))
     }
     
 }
