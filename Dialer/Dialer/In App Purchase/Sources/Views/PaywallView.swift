@@ -63,7 +63,6 @@ private struct PaywallContent: View {
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
                         .layoutPriority(2)
                 }
                 .padding([.horizontal, .bottom], 20)
@@ -86,40 +85,37 @@ private struct PaywallContent: View {
                         
                         
                         VStack(alignment: .leading, spacing: 15) {
-                            OfferringLabel("Exposures from 5 to 30 seconds")
+                            OfferringLabel("Unlimited USSDs usage")
                             
-                            OfferringLabel("Exclusive Icon")
+                            OfferringLabel("USSDs Saved by you")
                             
-                            OfferringLabel("Huge discounts on our other apps")
+                            OfferringLabel("Customized Insights andd tips")
                             
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
                         
-                        VStack(spacing: 25) {
-                            Button {
-                                Task {
-                                    await purchasePackage(package)
-                                }
-                            } label: {
-                                Text("Buy Now Lifetime Access")
-                                    .font(.system(.title3, design: .rounded))
-                                    .bold()
-                                    .foregroundColor(.white)
-                                    .frame(height: 60)
-                                    .frame(maxWidth: .infinity)
-                                    .background(linearGradient)
-                                    .cornerRadius(15)
-                                    .shadow(color: .purple, radius: isAnimating ? 3 : 0)
-                                    .scaleEffect(isAnimating ? 0.97 : 1.0)
-                                    .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
-                                    .onAppear {
-                                        self.isAnimating = true
-                                    }
+                        Button {
+                            Task {
+                                await purchasePackage(package)
                             }
-                            .padding(.bottom)
-                            
+                        } label: {
+                            Text("Buy Lifetime Access Now")
+                                .font(.system(.title3, design: .rounded))
+                                .bold()
+                                .foregroundColor(.white)
+                                .frame(height: 60)
+                                .frame(maxWidth: .infinity)
+                                .background(linearGradient)
+                                .cornerRadius(15)
+                                .shadow(color: .purple, radius: isAnimating ? 3 : 0)
+                                .scaleEffect(isAnimating ? 0.97 : 1.0)
+                                .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
+                                .onAppear {
+                                    self.isAnimating = true
+                                }
                         }
+                        .padding(.vertical)
                     }
                     .padding(20)
                     .background(.ultraThickMaterial)
@@ -153,7 +149,7 @@ private struct PaywallContent: View {
                         
                     }
                     .tint(.primary.opacity(0.7))
-                    .padding(.vertical)
+                    .padding(.vertical, 25)
                 }
                 
                 //
@@ -173,7 +169,22 @@ private struct PaywallContent: View {
                 //                    .listStyle(InsetGroupedListStyle())
             }
             .padding(.horizontal)
-            
+            .frame(maxHeight: .infinity)
+            .background(.background)
+            .overlay(alignment: .topLeading) {
+                Button {
+                    isPresented.wrappedValue = false
+                } label: {
+                    
+                    Image(systemName: "xmark.circle.fill")
+                        .resizable()
+                        .symbolRenderingMode(.hierarchical)
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                }
+                .tint(.primary.opacity(0.8))
+                .padding(30)
+            }
             
             /// - Display an overlay during a purchase
             Rectangle()
@@ -321,8 +332,8 @@ struct PaywallView_Previews: PreviewProvider {
     )
     private static let product2 = TestStoreProduct(
         localizedTitle: "Dialer Plus (Lifetime",
-        price: 19.99,
-        localizedPriceString: "$19.99",
+        price: 4.99,
+        localizedPriceString: "$4.99",
         productIdentifier: "com.revenuecat.product",
         productType: .nonConsumable,
         localizedDescription: "Get Lifetime access for $19.99",
