@@ -58,7 +58,6 @@ private struct PaywallContent: View {
                         .foregroundColor(.mainRed)
                         .frame(maxWidth: .infinity)
                     
-                    //                        Text("Upgrade to Dialer Pro for amazing custom USSD experience")
                     Text("Upgrade to Dialer Pro for unlimited transfers, payments and insights!")
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.medium)
@@ -148,22 +147,6 @@ private struct PaywallContent: View {
                     .tint(.primary.opacity(0.7))
                     .padding(.vertical, 25)
                 }
-                
-                //
-                //                    /// - The paywall view list displaying each package
-                //                    List {
-                //
-                //                        Section(header: Text(""), footer: Text(Self.footerText)) {
-                //                            ForEach(offering?.availablePackages ?? []) { package in
-                //                                PackageCellView(package: package) { (package) in
-                //                                    Task {
-                //                                        await purchasePackage(package)
-                //                                    }
-                //                                }
-                //                            }
-                //                        }
-                //                    }
-                //                    .listStyle(InsetGroupedListStyle())
             }
             .padding(.horizontal)
             .frame(maxHeight: .infinity)
@@ -177,7 +160,7 @@ private struct PaywallContent: View {
                         .resizable()
                         .symbolRenderingMode(.hierarchical)
                         .scaledToFit()
-                        .frame(width: 40, height: 40)
+                        .frame(width: 28, height: 28)
                 }
                 .tint(.primary.opacity(0.8))
                 .padding()
