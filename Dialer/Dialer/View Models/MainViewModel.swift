@@ -348,11 +348,11 @@ extension RecentDialCode {
 
 // MARK: - Extension for `PurchaseDetailView` methods
 extension MainViewModel {
-    var validAmount: Bool {
+    var hasValidAmount: Bool {
         purchaseDetail.amount >= AppConstants.minAmount
     }
     
-    var validCode: Bool {
+    var isPinCodeValid: Bool {
         if let pinCode {
             return String(pinCode).count == 5
         }

@@ -9,6 +9,7 @@ import Foundation
 
 struct AppConstants {
     // Airtime USSD Dial constants
+    private init() { }
     static let minAmount = 1
     static let allowedAmountRangeForPin = 10..<100
 }

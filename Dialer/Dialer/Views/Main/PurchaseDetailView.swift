@@ -36,8 +36,8 @@ struct PurchaseDetailView: View {
             
             VStack(spacing: 10) {
                 
-                Text(data.validAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
-                    .opacity(data.validAmount ? 1 : 0.6)
+                Text(data.hasValidAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
+                    .opacity(data.hasValidAmount ? 1 : 0.6)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
@@ -101,8 +101,8 @@ struct PurchaseDetailView: View {
                                     .cornerRadius(8)
                                     .foregroundColor(Color(.systemBackground))
                             }
-                                .disabled(!data.validCode)
-                                .opacity(data.validCode ? 1 : 0.4)
+                                .disabled(!data.isPinCodeValid)
+                                .opacity(data.isPinCodeValid ? 1 : 0.4)
                             , alignment: .trailing
                         )
                         
@@ -127,11 +127,11 @@ struct PurchaseDetailView: View {
                         Text("Confirm")
                             .frame(maxWidth: .infinity)
                             .frame(height: 45)
-                            .background(Color.blue.opacity((!data.validAmount) ? 0.5 : 1))
+                            .background(Color.blue.opacity((!data.hasValidAmount) ? 0.5 : 1))
                             .cornerRadius(8)
                             .foregroundColor(.white)
                     }
-                    .disabled(!data.validAmount)
+                    .disabled(!data.hasValidAmount)
                 } else {
                     VStack(spacing: 6) {
                         Button(action: {
@@ -141,11 +141,11 @@ struct PurchaseDetailView: View {
                             Label("Copy USSD code", systemImage: "doc.on.doc.fill")
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 45)
-                                .background(Color.primary.opacity((!data.validAmount) ? 0.5 : 1))
+                                .background(Color.primary.opacity((!data.hasValidAmount) ? 0.5 : 1))
                                 .cornerRadius(8)
                                 .foregroundColor(Color(.systemBackground))
                         }
-                        .disabled(!data.validAmount)
+                        .disabled(!data.hasValidAmount)
                         if didCopyToClipBoard {
                             CopiedUSSDLabel()
                         }

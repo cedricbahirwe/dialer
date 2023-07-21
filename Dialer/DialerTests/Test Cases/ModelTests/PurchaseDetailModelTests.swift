@@ -20,8 +20,8 @@ final class PurchaseDetailModelTests: XCTestCase {
 
     func testUSSDCodesSuit()  throws {
         try testPinLessPurchase()
-        try testPinnedPurchase_amountOutOfRangeForPinAppending()
-        try testPinnedPurchase_amountInRangeForPinAppending()
+        try testPinnedPurchaseAmountOutOfRangeForPinAppending()
+        try testPinnedPurchaseAmountInRangeForPinAppending()
     }
 
     func testPinLessPurchase() throws {
@@ -32,7 +32,7 @@ final class PurchaseDetailModelTests: XCTestCase {
 
     }
 
-    func testPinnedPurchase_amountOutOfRangeForPinAppending() throws {
+    func testPinnedPurchaseAmountOutOfRangeForPinAppending() throws {
         let pin = 22000
         let purchase = PurchaseDetailModel(amount: 100)
 
@@ -40,7 +40,7 @@ final class PurchaseDetailModelTests: XCTestCase {
         XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: "\(pin)"), "For the range of 10 to 99, pin should not be appended to the string")
     }
     
-    func testPinnedPurchase_amountInRangeForPinAppending() throws {
+    func testPinnedPurchaseAmountInRangeForPinAppending() throws {
         let pin = 22000
         let amount = 50
         let purchase = PurchaseDetailModel(amount: amount)
