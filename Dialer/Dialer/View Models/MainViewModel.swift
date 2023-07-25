@@ -145,7 +145,6 @@ protocol UtilitiesDelegate {
             code = ""
         }
         return purchase.getDialCode(pin: code)
-
     }
 
     func getPurchaseDetailUSSDCode() -> String {
@@ -344,5 +343,19 @@ extension RecentDialCode {
          back when a quick action is triggered.
          */
         return [ SceneDelegate.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
+    }
+}
+
+// MARK: - Extension for `PurchaseDetailView` methods
+extension MainViewModel {
+    var hasValidAmount: Bool {
+        purchaseDetail.amount >= AppConstants.minAmount
+    }
+    
+    var isPinCodeValid: Bool {
+        if let pinCode {
+            return String(pinCode).count == 5
+        }
+        return false
     }
 }

@@ -14,17 +14,6 @@ struct PurchaseDetailView: View {
     @State private var codepin: String = ""
     @State private var didCopyToClipBoard: Bool = false
     
-    private var validCode: Bool {
-        if let pin = data.pinCode {
-            return String(pin).count == 5
-        }
-        return false
-    }
-    
-    private var validAmount: Bool {
-        data.purchaseDetail.amount > 0
-    }
-    
     @State var show = false
     @State var bottomState = CGSize.zero
     @State var showFull = false
@@ -47,8 +36,8 @@ struct PurchaseDetailView: View {
             
             VStack(spacing: 10) {
                 
-                Text(validAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
-                    .opacity(validAmount ? 1 : 0.6)
+                Text(data.hasValidAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
+                    .opacity(data.hasValidAmount ? 1 : 0.6)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
@@ -112,8 +101,8 @@ struct PurchaseDetailView: View {
                                     .cornerRadius(8)
                                     .foregroundColor(Color(.systemBackground))
                             }
-                                .disabled(!validCode)
-                                .opacity(validCode ? 1 : 0.4)
+                                .disabled(!data.isPinCodeValid)
+                                .opacity(data.isPinCodeValid ? 1 : 0.4)
                             , alignment: .trailing
                         )
                         
@@ -138,11 +127,11 @@ struct PurchaseDetailView: View {
                         Text("Confirm")
                             .frame(maxWidth: .infinity)
                             .frame(height: 45)
-                            .background(Color.blue.opacity((!validCode || !validAmount) ? 0.5 : 1))
+                            .background(Color.blue.opacity((!data.hasValidAmount) ? 0.5 : 1))
                             .cornerRadius(8)
                             .foregroundColor(.white)
                     }
-                    .disabled(!validCode || !validAmount)
+                    .disabled(!data.hasValidAmount)
                 } else {
                     VStack(spacing: 6) {
                         Button(action: {
@@ -152,11 +141,11 @@ struct PurchaseDetailView: View {
                             Label("Copy USSD code", systemImage: "doc.on.doc.fill")
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 45)
-                                .background(Color.primary.opacity((!validCode || !validAmount) ? 0.5 : 1))
+                                .background(Color.primary.opacity((!data.hasValidAmount) ? 0.5 : 1))
                                 .cornerRadius(8)
                                 .foregroundColor(Color(.systemBackground))
                         }
-                        .disabled(!validCode || !validAmount)
+                        .disabled(!data.hasValidAmount)
                         if didCopyToClipBoard {
                             CopiedUSSDLabel()
                         }

@@ -20,8 +20,8 @@ final class PurchaseDetailModelTests: XCTestCase {
 
     func testUSSDCodesSuit()  throws {
         try testPinLessPurchase()
-        try testPinnedPurchaseSmallAmount()
-        try testPinnedPurchaseBigAmount()
+        try testPinnedPurchaseAmountOutOfRangeForPinAppending()
+        try testPinnedPurchaseAmountInRangeForPinAppending()
     }
 
     func testPinLessPurchase() throws {
@@ -32,22 +32,22 @@ final class PurchaseDetailModelTests: XCTestCase {
 
     }
 
-    func testPinnedPurchaseSmallAmount() throws {
+    func testPinnedPurchaseAmountOutOfRangeForPinAppending() throws {
         let pin = 22000
         let purchase = PurchaseDetailModel(amount: 100)
 
-        let expectedPinnedCode = "*182*2*1*1*1*100*\(pin)#"
-        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: "\(pin)"))
+        let expectedPinnedCode = "*182*2*1*1*1*100#"
+        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: "\(pin)"), "For the range of 10 to 99, pin should not be appended to the string")
     }
     
-    func testPinnedPurchaseBigAmount() throws {
+    func testPinnedPurchaseAmountInRangeForPinAppending() throws {
         let pin = 22000
-        let purchase = PurchaseDetailModel(amount: 1000)
+        let amount = 50
+        let purchase = PurchaseDetailModel(amount: amount)
 
-        let expectedPinnedCode = "*182*2*1*1*1*1000#"
-        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: String(pin)))
+        let expectedPinnedCode = "*182*2*1*1*1*\(amount)*\(pin)#"
+        XCTAssertEqual(expectedPinnedCode, purchase.getDialCode(pin: "\(pin)"), "For the range of 10 to 99, the pin is appended to the string")
     }
-
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
