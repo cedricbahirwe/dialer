@@ -371,8 +371,8 @@ private extension TransferView {
         
         switch result {
         case .success(let scan):
-            print("Found", scan)
             if let code = Merchant.extractMerchantCode(from: scan.string) {
+                Tracker.shared.logMerchantScan(code)
                 transaction.number = code
                 transferMoney()
             }

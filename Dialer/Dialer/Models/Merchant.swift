@@ -54,7 +54,7 @@ extension Merchant {
                 return String(input[startIndex..<endIndex])
             }
         } catch {
-            print("Regex Error: \(error)")
+            Tracker.shared.logError(error: error)
         }
         
         return nil

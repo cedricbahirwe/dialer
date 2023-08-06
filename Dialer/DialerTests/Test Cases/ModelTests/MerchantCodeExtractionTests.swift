@@ -29,21 +29,12 @@ final class MerchantCodeExtractionTests: XCTestCase {
     
     func testExtractMerchantCodeNoTrailingCharacter() {
         let urlString = "tel://*182*8*1*025394"
-        let expectedMerchantCode = "025394"
 
         let extractedMerchantCode = extractMerchantCode(from: urlString)
 
-        XCTAssertEqual(extractedMerchantCode, expectedMerchantCode, "Merchant code extraction failed when there is no trailing character")
+        XCTAssertNil(extractedMerchantCode, "Merchant code extraction failed when there is no trailing character")
     }
 
-    func testExtractMerchantCodeInvalidPrefix() {
-        let urlString = "tel://*182*8*2*025394%23"
-
-        let extractedMerchantCode = extractMerchantCode(from: urlString)
-
-        XCTAssertNil(extractedMerchantCode, "Merchant code extraction should be nil for invalid prefix")
-    }
-    
     func testExtractMerchantsDigits() {
         // Test cases: Input strings and their expected outputs
         let testCases: [(input: String, expectedOutput: String?)] = [

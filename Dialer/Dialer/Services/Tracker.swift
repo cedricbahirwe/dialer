@@ -18,6 +18,7 @@ protocol TrackerProtocol: AnyObject {
     func logTransaction(transaction: Transaction)
     func logTransaction(transaction: Transaction, user: DeviceAccount)
     func logMerchantSelection(_ merchant: Merchant)
+    func logMerchantScan(_ merchantCode: String)
     func logSignIn(account: DeviceAccount)
     func logError(error: Error)
     func startSession(for screen: ScreenName)
@@ -53,7 +54,7 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
     case merchantCodeSelected
     case conctactsOpened = "contact_opened"
     case logIn = "app_login"
-    
+    case merchantCodeScanned
     var stringValue: String {
         rawValue.camelToSnake()
     }
