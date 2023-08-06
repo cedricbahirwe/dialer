@@ -9,11 +9,12 @@ import Foundation
 
 // https://www.gsmarena.com/glossary.php3?term=pin-code
 struct CodePin: Codable {
-    let a: Int
-    let b: Int
-    let c: Int
-    let d: Int
-    let e: Int
+    private let a: Int
+    private let b: Int
+    private let c: Int
+    private let d: Int
+    private let e: Int
+    
     init(_ value: String) throws {
         guard value.allSatisfy({ $0.isWholeNumber }) else {
             throw ValidationError.invalidCharacters
@@ -45,21 +46,17 @@ struct CodePin: Codable {
         self.d = digits[3].wholeNumberValue!
         self.e = digits[4].wholeNumberValue!
     }
-
-    var asString: String { "\(a)\(b)\(c)\(d)\(e)" }
-
-    var asDigits: Int { Int(asString) ?? 0 }
 }
 
 extension CodePin {
+    var asString: String { "\(a)\(b)\(c)\(d)\(e)" }
+
+    var asNumber: Int { Int(asString) ?? 0 }
+    
+    var digits: Int { asString.count }
+    
     enum ValidationError: Error {
         case invalidCharacters
         case invalidCount(Int)
-    }
-}
-
-extension String {
-    init(_ codepin: CodePin) {
-        self = codepin.asString
     }
 }

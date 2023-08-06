@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseCore
+import RevenueCat
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         configureFirebase()
+        configureRevenuCat()
         return true
     }
 
@@ -30,5 +32,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure(options: options)
 
         _ = Tracker.shared
+    }
+    
+    private func configureRevenuCat() {
+        Purchases.logLevel = .debug
+        
+        Purchases.configure(
+            with:
+                Configuration.Builder(withAPIKey: RevenueCatConstants.apiKey)
+                .build()
+        )
+        
+        
+        Purchases.shared.delegate = PurchasesDelegateHandler.shared
     }
 }

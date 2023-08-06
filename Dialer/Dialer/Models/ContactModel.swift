@@ -21,3 +21,22 @@ struct Contact: Identifiable {
         phoneNumbers = numbers
     }
 }
+
+struct ContactsDictionary: Identifiable {
+    var id: Character { letter }
+    let letter: Character
+    let contacts: [Contact]
+}
+
+extension ContactsDictionary {
+    static func transform(_ contacts: [Contact]) -> [Self] {
+        // Transform the array of Contact objects into an array of ContactsDictionary objects
+        let contactsDictionary = Dictionary(grouping: contacts) { contact in
+            contact.names.prefix(1).uppercased().first ?? Character(" ")
+        }.map { (letter, contacts) in
+            Self(letter: letter, contacts: contacts)
+        }
+        
+        return contactsDictionary.sorted { $0.letter < $1.letter }
+    }
+}

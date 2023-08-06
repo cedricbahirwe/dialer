@@ -8,22 +8,28 @@
 import SwiftUI
 
 struct TransferView: View {
+    enum Sheet: Int, Identifiable {
+        var id: Int { rawValue }
+        case merchants
+        case contacts
+        case qrScanner
+    }
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
-
+    
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
-    @State private var showCreateMerchantView = false
     @State private var didCopyToClipBoard = false
-    @State private var showContactPicker = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
     
+    @State private var presentedSheet: Sheet?
+    
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
-
+    
     private var feeHintView: Text {
         let fee = transaction.estimatedFee
         if fee == -1 {
@@ -39,9 +45,9 @@ struct TransferView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-
+            
             VStack(spacing: 15) {
-
+                
                 VStack(spacing: 10) {
                     if transaction.type == .client && !transaction.amount.isEmpty {
                         feeHintView
@@ -49,33 +55,47 @@ struct TransferView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.estimatedFee)
                     }
-
-                    NumberField("Enter Amount", text: $transaction.amount.animation())
+                    
+                    NumberField("Enter Amount", text: $transaction.amount.onChange(handleAmountChange).animation())
                         .focused($focusedState, equals: .amount)
                 }
-
+                
                 VStack(spacing: 10) {
                     if transaction.type == .client {
                         Text(selectedContact.names).font(.caption).foregroundColor(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.type)
                     }
-                    NumberField(transaction.type == .client ?
-                                "Enter Receiver's number" :
-                                    "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
-                    .focused($focusedState, equals: .number)
-
+                    HStack {
+                        NumberField(transaction.type == .client ?
+                                    "Enter Receiver's number" :
+                                        "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
+                        .focused($focusedState, equals: .number)
+                        
+                        if transaction.type == .merchant {
+                            
+                            Button(action: openScanner) {
+                                Image(systemName: "qrcode.viewfinder")
+                                    .imageScale(.large)
+                                    .frame(width: 48, height: 48)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(8)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                    }
+                    
                     if transaction.type == .merchant {
                         Text("The code should be a 5-6 digits number")
                             .font(.caption).foregroundColor(.blue)
                     }
                 }
-
+                
                 VStack(spacing: 18) {
                     if transaction.type == .client {
                         Button(action: {
                             hideKeyboard()
-                            showContactPicker = true
+                            presentedSheet = .contacts
                             Tracker.shared.logEvent(.conctactsOpened)
                         }) {
                             HStack {
@@ -90,7 +110,7 @@ struct TransferView: View {
                             .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
                             .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
                         }                 }
-
+                    
                     HStack {
                         if UIApplication.hasSupportForUSSD {
                             Button(action: transferMoney) {
@@ -103,15 +123,6 @@ struct TransferView: View {
                                     .foregroundColor(Color.white)
                             }
                             .disabled(transaction.isValid == false)
-
-                            Button(action: copyToClipBoard) {
-                                Image(systemName: "doc.on.doc.fill")
-                                    .frame(width: 48, height: 48)
-                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                    .cornerRadius(8)
-                                    .foregroundColor(.white)
-                            }
-                            .disabled(transaction.isValid == false || didCopyToClipBoard)
                         } else {
                             Button(action: copyToClipBoard) {
                                 Label("Copy USSD code", systemImage: "doc.on.doc.fill")
@@ -128,13 +139,13 @@ struct TransferView: View {
                     }
                 }
                 .padding(.top)
-
+                
                 if didCopyToClipBoard {
                     CopiedUSSDLabel()
                 }
             }
             .padding()
-
+            
             if transaction.type == .merchant {
                 List {
                     Section {
@@ -144,7 +155,7 @@ struct TransferView: View {
                                 .frame(maxWidth: .infinity)
                                 .frame(minHeight: 50)
                             
-                         } else {
+                        } else {
                             ForEach(merchantStore.merchants) { merchant in
                                 HStack {
                                     HStack(spacing: 4) {
@@ -182,16 +193,16 @@ struct TransferView: View {
                                 .fontWeight(.semibold)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.5)
-
+                            
                             Spacer(minLength: 1)
                             
                             Button {
-                                showCreateMerchantView.toggle()
+                                presentedSheet = .merchants
                             } label: {
                                 Image(systemName: "plus.circle.fill")
                                     .imageScale(.large)
                             }
-
+                            
                         }
                     } footer: {
                         if !merchantStore.merchants.isEmpty {
@@ -205,16 +216,34 @@ struct TransferView: View {
                 Spacer()
             }
         }
-        .sheet(isPresented: showCreateMerchantView ? $showCreateMerchantView : $showContactPicker) {
-            if showCreateMerchantView {
+        .sheet(item: $presentedSheet) { sheet in
+            switch sheet {
+            case .qrScanner:
+                if #available(iOS 16.0, *) {
+                    CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
+                        .ignoresSafeArea()
+                        .presentationDetents([.medium, .large])
+
+                } else {
+                    CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
+                }
+            case .merchants:
                 CreateMerchantView(merchantStore: merchantStore)
-            } else {
-                ContactsListView(contacts: allContacts, selection: $selectedContact.onChange(cleanPhoneNumber))
+            case .contacts:
+                ContactsListView(
+                    contacts: allContacts,
+                    selection: selectedContact,
+                    completion: {
+                        selectedContact = $0
+                        cleanPhoneNumber(selectedContact)
+                        presentedSheet = nil
+                    })
             }
         }
         .actionSheet(isPresented: $showReportSheet) {
-            ActionSheet(title: Text("Report a problem."),
-                        buttons: alertButtons)
+            ActionSheet(
+                title: Text("Report a problem."),
+                buttons: alertButtons)
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
@@ -224,9 +253,7 @@ struct TransferView: View {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
                 
-                Button(action: {
-                    focusedState = focusedState?.next()
-                }) {
+                Button(action: goToNextFocus) {
                     Text("Next")
                         .font(.system(size: 18, design: .rounded))
                         .foregroundColor(.blue)
@@ -243,7 +270,7 @@ struct TransferView: View {
             }
         }
     }
-
+    
     private var alertButtons: [ActionSheet.Button] {
         [.default(Text("This merchant code is incorrect")), .cancel()]
     }
@@ -254,7 +281,14 @@ struct TransferView: View {
 }
 
 private extension TransferView {
-
+    
+    func goToNextFocus() {
+        focusedState = focusedState?.next()
+        if transaction.isValid && focusedState == .number {
+            transferMoney()
+        }
+    }
+    
     func initialization() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             focusedState = .amount
@@ -262,13 +296,13 @@ private extension TransferView {
         
         requestContacts()
     }
-
+    
     func switchPaymentType() {
         withAnimation {
             transaction.type.toggle()
         }
     }
-
+    
     func requestContacts() {
         Task {
             do {
@@ -282,11 +316,12 @@ private extension TransferView {
     
     private func cleanPhoneNumber(_ value: Contact?) {
         guard let contact = value else { return }
-        let firstNumber  = contact.phoneNumbers.first!
+        let firstNumber = contact.phoneNumbers.first!
         transaction.number = firstNumber
     }
     
     private func transferMoney() {
+        guard transaction.isValid else { return }
         hideKeyboard()
         Task {
             await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
@@ -297,26 +332,52 @@ private extension TransferView {
     /// Create a validation for the  `Number` field value
     /// - Parameter value: the validated data
     private func handleNumberField(_ value: String) {
+        let value = String(value.filter(\.isNumber))
+        
         if transaction.type == .merchant {
             transaction.number = String(value.prefix(6))
         } else {
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
-            if matchedContacts.isEmpty == false {
-                selectedContact = matchedContacts.first!
-            } else {
+            if matchedContacts.isEmpty {
                 selectedContact = .init(names: "", phoneNumbers: [])
+            } else {
+                selectedContact = matchedContacts.first!
             }
         }
     }
-
+    
+    private func handleAmountChange(_ value: String) {
+        let cleanAmount = String(value.filter(\.isNumber))
+        transaction.amount = cleanAmount
+    }
+    
     private func copyToClipBoard() {
         UIPasteboard.general.string = transaction.fullCode
         withAnimation { didCopyToClipBoard = true }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             withAnimation {
                 didCopyToClipBoard = false
             }
+        }
+    }
+    
+    private func openScanner() {
+        presentedSheet = .qrScanner
+    }
+    
+    func handleQRScan(result: Result<ScanResult, ScanError>) {
+        presentedSheet = nil
+        
+        switch result {
+        case .success(let scan):
+            if let code = Merchant.extractMerchantCode(from: scan.string) {
+                Tracker.shared.logMerchantScan(code)
+                transaction.number = code
+                transferMoney()
+            }
+        case .failure(let error):
+            Tracker.shared.logError(error: error)
         }
     }
     

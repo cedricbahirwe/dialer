@@ -24,7 +24,7 @@ enum DialerQuickCode {
     }
 
     private func codeSuffix(_ code: CodePin?) -> String {
-        if let code { return "*\(code.asDigits)#"  }
+        if let code { return "*\(code.asNumber)#"  }
         return "#"
     }
 }

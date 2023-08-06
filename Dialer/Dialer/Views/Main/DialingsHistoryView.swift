@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct DialingsHistoryView: View {
-    @ObservedObject var data: MainViewModel
-    @State private var didCopyToClipBoard = false
-
+    let data: HistoryViewModel
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         NavigationView {
             ZStack {
@@ -23,34 +22,11 @@ struct DialingsHistoryView: View {
                                 HistoryRow(recentCode: recentCode)
                                     .onTapGesture {
                                         data.performRecentDialing(for: recentCode)
-                                        if !UIApplication.hasSupportForUSSD {
-                                            copyToClipBoard(recentCode)
-                                        }
                                     }
                             }
                             .onDelete(perform: data.deletePastCode)
                         }
                     }
-                }
-
-                if didCopyToClipBoard {
-                    Color.clear
-                        .background(.ultraThinMaterial)
-                    
-                    VStack {
-                        Image(systemName: "checkmark")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(25)
-                        
-                        Text("USSD Code copied!")
-                            .font(.headline)
-                    }
-                    .padding(20)
-                    .frame(width: 200, height: 200)
-                    .background(.thickMaterial)
-                    .cornerRadius(15)
-                    .transition(.scale)
                 }
             }
             .background(Color.primaryBackground)
@@ -90,23 +66,11 @@ struct DialingsHistoryView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        data.showHistorySheet.toggle()
+                        dismiss()
                     }
                 }
             }
             .trackAppearance(.history)
-        }
-    }
-
-    private func copyToClipBoard(_ recentCode: RecentDialCode) {
-        let fullCode = data.getFullUSSDCode(from: recentCode.detail)
-        UIPasteboard.general.string = fullCode
-        withAnimation { didCopyToClipBoard = true }
-
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-            withAnimation {
-                didCopyToClipBoard = false
-            }
         }
     }
     
@@ -126,6 +90,6 @@ struct DialingsHistoryView: View {
 
 struct DialingsHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        DialingsHistoryView(data: MainViewModel())
+        DialingsHistoryView(data: HistoryViewModel())
     }
 }

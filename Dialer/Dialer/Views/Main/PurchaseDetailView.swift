@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PurchaseDetailView: View {
     @Binding var isPresented: Bool
+    var isIOS16 = false
     @ObservedObject var data: MainViewModel
     @State private var editedField: EditedField = .amount
     @State private var codepin: String = ""
@@ -41,7 +42,6 @@ struct PurchaseDetailView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
-                
                     .background(
                         Color.green.opacity(editedField == .amount ? 0.04 : 0)
                     )
@@ -58,7 +58,7 @@ struct PurchaseDetailView: View {
                             editedField = .amount
                         }
                     }
-                
+
                 if !data.hasStoredCodePin() {
                     VStack(spacing: 2) {
                         Text(
@@ -68,7 +68,7 @@ struct PurchaseDetailView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 40)
                         .background(Color.primary.opacity(0.06))
-                        
+
                         .background(
                             Color.green.opacity(editedField == .code ? 0.04 : 0.0)
                         )
@@ -105,25 +105,29 @@ struct PurchaseDetailView: View {
                                 .opacity(data.isPinCodeValid ? 1 : 0.4)
                             , alignment: .trailing
                         )
-                        
+
                         Text("Your pin will not be saved unless you manually save it.")
                             .font(.caption)
                             .foregroundColor(.red)
                             .lineLimit(1)
                             .minimumScaleFactor(0.8)
                     }
-                    
+
                 } else {
-                    Text("We've got your back 🎉\n Enter the amount and you're good to go✌🏾")
-                        .foregroundColor(.green)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.5)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 5)
+                    VStack {
+                        Text("We've got your back 🎉")
+                        Text("Enter the amount and you're good to go✌🏾")
+                    }
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.green)
+                    .padding(.horizontal, 5)
                 }
-                
+
                 if UIApplication.hasSupportForUSSD {
-                    Button(action: data.confirmPurchase) {
+                    Button(action: {
+                        data.confirmPurchase()
+                    }) {
                         Text("Confirm")
                             .frame(maxWidth: .infinity)
                             .frame(height: 45)
@@ -152,13 +156,15 @@ struct PurchaseDetailView: View {
                     }
                 }
             }
-            
+
             PinView(input: inputBinding())
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .padding(.bottom)
         }
+        .font(.system(size: 18, weight: .semibold, design: .rounded))
         .padding([.horizontal, .bottom])
         .frame(maxWidth: .infinity, alignment: .top)
+        .frame(maxHeight: isIOS16 ? .infinity : nil, alignment: .top)
         .background(
             Color.primaryBackground
                 .cornerRadius(15)
@@ -172,6 +178,7 @@ struct PurchaseDetailView: View {
         .gesture(
             DragGesture()
                 .onChanged { value in
+                    guard !isIOS16 else { return }
                     withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
                         bottomState = value.translation
                         if showFull {
@@ -183,6 +190,7 @@ struct PurchaseDetailView: View {
                     }
                 }
                 .onEnded { value in
+                    guard !isIOS16 else { return }
                     if bottomState.height > 50 {
                         isPresented = false
                     }
@@ -195,13 +203,13 @@ struct PurchaseDetailView: View {
                     }
                 }
         )
-        .onChange(of: isPresented, perform: { newValue in
+        .onChange(of: isPresented) { newValue in
             if newValue {
                 Tracker.shared.startSession(for: .buyAirtime)
             } else {
                 Tracker.shared.stopSession(for: .buyAirtime)
             }
-        })
+        }
     }
 }
 
@@ -249,13 +257,25 @@ private extension PurchaseDetailView {
 struct PurchaseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            Spacer()
-            ZStack(alignment: .bottom) {
+            if #available(iOS 16.0, *) {
+                Text("Purchase Sheet")
+                
+                .sheet(isPresented: .constant(true)) {
+                    PurchaseDetailView(isPresented: .constant(true), isIOS16: true, data: MainViewModel())
+                        .background(.purple)
+                        .presentationDetents([.height(490)])
+                }
+            } else {
                 Spacer()
-                    .background(Color.red)
-                PurchaseDetailView(isPresented: .constant(true), data: MainViewModel())
+
+                ZStack(alignment: .bottom) {
+                    Spacer()
+                        .background(Color.red)
+                    PurchaseDetailView(isPresented: .constant(true), data: MainViewModel())
+                }
             }
         }
+        
     }
 }
 #endif

@@ -10,36 +10,46 @@ import SwiftUI
 struct HistoryRow: View {
     let recentCode: RecentDialCode
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
+        HStack {
+            if recentCode.count > 20 {
+                Image(systemName: "flame.fill")
+                    .foregroundColor(.red)
+            } else {
                 Circle()
                     .fill(getColor())
-                    .frame(width: 10, height: 10)
-
-                Text(recentCode.detail.fullCode)
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                Spacer()
-                Image(systemName:
-                        recentCode.count > 50 ?
-                        "flame.fill" :
-                        "\(recentCode.count).circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 28, height: 28)
-                    .foregroundColor(recentCode.count > 50 ? .red : .primary)
+                    .frame(width: 12, height: 12)
             }
-            .contentShape(Rectangle())
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("You bought \(recentCode.detail.amount) RWF of airtime")
+                    .fontWeight(.medium)
+                    .minimumScaleFactor(0.9)
+                
+                HStack {
+                    if (0..<10).contains(recentCode.count) {
+                        Text("^[\(recentCode.count) time](inflect: true)")
+                    } else {
+                        Text("More than 10+ times")
+                            .italic()
+                    }
+                    Spacer()
+                    Text(recentCode.detail.purchaseDate, style: .date)
+                }
+                .font(.footnote)
+                .foregroundColor(.secondary)
+
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
         }
-        .padding(.horizontal, 5)
+        .contentShape(Rectangle())
+        .padding(4)
     }
 
     private func getColor() -> Color {  
-        if recentCode.detail.amount < 1000 {
+        if recentCode.detail.amount < 500 {
             return .green
-        } else if recentCode.detail.amount < 5000 {
+        } else if recentCode.detail.amount < 1000 {
             return .blue
         } else {
             return .red

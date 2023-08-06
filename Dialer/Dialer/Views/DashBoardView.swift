@@ -19,7 +19,12 @@ struct DashBoardView: View {
     @State private var presentQuickDial = false
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
+    @State private var paywallPresented = false
         
+    var isIOS16AndPlus: Bool {
+        guard #available(iOS 16.0, *) else { return false }
+        return true
+    }
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -49,8 +54,7 @@ struct DashBoardView: View {
                             title: "History",
                             icon: "clock.arrow.circlepath")
                         .onTapGesture {
-                            data.showHistorySheet.toggle()
-                            Tracker.shared.logEvent(.historyOpened)
+                            data.showHistoryView()
                         }
                         
                         NavigationLink {
@@ -64,6 +68,13 @@ struct DashBoardView: View {
                             }
                         }
                         .buttonStyle(PlainButtonStyle())
+                        
+//                        DashItemView(
+//                            title: "My Space",
+//                            icon: "person.crop.circle.badge")
+//                        .onTapGesture {
+//                            paywallPresented.toggle()
+//                        }
                         
                     }
                 }
@@ -80,31 +91,43 @@ struct DashBoardView: View {
             .blur(radius: showPurchaseSheet ? 3 : 0)
             .allowsHitTesting(!showPurchaseSheet)
             
-            if showPurchaseSheet {
-                Color.black.opacity(0.001)
-                    .onTapGesture {
-                        withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
-                            showPurchaseSheet = false
+            if !isIOS16AndPlus {
+                if showPurchaseSheet {
+                    Color.black.opacity(0.001)
+                        .onTapGesture {
+                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                                showPurchaseSheet = false
+                            }
                         }
-                    }
+                }
+                PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             }
-            PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
             
         }
-        .sheet(isPresented: showWelcomeView ? $showWelcomeView : data.settingsAndHistorySheetBinding()) {
-            if showWelcomeView {
-                WhatsNewView(isPresented: $showWelcomeView)
-            } else {
-                if data.showSettingsSheet {
-                    SettingsView()
-                        .environmentObject(data)
-                } else {
-                    DialingsHistoryView(data: data)
-                }
+        .sheet(isPresented: isIOS16AndPlus ? $showPurchaseSheet : .constant(false)) {
+            if #available(iOS 16.0, *) {
+                PurchaseDetailView(isPresented: $showPurchaseSheet, isIOS16: true, data: data)
+                    .presentationDetents([.medium])
             }
         }
-        .fullScreenCover(isPresented: $presentQuickDial) {
-            QuickDialingView()
+        .sheet(isPresented: $showWelcomeView) {
+            WhatsNewView(isPresented: $showWelcomeView)
+        }
+        .sheet(item: $data.presentedSheet) { sheet in
+            switch sheet {
+            case .settings:
+                SettingsView()
+                    .environmentObject(data)
+            case .history:
+                DialingsHistoryView(data: data.history)
+            }
+        }
+        .fullScreenCover(isPresented: paywallPresented ? $paywallPresented : $presentQuickDial) {
+            if paywallPresented {
+                PaywallView(isPresented: $paywallPresented)
+            } else {
+                QuickDialingView()
+            }
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")

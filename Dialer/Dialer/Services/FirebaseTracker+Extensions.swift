@@ -59,6 +59,11 @@ extension FirebaseTracker: TrackerProtocol {
                     "owner_id": ownerId
                  ])
     }
+    
+    func logMerchantScan(_ merchantCode: String) {
+        logEvent(name: AppAnalyticsEventType.merchantCodeScanned,
+                 parameters: [ "merchant_code": merchantCode])
+    }
 
     func logSignIn(account: DeviceAccount) {
         logEvent(name: AppAnalyticsEventType.logIn,
