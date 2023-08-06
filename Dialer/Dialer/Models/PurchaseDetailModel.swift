@@ -28,7 +28,7 @@ extension PurchaseDetailModel {
         
         /// `27/03/2023`: MTN disabled the ability to dial airtime USSD that includes Momo PIN for an amount greater than 99.
         /// You can dial the code with PIN for amount in the range of 10 to 99
-        if AppConstants.allowedAmountRangeForPin.contains(amount) && !pin.isEmpty {
+        if !pin.isEmpty && AppConstants.allowedAmountRangeForPin.contains(amount) {
             return "\(prefixCode)\(amount)*\(pin)#"
         } else {
             return "\(prefixCode)\(amount)#"

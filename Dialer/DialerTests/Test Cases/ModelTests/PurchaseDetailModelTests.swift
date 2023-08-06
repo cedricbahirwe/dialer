@@ -27,7 +27,7 @@ final class PurchaseDetailModelTests: XCTestCase {
         let pin = try Dialer.CodePin(22000)
         let purchase = PurchaseDetailModel(amount: 100)
         
-        let expectedPinnedCode = "*182*2*1*1*1*100*\(pin.asString)#"
+        let expectedPinnedCode = "*182*2*1*1*1*100#"
         XCTAssertEqual(expectedPinnedCode, purchase.getFullUSSDCode(with: pin))
     }
     
@@ -36,7 +36,7 @@ final class PurchaseDetailModelTests: XCTestCase {
         let purchase = PurchaseDetailModel(amount: 1000)
         
         let expectedPinnedCode = "*182*2*1*1*1*1000#"
-        XCTAssertEqual(expectedPinnedCode, purchase.getFullUSSDCode(with: nil))
+        XCTAssertEqual(expectedPinnedCode, purchase.getFullUSSDCode(with: pin))
     }
 
     func testPinnedPurchaseAmountOutOfRangeForPinAppending() throws {
