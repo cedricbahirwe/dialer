@@ -57,24 +57,24 @@ struct DashBoardView: View {
                             data.showHistoryView()
                         }
                         
-//                        NavigationLink {
-//                            MySpaceView()
-//                        } label: {
-//                            DashItemView(
-//                                title: "My Space",
-//                                icon: "person.crop.circle.badge")
-//                            .onAppear() {
-//                                Tracker.shared.logEvent(.mySpaceOpened)
-//                            }
-//                        }
-//                        .buttonStyle(PlainButtonStyle())
-                        
-                        DashItemView(
-                            title: "My Space",
-                            icon: "person.crop.circle.badge")
-                        .onTapGesture {
-                            paywallPresented.toggle()
+                        NavigationLink {
+                            MySpaceView()
+                        } label: {
+                            DashItemView(
+                                title: "My Space",
+                                icon: "person.crop.circle.badge")
+                            .onAppear() {
+                                Tracker.shared.logEvent(.mySpaceOpened)
+                            }
                         }
+                        .buttonStyle(PlainButtonStyle())
+                        
+//                        DashItemView(
+//                            title: "My Space",
+//                            icon: "person.crop.circle.badge")
+//                        .onTapGesture {
+//                            paywallPresented.toggle()
+//                        }
                         
                     }
                 }
