@@ -44,7 +44,7 @@ final class PurchaseDetailModelTests: XCTestCase {
         let purchase = PurchaseDetailModel(amount: 100)
 
         let expectedPinnedCode = "*182*2*1*1*1*100#"
-        XCTAssertEqual(expectedPinnedCode, purchase.getFullUSSDCode(with: pin), "For the range of 10 to 99, pin should not be appended to the string")
+        XCTAssertEqual(expectedPinnedCode, purchase.getFullUSSDCode(with: pin), "For the range out of 10 to 99, pin should not be appended to the string")
     }
     
     func testPinnedPurchaseAmountInRangeForPinAppending() throws {
