@@ -122,6 +122,7 @@
 		CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 		CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */; };
 		CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C602A2C789C00C7712B /* ContactRowView.swift */; };
+		F4EE6CE82A6531D800F7EEDA /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE6CE72A6531D800F7EEDA /* AppConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +248,7 @@
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
 		CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreview.swift; sourceTree = "<group>"; };
 		CBE73C602A2C789C00C7712B /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
+		F4EE6CE72A6531D800F7EEDA /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,6 +437,7 @@
 				CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */,
 				CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */,
 				CB338CDB29AF6BDC00BEAD9A /* AppConfiguration.swift */,
+				F4EE6CE72A6531D800F7EEDA /* AppConstants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -843,6 +846,7 @@
 				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
 				825F996326720AE6009E4A7B /* TransferView.swift in Sources */,
+				F4EE6CE82A6531D800F7EEDA /* AppConstants.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CBA66BA82A5EB18D0082C8CE /* InAppPurchaseConstants.swift in Sources */,

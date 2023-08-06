@@ -90,6 +90,20 @@ final class MainViewModel: ObservableObject {
             throw DialingError.canNotDial
         }
     }
+
+//    func getFullUSSDCode(from purchase: PurchaseDetailModel) -> String {
+//        let code: String
+//        if let _ = pinCode, String(pinCode!).count >= 5 {
+//            code = String(pinCode!)
+//        } else {
+//            code = ""
+//        }
+//        return purchase.getDialCode(pin: code)
+//    }
+
+//    func getPurchaseDetailUSSDCode() -> String {
+//        getFullUSSDCode(from: purchaseDetail)
+//    }
     
     func getPurchaseDetailUSSDCode() -> String {
         purchaseDetail.getFullUSSDCode(with: pinCode)
@@ -251,5 +265,16 @@ extension RecentDialCode {
          back when a quick action is triggered.
          */
         return [ SceneDelegate.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
+    }
+}
+
+// MARK: - Extension for `PurchaseDetailView` methods
+extension MainViewModel {
+    var hasValidAmount: Bool {
+        purchaseDetail.amount >= AppConstants.minAmount
+    }
+    
+    var isPinCodeValid: Bool {
+        pinCode?.asString.count == 5
     }
 }
