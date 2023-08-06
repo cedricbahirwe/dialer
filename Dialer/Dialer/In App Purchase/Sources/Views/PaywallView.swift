@@ -307,6 +307,7 @@ extension NSError: LocalizedError {
     
 }
 
+#if DEBUG
 struct PaywallView_Previews: PreviewProvider {
     
     private static let product1 = TestStoreProduct(
@@ -370,3 +371,4 @@ struct PaywallView_Previews: PreviewProvider {
     }
     
 }
+#endif
