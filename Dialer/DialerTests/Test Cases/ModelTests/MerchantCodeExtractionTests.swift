@@ -43,7 +43,30 @@ final class MerchantCodeExtractionTests: XCTestCase {
 
         XCTAssertNil(extractedMerchantCode, "Merchant code extraction should be nil for invalid prefix")
     }
-
+    
+    func testExtractMerchantsDigits() {
+        // Test cases: Input strings and their expected outputs
+        let testCases: [(input: String, expectedOutput: String?)] = [
+            ("tel://*182*8*1*029813%23", "029813"),
+            ("tel:*182*8*1*029813%23", "029813"),
+            ("tel://*182*8*1*912345%23", "912345"),
+            ("tel:*182*8*1*912345%23", "912345"),
+            ("tel://*182*8*1*000000%23", "000000"),
+            ("tel:*182*8*1*000000%23", "000000"),
+            ("tel://*182*8*1*123456%23", "123456"),
+            ("tel:*182*8*1*123456%23", "123456"),
+            ("tel://*182*8*1*999999%23", "999999"),
+            ("tel:*182*8*1*999999%23", "999999"),
+        ]
+        
+        for (index, testCase) in testCases.enumerated() {
+            if let result = Merchant.extractMerchantCode(from: testCase.input) {
+                XCTAssertEqual(result, testCase.expectedOutput, "Test case \(index + 1) failed. Expected: \(testCase.expectedOutput ?? "nil"), Got: \(result)")
+            } else {
+                XCTFail("Test case \(index + 1) failed. No match found.")
+            }
+        }
+    }
     
     private func extractMerchantCode(from code: String) -> String? {
         Merchant.extractMerchantCode(from: code)

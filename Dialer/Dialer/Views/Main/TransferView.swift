@@ -61,11 +61,11 @@ struct TransferView: View {
                 }
                 
                 VStack(spacing: 10) {
-//                    if transaction.type == .client {
-//                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-//                            .animation(.default, value: transaction.type)
-//                    }
+                    if transaction.type == .client {
+                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .animation(.default, value: transaction.type)
+                    }
                     HStack {
                         NumberField(transaction.type == .client ?
                                     "Enter Receiver's number" :
@@ -371,6 +371,7 @@ private extension TransferView {
         
         switch result {
         case .success(let scan):
+            print("Found", scan)
             if let code = Merchant.extractMerchantCode(from: scan.string) {
                 transaction.number = code
                 transferMoney()
