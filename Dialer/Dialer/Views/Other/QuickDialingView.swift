@@ -57,7 +57,7 @@ struct QuickDialingView: View {
                         .scaledToFit()
                         .frame(width: 75, height: 75)
                         .clipShape(Circle())
-                        .foregroundStyle(Color.accentColor)
+                        .foregroundStyle(Color.accentColor, .white)
                 })
                 .frame(maxWidth: .infinity)
                 .overlay(bottomNavigationView)
