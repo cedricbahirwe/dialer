@@ -20,100 +20,88 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
+            
+            Form {
+                Section {
+                    HStack(spacing: 3) {
+                        SettingsRow(.biometrics)
+                        Toggle("Biometrics", isOn: $allowBiometrics)
+                            .toggleStyle(SwitchToggleStyle())
+                            .labelsHidden()
+                    }
                     
-                    Section(header: sectionHeader("General settings")) {
-                        VStack {
-
-                            HStack(spacing: 3) {
-                                SettingsRow(.biometrics)
-                                Toggle("Biometrics", isOn: $allowBiometrics)
-                                    .toggleStyle(SwitchToggleStyle())
-                                    .labelsHidden()
-                            }
-
-                            if dataStore.hasStoredCodePin() {
-                                SettingsRow(.deletePin,
-                                            action: presentPinRemovalSheet)
-                            }
-
-                            if !dataStore.ussdCodes.isEmpty {
-                                SettingsRow(.deleteUSSDs,
-                                            action: presentUSSDsRemovalSheet)
-                            }
-                        }
-                        .padding(.bottom, 20)
+                    if !dataStore.hasStoredCodePin() {
+                        SettingsRow(.deletePin,
+                                    action: presentPinRemovalSheet)
                     }
-                    .confirmationDialog("Confirmation",
-                                        isPresented: $showDialog,
-                                        titleVisibility: .visible,
-                                        presenting: alertItem) { item in
-
-                        Button("Delete",
-                               role: .destructive,
-                               action: item.action)
-
-                        Button("Cancel",
-                               role: .cancel) {
-                            alertItem = nil
-                        }
-                    } message: { item in
-                        VStack {
-                            Text(item.message)
-                            Text(item.title ?? "asfa")
-                        }
-                    }
-
-//                    Section(header: sectionHeader("Tips and Guides")){
-//                        VStack {
-//                            HStack(spacing: 0) {
-//                                SettingsRow(.getStarted, exists: false)
-//                            }
-//                        }
-//                        .padding(.bottom, 20)
-//                    }
                     
-                    Section(header: sectionHeader("Reach Out")) {
-                        VStack {
-                            SettingsRow(.contactUs, action: openMail)
-                                .alert("No Email Client Found",
-                                       isPresented: $showMailErrorAlert) {
-                                    Button("OK", role: .cancel) { }
-                                    Button("Copy Support Email", action: copyEmail)
-                                    Button("Open Twitter", action: openTwitter)
-                                } message: {
-                                    Text(String(format:
-                                                    NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
-                                                DialerlLinks.supportEmail
-                                               )
-                                    )
-                                }
-                            Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
-                                SettingsRow(.tweetUs)
-                            }
-                            
-                            SettingsRow(.translationSuggestion, action: openMail)
-                            
-                        }
-                        .padding(.bottom, 20)
+                    if dataStore.ussdCodes.isEmpty {
+                        SettingsRow(.deleteUSSDs,
+                                    action: presentUSSDsRemovalSheet)
                     }
-                    Section(header: sectionHeader("Colophon")) {
-                        
-                        VStack {
-                            NavigationLink(destination: AboutView()) {
-                                SettingsRow(.about, allowNavigation: true)
-                            }
-                            
-                            SettingsRow(.review, allowNavigation: true, action: ReviewHandler.requestReviewManually)
-                        }
-                        .padding(.bottom, 20)
+                } header: {
+                    sectionHeader("General settings")
+                }
+                
+                .confirmationDialog("Confirmation",
+                                    isPresented: $showDialog,
+                                    titleVisibility: .visible,
+                                    presenting: alertItem) { item in
+                    
+                    Button("Delete",
+                           role: .destructive,
+                           action: item.action)
+                    
+                    Button("Cancel",
+                           role: .cancel) {
+                        alertItem = nil
+                    }
+                } message: { item in
+                    VStack {
+                        Text(item.message)
+                        Text(item.title ?? "asfa")
                     }
                 }
-                .padding(.horizontal, 10)
-                .foregroundColor(.primary.opacity(0.8))
+                
+                Section {
+                    
+                    SettingsRow(.contactUs, action: openMail)
+                        .alert("No Email Client Found",
+                               isPresented: $showMailErrorAlert) {
+                            Button("OK", role: .cancel) { }
+                            Button("Copy Support Email", action: copyEmail)
+                            Button("Open Twitter", action: openTwitter)
+                        } message: {
+                            Text(String(format:
+                                            NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
+                                        DialerlLinks.supportEmail
+                                       )
+                            )
+                        }
+                    Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
+                        SettingsRow(.tweetUs)
+                    }
+                    
+                    SettingsRow(.translationSuggestion, action: openMail)
+                    
+                } header: {
+                    sectionHeader("Reach Out")
+                }
+                
+                Section {
+                    NavigationLink(destination: AboutView()) {
+                        SettingsRow(.about)
+                    }
+                    
+                    SettingsRow(.review, action: ReviewHandler.requestReviewManually)
+                    
+                } header: {
+                    sectionHeader("Colophon")
+                }
+                
             }
-            .background(Color.primaryBackground)
+            
+            .foregroundColor(.primary.opacity(0.8))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
@@ -183,7 +171,7 @@ struct SettingsView: View {
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.title3.weight(.semibold))
-            .padding(.vertical)
+            .textCase(nil)
     }
     
     
@@ -214,21 +202,17 @@ extension SettingsView {
     struct SettingsRow: View {
         
         init(_ option: SettingsOption,
-             allowNavigation: Bool = false,
              action: @escaping () -> Void) {
             self.item = option.getSettingsItem()
-            self.allowNavigation = allowNavigation
             self.action = action
         }
         
-        init(_ option: SettingsOption, allowNavigation: Bool = false) {
+        init(_ option: SettingsOption) {
             self.item = option.getSettingsItem()
-            self.allowNavigation = allowNavigation
             self.action = nil
         }
         
         private let item: SettingsItem
-        private let allowNavigation: Bool
         private let action: (() -> Void)?
         
         var body: some View {
@@ -263,13 +247,7 @@ extension SettingsView {
                 .padding(.leading, 15)
                 
                 Spacer(minLength: 1)
-                
-                if allowNavigation {
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
-                }
             }
-            .padding(.vertical, 5)
         }
     }
 }

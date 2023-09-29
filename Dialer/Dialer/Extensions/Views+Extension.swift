@@ -30,7 +30,15 @@ struct BiometricsAccessibility: ViewModifier {
     }
 }
 
+extension Bool {
+    static var isIOS16AndPlus: Bool {
+        guard #available(iOS 16.0.0, *) else { return false }
+        return true
+    }
+}
+
 extension View {
+    
     /// Tracking screen appearance and disappearance
     func trackAppearance(_ screen: ScreenName) -> some View {
         self
@@ -64,6 +72,19 @@ extension View {
                     .offset(x: -2, y: -2)
                     .clipped()
             )
+    }
+    
+    /// Applies the given transform if the given condition evaluates to `true`.
+    /// - Parameters:
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    @ViewBuilder func `if`<Content: View>(_ condition: @autoclosure () -> Bool, transform: (Self) -> Content) -> some View {
+        if condition() {
+            transform(self)
+        } else {
+            self
+        }
     }
 }
 

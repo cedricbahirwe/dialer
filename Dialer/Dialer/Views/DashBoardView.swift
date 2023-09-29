@@ -170,7 +170,7 @@ extension DashBoardView {
                     Label("Quick Dial", systemImage: "plus.circle.fill")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                 }
-                .foregroundColor(.mainRed)
+                .foregroundStyle(.mainRed)
             }
             
             Spacer(minLength: 5)
