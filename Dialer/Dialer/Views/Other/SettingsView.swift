@@ -29,12 +29,12 @@ struct SettingsView: View {
                             .labelsHidden()
                     }
                     
-                    if !dataStore.hasStoredCodePin() {
+                    if dataStore.hasStoredCodePin() {
                         SettingsRow(.deletePin,
                                     action: presentPinRemovalSheet)
                     }
                     
-                    if dataStore.ussdCodes.isEmpty {
+                    if !dataStore.ussdCodes.isEmpty {
                         SettingsRow(.deleteUSSDs,
                                     action: presentUSSDsRemovalSheet)
                     }
