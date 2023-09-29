@@ -10,7 +10,7 @@ import SwiftUI
 struct BiometricsAccessibility: ViewModifier {
     private let biometrics = BiometricsAuth.shared
     var onEvaluation: (Bool) -> Void
-    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
     func body(content: Content) -> some View {

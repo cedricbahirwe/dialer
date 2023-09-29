@@ -10,10 +10,10 @@ import SwiftUI
 struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     
-    @AppStorage(UserDefaults.Keys.showWelcomeView)
+    @AppStorage(UserDefaultsKeys.showWelcomeView)
     private var showWelcomeView: Bool = true
     
-    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
     @State private var presentQuickDial = false

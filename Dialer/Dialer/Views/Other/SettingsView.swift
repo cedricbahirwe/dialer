@@ -11,7 +11,7 @@ import MessageUI
 struct SettingsView: View {
     @EnvironmentObject var dataStore: MainViewModel
     
-    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     @State var alertItem: AlertDialog?
     @State var showDialog = false

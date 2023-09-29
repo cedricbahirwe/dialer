@@ -13,7 +13,7 @@ final class DialerStorage {
     typealias ElectricityMeters = [ElectricityMeter]
     typealias USSDCodes = [USSDCode]
     
-    private let LocalKeys = UserDefaults.Keys.self
+    private let LocalKeys = UserDefaultsKeys.self
     
     private let userDefaults = UserDefaults.standard
     
