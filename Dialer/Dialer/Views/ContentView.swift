@@ -35,8 +35,8 @@ struct ContentView: View {
         } message: {
             Text($0.message)
         }
-        .fullScreenCover(isPresented: $data.hasReachSync) {
-            CongratulationsView(isPresented: $data.hasReachSync)
+        .fullScreenCover(isPresented: .constant(true)) {//} $data.hasReachSync) {
+            ThanksYouView(isPresented: $data.hasReachSync)
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {

@@ -1,5 +1,5 @@
 //
-//  CongratulationsView.swift
+//  ThanksYouView.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 05/07/2021.
@@ -7,20 +7,22 @@
 
 import SwiftUI
 
-struct CongratulationsView: View {
+struct ThanksYouView: View {
     @Binding var isPresented: Bool
-    @State private var timeRemaining: Int = 71
+    @State private var timeRemaining: Int = 70
     @State private var isAppActive = true
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var bashGradient = LinearGradient(gradient: Gradient(colors: [.yellow, .green, .purple, Color.red.opacity(0.8)]), startPoint: .topLeading, endPoint: .bottomTrailing)
 
     var body: some View {
         ZStack {
-            Color.primaryBackground
-                .ignoresSafeArea()
-            CongratsView()
-                .opacity(timeRemaining <= 1 ? 0.3 : 1)
-                .blur(radius: timeRemaining <= 1 ? 3 : 0)
-                .animation(.linear(duration: 0.5), value: timeRemaining)
+            
+            
+            if #available(iOS 16.0, *) {
+                Color.primaryBackground.opacity(0)
+                    .background(Color.red.gradient)
+                    .ignoresSafeArea()
+            }
             VStack(spacing: 10) {
                 
                 Image("congrats")
@@ -32,13 +34,25 @@ struct CongratulationsView: View {
                 Text("Thanks for using Dialer for the past month!")
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
-                    .opacity(0.8)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                
-                Text("We appreciate your support, and would like to hear how to make **Dialer** even more better.")
-                    .font(.caption)
+                Text("We appreciate your support, and would love to hear how to make **Dialer** even more useful to you.")
+                    .font(.callout)
                     .multilineTextAlignment(.center)
+                
+                Button(action: {
+                    goToAppStoreRating()
+                }){
+                    Text("Rate our app")
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 10)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.accentColor)
+                        .cornerRadius(8)
+                        .foregroundColor(.white)
+                }
 
                 Text(String(format: NSLocalizedString("Remaining time: timeRemaining seconds", comment: ""), timeRemaining))
                     .font(.callout)
@@ -60,8 +74,8 @@ struct CongratulationsView: View {
                 Image(systemName: "multiply.circle.fill")
                     .resizable()
                     .frame(width: 35, height: 35)
-                    .foregroundColor(Color.red)
-                    
+                    .foregroundStyle(.red,  .white)
+                    .padding(8)
             })
             .padding(5)
             , alignment: .topLeading
@@ -82,13 +96,18 @@ struct CongratulationsView: View {
             isAppActive = true
         }
     }
+    
+    private func goToAppStoreRating() {
+        isPresented = false
+        ReviewHandler.requestReviewManually()
+    }
 }
 
 #if DEBUG
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
-        CongratulationsView(isPresented: .constant(true))
-            .preferredColorScheme(.dark)
+        ThanksYouView(isPresented: .constant(true))
+//            .preferredColorScheme(.dark)
     }
 }
 #endif
