@@ -87,7 +87,7 @@ class FirebaseTracker {
         let deviceModel = device.model
         let deviceSystemVersion = device.systemVersion
         let deviceSystemName = device.systemName
-        let deviceIdentifier = (device.identifierForVendor ?? .init()).uuidString
+        let deviceIdentifier = DialerStorage.shared.getOneTimeUniqueAppID()!.uuidString
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let bundleID = Bundle.main.bundleIdentifier

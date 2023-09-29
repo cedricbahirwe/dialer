@@ -20,6 +20,19 @@ final class DialerStorage {
     static let shared = DialerStorage()
     
     private init() { }
+    
+    func saveOneTimeUniqueAppID() {
+        guard getOneTimeUniqueAppID() == nil else { return }
+        userDefaults.setValue(UUID().uuidString, forKey: LocalKeys.appUniqueID)
+    }
+    
+    func getOneTimeUniqueAppID() -> UUID? {
+        guard let uniqueIDString = userDefaults.value(forKey: LocalKeys.appUniqueID) as? String,
+              let uniqueID = UUID(uuidString: uniqueIDString) else {
+            return nil
+        }
+        return uniqueID
+    }
 
     func saveCodePin(_ value: CodePin) throws {
         let data = try encodeData(value)

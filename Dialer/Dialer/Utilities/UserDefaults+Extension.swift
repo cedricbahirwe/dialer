@@ -8,6 +8,7 @@
 import Foundation
 
 enum UserDefaultsKeys {
+    static let appUniqueID = "appUniqueIdentifier"
     static let recentCodes = "recentCodes"
     static let pinCode = "pinCode"
     static let lastSyncDate = "lastSyncDate"
