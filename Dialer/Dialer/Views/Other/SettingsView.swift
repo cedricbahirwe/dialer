@@ -223,6 +223,7 @@ extension SettingsView {
 }
 
 
+
 private class MailComposer: ObservableObject {
     @Published var showMailView = false
     @Published var showMailErrorAlert = false
@@ -235,8 +236,7 @@ private class MailComposer: ObservableObject {
         }
     }
     
-    
-    func makeMailView() -> MailView {
+    @MainActor func makeMailView() -> MailView {
         MailView(recipientEmail: DialerlLinks.supportEmail,
                  subject: "Dialer Question",
                  bodyMessage: getEmailBody())
