@@ -10,7 +10,7 @@ import SwiftUI
 struct BiometricsAccessibility: ViewModifier {
     private let biometrics = BiometricsAuth.shared
     var onEvaluation: (Bool) -> Void
-    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
     func body(content: Content) -> some View {
@@ -30,7 +30,15 @@ struct BiometricsAccessibility: ViewModifier {
     }
 }
 
+extension Bool {
+    static var isIOS16AndPlus: Bool {
+        guard #available(iOS 16.0.0, *) else { return false }
+        return true
+    }
+}
+
 extension View {
+    
     /// Tracking screen appearance and disappearance
     func trackAppearance(_ screen: ScreenName) -> some View {
         self

@@ -59,11 +59,11 @@ struct WhatsNewView: View {
                     .font(.body.weight(.semibold))
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
-                    .background(Color.primaryBackground)
+                    .background(Color.accentColor)
                     .cornerRadius(15)
                     .shadow(color: .lightShadow, radius: 3, x: -3, y: -3)
                     .shadow(color: .darkShadow, radius: 3, x: 3, y: 3)
-                    .foregroundColor(.mainRed)
+                    .foregroundStyle(.white)
             }
             .padding([.horizontal,.bottom])
         }
@@ -124,7 +124,7 @@ private struct ChangeLog: Identifiable {
 }
     
 private extension ChangeLog {
-    static let version193 = [
+    static let version500 = [
         ChangeLog("phone.circle", "Airtime", "Ability to quickly generate USSD for buying airtime."),
         ChangeLog("clock.arrow.circlepath", "History", "Get direct access to your frequently used USSD codes."),
         ChangeLog("francsign.circle", "Transfer/Pay", "Get the right USSD code for transferring to your friend or paying to the store."),
@@ -132,6 +132,6 @@ private extension ChangeLog {
     ]
     
     static var latestLogs: [ChangeLog] {
-        version193
+        version500
     }
 }

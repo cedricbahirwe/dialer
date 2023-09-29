@@ -11,116 +11,101 @@ import MessageUI
 struct SettingsView: View {
     @EnvironmentObject var dataStore: MainViewModel
     
-    @AppStorage(UserDefaults.Keys.allowBiometrics)
+    @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
-    @State var showMailView = false
-    @State var showMailErrorAlert = false
     @State var alertItem: AlertDialog?
     @State var showDialog = false
-
+    
+    @StateObject private var mailComposer = MailComposer()
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
+            Form {
+                Section {
+                    HStack(spacing: 3) {
+                        SettingsRow(.biometrics)
+                        Toggle("Biometrics", isOn: $allowBiometrics)
+                            .toggleStyle(SwitchToggleStyle())
+                            .labelsHidden()
+                    }
                     
-                    Section(header: sectionHeader("General settings")) {
-                        VStack {
-
-                            HStack(spacing: 3) {
-                                SettingsRow(.biometrics)
-                                Toggle("Biometrics", isOn: $allowBiometrics)
-                                    .toggleStyle(SwitchToggleStyle())
-                                    .labelsHidden()
-                            }
-
-                            if dataStore.hasStoredCodePin() {
-                                SettingsRow(.deletePin,
-                                            action: presentPinRemovalSheet)
-                            }
-
-                            if !dataStore.ussdCodes.isEmpty {
-                                SettingsRow(.deleteUSSDs,
-                                            action: presentUSSDsRemovalSheet)
-                            }
-                        }
-                        .padding(.bottom, 20)
+                    if dataStore.hasStoredCodePin() {
+                        SettingsRow(.deletePin,
+                                    action: presentPinRemovalSheet)
                     }
-                    .confirmationDialog("Confirmation",
-                                        isPresented: $showDialog,
-                                        titleVisibility: .visible,
-                                        presenting: alertItem) { item in
-
-                        Button("Delete",
-                               role: .destructive,
-                               action: item.action)
-
-                        Button("Cancel",
-                               role: .cancel) {
-                            alertItem = nil
-                        }
-                    } message: { item in
-                        VStack {
-                            Text(item.message)
-                            Text(item.title ?? "asfa")
-                        }
-                    }
-
-//                    Section(header: sectionHeader("Tips and Guides")){
-//                        VStack {
-//                            HStack(spacing: 0) {
-//                                SettingsRow(.getStarted, exists: false)
-//                            }
-//                        }
-//                        .padding(.bottom, 20)
-//                    }
                     
-                    Section(header: sectionHeader("Reach Out")) {
-                        VStack {
-                            SettingsRow(.contactUs, action: openMail)
-                                .alert("No Email Client Found",
-                                       isPresented: $showMailErrorAlert) {
-                                    Button("OK", role: .cancel) { }
-                                    Button("Copy Support Email", action: copyEmail)
-                                    Button("Open Twitter", action: openTwitter)
-                                } message: {
-                                    Text(String(format:
-                                                    NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
-                                                DialerlLinks.supportEmail
-                                               )
-                                    )
-                                }
-                            Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
-                                SettingsRow(.tweetUs)
-                            }
-                            
-                            SettingsRow(.translationSuggestion, action: openMail)
-                            
-                        }
-                        .padding(.bottom, 20)
+                    if !dataStore.ussdCodes.isEmpty {
+                        SettingsRow(.deleteUSSDs,
+                                    action: presentUSSDsRemovalSheet)
                     }
-                    Section(header: sectionHeader("Colophon")) {
-                        
-                        VStack {
-                            NavigationLink(destination: AboutView()) {
-                                SettingsRow(.about, allowNavigation: true)
-                            }
-                            
-                            SettingsRow(.review, allowNavigation: true, action: ReviewHandler.requestReviewManually)
-                        }
-                        .padding(.bottom, 20)
+                } header: {
+                    sectionHeader("General settings")
+                }
+                
+                .confirmationDialog("Confirmation",
+                                    isPresented: $showDialog,
+                                    titleVisibility: .visible,
+                                    presenting: alertItem) { item in
+                    
+                    Button("Delete",
+                           role: .destructive,
+                           action: item.action)
+                    
+                    Button("Cancel",
+                           role: .cancel) {
+                        alertItem = nil
+                    }
+                } message: { item in
+                    VStack {
+                        Text(item.message)
+                        Text(item.title ?? "asfa")
                     }
                 }
-                .padding(.horizontal, 10)
-                .foregroundColor(.primary.opacity(0.8))
+                
+                Section {
+                    
+                    SettingsRow(.contactUs, action: mailComposer.openMail)
+                        .alert("No Email Client Found",
+                               isPresented: $mailComposer.showMailErrorAlert) {
+                            Button("OK", role: .cancel) { }
+                            Button("Copy Support Email", action: copyEmail)
+                            Button("Open Twitter", action: openTwitter)
+                        } message: {
+                            Text(String(format:
+                                            NSLocalizedString("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to supportEmail as well.", comment: ""),
+                                        DialerlLinks.supportEmail
+                                       )
+                            )
+                        }
+                    Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
+                        SettingsRow(.tweetUs)
+                    }
+                    
+                    SettingsRow(.translationSuggestion, action: mailComposer.openMail)
+                    
+                } header: {
+                    sectionHeader("Reach Out")
+                }
+                
+                Section {
+                    NavigationLink(destination: AboutView()) {
+                        SettingsRow(.about)
+                    }
+                    
+                    SettingsRow(.review, action: ReviewHandler.requestReviewManually)
+                    
+                } header: {
+                    sectionHeader("Colophon")
+                }
+                
             }
-            .background(Color.primaryBackground)
+            
+            .foregroundColor(.primary.opacity(0.8))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
-            .sheet(isPresented: $showMailView) {
-                MailView(recipientEmail: DialerlLinks.supportEmail,
-                         subject: "Dialer Question",
-                         bodyMessage: getEmailBody())
+            .sheet(isPresented: $mailComposer.showMailView) {
+                mailComposer.makeMailView()
             }
             .safeAreaInset(edge: .bottom, content: {
                 
@@ -141,14 +126,14 @@ struct SettingsView: View {
             .trackAppearance(.settings)
         }
     }
-
+    
     private func presentPinRemovalSheet() {
         alertItem = .init("Confirmation",
                           message: "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later.",
                           action: dataStore.removePin)
         showDialog.toggle()
     }
-
+    
     private func presentUSSDsRemovalSheet() {
         alertItem = .init("Confirmation",
                           message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
@@ -156,25 +141,6 @@ struct SettingsView: View {
         showDialog.toggle()
     }
     
-    
-    private func getEmailBody() -> String {
-        var body = "\n\n\n\n\n\n\n\n"
-        
-        let deviceName = UIDevice.current.localizedModel
-        body.append(contentsOf: deviceName)
-        
-        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
-        body.append(iosVersion)
-        
-        if let appVersion  = UIApplication.appVersion {
-            body.append("\nDialer Version: \(appVersion)")
-        }
-        if let buildVersion = UIApplication.buildVersion {
-            body.append("\nDialer Build: \(buildVersion)")
-        }
-        return body
-    }
-
     private func copyEmail() {
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = DialerlLinks.dialerTwitter
@@ -183,7 +149,7 @@ struct SettingsView: View {
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.title3.weight(.semibold))
-            .padding(.vertical)
+            .textCase(nil)
     }
     
     
@@ -191,15 +157,6 @@ struct SettingsView: View {
         
         guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
         UIApplication.shared.open(url)
-    }
-    
-    private func openMail() {
-        
-        if MFMailComposeViewController.canSendMail() {
-            showMailView.toggle()
-        } else {
-            showMailErrorAlert = true
-        }
     }
 }
 
@@ -209,26 +166,23 @@ struct SettingsView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
+
 extension SettingsView {
     
     struct SettingsRow: View {
         
         init(_ option: SettingsOption,
-             allowNavigation: Bool = false,
              action: @escaping () -> Void) {
             self.item = option.getSettingsItem()
-            self.allowNavigation = allowNavigation
             self.action = action
         }
         
-        init(_ option: SettingsOption, allowNavigation: Bool = false) {
+        init(_ option: SettingsOption) {
             self.item = option.getSettingsItem()
-            self.allowNavigation = allowNavigation
             self.action = nil
         }
         
         private let item: SettingsItem
-        private let allowNavigation: Bool
         private let action: (() -> Void)?
         
         var body: some View {
@@ -245,7 +199,7 @@ extension SettingsView {
                     .resizable()
                     .scaledToFit()
                     .padding(6)
-                    .frame(width: 30, height:30)
+                    .frame(width: 28, height: 28)
                     .background(item.color)
                     .cornerRadius(6)
                     .foregroundColor(.white)
@@ -263,13 +217,46 @@ extension SettingsView {
                 .padding(.leading, 15)
                 
                 Spacer(minLength: 1)
-                
-                if allowNavigation {
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
-                }
             }
-            .padding(.vertical, 5)
         }
+    }
+}
+
+
+
+private class MailComposer: ObservableObject {
+    @Published var showMailView = false
+    @Published var showMailErrorAlert = false
+    
+    func openMail() {
+        if MFMailComposeViewController.canSendMail() {
+            showMailView.toggle()
+        } else {
+            showMailErrorAlert = true
+        }
+    }
+    
+    @MainActor func makeMailView() -> MailView {
+        MailView(recipientEmail: DialerlLinks.supportEmail,
+                 subject: "Dialer Question",
+                 bodyMessage: getEmailBody())
+    }
+    
+    private func getEmailBody() -> String {
+        var body = "\n\n\n\n\n\n\n\n"
+        
+        let deviceName = UIDevice.current.localizedModel
+        body.append(contentsOf: deviceName)
+        
+        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
+        body.append(iosVersion)
+        
+        if let appVersion  = UIApplication.appVersion {
+            body.append("\nDialer Version: \(appVersion)")
+        }
+        if let buildVersion = UIApplication.buildVersion {
+            body.append("\nDialer Build: \(buildVersion)")
+        }
+        return body
     }
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-enum AppUpdateType: Int {
-    case majorUpdates, minorUpdates, noUpdates
+enum AppUpdateType {
+    case majorUpdate(_ version: String), minorUpdate(_ version: String), noUpdate
 }
 
 final class ForceUpdateManager: ObservableObject {
@@ -38,26 +38,26 @@ final class ForceUpdateManager: ObservableObject {
         guard  let storeAppVersion = RemoteConfigs.shared.string(for: .latestAppVersion) else { fatalError() }
         let update = getTypeOfUpdate(storeAppVersion: storeAppVersion)
         switch update {
-        case .noUpdates:
+        case .noUpdate:
             DialerStorage.shared.saveLastAskedDateToUpdate(nil)
             break
-        case .majorUpdates:
+        case .majorUpdate(let version):
             let actions = [
-                UpdateAlert.Action("Download", action: openAppOnStore)
+                UpdateAlert.Action("Download v.\(version)", action: openAppOnStore)
             ]
             self.updateAlert = .init(title: "Please, Update your app!",
                                      message: "You haven't updated your app for a long time! Quickly download the latest version to take advantage of the new features. It's quick and easy !",
                                      buttons: actions)
 
-        case .minorUpdates:
+        case .minorUpdate(let version):
             let actions: [UpdateAlert.Action] = [
                 .init("Not Now", action:  {
                     DialerStorage.shared.saveLastAskedDateToUpdate(.now)
                 }),
-                .init("Download", action: openAppOnStore)
+                .init("Download \(version)", action: openAppOnStore)
             ]
 
-            self.updateAlert = .init(title: "New Version available!",
+            self.updateAlert = .init(title: "New Version is available!",
                                      message: "A new version of the app is available. Download it as soon as possible to enjoy all the latest features!",
                                      buttons: actions)
 
@@ -73,15 +73,15 @@ final class ForceUpdateManager: ObservableObject {
             let currentMajorVersion = currentVersionArray[0]
             let storeMajorVersion = storeVersionArray[0]
             if (currentMajorVersion < storeMajorVersion) {
-                return .majorUpdates
+                return .majorUpdate(storeAppVersion)
             } else if (currentMajorVersion == storeMajorVersion) &&
                         (currentVersionArray[1] < storeVersionArray[1]) {
-                return .minorUpdates
+                return .minorUpdate(storeAppVersion)
             }
         }
 
         DialerStorage.shared.saveLastAskedDateToUpdate(nil)
-        return .noUpdates
+        return .noUpdate
     }
 
     private func openAppOnStore() {

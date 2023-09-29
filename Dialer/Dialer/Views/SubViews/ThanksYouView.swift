@@ -1,5 +1,5 @@
 //
-//  CongratulationsView.swift
+//  ThanksYouView.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 05/07/2021.
@@ -7,47 +7,51 @@
 
 import SwiftUI
 
-struct CongratulationsView: View {
+struct ThanksYouView: View {
     @Binding var isPresented: Bool
-    @State private var timeRemaining: Int = 71
+    @State private var timeRemaining: Int = 30
     @State private var isAppActive = true
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
+    
     var body: some View {
         ZStack {
             Color.primaryBackground
                 .ignoresSafeArea()
-            CongratsView()
-                .opacity(timeRemaining <= 1 ? 0.3 : 1)
-                .blur(radius: timeRemaining <= 1 ? 3 : 0)
-                .animation(.linear(duration: 0.5), value: timeRemaining)
+            
             VStack(spacing: 10) {
-                
                 Image("congrats")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 80)
-                    .padding(.bottom, -10)
-
+                
                 Text("Thanks for using Dialer for the past month!")
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
-                    .opacity(0.8)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
-               
-                Text("We appreciate your support, and would like to hear how to make **Dialer** even more better.")
-                    .font(.caption)
+                
+                Text("Please tell us how we can make Dialer even more useful to you.")
+                    .font(.callout)
                     .multilineTextAlignment(.center)
-
-                Text(String(format: NSLocalizedString("Remaining time: timeRemaining seconds", comment: ""), timeRemaining))
+                
+                Button(action: goToAppStoreRating) {
+                    Text("Rate our app")
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.accentColor)
+                        .cornerRadius(8)
+                        .foregroundColor(.white)
+                }
+                
+                Text("Remaining time: ^[\(timeRemaining) second](inflect: true)")
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red.opacity(0.8))
             }
             .padding(20)
             .frame(maxWidth: .infinity)
-            .background(Color.primaryBackground)
+            .background(.primaryBackground)
             .cornerRadius(15)
             .shadow(color: .lightShadow, radius: 8, x: -8, y: -8)
             .shadow(color: .darkShadow, radius: 8, x: 8, y: 8)
@@ -59,12 +63,11 @@ struct CongratulationsView: View {
             }, label: {
                 Image(systemName: "multiply.circle.fill")
                     .resizable()
-                    .frame(width: 35, height: 35)
-                    .foregroundColor(Color.red)
-                    
+                    .frame(width: 32, height: 32)
+                    .foregroundStyle(.black.opacity(0.7),  .regularMaterial)
             })
-            .padding(5)
-            , alignment: .topLeading
+            .padding()
+            , alignment: .topTrailing
         )
         
         .onReceive(timer) { _ in
@@ -82,13 +85,18 @@ struct CongratulationsView: View {
             isAppActive = true
         }
     }
+    
+    private func goToAppStoreRating() {
+        isPresented = false
+        ReviewHandler.requestReviewManually()
+    }
 }
 
 #if DEBUG
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
-        CongratulationsView(isPresented: .constant(true))
-            .preferredColorScheme(.dark)
+        ThanksYouView(isPresented: .constant(true))
+        //            .preferredColorScheme(.dark)
     }
 }
 #endif

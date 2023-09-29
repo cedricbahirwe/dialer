@@ -69,8 +69,7 @@ extension FirebaseManager: DeviceManagerProtocol {
     }
 
     func updateDevice(_ device: DeviceAccount) async throws -> Bool {
-        guard let deviceID = device.id else { return false }
-        return try await updateItemWithID(deviceID, content: device, in: .devices)
+        return try await updateItemWithID(device.deviceHash, content: device, in: .devices)
     }
 
     func deleteDevice(_ deviceID: String) async throws {

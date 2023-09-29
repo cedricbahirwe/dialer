@@ -19,7 +19,7 @@ struct ContentView: View {
                     do {
                         UserViewModel.shared.offerings = try await Purchases.shared.offerings()
                     } catch {
-                        print("Error fetching offerings: \(error)")
+                        Log.debug("Error fetching offerings: \(error)")
                     }
                 }
         }
@@ -36,7 +36,7 @@ struct ContentView: View {
             Text($0.message)
         }
         .fullScreenCover(isPresented: $data.hasReachSync) {
-            CongratulationsView(isPresented: $data.hasReachSync)
+            ThanksYouView(isPresented: $data.hasReachSync)
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {

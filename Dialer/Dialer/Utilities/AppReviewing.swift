@@ -10,7 +10,7 @@ import StoreKit
 enum ReviewHandler {
     
     static func requestReview() {
-        var count = UserDefaults.standard.integer(forKey: UserDefaults.Keys.appStartUpsCountKey)
+        var count = UserDefaults.standard.integer(forKey: UserDefaultsKeys.appStartUpsCountKey)
         count += 1
         UserDefaults.standard.set(count, forKey: UserDefaultsKeys.appStartUpsCountKey)
         
@@ -21,7 +21,7 @@ enum ReviewHandler {
         let lastVersionPromptedForReview = UserDefaults.standard.string(forKey: UserDefaultsKeys.lastVersionPromptedForReviewKey)
         
         if count%4==0 && currentVersion != lastVersionPromptedForReview {
-            DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
                     SKStoreReviewController.requestReview(in: scene)
                     UserDefaults.standard.set(currentVersion, forKey: UserDefaultsKeys.lastVersionPromptedForReviewKey)

@@ -13,7 +13,7 @@ import RevenueCat
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        DialerStorage.shared.saveOneTimeUniqueAppID()
         configureFirebase()
         configureRevenuCat()
         return true
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func configureRevenuCat() {
-        Purchases.logLevel = .debug
+//        Purchases.logLevel = .debug
         
         Purchases.configure(
             with:

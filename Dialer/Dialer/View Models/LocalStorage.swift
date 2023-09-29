@@ -13,13 +13,26 @@ final class DialerStorage {
     typealias ElectricityMeters = [ElectricityMeter]
     typealias USSDCodes = [USSDCode]
     
-    private let LocalKeys = UserDefaults.Keys.self
+    private let LocalKeys = UserDefaultsKeys.self
     
     private let userDefaults = UserDefaults.standard
     
     static let shared = DialerStorage()
     
     private init() { }
+    
+    func saveOneTimeUniqueAppID() {
+        guard getOneTimeUniqueAppID() == nil else { return }
+        userDefaults.setValue(UUID().uuidString, forKey: LocalKeys.appUniqueID)
+    }
+    
+    func getOneTimeUniqueAppID() -> UUID? {
+        guard let uniqueIDString = userDefaults.value(forKey: LocalKeys.appUniqueID) as? String,
+              let uniqueID = UUID(uuidString: uniqueIDString) else {
+            return nil
+        }
+        return uniqueID
+    }
 
     func saveCodePin(_ value: CodePin) throws {
         let data = try encodeData(value)
@@ -135,6 +148,20 @@ private extension DialerStorage {
         return dictionary
     }
     
+    func decodeDataWithFirebase<T: Decodable>(key: String, as type: T.Type) -> T? {
+        guard let dictionary = userDefaults.object(forKey: key) as? [String: Any] else {
+            userDefaults.removeObject(forKey: key)
+            return nil
+        }
+        
+        do {
+            return try Firestore.Decoder().decode(type, from: dictionary)
+        } catch let error {
+            Log.debug("Couldn't decode the firebase data of type \(type): ", error)
+        }
+        return nil
+    }
+    
     func encodeData<T>(_ value: T) throws -> Data where T: Codable {
         return try JSONEncoder().encode(value)
     }
@@ -147,19 +174,6 @@ private extension DialerStorage {
             return try JSONDecoder().decode(type, from: data)
         } catch let error {
             Log.debug("Couldn't decode the data of type \(type): ", error.localizedDescription)
-        }
-        return nil
-    }
-    
-    func decodeDataWithFirebase<T: Decodable>(key: String, as type: T.Type) -> T? {
-        guard let dictionary = userDefaults.object(forKey: key) as? [String: Any] else {
-            userDefaults.removeObject(forKey: key)
-            return nil
-        }
-        do {
-            return try Firestore.Decoder().decode(type, from: dictionary)
-        } catch let error {
-            Log.debug("Couldn't decode the firebase data of type \(type): ", error)
         }
         return nil
     }
