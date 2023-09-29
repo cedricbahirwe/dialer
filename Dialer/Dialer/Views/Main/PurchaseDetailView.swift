@@ -93,13 +93,12 @@ struct PurchaseDetailView: View {
                                 self.codepin = ""
                             }){
                                 Text("Save")
-                                    .font(.caption)
                                     .fontWeight(.semibold)
-                                    .padding(.horizontal, 10)
+                                    .padding(.horizontal, 20)
                                     .frame(height: 40)
-                                    .background(Color.primary)
+                                    .background(.primary)
                                     .cornerRadius(8)
-                                    .foregroundColor(Color(.systemBackground))
+                                    .foregroundStyle(.background)
                             }
                                 .disabled(!data.isPinCodeValid)
                                 .opacity(data.isPinCodeValid ? 1 : 0.4)
