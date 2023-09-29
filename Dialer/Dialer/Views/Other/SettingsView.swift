@@ -13,14 +13,13 @@ struct SettingsView: View {
     
     @AppStorage(UserDefaults.Keys.allowBiometrics)
     private var allowBiometrics = false
-    @State var showMailView = false
-    @State var showMailErrorAlert = false
     @State var alertItem: AlertDialog?
     @State var showDialog = false
-
+    
+    @StateObject private var mailComposer = MailComposer()
+    
     var body: some View {
         NavigationView {
-            
             Form {
                 Section {
                     HStack(spacing: 3) {
@@ -65,9 +64,9 @@ struct SettingsView: View {
                 
                 Section {
                     
-                    SettingsRow(.contactUs, action: openMail)
+                    SettingsRow(.contactUs, action: mailComposer.openMail)
                         .alert("No Email Client Found",
-                               isPresented: $showMailErrorAlert) {
+                               isPresented: $mailComposer.showMailErrorAlert) {
                             Button("OK", role: .cancel) { }
                             Button("Copy Support Email", action: copyEmail)
                             Button("Open Twitter", action: openTwitter)
@@ -82,7 +81,7 @@ struct SettingsView: View {
                         SettingsRow(.tweetUs)
                     }
                     
-                    SettingsRow(.translationSuggestion, action: openMail)
+                    SettingsRow(.translationSuggestion, action: mailComposer.openMail)
                     
                 } header: {
                     sectionHeader("Reach Out")
@@ -105,10 +104,8 @@ struct SettingsView: View {
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
-            .sheet(isPresented: $showMailView) {
-                MailView(recipientEmail: DialerlLinks.supportEmail,
-                         subject: "Dialer Question",
-                         bodyMessage: getEmailBody())
+            .sheet(isPresented: $mailComposer.showMailView) {
+                mailComposer.makeMailView()
             }
             .safeAreaInset(edge: .bottom, content: {
                 
@@ -129,14 +126,14 @@ struct SettingsView: View {
             .trackAppearance(.settings)
         }
     }
-
+    
     private func presentPinRemovalSheet() {
         alertItem = .init("Confirmation",
                           message: "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later.",
                           action: dataStore.removePin)
         showDialog.toggle()
     }
-
+    
     private func presentUSSDsRemovalSheet() {
         alertItem = .init("Confirmation",
                           message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
@@ -144,25 +141,6 @@ struct SettingsView: View {
         showDialog.toggle()
     }
     
-    
-    private func getEmailBody() -> String {
-        var body = "\n\n\n\n\n\n\n\n"
-        
-        let deviceName = UIDevice.current.localizedModel
-        body.append(contentsOf: deviceName)
-        
-        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
-        body.append(iosVersion)
-        
-        if let appVersion  = UIApplication.appVersion {
-            body.append("\nDialer Version: \(appVersion)")
-        }
-        if let buildVersion = UIApplication.buildVersion {
-            body.append("\nDialer Build: \(buildVersion)")
-        }
-        return body
-    }
-
     private func copyEmail() {
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = DialerlLinks.dialerTwitter
@@ -180,15 +158,6 @@ struct SettingsView: View {
         guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
         UIApplication.shared.open(url)
     }
-    
-    private func openMail() {
-        
-        if MFMailComposeViewController.canSendMail() {
-            showMailView.toggle()
-        } else {
-            showMailErrorAlert = true
-        }
-    }
 }
 
 struct SettingsView_Previews: PreviewProvider {
@@ -197,6 +166,7 @@ struct SettingsView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
+
 extension SettingsView {
     
     struct SettingsRow: View {
@@ -229,7 +199,7 @@ extension SettingsView {
                     .resizable()
                     .scaledToFit()
                     .padding(6)
-                    .frame(width: 30, height:30)
+                    .frame(width: 28, height: 28)
                     .background(item.color)
                     .cornerRadius(6)
                     .foregroundColor(.white)
@@ -249,5 +219,44 @@ extension SettingsView {
                 Spacer(minLength: 1)
             }
         }
+    }
+}
+
+
+private class MailComposer: ObservableObject {
+    @Published var showMailView = false
+    @Published var showMailErrorAlert = false
+    
+    func openMail() {
+        if MFMailComposeViewController.canSendMail() {
+            showMailView.toggle()
+        } else {
+            showMailErrorAlert = true
+        }
+    }
+    
+    
+    func makeMailView() -> MailView {
+        MailView(recipientEmail: DialerlLinks.supportEmail,
+                 subject: "Dialer Question",
+                 bodyMessage: getEmailBody())
+    }
+    
+    private func getEmailBody() -> String {
+        var body = "\n\n\n\n\n\n\n\n"
+        
+        let deviceName = UIDevice.current.localizedModel
+        body.append(contentsOf: deviceName)
+        
+        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
+        body.append(iosVersion)
+        
+        if let appVersion  = UIApplication.appVersion {
+            body.append("\nDialer Version: \(appVersion)")
+        }
+        if let buildVersion = UIApplication.buildVersion {
+            body.append("\nDialer Build: \(buildVersion)")
+        }
+        return body
     }
 }
