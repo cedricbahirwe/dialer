@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThanksYouView: View {
     @Binding var isPresented: Bool
-    @State private var timeRemaining: Int = 70
+    @State private var timeRemaining: Int = 30
     @State private var isAppActive = true
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -44,7 +44,7 @@ struct ThanksYouView: View {
                         .foregroundColor(.white)
                 }
                 
-                Text(String(format: NSLocalizedString("Remaining time: timeRemaining seconds", comment: ""), timeRemaining))
+                Text("Remaining time: ^[\(timeRemaining) second](inflect: true)")
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red.opacity(0.8))
