@@ -73,7 +73,6 @@ enum EventParameterKey: String {
     case transTime = "tran_timestamp"
 
     // Device
-    case devId = "device_id"
     case devHash = "device_hash"
     case devVersion = "device_version"
 }

@@ -96,7 +96,7 @@ struct PurchaseDetailView: View {
                                     .fontWeight(.semibold)
                                     .padding(.horizontal, 20)
                                     .frame(height: 40)
-                                    .background(.primary)
+                                    .background(Color.primary)
                                     .cornerRadius(8)
                                     .foregroundStyle(.background)
                             }

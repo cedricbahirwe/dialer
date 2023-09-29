@@ -302,11 +302,11 @@ extension CodeScannerView.CodeScannerViewController: AVCapturePhotoCaptureDelega
     ) {
         isCapturing = false
         guard let imageData = photo.fileDataRepresentation() else {
-            print("Error while generating image from photo capture data.");
+            Log.debug("Error while generating image from photo capture data.");
             return
         }
         guard let qrImage = UIImage(data: imageData) else {
-            print("Unable to generate UIImage from image data.");
+            Log.debug("Unable to generate UIImage from image data.");
             return
         }
         handler?(qrImage)

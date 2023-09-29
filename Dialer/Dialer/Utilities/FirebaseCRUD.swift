@@ -63,6 +63,7 @@ extension FirebaseCRUD {
     }
     
     func getAllWithQuery<T: Decodable>(_ querySnapshot: QuerySnapshot) async -> [T] {
+        
         let result = querySnapshot.documents.compactMap { document -> T? in
             do {
                 return try document.data(as: T.self)
@@ -109,7 +110,7 @@ extension FirebaseCRUD {
                 
                 continuation.resume(returning: true)
             } catch {
-                Log.debug("Error updating Merchant: \(error)")
+                Log.debug("Error updating item: \(error)")
                 continuation.resume(throwing: error)
             }
         }

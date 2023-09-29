@@ -41,7 +41,6 @@ extension FirebaseTracker: TrackerProtocol {
             .transType : transaction.type.rawValue,
             .transCode : transaction.fullCode,
             .transTime : Date.now.formatted(),
-            .devId: user.id as Any,
             .devHash: user.deviceHash
         ]
 

@@ -135,6 +135,20 @@ private extension DialerStorage {
         return dictionary
     }
     
+    func decodeDataWithFirebase<T: Decodable>(key: String, as type: T.Type) -> T? {
+        guard let dictionary = userDefaults.object(forKey: key) as? [String: Any] else {
+            userDefaults.removeObject(forKey: key)
+            return nil
+        }
+        
+        do {
+            return try Firestore.Decoder().decode(type, from: dictionary)
+        } catch let error {
+            Log.debug("Couldn't decode the firebase data of type \(type): ", error)
+        }
+        return nil
+    }
+    
     func encodeData<T>(_ value: T) throws -> Data where T: Codable {
         return try JSONEncoder().encode(value)
     }
@@ -147,19 +161,6 @@ private extension DialerStorage {
             return try JSONDecoder().decode(type, from: data)
         } catch let error {
             Log.debug("Couldn't decode the data of type \(type): ", error.localizedDescription)
-        }
-        return nil
-    }
-    
-    func decodeDataWithFirebase<T: Decodable>(key: String, as type: T.Type) -> T? {
-        guard let dictionary = userDefaults.object(forKey: key) as? [String: Any] else {
-            userDefaults.removeObject(forKey: key)
-            return nil
-        }
-        do {
-            return try Firestore.Decoder().decode(type, from: dictionary)
-        } catch let error {
-            Log.debug("Couldn't decode the firebase data of type \(type): ", error)
         }
         return nil
     }

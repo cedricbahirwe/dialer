@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func configureRevenuCat() {
-        Purchases.logLevel = .debug
+//        Purchases.logLevel = .debug
         
         Purchases.configure(
             with:

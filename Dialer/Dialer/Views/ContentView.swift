@@ -19,7 +19,7 @@ struct ContentView: View {
                     do {
                         UserViewModel.shared.offerings = try await Purchases.shared.offerings()
                     } catch {
-                        print("Error fetching offerings: \(error)")
+                        Log.debug("Error fetching offerings: \(error)")
                     }
                 }
         }
