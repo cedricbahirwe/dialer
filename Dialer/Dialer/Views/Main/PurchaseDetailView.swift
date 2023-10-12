@@ -91,6 +91,7 @@ struct PurchaseDetailView: View {
                                 guard let codepin = try? CodePin(codepin) else { return }
                                 data.saveCodePin(codepin)
                                 self.codepin = ""
+                                editedField = .amount
                             }){
                                 Text("Save")
                                     .fontWeight(.semibold)

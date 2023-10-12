@@ -11,12 +11,15 @@ import UIKit
 struct PurchaseDetailModel: Hashable, Codable {
     var amount: Int = 0
     var purchaseDate: Date = .now
-    var fullCode: String { "\(prefixCode)\(amount)*PIN#" }
     
     private var prefixCode: String { "*182*2*1*1*1*" }
 }
 
 extension PurchaseDetailModel {
+    
+    func getRedactedFullCode() -> String {
+        return "\(prefixCode)\(amount)*PIN#"
+    }
     
     func getFullUSSDCode(with pinCode: CodePin?) -> String {
         let pin: String
