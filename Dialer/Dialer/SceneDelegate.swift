@@ -93,7 +93,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         application.shortcutItems = codes.map({ code -> UIApplicationShortcutItem in
             return UIApplicationShortcutItem(type: ActionType.dialAction.rawValue,
                                              localizedTitle: "Buy for \(code.detail.amount)",
-                                             localizedSubtitle: "\(code.detail.getFullUSSDCode(with: nil))",
+                                             localizedSubtitle: "\(code.detail.getRedactedFullCode())",
                                              icon: UIApplicationShortcutIcon(systemImageName: "phone.fill"),
                                              userInfo: code.quickActionUserInfo)
             
