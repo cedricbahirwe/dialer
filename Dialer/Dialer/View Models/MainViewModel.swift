@@ -90,20 +90,6 @@ final class MainViewModel: ObservableObject {
             throw DialingError.canNotDial
         }
     }
-
-//    func getFullUSSDCode(from purchase: PurchaseDetailModel) -> String {
-//        let code: String
-//        if let _ = pinCode, String(pinCode!).count >= 5 {
-//            code = String(pinCode!)
-//        } else {
-//            code = ""
-//        }
-//        return purchase.getDialCode(pin: code)
-//    }
-
-//    func getPurchaseDetailUSSDCode() -> String {
-//        getFullUSSDCode(from: purchaseDetail)
-//    }
     
     func getPurchaseDetailUSSDCode() -> String {
         purchaseDetail.getFullUSSDCode(with: pinCode)

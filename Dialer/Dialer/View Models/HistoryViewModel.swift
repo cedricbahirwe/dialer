@@ -14,7 +14,7 @@ final class HistoryViewModel: ObservableObject {
         recentCodes.map(\.totalPrice).reduce(0, +)
     }
     
-    /// Perfom a quick dialing from the `History View Row.`
+    /// Perform a quick dialing from the `History View Row.`
     /// - Parameter recentCode: the row code to be performed.
     func performRecentDialing(for recentCode: RecentDialCode) {
         let recent = recentCode
