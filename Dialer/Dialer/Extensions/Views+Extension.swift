@@ -46,7 +46,7 @@ extension View {
             .onDisappear() { Tracker.shared.stopSession(for: screen) }
     }
     
-    /// Handle  Tap Gesture for Biometrics Evaluation
+    /// Handle Tap Gesture for Biometrics Evaluation
     func onTapForBiometrics(onEvaluation: @escaping(Bool) -> Void) -> some View {
         ModifiedContent(content: self, modifier: BiometricsAccessibility(onEvaluation: onEvaluation))
     }

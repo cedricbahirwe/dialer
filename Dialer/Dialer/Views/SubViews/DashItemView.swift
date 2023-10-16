@@ -38,6 +38,8 @@ struct DashItemView: View {
 
     }
 }
+
+#if DEBUG
 struct DashItemView_Previews: PreviewProvider {
     static var previews: some View {
         DashItemView(title: "Title", icon: "house.fill")
@@ -46,3 +48,4 @@ struct DashItemView_Previews: PreviewProvider {
             .previewDisplayName("DashItem View")
     }
 }
+#endif

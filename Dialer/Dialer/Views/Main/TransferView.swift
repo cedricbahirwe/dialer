@@ -8,12 +8,6 @@
 import SwiftUI
 
 struct TransferView: View {
-    enum Sheet: Int, Identifiable {
-        var id: Int { rawValue }
-        case merchants
-        case contacts
-        case qrScanner
-    }
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
     
@@ -281,6 +275,21 @@ struct TransferView: View {
 }
 
 private extension TransferView {
+    enum FocusField {
+        case amount, number
+        func next() -> Self? {
+            self == .amount ? .number : nil
+        }
+    }
+    enum Sheet: Int, Identifiable {
+        var id: Int { rawValue }
+        case merchants
+        case contacts
+        case qrScanner
+    }
+}
+
+private extension TransferView {
     
     func goToNextFocus() {
         focusedState = focusedState?.next()
@@ -314,16 +323,15 @@ private extension TransferView {
         }
     }
     
-    private func cleanPhoneNumber(_ value: Contact?) {
+    func cleanPhoneNumber(_ value: Contact?) {
         guard let contact = value else { return }
         let firstNumber = contact.phoneNumbers.first!
         transaction.number = firstNumber
     }
     
-    private func transferMoney() {
+    
+    func transferMoney() {
         guard transaction.isValid else { return }
-        hideKeyboard()
-//        Thread.sleep(forTimeInterval: 250)
         Task {
             await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
             Tracker.shared.logTransaction(transaction: transaction)
@@ -332,7 +340,7 @@ private extension TransferView {
     
     /// Create a validation for the  `Number` field value
     /// - Parameter value: the validated data
-    private func handleNumberField(_ value: String) {
+    func handleNumberField(_ value: String) {
         let value = String(value.filter(\.isNumber))
         
         if transaction.type == .merchant {
@@ -347,12 +355,12 @@ private extension TransferView {
         }
     }
     
-    private func handleAmountChange(_ value: String) {
+    func handleAmountChange(_ value: String) {
         let cleanAmount = String(value.filter(\.isNumber))
         transaction.amount = cleanAmount
     }
     
-    private func copyToClipBoard() {
+    func copyToClipBoard() {
         UIPasteboard.general.string = transaction.fullCode
         withAnimation { didCopyToClipBoard = true }
         
@@ -363,7 +371,7 @@ private extension TransferView {
         }
     }
     
-    private func openScanner() {
+    func openScanner() {
         hideKeyboard()
         presentedSheet = .qrScanner
     }
@@ -382,13 +390,6 @@ private extension TransferView {
             }
         case .failure(let error):
             Tracker.shared.logError(error: error)
-        }
-    }
-    
-    enum FocusField {
-        case amount, number
-        func next() -> Self? {
-            self == .amount ? .number : nil
         }
     }
 }

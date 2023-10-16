@@ -181,8 +181,10 @@ extension NewDialingView {
     }
 }
 
+#if DEBUG
 struct NewDialingView_Previews: PreviewProvider {
     static var previews: some View {
         NewDialingView(store: MainViewModel())
     }
 }
+#endif

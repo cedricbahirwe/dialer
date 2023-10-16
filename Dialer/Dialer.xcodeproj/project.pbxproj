@@ -54,6 +54,7 @@
 		CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */; };
 		CB1CC86C29C4524200FF2116 /* FirebaseCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */; };
 		CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */; };
+		CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A55112ADD369A0088008F /* MailComposer.swift */; };
 		CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD329AF626500BEAD9A /* Tracker.swift */; };
 		CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */; };
 		CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD729AF668300BEAD9A /* FirebaseTracker+Extensions.swift */; };
@@ -95,7 +96,6 @@
 		CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70429AFEC98004BBE32 /* TimeInterval+Extensions.swift */; };
 		CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70629AFF4F3004BBE32 /* Logger.swift */; };
 		CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */; };
-		CBA429E029AB85F50041D578 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA429DF29AB85F50041D578 /* SpeakerView.swift */; };
 		CBA66BA82A5EB18D0082C8CE /* InAppPurchaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BA72A5EB18D0082C8CE /* InAppPurchaseConstants.swift */; };
 		CBA66BAC2A5EB2600082C8CE /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA66BAB2A5EB2600082C8CE /* PaywallView.swift */; };
 		CBA66BAF2A5EB3250082C8CE /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = CBA66BAE2A5EB3250082C8CE /* RevenueCat */; };
@@ -193,6 +193,7 @@
 		CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCRUD.swift; sourceTree = "<group>"; };
 		CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModelTests.swift; sourceTree = "<group>"; };
+		CB2A55112ADD369A0088008F /* MailComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
 		CB338CD329AF626500BEAD9A /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTracker.swift; sourceTree = "<group>"; };
 		CB338CD729AF668300BEAD9A /* FirebaseTracker+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseTracker+Extensions.swift"; sourceTree = "<group>"; };
@@ -223,7 +224,6 @@
 		CB92F70429AFEC98004BBE32 /* TimeInterval+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extensions.swift"; sourceTree = "<group>"; };
 		CB92F70629AFF4F3004BBE32 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
-		CBA429DF29AB85F50041D578 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		CBA66BA72A5EB18D0082C8CE /* InAppPurchaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseConstants.swift; sourceTree = "<group>"; };
 		CBA66BAB2A5EB2600082C8CE /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		CBA66BB12A5EB3820082C8CE /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
@@ -441,6 +441,7 @@
 			children = (
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
+				CB2A55102ADD36510088008F /* Dialing */,
 				CBE73C642A2C7A8D00C7712B /* Widget */,
 				820C108B2766A4D400A7CADE /* Main */,
 				820C108C2766A51000A7CADE /* Details */,
@@ -463,6 +464,7 @@
 				82EEBCF726C1391D00B1720A /* LocalStorage.swift */,
 				CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */,
 				CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */,
+				CB2A55112ADD369A0088008F /* MailComposer.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -497,6 +499,15 @@
 			path = ModelTests;
 			sourceTree = "<group>";
 		};
+		CB2A55102ADD36510088008F /* Dialing */ = {
+			isa = PBXGroup;
+			children = (
+				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
+				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
+			);
+			path = Dialing;
+			sourceTree = "<group>";
+		};
 		CB338CD229AF625800BEAD9A /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,7 +532,6 @@
 			isa = PBXGroup;
 			children = (
 				CB1099442A61556F00E99555 /* QRScanner */,
-				CBA429DF29AB85F50041D578 /* SpeakerView.swift */,
 				821C0737264DDFFB00DBD545 /* PinView.swift */,
 				820C10892766A31400A7CADE /* NumberField.swift */,
 			);
@@ -610,8 +620,6 @@
 		CBE73C632A2C7A7D00C7712B /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
-				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
 				828D79D626E1029800439F9A /* SettingsView.swift */,
 				CBC262BE2784C7D3000B8E0E /* MailView.swift */,
 				821BE13226FB19F200A3CA02 /* AboutView.swift */,
@@ -845,6 +853,7 @@
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CBA66BA82A5EB18D0082C8CE /* InAppPurchaseConstants.swift in Sources */,
 				CBA66BAC2A5EB2600082C8CE /* PaywallView.swift in Sources */,
+				CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,
 				CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */,
 				8255E68E2693959800657EFB /* ThanksYouView.swift in Sources */,
@@ -853,7 +862,6 @@
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
 				CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */,
 				CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */,
-				CBA429E029AB85F50041D578 /* SpeakerView.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
 				CBA9BB05294C8F7000D95C82 /* DialerLocalNotification.swift in Sources */,
 				CB45381628AB9C6500F3F24C /* MySpaceView.swift in Sources */,

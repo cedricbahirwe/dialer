@@ -18,9 +18,3 @@ struct CopiedUSSDLabel: View {
             .transition(.scale)
     }
 }
-
-struct CopiedUSSDLabel_Previews: PreviewProvider {
-    static var previews: some View {
-        CopiedUSSDLabel()
-    }
-}

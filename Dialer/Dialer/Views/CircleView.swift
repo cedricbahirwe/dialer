@@ -84,8 +84,10 @@ struct CircleView: View {
     }
 }
 
+#if DEBUG
 struct CircleView_Previews: PreviewProvider {
     static var previews: some View {
         CircleView()
     }
 }
+#endif
