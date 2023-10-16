@@ -22,13 +22,14 @@ enum Log {
             "file": filename
         ]
         // 2. log an event depending on
-        let logType: LogEvent = type == .error ? .error : .debugInfo
-        Tracker.shared.logEvent(name: logType, parameters: logs)
+        if !AppConfiguration.isDebug {
+            let logType: LogEvent = type == .error ? .error : .debugInfo
+            Tracker.shared.logEvent(name: logType, parameters: logs)
+        }
     }
     
     static func debug(_ items: Any...) {
-        #if DEBUG
+        guard AppConfiguration.isDebug else { return }
         debugPrint(items)
-        #endif
     }
 }

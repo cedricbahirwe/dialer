@@ -323,6 +323,7 @@ private extension TransferView {
     private func transferMoney() {
         guard transaction.isValid else { return }
         hideKeyboard()
+//        Thread.sleep(forTimeInterval: 250)
         Task {
             await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
             Tracker.shared.logTransaction(transaction: transaction)
@@ -363,6 +364,7 @@ private extension TransferView {
     }
     
     private func openScanner() {
+        hideKeyboard()
         presentedSheet = .qrScanner
     }
     
@@ -375,6 +377,8 @@ private extension TransferView {
                 Tracker.shared.logMerchantScan(code)
                 transaction.number = code
                 transferMoney()
+            } else {
+                focusedState = .number
             }
         case .failure(let error):
             Tracker.shared.logError(error: error)

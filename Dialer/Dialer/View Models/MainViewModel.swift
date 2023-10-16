@@ -14,7 +14,7 @@ protocol ClipBoardDelegate {
 
 final class MainViewModel: ObservableObject {
     
-    @Published private(set) var history = HistoryViewModel()
+    private(set) var history = HistoryViewModel()
     
     @Published var pinCode: CodePin? = DialerStorage.shared.getCodePin()
     
@@ -49,6 +49,7 @@ final class MainViewModel: ObservableObject {
     }
     
     /// Confirm and Purchase an entered Code.
+    @MainActor
     func confirmPurchase() {
         let purchase = purchaseDetail
         Task {
@@ -76,12 +77,12 @@ final class MainViewModel: ObservableObject {
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
-    private func dialCode(from purchase: PurchaseDetailModel) async throws {
+    @MainActor private func dialCode(from purchase: PurchaseDetailModel) async throws {
         
         let newUrl = purchase.getFullUSSDCode(with: pinCode)
         
         if let telUrl = URL(string: "tel://\(newUrl)"),
-           await UIApplication.shared.canOpenURL(telUrl) {
+        UIApplication.shared.canOpenURL(telUrl) {
             let isCompleted = await UIApplication.shared.open(telUrl)
             if !isCompleted {
                 throw DialingError.canNotDial
@@ -97,9 +98,10 @@ final class MainViewModel: ObservableObject {
     
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
+    @MainActor
     static func performQuickDial(for code: DialerQuickCode) async {
         if let telUrl = URL(string: "tel://\(code.ussd)"),
-           await UIApplication.shared.canOpenURL(telUrl) {
+           UIApplication.shared.canOpenURL(telUrl) {
             
             let isCompleted = await UIApplication.shared.open(telUrl)
             if isCompleted {
