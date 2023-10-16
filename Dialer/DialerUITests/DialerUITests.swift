@@ -45,6 +45,53 @@ class DialerUITests: XCTestCase {
         try testNewDialViewComponents()
 
     }
+    
+    func testTransferViewMerchantState() throws {
+        
+        app.staticTexts["Transfer/Pay"].tap()
+        
+        let dialButton = app.buttons["Dial USSD"]
+        
+        XCTAssertFalse(dialButton.isEnabled, "The dial button should be disabled at first")
+        
+        let amountField = app.textFields["transferAmountField"]
+        amountField.tap()
+        amountField.typeText("100")
+        
+        let numberField = app.textFields["transferNumberField"]
+        numberField.tap()
+        numberField.typeText("025809")
+        
+        XCTAssertTrue(dialButton.isEnabled, "The dial button should be enabled")
+    }
+    
+    func testTransferViewClientState() throws {
+        
+        app.staticTexts["Transfer/Pay"].tap()
+        
+        let dialButton = app.buttons["Dial USSD"]
+        
+        XCTAssertFalse(dialButton.isEnabled, "The dial button should be disabled at first")
+        
+        let amountField = app.textFields["transferAmountField"]
+        amountField.tap()
+        amountField.typeText("1000")
+        
+        let switchButton = app.buttons["Send Money"]
+        switchButton.tap()
+        
+        let numberField = app.textFields["transferNumberField"]
+        numberField.tap()
+        numberField.typeText("025809")
+        
+        XCTAssertFalse(dialButton.isEnabled, "The dial button should still be disabled")
+        let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: (numberField.value as! String).count)
+        
+        numberField.typeText(deleteString)
+        numberField.typeText("0782628511")
+        
+        XCTAssertTrue(dialButton.isEnabled, "The dial button should be enabled")
+    }
 
     func testHomeMenuItemsDisplay() throws {
         XCTAssertTrue(app.staticTexts["Buy airtime"].exists)

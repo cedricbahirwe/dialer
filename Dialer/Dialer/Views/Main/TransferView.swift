@@ -52,6 +52,7 @@ struct TransferView: View {
                     
                     NumberField("Enter Amount", text: $transaction.amount.onChange(handleAmountChange).animation())
                         .focused($focusedState, equals: .amount)
+                        .accessibilityIdentifier("transferAmountField")
                 }
                 
                 VStack(spacing: 10) {
@@ -65,6 +66,7 @@ struct TransferView: View {
                                     "Enter Receiver's number" :
                                         "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
                         .focused($focusedState, equals: .number)
+                        .accessibilityIdentifier("transferNumberField")
                         
                         if transaction.type == .merchant {
                             
