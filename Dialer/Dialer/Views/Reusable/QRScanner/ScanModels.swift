@@ -39,6 +39,3 @@ struct ScanResult {
     /// The corner coordinates of the scanned code.
     let corners: [CGPoint]
 }
-
-
-

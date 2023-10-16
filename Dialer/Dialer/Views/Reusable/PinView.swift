@@ -51,11 +51,13 @@ struct PinView: View {
     }
 }
 
+#if DEBUG
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
         PinView(input: .constant("*182#"))
     }
 }
+#endif
 
 extension PinView {
     struct CircleButton: View {

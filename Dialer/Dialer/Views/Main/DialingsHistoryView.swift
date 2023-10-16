@@ -88,8 +88,10 @@ struct DialingsHistoryView: View {
     }
 }
 
+#if DEBUG
 struct DialingsHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         DialingsHistoryView(data: HistoryViewModel())
     }
 }
+#endif

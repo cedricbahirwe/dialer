@@ -62,6 +62,7 @@ struct ContentView: View {
     }
 }
 
+#if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
@@ -69,3 +70,4 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(ForceUpdateManager())
     }
 }
+#endif
