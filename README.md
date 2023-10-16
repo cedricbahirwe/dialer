@@ -6,24 +6,18 @@ Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
 
 ## ✅ Dones:
-* Beautiful UI with Light/Dark Mode support.
-* History View to Track Past dialings.
-* Incognito mode for dialings (No track will be stored).
+* Support Light/Dark Mode.
+* History View to Track Past Dials.
+* Incognito mode for dials.
 * Home Screen Quick Actions.
 * Quick MTN Momo transfer (Client and Merchant support).
 * Contacts Filtering.
 * Settings
 * Transaction Amount Limit 
 
-## ✨ TODOs :
-
-* Good Local Storage (Core Data)
-* Siri Commands Support (Intents and IntentsUI)
-* Transaction History
-
 ## TakeAways 🚀
 
-- What makes a great app!
+- What makes a great app
 - SDLC(Software Development Life Cycle) in practice
 - Following Apple Human Interface Guidelines (HIG)
 - Deep Dive into Home Screen Quick Actions
