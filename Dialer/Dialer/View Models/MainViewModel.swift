@@ -50,17 +50,19 @@ final class MainViewModel: ObservableObject {
     
     /// Confirm and Purchase an entered Code.
     @MainActor
-    func confirmPurchase() {
+    func confirmPurchase() async {
         let purchase = purchaseDetail
-        Task {
-            do {
-                try await dialCode(from: purchase)
-                history.storeCode(code: .init(detail: purchase))
-                self.purchaseDetail = PurchaseDetailModel()
-            } catch let error as DialingError {
-                Log.debug(error.message)
-            }
+        
+        do {
+            try await dialCode(from: purchase)
+            history.storeCode(code: .init(detail: purchase))
+            self.purchaseDetail = PurchaseDetailModel()
+        } catch let error as DialingError {
+            Log.debug(error.message)
+        } catch let error {
+            Log.debug(error.localizedDescription)
         }
+        
     }
     
     /// Save locally the Code Pin
@@ -77,16 +79,12 @@ final class MainViewModel: ObservableObject {
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
-    @MainActor private func dialCode(from purchase: PurchaseDetailModel) async throws {
+    private func dialCode(from purchase: PurchaseDetailModel) async throws {
         
         let newUrl = purchase.getFullUSSDCode(with: pinCode)
         
-        if let telUrl = URL(string: "tel://\(newUrl)"),
-        UIApplication.shared.canOpenURL(telUrl) {
-            let isCompleted = await UIApplication.shared.open(telUrl)
-            if !isCompleted {
-                throw DialingError.canNotDial
-            }
+        if let telUrl = URL(string: "tel://\(newUrl)") {
+            try await DialService.dial(telUrl)
         } else {
             throw DialingError.canNotDial
         }
@@ -98,16 +96,17 @@ final class MainViewModel: ObservableObject {
     
     /// Perform an independent dial, without storing or tracking.
     /// - Parameter code: a `DialerQuickCode`  code to be dialed.
-    @MainActor
     static func performQuickDial(for code: DialerQuickCode) async {
-        if let telUrl = URL(string: "tel://\(code.ussd)"),
-           UIApplication.shared.canOpenURL(telUrl) {
-            
-            let isCompleted = await UIApplication.shared.open(telUrl)
-            if isCompleted {
-                Log.debug("Successfully Dialed")
-            } else {
-                Log.debug("Failed Dialed")
+        if let telUrl = URL(string: "tel://\(code.ussd)") {
+            do {
+                let isCompleted = try await DialService.dial(telUrl)
+                if isCompleted {
+                    Log.debug("Successfully Dialed")
+                } else {
+                    Log.debug("Failed Dialed")
+                }
+            } catch {
+                Log.debug("Failed Dialed \(error.localizedDescription)")
             }
             
         } else {

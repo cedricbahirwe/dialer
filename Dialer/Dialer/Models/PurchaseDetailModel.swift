@@ -46,12 +46,8 @@ extension PurchaseDetailModel {
         
         let newUrl = getFullUSSDCode(with: pinCode)
         
-        if let telUrl = URL(string: "tel://\(newUrl)"),
-           await UIApplication.shared.canOpenURL(telUrl) {
-            let isCompleted = await UIApplication.shared.open(telUrl)
-            if !isCompleted {
-                throw DialingError.canNotDial
-            }
+        if let telUrl = URL(string: "tel://\(newUrl)") {
+            try await DialService.dial(telUrl)
         } else {
             throw DialingError.canNotDial
         }

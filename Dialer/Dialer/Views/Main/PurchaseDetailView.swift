@@ -126,7 +126,9 @@ struct PurchaseDetailView: View {
 
                 if UIApplication.hasSupportForUSSD {
                     Button(action: {
-                        data.confirmPurchase()
+                        Task {
+                            await data.confirmPurchase()
+                        }
                     }) {
                         Text("Confirm")
                             .frame(maxWidth: .infinity)
@@ -139,7 +141,9 @@ struct PurchaseDetailView: View {
                 } else {
                     VStack(spacing: 6) {
                         Button(action: {
-                            data.confirmPurchase()
+                            Task {
+                                await data.confirmPurchase()
+                            }
                             copyToClipBoard()
                         }) {
                             Label("Copy USSD code", systemImage: "doc.on.doc.fill")
