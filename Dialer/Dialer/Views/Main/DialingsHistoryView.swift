@@ -21,7 +21,9 @@ struct DialingsHistoryView: View {
                             ForEach(data.recentCodes) { recentCode in
                                 HistoryRow(recentCode: recentCode)
                                     .onTapGesture {
-                                        data.performRecentDialing(for: recentCode)
+                                        Task {
+                                            await data.performRecentDialing(for: recentCode)
+                                        }
                                     }
                             }
                             .onDelete(perform: data.deletePastCode)

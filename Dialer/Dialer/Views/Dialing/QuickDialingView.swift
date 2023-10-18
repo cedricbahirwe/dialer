@@ -72,12 +72,9 @@ struct QuickDialingView: View {
         // Basic Checks
         // This can be removed when user wants to dial a phone number ....
         if code.contains("*") && code.contains("#") && code.count >= 5 {
-            if let telUrl = URL(string: "tel://\(code)"),
-                await UIApplication.shared.canOpenURL(telUrl) {
-                await UIApplication.shared.open(telUrl)
-
+            if let telUrl = URL(string: "tel://\(code)") {
+                _ = try? await DialService.dial(telUrl)
             } else {
-                // Can not dial this code
                 manageInvalidCode()
             }
 

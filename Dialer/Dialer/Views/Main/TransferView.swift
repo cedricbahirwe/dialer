@@ -109,7 +109,10 @@ struct TransferView: View {
                     
                     HStack {
                         if UIApplication.hasSupportForUSSD {
-                            Button(action: transferMoney) {
+                            Button(action: {
+                                hideKeyboard()
+                                transferMoney()
+                            }) {
                                 Text("Dial USSD")
                                     .font(.subheadline.bold())
                                     .frame(maxWidth: .infinity)
@@ -219,7 +222,7 @@ struct TransferView: View {
                     CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
                         .ignoresSafeArea()
                         .presentationDetents([.medium, .large])
-
+                    
                 } else {
                     CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
                 }

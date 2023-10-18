@@ -16,15 +16,16 @@ final class HistoryViewModel: ObservableObject {
     
     /// Perform a quick dialing from the `History View Row.`
     /// - Parameter recentCode: the row code to be performed.
-    func performRecentDialing(for recentCode: RecentDialCode) {
+    ///
+    func performRecentDialing(for recentCode: RecentDialCode) async {
         let recent = recentCode
-        Task {
-            do {
-                try await recentCode.detail.dialCode()
-                storeCode(code: recent)
-            } catch let error as DialingError {
-                Log.debug(error.message)
-            }
+        do {
+            try await recentCode.detail.dialCode()
+            storeCode(code: recent)
+        } catch let error as DialingError {
+            Log.debug(error.message)
+        } catch let error {
+            Log.debug(error.localizedDescription)
         }
     }
     
