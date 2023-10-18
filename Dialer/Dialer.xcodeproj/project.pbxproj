@@ -1090,7 +1090,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1117,7 +1117,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1253,7 +1253,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1381,7 +1381,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
