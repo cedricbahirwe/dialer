@@ -19,12 +19,12 @@ struct DashBoardView: View {
     @State private var presentQuickDial = false
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
-    @State private var paywallPresented = false
         
-    var isIOS16AndPlus: Bool {
+    private var isIOS16AndPlus: Bool {
         guard #available(iOS 16.0, *) else { return false }
         return true
     }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -68,14 +68,6 @@ struct DashBoardView: View {
                             }
                         }
                         .buttonStyle(PlainButtonStyle())
-                        
-//                        DashItemView(
-//                            title: "My Space",
-//                            icon: "person.crop.circle.badge")
-//                        .onTapGesture {
-//                            paywallPresented.toggle()
-//                        }
-                        
                     }
                 }
                 .padding()
@@ -122,12 +114,8 @@ struct DashBoardView: View {
                 DialingsHistoryView(data: data.history)
             }
         }
-        .fullScreenCover(isPresented: paywallPresented ? $paywallPresented : $presentQuickDial) {
-            if paywallPresented {
-                PaywallView(isPresented: $paywallPresented)
-            } else {
-                QuickDialingView()
-            }
+        .fullScreenCover(isPresented: $presentQuickDial) {
+            QuickDialingView()
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")
@@ -180,7 +168,6 @@ extension DashBoardView {
     }
 }
 
-#if DEBUG
 struct DashBoardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -189,4 +176,3 @@ struct DashBoardView_Previews: PreviewProvider {
         }
     }
 }
-#endif

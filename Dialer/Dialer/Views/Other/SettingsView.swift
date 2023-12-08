@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var dataStore: MainViewModel
-    
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
-    @State var alertItem: AlertDialog?
-    @State var showDialog = false
+    
+    @EnvironmentObject var dataStore: MainViewModel
     
     @StateObject private var mailComposer = MailComposer()
+    
+    @State var alertItem: AlertDialog?
+    @State var showDialog = false
     
     var body: some View {
         NavigationView {
@@ -62,7 +63,6 @@ struct SettingsView: View {
                 }
                 
                 Section {
-                    
                     SettingsRow(.contactUs, action: mailComposer.openMail)
                         .alert("No Email Client Found",
                                isPresented: $mailComposer.showMailErrorAlert) {
@@ -79,9 +79,6 @@ struct SettingsView: View {
                     Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
                         SettingsRow(.tweetUs)
                     }
-                    
-                    SettingsRow(.translationSuggestion, action: mailComposer.openMail)
-                    
                 } header: {
                     sectionHeader("Reach Out")
                 }
@@ -159,15 +156,6 @@ struct SettingsView: View {
     }
 }
 
-#if DEBUG
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-            .environmentObject(MainViewModel())
-    }
-}
-#endif
-
 extension SettingsView {
     
     struct SettingsRow: View {
@@ -211,7 +199,7 @@ extension SettingsView {
                     Text(item.subtitle)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.secondary)
-
+                    
                 }
                 .multilineTextAlignment(.leading)
                 .minimumScaleFactor(0.8)
@@ -220,5 +208,12 @@ extension SettingsView {
                 Spacer(minLength: 1)
             }
         }
+    }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+            .environmentObject(MainViewModel())
     }
 }

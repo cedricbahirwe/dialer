@@ -50,7 +50,8 @@ struct TransferView: View {
                             .animation(.default, value: transaction.estimatedFee)
                     }
                     
-                    NumberField("Enter Amount", text: $transaction.amount.onChange(handleAmountChange).animation())
+                    NumberField("Enter Amount", text: $transaction.amount)
+                        .onChange(of: transaction.amount, perform: handleAmountChange)
                         .focused($focusedState, equals: .amount)
                         .accessibilityIdentifier("transferAmountField")
                 }
@@ -195,11 +196,16 @@ struct TransferView: View {
                             
                             Spacer(minLength: 1)
                             
-                            Button {
-                                presentedSheet = .merchants
-                            } label: {
-                                Image(systemName: "plus.circle.fill")
-                                    .imageScale(.large)
+                            if merchantStore.isFetching {
+                                ProgressView()
+                                    .tint(.blue)
+                            } else {
+                                Button {
+                                    presentedSheet = .merchants
+                                } label: {
+                                    Image(systemName: "plus.circle.fill")
+                                        .imageScale(.large)
+                                }
                             }
                             
                         }
@@ -360,9 +366,13 @@ private extension TransferView {
         }
     }
     
-    func handleAmountChange(_ value: String) {
-        let cleanAmount = String(value.filter(\.isNumber))
-        transaction.amount = cleanAmount
+    func handleAmountChange(_ newAmount: String) {
+        let cleanAmount = String(newAmount.filter(\.isNumber))
+        if cleanAmount.first == "0" {
+            transaction.amount = String(cleanAmount.dropFirst())
+        } else {
+            transaction.amount = cleanAmount
+        }
     }
     
     func copyToClipBoard() {
@@ -399,7 +409,6 @@ private extension TransferView {
     }
 }
 
-#if DEBUG
 struct SendingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -408,4 +417,3 @@ struct SendingView_Previews: PreviewProvider {
         }
     }
 }
-#endif

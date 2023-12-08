@@ -27,13 +27,16 @@ struct PurchaseDetailView: View {
             .matchedGeometryEffect(id: "border", in: animation)
     }
     
+    private let defaultHeight: CGFloat = 300
     
     var body: some View {
         VStack(spacing: 8) {
+            
             Capsule()
                 .fill(Color.gray)
                 .frame(width: 50, height: 5)
                 .padding(.vertical, 8)
+                .opacity(isIOS16 ? 0 : 1)
             
             VStack(spacing: 10) {
                 
@@ -90,8 +93,10 @@ struct PurchaseDetailView: View {
                             Button(action: {
                                 guard let codepin = try? CodePin(codepin) else { return }
                                 data.saveCodePin(codepin)
-                                self.codepin = ""
-                                editedField = .amount
+                                withAnimation {
+                                    self.codepin = ""
+                                    editedField = .amount
+                                }
                             }){
                                 Text("Save")
                                     .fontWeight(.semibold)
@@ -105,12 +110,6 @@ struct PurchaseDetailView: View {
                                 .opacity(data.isPinCodeValid ? 1 : 0.4)
                             , alignment: .trailing
                         )
-
-                        Text("Your pin will not be saved unless you manually save it.")
-                            .font(.caption)
-                            .foregroundColor(.red)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
                     }
 
                 } else {
@@ -122,6 +121,7 @@ struct PurchaseDetailView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(.green)
                     .padding(.horizontal, 5)
+                    .frame(height: 40)
                 }
 
                 if UIApplication.hasSupportForUSSD {
@@ -186,10 +186,10 @@ struct PurchaseDetailView: View {
                     withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
                         bottomState = value.translation
                         if showFull {
-                            bottomState.height += -300
+                            bottomState.height += -defaultHeight
                         }
-                        if bottomState.height < -300 {
-                            bottomState.height = -300
+                        if bottomState.height < -defaultHeight {
+                            bottomState.height = -defaultHeight
                         }
                     }
                 }
@@ -199,7 +199,7 @@ struct PurchaseDetailView: View {
                         isPresented = false
                     }
                     if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
-                        bottomState.height = -300
+                        bottomState.height = -defaultHeight
                         showFull = true
                     } else {
                         bottomState = .zero
@@ -257,7 +257,6 @@ private extension PurchaseDetailView {
     }
 }
 
-#if DEBUG
 struct PurchaseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
@@ -282,4 +281,3 @@ struct PurchaseDetailView_Previews: PreviewProvider {
         
     }
 }
-#endif
