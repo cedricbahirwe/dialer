@@ -21,8 +21,9 @@ struct DashBoardView: View {
     @State private var showPurchaseSheet = false
         
     var isIOS16AndPlus: Bool {
-        guard #available(iOS 16.0, *) else { return false }
-        return true
+        true
+//        guard #available(iOS 16.0, *) else { return false }
+//        return true
     }
     var body: some View {
         ZStack(alignment: .bottom) {

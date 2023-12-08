@@ -30,10 +30,12 @@ struct PurchaseDetailView: View {
     
     var body: some View {
         VStack(spacing: 8) {
+            
             Capsule()
                 .fill(Color.gray)
                 .frame(width: 50, height: 5)
                 .padding(.vertical, 8)
+                .opacity(isIOS16 ? 0 : 1)
             
             VStack(spacing: 10) {
                 
@@ -90,8 +92,10 @@ struct PurchaseDetailView: View {
                             Button(action: {
                                 guard let codepin = try? CodePin(codepin) else { return }
                                 data.saveCodePin(codepin)
-                                self.codepin = ""
-                                editedField = .amount
+                                withAnimation {
+                                    self.codepin = ""
+                                    editedField = .amount
+                                }
                             }){
                                 Text("Save")
                                     .fontWeight(.semibold)
@@ -105,12 +109,6 @@ struct PurchaseDetailView: View {
                                 .opacity(data.isPinCodeValid ? 1 : 0.4)
                             , alignment: .trailing
                         )
-
-                        Text("Your pin will not be saved unless you manually save it.")
-                            .font(.caption)
-                            .foregroundColor(.red)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
                     }
 
                 } else {
@@ -122,6 +120,7 @@ struct PurchaseDetailView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(.green)
                     .padding(.horizontal, 5)
+                    .frame(height: 40)
                 }
 
                 if UIApplication.hasSupportForUSSD {
@@ -257,7 +256,6 @@ private extension PurchaseDetailView {
     }
 }
 
-#if DEBUG
 struct PurchaseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
@@ -282,4 +280,3 @@ struct PurchaseDetailView_Previews: PreviewProvider {
         
     }
 }
-#endif
