@@ -12,7 +12,6 @@ enum SettingsOption {
     case getStarted
     case contactUs
     case tweetUs
-    case translationSuggestion
     case about
     case review
     case deletePin
@@ -32,8 +31,6 @@ enum SettingsOption {
             return .init(sysIcon: "bubble.left.and.bubble.right.fill", color: .pink, title: "Contact Us", subtitle: "Get help or ask a question.")
         case .tweetUs:
             return .init(icon: "twitter", color: Color("twitter"), title: "Tweet Us", subtitle: "Stay up to date.")
-        case .translationSuggestion:
-            return .init(icon: "translation", color: .blue, title: "Translation Suggestion", subtitle: "Improve our localization.")
         case .about:
             return .init(sysIcon: "info", color: .orange, title: "About", subtitle: "Version information.")
         case .review:
