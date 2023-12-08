@@ -196,11 +196,16 @@ struct TransferView: View {
                             
                             Spacer(minLength: 1)
                             
-                            Button {
-                                presentedSheet = .merchants
-                            } label: {
-                                Image(systemName: "plus.circle.fill")
-                                    .imageScale(.large)
+                            if merchantStore.isFetching {
+                                ProgressView()
+                                    .tint(.blue)
+                            } else {
+                                Button {
+                                    presentedSheet = .merchants
+                                } label: {
+                                    Image(systemName: "plus.circle.fill")
+                                        .imageScale(.large)
+                                }
                             }
                             
                         }
