@@ -15,8 +15,8 @@ struct Merchant: Codable, Identifiable {
     let address: String?
     let code: String
     let ownerId: String?
-    var hashCode: UUID
-    var createdDate: Date?
+    let hashCode: UUID
+    let createdDate: Date?
     
     init(_ id: String? = nil, name: String, address: String?, code: String, ownerId: String) {
         self.id = id
