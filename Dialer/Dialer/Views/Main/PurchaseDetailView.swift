@@ -27,6 +27,7 @@ struct PurchaseDetailView: View {
             .matchedGeometryEffect(id: "border", in: animation)
     }
     
+    private let defaultHeight: CGFloat = 300
     
     var body: some View {
         VStack(spacing: 8) {
@@ -185,10 +186,10 @@ struct PurchaseDetailView: View {
                     withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
                         bottomState = value.translation
                         if showFull {
-                            bottomState.height += -300
+                            bottomState.height += -defaultHeight
                         }
-                        if bottomState.height < -300 {
-                            bottomState.height = -300
+                        if bottomState.height < -defaultHeight {
+                            bottomState.height = -defaultHeight
                         }
                     }
                 }
@@ -198,7 +199,7 @@ struct PurchaseDetailView: View {
                         isPresented = false
                     }
                     if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
-                        bottomState.height = -300
+                        bottomState.height = -defaultHeight
                         showFull = true
                     } else {
                         bottomState = .zero

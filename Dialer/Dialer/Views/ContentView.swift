@@ -12,21 +12,7 @@ struct ContentView: View {
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
     
     @State private var showPurchaseSheet = true
-//    var body: some View {
-//        VStack {
-//            Text("Element")
-//                .onTapGesture(perform: {
-//                    showPurchaseSheet.toggle()
-//                })
-//                .sheet(isPresented: $showPurchaseSheet) {
-//                    if #available(iOS 16.0, *) {
-//                        PurchaseDetailView(isPresented: $showPurchaseSheet, isIOS16: true, data: data)
-//                            .presentationDetents([.medium])
-//                    }
-//                }
-//            
-//        }
-//    }
+    
     var body: some View {
         NavigationView {
             DashBoardView()

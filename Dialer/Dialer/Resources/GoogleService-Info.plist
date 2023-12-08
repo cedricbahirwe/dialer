@@ -32,5 +32,7 @@
 	<string>1:159267134596:ios:9e60b7d3608df542d2f6d1</string>
 	<key>FirebaseScreenReportingEnabled</key>
 	<false/>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<false/>
 </dict>
 </plist>

@@ -20,11 +20,11 @@ struct DashBoardView: View {
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
         
-    var isIOS16AndPlus: Bool {
-        true
-//        guard #available(iOS 16.0, *) else { return false }
-//        return true
+    private var isIOS16AndPlus: Bool {
+        guard #available(iOS 16.0, *) else { return false }
+        return true
     }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
