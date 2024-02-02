@@ -15,7 +15,7 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var didCopyToClipBoard = false
     @State private var allContacts: [Contact] = []
-    @State private var selectedContact: Contact = Contact(names: "", phoneNumbers: [])
+    @State private var selectedContact: Contact = .empty
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
     
     @State private var presentedSheet: Sheet?
@@ -356,13 +356,10 @@ private extension TransferView {
         
         if transaction.type == .merchant {
             transaction.number = String(value.prefix(6))
+            selectedContact = .empty
         } else {
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
-            if matchedContacts.isEmpty {
-                selectedContact = .init(names: "", phoneNumbers: [])
-            } else {
-                selectedContact = matchedContacts.first!
-            }
+            selectedContact = matchedContacts.isEmpty ? .empty : matchedContacts.first!
         }
     }
     

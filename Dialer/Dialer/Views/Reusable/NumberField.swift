@@ -35,7 +35,6 @@ struct NumberField: View {
 }
 
 
-#if DEBUG
 struct NumberField_Previews: PreviewProvider {
     static var previews: some View {
         NumberField("placeholder", text: .constant(""))
@@ -43,4 +42,3 @@ struct NumberField_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-#endif

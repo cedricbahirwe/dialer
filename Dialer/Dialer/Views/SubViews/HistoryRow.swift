@@ -57,7 +57,6 @@ struct HistoryRow: View {
     }
 }
 
-#if DEBUG
 struct HistoryRow_Previews: PreviewProvider {
     static var previews: some View {
         HistoryRow(recentCode: MockPreview.recentDial)
@@ -65,4 +64,3 @@ struct HistoryRow_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-#endif

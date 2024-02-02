@@ -7,7 +7,7 @@
 
 import Foundation
 
-#if DEBUG
+
 enum MockPreview {
     static let contact1 = Contact(names: "Kate Bell",
                                  phoneNumbers: ["(555) 564-8583", "(415) 555-3695"])
@@ -25,4 +25,3 @@ enum MockPreview {
         Merchant(Optional("xW5nAHmPgTmvyohe0XtI"), name: "La gardienne", address: "12 KN 41St, Kigali", code: "004422", ownerId: UUID().uuidString)
     ]
 }
-#endif

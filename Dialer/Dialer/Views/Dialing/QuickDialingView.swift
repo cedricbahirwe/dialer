@@ -125,11 +125,9 @@ struct QuickDialingView: View {
     }
 }
 
-#if DEBUG
 struct QuickDialingView_Previews: PreviewProvider {
     static var previews: some View {
         QuickDialingView()
         //        .previewLayout(.fixed(width: 850, height: 900))
     }
 }
-#endif
