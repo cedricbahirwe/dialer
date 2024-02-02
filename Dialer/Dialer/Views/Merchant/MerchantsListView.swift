@@ -76,11 +76,9 @@ private extension MerchantsListView {
     }
 }
 
-#if DEBUG
 struct MerchantsListView_Previews: PreviewProvider {
     static var previews: some View {
         MerchantsListView()
             .environmentObject(MerchantStore())
     }
 }
-#endif

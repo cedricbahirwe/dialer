@@ -16,10 +16,11 @@ struct Contact: Identifiable {
         self.names = names
         self.phoneNumbers = phoneNumbers
     }
-
+    
     mutating func updatePhones(_ numbers: [String]) {
         phoneNumbers = numbers
     }
+    static let empty = Contact(names: "", phoneNumbers: [])
 }
 
 struct ContactsDictionary: Identifiable {

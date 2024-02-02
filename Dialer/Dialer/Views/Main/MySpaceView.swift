@@ -131,7 +131,6 @@ extension MySpaceView: ClipBoardDelegate {
     }
 }
 
-#if DEBUG
 struct MySpaceView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -140,4 +139,3 @@ struct MySpaceView_Previews: PreviewProvider {
         }
     }
 }
-#endif

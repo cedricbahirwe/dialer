@@ -92,11 +92,9 @@ struct ThanksYouView: View {
     }
 }
 
-#if DEBUG
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
         ThanksYouView(isPresented: .constant(true))
         //            .preferredColorScheme(.dark)
     }
 }
-#endif
