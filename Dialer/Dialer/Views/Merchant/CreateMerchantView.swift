@@ -106,10 +106,8 @@ private extension CreateMerchantView {
     }
 }
 
-#if DEBUG
 struct CreateMerchantView_Previews: PreviewProvider {
     static var previews: some View {
         CreateMerchantView(merchantStore: MerchantStore())
     }
 }
-#endif

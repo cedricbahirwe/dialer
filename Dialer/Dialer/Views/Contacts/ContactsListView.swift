@@ -163,7 +163,6 @@ private extension ContactsListView {
     }
 }
 
-#if DEBUG
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -173,4 +172,3 @@ struct ContactsList_Previews: PreviewProvider {
         }
     }
 }
-#endif

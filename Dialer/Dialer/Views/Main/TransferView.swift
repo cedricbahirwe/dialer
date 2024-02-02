@@ -359,12 +359,7 @@ private extension TransferView {
             selectedContact = .empty
         } else {
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
-            selectedContact = matchedContacts.isEmpty 
-            if matchedContacts.isEmpty {
-                selectedContact = .empty
-            } else {
-                selectedContact = matchedContacts.first!
-            }
+            selectedContact = matchedContacts.isEmpty ? .empty : matchedContacts.first!
         }
     }
     
