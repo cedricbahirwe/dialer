@@ -21,24 +21,6 @@ extension PurchaseDetailModel {
         return "\(prefixCode)\(amount)*PIN#"
     }
     
-    @available(*, deprecated, renamed: "getFullUSSDCode()", message: "MTN disabled the ability to directly dial airtime USSD that includes Momo PIN.")
-    private func getFullUSSDCode(with pinCode: CodePin?) -> String {
-        let pin: String
-        if let pinCode, pinCode.digits >= 5 {
-            pin = pinCode.asString
-        } else {
-            pin = ""
-        }
-        
-        /// `27/03/2023`: MTN disabled the ability to dial airtime USSD that includes Momo PIN for an amount greater than 99.
-        /// You can dial the code with PIN for amount in the range of 10 to 99
-        if !pin.isEmpty && AppConstants.allowedAmountRangeForPin.contains(amount) {
-            return "\(prefixCode)\(amount)*\(pin)#"
-        } else {
-            return "\(prefixCode)\(amount)#"
-        }
-    }
-    
     func getFullUSSDCode() -> String {
         return "\(prefixCode)\(amount)#"
     }

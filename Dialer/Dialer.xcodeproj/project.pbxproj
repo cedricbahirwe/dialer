@@ -1024,7 +1024,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.4.1;
+				MARKETING_VERSION = 5.5.0;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_warn_duplicate_libraries",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1051,7 +1055,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.4.1;
+				MARKETING_VERSION = 5.5.0;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_warn_duplicate_libraries",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1187,7 +1195,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.4.1;
+				MARKETING_VERSION = 5.5.0;
 				OTHER_LDFLAGS = (
 					"-Xlinker",
 					"-no_warn_duplicate_libraries",
@@ -1319,7 +1327,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.4.1;
+				MARKETING_VERSION = 5.5.0;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_warn_duplicate_libraries",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1460,9 +1472,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				kind = versionRange;
-				maximumVersion = 11.0.0;
-				minimumVersion = 10.0.0;
+				kind = exactVersion;
+				version = 10.23.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

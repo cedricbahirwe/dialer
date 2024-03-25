@@ -188,7 +188,7 @@ struct PurchaseDetailView_Previews: PreviewProvider {
                 
                 ZStack(alignment: .bottom) {
                     Spacer()
-
+                    
                     PurchaseDetailView(
                         isPresented: .constant(true),
                         isIOS16: false,

@@ -118,6 +118,7 @@ struct SettingsView: View {
             }
             .trackAppearance(.settings)
         }
+        
     }
     
     private func presentPinRemovalSheet() {
