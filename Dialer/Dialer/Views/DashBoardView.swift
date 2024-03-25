@@ -16,7 +16,6 @@ struct DashBoardView: View {
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
-    @State private var presentQuickDial = false
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
         
@@ -77,8 +76,6 @@ struct DashBoardView: View {
                 } label: { EmptyView() }
                 
                 Spacer()
-                
-                bottomBarView
             }
             .blur(radius: showPurchaseSheet ? 3 : 0)
             .allowsHitTesting(!showPurchaseSheet)
@@ -113,9 +110,6 @@ struct DashBoardView: View {
             case .history:
                 DialingsHistoryView(data: data.history)
             }
-        }
-        .fullScreenCover(isPresented: $presentQuickDial) {
-            QuickDialingView()
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")
@@ -153,24 +147,6 @@ private extension DashBoardView {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             )
-    }
-    
-    var bottomBarView: some View {
-        HStack {
-            if UIApplication.hasSupportForUSSD {
-                Button {
-                    presentQuickDial.toggle()
-                } label: {
-                    Label("Quick Dial", systemImage: "plus.circle.fill")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                }
-                .foregroundStyle(.mainRed)
-            }
-            
-            Spacer(minLength: 5)
-        }
-        .padding(.horizontal)
-        .padding(.bottom, 8)
     }
 }
 

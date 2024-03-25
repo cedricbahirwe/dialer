@@ -70,7 +70,6 @@
 		CB3B81EA29ABD2B0001FAFF6 /* CreateMerchantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */; };
 		CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */; };
 		CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */; };
-		CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */; };
 		CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB45381228AB8FE000F3F24C /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 		CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */; };
@@ -204,7 +203,6 @@
 		CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMerchantView.swift; sourceTree = "<group>"; };
 		CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenName.swift; sourceTree = "<group>"; };
 		CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamelToSnakeTests.swift; sourceTree = "<group>"; };
-		CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDialingView.swift; sourceTree = "<group>"; };
 		CB45380F28AB7E8B00F3F24C /* USSDCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USSDCode.swift; sourceTree = "<group>"; };
 		CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
 		CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
@@ -491,7 +489,6 @@
 			isa = PBXGroup;
 			children = (
 				821C0733264DD78F00DBD545 /* NewDialingView.swift */,
-				CB45380D28AB7CE200F3F24C /* QuickDialingView.swift */,
 			);
 			path = Dialing;
 			sourceTree = "<group>";
@@ -658,8 +655,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				CLASSPREFIX = CB;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1500;
+				ORGANIZATIONNAME = "Cédric Bahirwe";
 				TargetAttributes = {
 					82D41FB225D1C1FE00551D22 = {
 						CreatedOnToolsVersion = 12.3;
@@ -798,7 +797,6 @@
 				CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */,
 				8255E68E2693959800657EFB /* ThanksYouView.swift in Sources */,
 				CB338CDC29AF6BDC00BEAD9A /* AppConfiguration.swift in Sources */,
-				CB45380E28AB7CE300F3F24C /* QuickDialingView.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
 				CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */,
 				CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */,

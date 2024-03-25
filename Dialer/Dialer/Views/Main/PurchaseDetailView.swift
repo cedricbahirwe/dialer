@@ -12,19 +12,15 @@ struct PurchaseDetailView: View {
     let isIOS16: Bool
     @ObservedObject var data: MainViewModel
     @State private var didCopyToClipBoard: Bool = false
-    @State private var show = false
     @State private var bottomState = CGSize.zero
-    @State private var showFull = false
-    @Namespace private var animation
     
     private let defaultSheetHeight: CGFloat = 300
     private var fieldBorder: some View {
         RoundedRectangle(cornerRadius: 8)
             .stroke(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing),  lineWidth:1)
-            .matchedGeometryEffect(id: "border", in: animation)
     }
-        
-    var body: some View {
+    
+    private var contentView: some View {
         VStack(spacing: 8) {
             Capsule()
                 .fill(Color.gray)
@@ -80,8 +76,8 @@ struct PurchaseDetailView: View {
             }
             
             PinView(input: inputBinding())
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .padding(.vertical)
+                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                .padding(.vertical, 10)
         }
         .font(.system(size: 18, weight: .semibold, design: .rounded))
         .padding([.horizontal, .bottom])
@@ -94,10 +90,19 @@ struct PurchaseDetailView: View {
                 .shadow(radius: 5)
         )
         .font(.system(size: 18, weight: .semibold, design: .rounded))
-        .offset(x: 0, y: isPresented ? 0 : 800)
         .offset(y: max(0, bottomState.height))
-        .blur(radius: show ? 20 : 0)
-        .gesture(sheetDragGesture)
+        .offset(x: 0, y: isPresented ? 0 : 800)
+    }
+    
+    var body: some View {
+        Group {
+            if isIOS16 {
+                contentView
+            } else {
+                contentView
+                    .gesture(sheetDragGesture)
+            }
+        }
         .onChange(of: isPresented) { newValue in
             if newValue {
                 Tracker.shared.startSession(for: .buyAirtime)
@@ -113,27 +118,28 @@ struct PurchaseDetailView: View {
                 guard !isIOS16 else { return }
                 withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
                     bottomState = value.translation
-                    if showFull {
-                        bottomState.height += -defaultSheetHeight
-                    }
-                    if bottomState.height < -defaultSheetHeight {
-                        bottomState.height = -defaultSheetHeight
-                    }
                 }
             }
             .onEnded { value in
                 guard !isIOS16 else { return }
-                if bottomState.height > 50 {
-                    isPresented = false
-                }
-                if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
-                    bottomState.height = -defaultSheetHeight
-                    showFull = true
+                if bottomState.height > 100 {
+                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                        bottomState.height = defaultSheetHeight + 200
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        resetView()
+                    }
                 } else {
-                    bottomState = .zero
-                    showFull = false
+                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                        bottomState = .zero
+                    }
                 }
             }
+    }
+    
+    private func resetView() {
+        isPresented = false
+        bottomState = .zero
     }
 }
 
