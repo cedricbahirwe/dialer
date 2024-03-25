@@ -214,3 +214,72 @@ struct SettingsView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
+
+
+#warning("This code should be transferred to settings where users will be able to save their Pin")
+
+//if !data.hasStoredCodePin() {
+//    VStack(spacing: 2) {
+//        Text(
+//            NSLocalizedString(codepin.isEmpty ? "Enter Pin" : codepin.description,
+//                              comment: "")
+//        )
+//        .frame(maxWidth: .infinity)
+//        .frame(height: 40)
+//        .background(Color.primary.opacity(0.06))
+//
+//        .background(
+//            Color.green.opacity(editedField == .code ? 0.04 : 0.0)
+//        )
+//        .cornerRadius(8)
+//        .overlay(
+//            ZStack {
+//                if editedField == .code {
+//                    fieldBorder
+//                }
+//            }
+//        )
+//        .contentShape(Rectangle())
+//        .onTapGesture {
+//            withAnimation {
+//                editedField = .code
+//            }
+//        }
+//        .overlay(
+//            Button(action: {
+//                guard let codepin = try? CodePin(codepin) else { return }
+//                data.saveCodePin(codepin)
+//                withAnimation {
+//                    self.codepin = ""
+//                    editedField = .amount
+//                }
+//            }){
+//                Text("Save")
+//                    .fontWeight(.semibold)
+//                    .padding(.horizontal, 20)
+//                    .frame(height: 40)
+//                    .background(Color.primary)
+//                    .cornerRadius(8)
+//                    .foregroundStyle(.background)
+//            }
+//                .disabled(!data.isPinCodeValid)
+//                .opacity(data.isPinCodeValid ? 1 : 0.4)
+//            , alignment: .trailing
+//        )
+//    }
+//
+//} else {
+//    VStack {
+//        Text("We've got your back 🎉")
+//        Text("Enter the amount and you're good to go✌🏾")
+//    }
+//    .font(.caption)
+//    .multilineTextAlignment(.center)
+//    .foregroundColor(.green)
+//    .padding(.horizontal, 5)
+//    .frame(height: 40)
+//}
+//func filterPin(_ value: String) {
+//    codepin = String(value.prefix(5))
+//    data.pinCode = try? CodePin(codepin)
+//}

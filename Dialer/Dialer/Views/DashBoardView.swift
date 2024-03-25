@@ -100,7 +100,6 @@ struct DashBoardView: View {
             if #available(iOS 16.0, *) {
                 makePurchaseDetailView()
                     .presentationDetents([.height(400)])
-                    .presentationDragIndicator(.visible)
             }
         }
         .sheet(isPresented: $showWelcomeView) {
