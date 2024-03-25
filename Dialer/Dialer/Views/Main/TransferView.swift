@@ -29,7 +29,7 @@ struct TransferView: View {
         if fee == -1 {
             return Text("We can not estimate the fee for this amount.")
         } else {
-            return Text(String(format: NSLocalizedString("Estimated fee: amount RWF", comment: ""), fee))
+            return Text("Estimated fee: \(fee) RWF")
         }
     }
     
@@ -106,7 +106,8 @@ struct TransferView: View {
                             .cornerRadius(8)
                             .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
                             .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
-                        }                 }
+                        }                
+                    }
                     
                     HStack {
                         if UIApplication.hasSupportForUSSD {

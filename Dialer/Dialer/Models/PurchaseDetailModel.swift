@@ -21,7 +21,8 @@ extension PurchaseDetailModel {
         return "\(prefixCode)\(amount)*PIN#"
     }
     
-    func getFullUSSDCode(with pinCode: CodePin?) -> String {
+    @available(*, deprecated, renamed: "getFullUSSDCode()", message: "MTN disabled the ability to directly dial airtime USSD that includes Momo PIN.")
+    private func getFullUSSDCode(with pinCode: CodePin?) -> String {
         let pin: String
         if let pinCode, pinCode.digits >= 5 {
             pin = pinCode.asString
@@ -38,13 +39,17 @@ extension PurchaseDetailModel {
         }
     }
     
+    func getFullUSSDCode() -> String {
+        return "\(prefixCode)\(amount)#"
+    }
+    
     
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
-    func dialCode(pinCode: CodePin? = nil) async throws {
+    func dialCode() async throws {
         
-        let newUrl = getFullUSSDCode(with: pinCode)
+        let newUrl = getFullUSSDCode()
         
         if let telUrl = URL(string: "tel://\(newUrl)") {
             try await DialService.dial(telUrl)

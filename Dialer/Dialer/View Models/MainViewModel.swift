@@ -81,7 +81,7 @@ final class MainViewModel: ObservableObject {
     ///   - purchase: the purchase to take the fullCode from.
     private func dialCode(from purchase: PurchaseDetailModel) async throws {
         
-        let newUrl = purchase.getFullUSSDCode(with: pinCode)
+        let newUrl = purchase.getFullUSSDCode()
         
         if let telUrl = URL(string: "tel://\(newUrl)") {
             try await DialService.dial(telUrl)
@@ -91,7 +91,7 @@ final class MainViewModel: ObservableObject {
     }
     
     func getPurchaseDetailUSSDCode() -> String {
-        purchaseDetail.getFullUSSDCode(with: pinCode)
+        purchaseDetail.getFullUSSDCode()
     }
     
     /// Perform an independent dial, without storing or tracking.

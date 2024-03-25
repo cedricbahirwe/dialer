@@ -92,14 +92,15 @@ struct DashBoardView: View {
                             }
                         }
                 }
-                PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
+                makePurchaseDetailView()
             }
             
         }
         .sheet(isPresented: isIOS16AndPlus ? $showPurchaseSheet : .constant(false)) {
             if #available(iOS 16.0, *) {
-                PurchaseDetailView(isPresented: $showPurchaseSheet, isIOS16: true, data: data)
-                    .presentationDetents([.medium])
+                makePurchaseDetailView()
+                    .presentationDetents([.height(400)])
+                    .presentationDragIndicator(.visible)
             }
         }
         .sheet(isPresented: $showWelcomeView) {
@@ -136,7 +137,16 @@ struct DashBoardView: View {
         .trackAppearance(.dashboard)
     }
     
-    private var gearGradient: some View {
+    private func makePurchaseDetailView() -> PurchaseDetailView {
+        PurchaseDetailView(
+            isPresented: $showPurchaseSheet,
+            isIOS16: isIOS16AndPlus,
+            data: data)
+    }
+}
+
+private extension DashBoardView {
+    var gearGradient: some View {
         LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
             .frame(width: 30, height: 30)
             .mask(
@@ -146,9 +156,6 @@ struct DashBoardView: View {
             )
     }
     
-}
-
-extension DashBoardView {
     var bottomBarView: some View {
         HStack {
             if UIApplication.hasSupportForUSSD {

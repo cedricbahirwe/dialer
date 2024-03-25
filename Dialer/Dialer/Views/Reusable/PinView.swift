@@ -18,14 +18,11 @@ struct PinView: View {
         defaults += isFullMode ? ["#"] : ["X"]
         return defaults
     }
+    
+    private let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 10), count: 3)
+
     var body: some View {
-        LazyVGrid(
-            columns: Array(
-                repeating: .init(.flexible(),
-                                 spacing: 10),
-                count: 3),
-            spacing: 8
-        ) {
+        LazyVGrid(columns: columns, spacing: 8) {
             ForEach(buttons, id: \.self) { button in
                 CircleButton(button, size: btnSize,
                              action: { addKey(button)})
