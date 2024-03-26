@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-enum MockPreview {
+enum MockPreviewData {
     static let contact1 = Contact(names: "Kate Bell",
                                  phoneNumbers: ["(555) 564-8583", "(415) 555-3695"])
     static let contact2 = Contact(names: "John Smith",
