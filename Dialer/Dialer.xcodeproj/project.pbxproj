@@ -110,7 +110,6 @@
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
-		CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45381128AB8FE000F3F24C /* DialerQuickCode.swift */; };
 		CBE73C5E2A2C76BF00C7712B /* MockPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C5D2A2C76BF00C7712B /* MockPreview.swift */; };
 		CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C602A2C789C00C7712B /* ContactRowView.swift */; };
@@ -820,7 +819,6 @@
 				CBE3D8AE290C1D6500DF5C09 /* DialerQuickCode.swift in Sources */,
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
 				CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */,
-				CBE3D8AD290C1D5900DF5C09 /* CodePin.swift in Sources */,
 				CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */,
 				CBAF131A2785A57400D32E1F /* ElectricityMeter.swift in Sources */,
 				CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */,

@@ -17,30 +17,17 @@ final class DialerQuickCodeTests: XCTestCase {
     }
 
     func testMomoQuickCode() throws {
-        let pin = makeCodePin(20_000)
-        let code1 =  DialerQuickCode.mobileWalletBalance(code: pin)
-        XCTAssertEqual(code1.ussd, "*182*6*1*20000#")
-        XCTAssertEqual(code1.ussd, "*182*6*1*\(pin.asString)#")
-
-        let code2 =  DialerQuickCode.mobileWalletBalance(code: nil)
-        XCTAssertEqual(code2.ussd, "*182*6*1#")
+        let code1 =  DialerQuickCode.mobileWalletBalance
+        XCTAssertEqual(code1.ussd, "*182*6*1#")
     }
 
 
     func testElectricityQuickCode() throws {
-        let pin = makeCodePin(10_000)
         let meter = "1000000"
         let amount = 1_000
         let code1 =  DialerQuickCode.electricity(meter: meter,
-                                                 amount: amount,
-                                                 code: pin)
-        XCTAssertEqual(code1.ussd, "*182*2*2*1*1*1000000*1000*10000#")
-        XCTAssertEqual(code1.ussd, "*182*2*2*1*1*1000000*1000*\(pin.asString)#")
-
-        let code2 =  DialerQuickCode.electricity(meter: meter,
-                                                 amount: amount,
-                                                 code: nil)
-        XCTAssertEqual(code2.ussd, "*182*2*2*1*1*1000000*1000#")
+                                                 amount: amount)
+        XCTAssertEqual(code1.ussd, "*182*2*2*1*1*1000000*1000#")
     }
 
     func testOtherQuickCode() throws {
