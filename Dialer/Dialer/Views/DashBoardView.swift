@@ -16,7 +16,6 @@ struct DashBoardView: View {
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
-    @State private var presentQuickDial = false
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
         
@@ -77,8 +76,6 @@ struct DashBoardView: View {
                 } label: { EmptyView() }
                 
                 Spacer()
-                
-                bottomBarView
             }
             .blur(radius: showPurchaseSheet ? 3 : 0)
             .allowsHitTesting(!showPurchaseSheet)
@@ -92,14 +89,14 @@ struct DashBoardView: View {
                             }
                         }
                 }
-                PurchaseDetailView(isPresented: $showPurchaseSheet, data: data)
+                makePurchaseDetailView()
             }
             
         }
         .sheet(isPresented: isIOS16AndPlus ? $showPurchaseSheet : .constant(false)) {
             if #available(iOS 16.0, *) {
-                PurchaseDetailView(isPresented: $showPurchaseSheet, isIOS16: true, data: data)
-                    .presentationDetents([.medium])
+                makePurchaseDetailView()
+                    .presentationDetents([.height(400)])
             }
         }
         .sheet(isPresented: $showWelcomeView) {
@@ -113,9 +110,6 @@ struct DashBoardView: View {
             case .history:
                 DialingsHistoryView(data: data.history)
             }
-        }
-        .fullScreenCover(isPresented: $presentQuickDial) {
-            QuickDialingView()
         }
         .background(Color.primaryBackground)
         .navigationTitle("Dialer")
@@ -136,7 +130,16 @@ struct DashBoardView: View {
         .trackAppearance(.dashboard)
     }
     
-    private var gearGradient: some View {
+    private func makePurchaseDetailView() -> PurchaseDetailView {
+        PurchaseDetailView(
+            isPresented: $showPurchaseSheet,
+            isIOS16: isIOS16AndPlus,
+            data: data)
+    }
+}
+
+private extension DashBoardView {
+    var gearGradient: some View {
         LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
             .frame(width: 30, height: 30)
             .mask(
@@ -144,27 +147,6 @@ struct DashBoardView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             )
-    }
-    
-}
-
-extension DashBoardView {
-    var bottomBarView: some View {
-        HStack {
-            if UIApplication.hasSupportForUSSD {
-                Button {
-                    presentQuickDial.toggle()
-                } label: {
-                    Label("Quick Dial", systemImage: "plus.circle.fill")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                }
-                .foregroundStyle(.mainRed)
-            }
-            
-            Spacer(minLength: 5)
-        }
-        .padding(.horizontal)
-        .padding(.bottom, 8)
     }
 }
 

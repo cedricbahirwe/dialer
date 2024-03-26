@@ -18,63 +18,78 @@ struct PinView: View {
         defaults += isFullMode ? ["#"] : ["X"]
         return defaults
     }
+    
+    private let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 10), count: 3)
+
     var body: some View {
-        LazyVGrid(
-            columns: Array(
-                repeating: .init(.flexible(),
-                                 spacing: 10),
-                count: 3),
-            spacing: 8
-        ) {
+        LazyVGrid(columns: columns, spacing: 8) {
             ForEach(buttons, id: \.self) { button in
-                CircleButton(button, size: btnSize,
-                             action: { addKey(button)})
-                .foregroundColor(
-                    button == "X" ?
-                    Color.red : Color(.label)
-                )
+                
+                PinButton(button, size: btnSize,
+                          action: { handleKey(button)})
+                .foregroundStyle(.primary)
                 .opacity(!isFullMode && button == "*" ? 0 : 1)
-                .opacity(input.isEmpty && button == "X" ? 0 : 1)
                 
             }
         }
     }
     
-    private func addKey(_ value: String) {
+    private func handleKey(_ value: String) {
         if value == "X" {
-            if !input.isEmpty {
-                input.removeLast()
-            }
+            removeLastKey()
         } else {
-            input.append(value)
+            addKey(value)
         }
+    }
+    
+    private func addKey(_ value: String) {
+        input.append(value)
+    }
+    
+    private func removeLastKey() {
+        guard !input.isEmpty else { return }
+        input.removeLast()
     }
 }
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
         PinView(input: .constant("*182#"))
+            .previewLayout(.sizeThatFits)
+            .font(.title2)
     }
 }
 
 extension PinView {
-    struct CircleButton: View {
-        let title: String
-        let size: CGFloat
-        let action: () -> Void
+    struct PinButton: View {
+        private let title: String
+        private let size: CGFloat
+        private let action: () -> Void
 
         init(_ title: String, size: CGFloat, action: @escaping () -> Void) {
             self.title = title
             self.size = size
             self.action = action
         }
+        
+        private var isDeleteBtn: Bool {
+            title == "X"
+        }
 
         var body: some View {
             Button(action: action) {
-                Text(title)
-                    .frame(width: size, height: size)
-                    .background(Color.gray.opacity(0.2))
-                    .clipShape(Circle())
+                Group {
+                    if isDeleteBtn {
+                        Image(systemName: "delete.left")
+                    } else {
+                        Text(title)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: size)
+                .background(isDeleteBtn ? .clear : .offBackground) 
+                .clipShape(.rect(cornerRadius: 5))
+                .shadow(radius: 1, x: 0, y: 1)
             }
         }
     }

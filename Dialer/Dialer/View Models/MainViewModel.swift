@@ -15,9 +15,7 @@ protocol ClipBoardDelegate {
 final class MainViewModel: ObservableObject {
     
     private(set) var history = HistoryViewModel()
-    
-    @Published var pinCode: CodePin? = DialerStorage.shared.getCodePin()
-    
+        
     /// Used to show Congratulations Screen
     @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
         didSet(newValue) {
@@ -35,18 +33,7 @@ final class MainViewModel: ObservableObject {
 
     @Published private(set) var ussdCodes: [USSDCode] = []
     
-    @Published var presentedSheet: Sheet?
-    
-    ///  Delete locally the Pin Code.
-    func removePin() {
-        DialerStorage.shared.removePinCode()
-        pinCode = nil
-    }
-
-    /// Has user saved Code Pin
-    func hasStoredCodePin() -> Bool {
-        DialerStorage.shared.hasSavedCodePin()
-    }
+    @Published var presentedSheet: DialerSheet?
     
     /// Confirm and Purchase an entered Code.
     @MainActor
@@ -65,23 +52,12 @@ final class MainViewModel: ObservableObject {
         
     }
     
-    /// Save locally the Code Pin
-    /// - Parameter value: the pin value to be saved.
-    func saveCodePin(_ value: CodePin) {
-        pinCode = value
-        do {
-            try DialerStorage.shared.saveCodePin(value)
-        } catch {
-            Log.debug("Storage: \(error.localizedDescription)")
-        }
-    }
-    
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
     private func dialCode(from purchase: PurchaseDetailModel) async throws {
         
-        let newUrl = purchase.getFullUSSDCode(with: pinCode)
+        let newUrl = purchase.getFullUSSDCode()
         
         if let telUrl = URL(string: "tel://\(newUrl)") {
             try await DialService.dial(telUrl)
@@ -91,7 +67,7 @@ final class MainViewModel: ObservableObject {
     }
     
     func getPurchaseDetailUSSDCode() -> String {
-        purchaseDetail.getFullUSSDCode(with: pinCode)
+        purchaseDetail.getFullUSSDCode()
     }
     
     /// Perform an independent dial, without storing or tracking.
@@ -118,7 +94,7 @@ final class MainViewModel: ObservableObject {
 
 // MARK: - Sheets presentation
 extension MainViewModel {
-    enum Sheet: Int, Identifiable {
+    enum DialerSheet: Int, Identifiable {
         var id: Int { rawValue }
         case settings
         case history
@@ -152,12 +128,12 @@ extension MainViewModel {
     }
 
     func checkMobileWalletBalance() {
-        performQuickDial(for: .mobileWalletBalance(code: pinCode))
+        performQuickDial(for: .mobileWalletBalance)
     }
 
     func getElectricity(for meterNumber: String, amount: Int) {
         let number = meterNumber.replacingOccurrences(of: " ", with: "")
-        performQuickDial(for: .electricity(meter: number, amount: amount, code: pinCode))
+        performQuickDial(for: .electricity(meter: number, amount: amount))
     }
 }
 
@@ -259,9 +235,5 @@ extension RecentDialCode {
 extension MainViewModel {
     var hasValidAmount: Bool {
         purchaseDetail.amount >= AppConstants.minAmount
-    }
-    
-    var isPinCodeValid: Bool {
-        pinCode?.asString.count == 5
     }
 }

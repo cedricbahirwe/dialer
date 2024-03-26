@@ -59,7 +59,7 @@ struct HistoryRow: View {
 
 struct HistoryRow_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryRow(recentCode: MockPreview.recentDial)
+        HistoryRow(recentCode: MockPreviewData.recentDial)
             .padding()
             .previewLayout(.sizeThatFits)
     }

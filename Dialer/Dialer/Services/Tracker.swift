@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 protocol AnalyticsEventType {
     var stringValue: String { get }

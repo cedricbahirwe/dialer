@@ -19,7 +19,11 @@ final class DialerStorage {
     
     static let shared = DialerStorage()
     
-    private init() { }
+    private init() {
+        // Delete PinCode if it exists for all devices
+        // Note: Remove this in next version + 1
+        removePinCode()
+    }
     
     func saveOneTimeUniqueAppID() {
         guard getOneTimeUniqueAppID() == nil else { return }
@@ -34,24 +38,7 @@ final class DialerStorage {
         return uniqueID
     }
 
-    func saveCodePin(_ value: CodePin) throws {
-        let data = try encodeData(value)
-        userDefaults.setValue(data, forKey: LocalKeys.pinCode)
-    }
     
-    func getCodePin() -> CodePin? {
-        // Handle Migration
-        if let code = userDefaults.value(forKey: LocalKeys.pinCode) as? Int {
-            return try? CodePin(code)
-        } else {
-            return decodeData(key: LocalKeys.pinCode, as: CodePin.self)
-        }
-    }
-
-    func hasSavedCodePin() -> Bool {
-        getCodePin() != nil
-    }
-
     func removePinCode() {
         userDefaults.removeObject(forKey: LocalKeys.pinCode)
     }

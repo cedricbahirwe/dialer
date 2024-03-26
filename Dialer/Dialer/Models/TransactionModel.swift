@@ -13,7 +13,7 @@ struct Transaction: Identifiable {
     var number: String
     var type: TransactionType
     
-    var trailingCode: String {
+    private var trailingCode: String {
         // Need strategy to deal with country code
         number.replacingOccurrences(of: " ", with: "") + "*" + amount
     }

@@ -36,7 +36,7 @@ struct ContactRowView: View {
 
 struct ContactRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactRowView(contact: MockPreview.contact1)
+        ContactRowView(contact: MockPreviewData.contact1)
             .padding()
             .previewLayout(.sizeThatFits)
     }

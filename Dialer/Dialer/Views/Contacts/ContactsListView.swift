@@ -167,8 +167,8 @@ struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ContactsListView(
-                contacts: [MockPreview.contact1, MockPreview.contact2],
-                selection: MockPreview.contact1) { _ in }
+                contacts: [MockPreviewData.contact1, MockPreviewData.contact2],
+                selection: MockPreviewData.contact1) { _ in }
         }
     }
 }

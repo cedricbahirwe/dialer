@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 struct DeviceAccount: Codable {
     @DocumentID private var id: String?
 
-    var name: String
+    let name: String
     let model: String
     let systemVersion: String
     let systemName: String

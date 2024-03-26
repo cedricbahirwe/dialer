@@ -32,17 +32,12 @@ class DialerUITests: XCTestCase {
     }
 
     func testHomeComponentDisplay() throws {
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
 
         let element = app.buttons
 
         debugMe(element)
 
         try testHomeMenuItemsDisplay()
-
-        try testDialButtonDisplay()
-
-        try testNewDialViewComponents()
 
     }
     
@@ -97,17 +92,6 @@ class DialerUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Buy airtime"].exists)
         XCTAssertTrue(app.staticTexts["Transfer/Pay"].exists)
         XCTAssertTrue(app.staticTexts["History"].exists)
-    }
-
-    func testNewDialViewComponents() throws {
-        app.buttons["Quick Dial"].tap()
-        // Delete button is hidden on first view appearance
-        XCTAssertFalse(app.buttons["Backspace"].isEnabled)
-    }
-
-    func testDialButtonDisplay() throws {
-        XCTAssertTrue(app.staticTexts["Quick Dial"].exists)
-        XCTAssertTrue(app.buttons["Quick Dial"].exists)
     }
 
     private func debugMe(_ element: XCUIElementQuery) {

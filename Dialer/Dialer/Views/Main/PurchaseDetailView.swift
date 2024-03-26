@@ -9,121 +9,35 @@ import SwiftUI
 
 struct PurchaseDetailView: View {
     @Binding var isPresented: Bool
-    var isIOS16 = false
+    let isIOS16: Bool
     @ObservedObject var data: MainViewModel
-    @State private var editedField: EditedField = .amount
-    @State private var codepin: String = ""
     @State private var didCopyToClipBoard: Bool = false
+    @State private var bottomState = CGSize.zero
     
-    @State var show = false
-    @State var bottomState = CGSize.zero
-    @State var showFull = false
-    
-    @Namespace private var animation
-    
+    private let defaultSheetHeight: CGFloat = 300
     private var fieldBorder: some View {
         RoundedRectangle(cornerRadius: 8)
             .stroke(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing),  lineWidth:1)
-            .matchedGeometryEffect(id: "border", in: animation)
     }
     
-    private let defaultHeight: CGFloat = 300
-    
-    var body: some View {
+    private var contentView: some View {
         VStack(spacing: 8) {
-            
             Capsule()
                 .fill(Color.gray)
                 .frame(width: 50, height: 5)
-                .padding(.vertical, 8)
-                .opacity(isIOS16 ? 0 : 1)
+                .padding(.vertical, 12)
             
             VStack(spacing: 10) {
                 
-                Text(data.hasValidAmount ? data.purchaseDetail.amount.description : NSLocalizedString("Enter Amount", comment: ""))
+                Text(data.hasValidAmount ? data.purchaseDetail.amount.description : "Enter Amount")
                     .opacity(data.hasValidAmount ? 1 : 0.6)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(Color.primary.opacity(0.06))
-                    .background(
-                        Color.green.opacity(editedField == .amount ? 0.04 : 0)
-                    )
+                    .background(Color.green.opacity(0.04))
                     .cornerRadius(8)
-                    .overlay(
-                        ZStack {
-                            if editedField == .amount {
-                                fieldBorder
-                            }
-                        }
-                    )
-                    .onTapGesture {
-                        withAnimation {
-                            editedField = .amount
-                        }
-                    }
-
-                if !data.hasStoredCodePin() {
-                    VStack(spacing: 2) {
-                        Text(
-                            NSLocalizedString(codepin.isEmpty ? "Enter Pin" : codepin.description,
-                                              comment: "")
-                        )
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 40)
-                        .background(Color.primary.opacity(0.06))
-
-                        .background(
-                            Color.green.opacity(editedField == .code ? 0.04 : 0.0)
-                        )
-                        .cornerRadius(8)
-                        .overlay(
-                            ZStack {
-                                if editedField == .code {
-                                    fieldBorder
-                                }
-                            }
-                        )
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            withAnimation {
-                                editedField = .code
-                            }
-                        }
-                        .overlay(
-                            Button(action: {
-                                guard let codepin = try? CodePin(codepin) else { return }
-                                data.saveCodePin(codepin)
-                                withAnimation {
-                                    self.codepin = ""
-                                    editedField = .amount
-                                }
-                            }){
-                                Text("Save")
-                                    .fontWeight(.semibold)
-                                    .padding(.horizontal, 20)
-                                    .frame(height: 40)
-                                    .background(Color.primary)
-                                    .cornerRadius(8)
-                                    .foregroundStyle(.background)
-                            }
-                                .disabled(!data.isPinCodeValid)
-                                .opacity(data.isPinCodeValid ? 1 : 0.4)
-                            , alignment: .trailing
-                        )
-                    }
-
-                } else {
-                    VStack {
-                        Text("We've got your back 🎉")
-                        Text("Enter the amount and you're good to go✌🏾")
-                    }
-                    .font(.caption)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.green)
-                    .padding(.horizontal, 5)
-                    .frame(height: 40)
-                }
-
+                    .overlay(fieldBorder )
+                
                 if UIApplication.hasSupportForUSSD {
                     Button(action: {
                         Task {
@@ -160,10 +74,10 @@ struct PurchaseDetailView: View {
                     }
                 }
             }
-
+            
             PinView(input: inputBinding())
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .padding(.bottom)
+                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                .padding(.vertical, 10)
         }
         .font(.system(size: 18, weight: .semibold, design: .rounded))
         .padding([.horizontal, .bottom])
@@ -176,37 +90,19 @@ struct PurchaseDetailView: View {
                 .shadow(radius: 5)
         )
         .font(.system(size: 18, weight: .semibold, design: .rounded))
-        .offset(x: 0, y: isPresented ? 0 : 800)
         .offset(y: max(0, bottomState.height))
-        .blur(radius: show ? 20 : 0)
-        .gesture(
-            DragGesture()
-                .onChanged { value in
-                    guard !isIOS16 else { return }
-                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
-                        bottomState = value.translation
-                        if showFull {
-                            bottomState.height += -defaultHeight
-                        }
-                        if bottomState.height < -defaultHeight {
-                            bottomState.height = -defaultHeight
-                        }
-                    }
-                }
-                .onEnded { value in
-                    guard !isIOS16 else { return }
-                    if bottomState.height > 50 {
-                        isPresented = false
-                    }
-                    if (bottomState.height < -100 && !showFull) || (bottomState.height < -250 && showFull) {
-                        bottomState.height = -defaultHeight
-                        showFull = true
-                    } else {
-                        bottomState = .zero
-                        showFull = false
-                    }
-                }
-        )
+        .offset(x: 0, y: isPresented ? 0 : 800)
+    }
+    
+    var body: some View {
+        Group {
+            if isIOS16 {
+                contentView
+            } else {
+                contentView
+                    .gesture(sheetDragGesture)
+            }
+        }
         .onChange(of: isPresented) { newValue in
             if newValue {
                 Tracker.shared.startSession(for: .buyAirtime)
@@ -215,27 +111,50 @@ struct PurchaseDetailView: View {
             }
         }
     }
+    
+    private var sheetDragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                guard !isIOS16 else { return }
+                withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                    bottomState = value.translation
+                }
+            }
+            .onEnded { value in
+                guard !isIOS16 else { return }
+                if bottomState.height > 100 {
+                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                        bottomState.height = defaultSheetHeight + 200
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        resetView()
+                    }
+                } else {
+                    withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
+                        bottomState = .zero
+                    }
+                }
+            }
+    }
+    
+    private func resetView() {
+        isPresented = false
+        bottomState = .zero
+    }
 }
 
 // MARK: - Private Methods
 private extension PurchaseDetailView {
-    func filterPin(_ value: String) {
-        codepin = String(value.prefix(5))
-        data.pinCode = try? CodePin(codepin)
-    }
     
     func inputBinding() -> Binding<String> {
-        switch editedField {
-        case .amount:
-            return Binding {
+        Binding(
+            get: {
                 data.purchaseDetail.amount == 0 ? "" :
                 String(data.purchaseDetail.amount)
-            } set: {
+            }, set: {
                 data.purchaseDetail.amount = Int($0) ?? 0
             }
-        case .code:
-            return $codepin.onChange(filterPin)
-        }
+        )
     }
     
     func copyToClipBoard() {
@@ -244,16 +163,12 @@ private extension PurchaseDetailView {
         withAnimation {
             didCopyToClipBoard = true
         }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             withAnimation {
                 didCopyToClipBoard = false
             }
         }
-    }
-    
-    enum EditedField {
-        case amount, code
     }
 }
 
@@ -262,22 +177,25 @@ struct PurchaseDetailView_Previews: PreviewProvider {
         VStack {
             if #available(iOS 16.0, *) {
                 Text("Purchase Sheet")
-                
-                .sheet(isPresented: .constant(true)) {
-                    PurchaseDetailView(isPresented: .constant(true), isIOS16: true, data: MainViewModel())
+                    .sheet(isPresented: .constant(true)) {
+                        PurchaseDetailView(isPresented: .constant(true),
+                                           isIOS16: true, data: MainViewModel())
                         .background(.purple)
-                        .presentationDetents([.height(490)])
-                }
+                        .presentationDetents([.height(500)])
+                    }
             } else {
                 Spacer()
-
+                
                 ZStack(alignment: .bottom) {
                     Spacer()
-                        .background(Color.red)
-                    PurchaseDetailView(isPresented: .constant(true), data: MainViewModel())
+                    
+                    PurchaseDetailView(
+                        isPresented: .constant(true),
+                        isIOS16: false,
+                        data: MainViewModel()
+                    )
                 }
             }
         }
-        
     }
 }
