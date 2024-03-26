@@ -15,8 +15,8 @@ struct SettingsView: View {
     
     @StateObject private var mailComposer = MailComposer()
     
-    @State var alertItem: AlertDialog?
-    @State var showDialog = false
+    @State private var alertItem: AlertDialog?
+    @State private var showDialog = false
     
     var body: some View {
         NavigationView {
@@ -29,11 +29,6 @@ struct SettingsView: View {
                             .labelsHidden()
                     }
                     
-                    if dataStore.hasStoredCodePin() {
-                        SettingsRow(.deletePin,
-                                    action: presentPinRemovalSheet)
-                    }
-                    
                     if !dataStore.ussdCodes.isEmpty {
                         SettingsRow(.deleteUSSDs,
                                     action: presentUSSDsRemovalSheet)
@@ -41,11 +36,11 @@ struct SettingsView: View {
                 } header: {
                     sectionHeader("General settings")
                 }
-                
                 .confirmationDialog("Confirmation",
                                     isPresented: $showDialog,
                                     titleVisibility: .visible,
-                                    presenting: alertItem) { item in
+                                    presenting: alertItem)
+                { item in
                     
                     Button("Delete",
                            role: .destructive,
@@ -58,7 +53,7 @@ struct SettingsView: View {
                 } message: { item in
                     VStack {
                         Text(item.message)
-                        Text(item.title ?? "asfa")
+                        Text(item.title ?? "")
                     }
                 }
                 
@@ -100,15 +95,14 @@ struct SettingsView: View {
             .sheet(isPresented: $mailComposer.showMailView) {
                 mailComposer.makeMailView()
             }
-            .safeAreaInset(edge: .bottom, content: {
-                
+            .safeAreaInset(edge: .bottom) {
                 Text("By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html).")
                     .font(.subheadline.bold())
                     .multilineTextAlignment(.center)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(.thinMaterial)
-            })
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
@@ -118,14 +112,6 @@ struct SettingsView: View {
             }
             .trackAppearance(.settings)
         }
-        
-    }
-    
-    private func presentPinRemovalSheet() {
-        alertItem = .init("Confirmation",
-                          message: "Do you really want to remove your pin?.\nYou'll need to re-enter it manually later.",
-                          action: dataStore.removePin)
-        showDialog.toggle()
     }
     
     private func presentUSSDsRemovalSheet() {
@@ -215,72 +201,3 @@ struct SettingsView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
     }
 }
-
-
-#warning("This code should be transferred to settings where users will be able to save their Pin")
-
-//if !data.hasStoredCodePin() {
-//    VStack(spacing: 2) {
-//        Text(
-//            NSLocalizedString(codepin.isEmpty ? "Enter Pin" : codepin.description,
-//                              comment: "")
-//        )
-//        .frame(maxWidth: .infinity)
-//        .frame(height: 40)
-//        .background(Color.primary.opacity(0.06))
-//
-//        .background(
-//            Color.green.opacity(editedField == .code ? 0.04 : 0.0)
-//        )
-//        .cornerRadius(8)
-//        .overlay(
-//            ZStack {
-//                if editedField == .code {
-//                    fieldBorder
-//                }
-//            }
-//        )
-//        .contentShape(Rectangle())
-//        .onTapGesture {
-//            withAnimation {
-//                editedField = .code
-//            }
-//        }
-//        .overlay(
-//            Button(action: {
-//                guard let codepin = try? CodePin(codepin) else { return }
-//                data.saveCodePin(codepin)
-//                withAnimation {
-//                    self.codepin = ""
-//                    editedField = .amount
-//                }
-//            }){
-//                Text("Save")
-//                    .fontWeight(.semibold)
-//                    .padding(.horizontal, 20)
-//                    .frame(height: 40)
-//                    .background(Color.primary)
-//                    .cornerRadius(8)
-//                    .foregroundStyle(.background)
-//            }
-//                .disabled(!data.isPinCodeValid)
-//                .opacity(data.isPinCodeValid ? 1 : 0.4)
-//            , alignment: .trailing
-//        )
-//    }
-//
-//} else {
-//    VStack {
-//        Text("We've got your back 🎉")
-//        Text("Enter the amount and you're good to go✌🏾")
-//    }
-//    .font(.caption)
-//    .multilineTextAlignment(.center)
-//    .foregroundColor(.green)
-//    .padding(.horizontal, 5)
-//    .frame(height: 40)
-//}
-//func filterPin(_ value: String) {
-//    codepin = String(value.prefix(5))
-//    data.pinCode = try? CodePin(codepin)
-//}

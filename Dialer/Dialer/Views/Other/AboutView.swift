@@ -33,7 +33,7 @@ struct AboutView: View {
             VStack(spacing: 2) {
                 Text("Designed and developed by")
                     .foregroundColor(.secondary)
-                Link("Cedric Bahirwe.", destination: URL(string: DialerlLinks.authorLinkedIn)!)
+                Link("Cédric Bahirwe.", destination: DialerlLinks.authorLinkedIn)
             }
             .font(.body.weight(.semibold))
 
@@ -59,6 +59,5 @@ struct AboutView_Previews: PreviewProvider {
             AboutView()
                 .navigationBarTitleDisplayMode(.inline)
         }
-        .preferredColorScheme(.dark)
     }
 }

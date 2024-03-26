@@ -163,7 +163,7 @@ struct ElectricityView: View {
 
     private func copyToClipBoard() {
         guard let amount = Int(amount) else { return }
-        let fullCode = DialerQuickCode.electricity(meter: meterNumber, amount: amount, code: store.pinCode)
+        let fullCode = DialerQuickCode.electricity(meter: meterNumber, amount: amount)
         UIPasteboard.general.string = fullCode.ussd
         withAnimation { didCopyToClipBoard = true }
 
