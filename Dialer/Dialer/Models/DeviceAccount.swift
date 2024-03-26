@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 struct DeviceAccount: Codable {
     @DocumentID private var id: String?

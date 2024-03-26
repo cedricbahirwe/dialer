@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 struct Merchant: Codable, Identifiable {
