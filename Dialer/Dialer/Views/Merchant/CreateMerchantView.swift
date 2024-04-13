@@ -106,8 +106,6 @@ private extension CreateMerchantView {
     }
 }
 
-struct CreateMerchantView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateMerchantView(merchantStore: MerchantStore())
-    }
+#Preview {
+    CreateMerchantView(merchantStore: MerchantStore())
 }

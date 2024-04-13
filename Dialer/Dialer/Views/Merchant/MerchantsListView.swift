@@ -12,7 +12,7 @@ struct MerchantsListView: View {
     @State private var showCreateView = false
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(merchantStore.merchants) { merchant in
                     MerchantRow(merchant)
@@ -76,9 +76,7 @@ private extension MerchantsListView {
     }
 }
 
-struct MerchantsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        MerchantsListView()
-            .environmentObject(MerchantStore())
-    }
+#Preview {
+    MerchantsListView()
+        .environmentObject(MerchantStore())
 }

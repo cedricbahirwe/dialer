@@ -19,7 +19,7 @@ struct ContactsListView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 searchBarView
                 
@@ -99,7 +99,7 @@ struct ContactsListView: View {
         .frame(maxHeight: .infinity)
     }
     
-
+    
 }
 
 private extension ContactsListView {
@@ -109,7 +109,7 @@ private extension ContactsListView {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
                     .padding(9)
-
+                
                 TextField("Search by name or phone", text: $contactsVM.searchQuery) { isEditing in
                     withAnimation {
                         self.isSearching = isEditing
@@ -118,7 +118,7 @@ private extension ContactsListView {
                 .font(.system(.callout, design: .rounded))
                 .focused($isSearching)
                 .submitLabel(.done)
-
+                
                 if isSearching {
                     Button(action: clearSearch) {
                         Image(systemName: "multiply.circle.fill")
@@ -129,7 +129,7 @@ private extension ContactsListView {
             }
             .background(Color.offBackground)
             .cornerRadius(6)
-
+            
             if isSearching {
                 Button(action: endEditing) {
                     Text("Cancel")
@@ -140,7 +140,7 @@ private extension ContactsListView {
         .animation(.default, value: isSearching)
         .padding(.horizontal)
     }
-
+    
     private func clearSearch() {
         withAnimation {
             if contactsVM.searchQuery.isEmpty {
@@ -161,12 +161,10 @@ private extension ContactsListView {
     }
 }
 
-struct ContactsList_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ContactsListView(
-                contacts: [MockPreviewData.contact1, MockPreviewData.contact2],
-                selection: MockPreviewData.contact1) { _ in }
-        }
+#Preview {
+    Group {
+        ContactsListView(
+            contacts: [MockPreviewData.contact1, MockPreviewData.contact2],
+            selection: MockPreviewData.contact1) { _ in }
     }
 }

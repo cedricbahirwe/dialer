@@ -30,13 +30,6 @@ struct BiometricsAccessibility: ViewModifier {
     }
 }
 
-extension Bool {
-    static var isIOS16AndPlus: Bool {
-        guard #available(iOS 16.0.0, *) else { return false }
-        return true
-    }
-}
-
 extension View {
     
     /// Tracking screen appearance and disappearance
@@ -72,17 +65,5 @@ extension View {
                     .offset(x: -2, y: -2)
                     .clipped()
             )
-    }
-}
-
-
-extension List {
-    @ViewBuilder
-    func hideListBackground() -> some View {
-        if #available(iOS 16.0, *) {
-            self.scrollContentBackground(.hidden)
-        } else {
-            self
-        }
     }
 }

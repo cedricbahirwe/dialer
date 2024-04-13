@@ -11,7 +11,7 @@ struct DialingsHistoryView: View {
     let data: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack {
                     if data.recentCodes.isEmpty {
@@ -85,8 +85,6 @@ struct DialingsHistoryView: View {
     }
 }
 
-struct DialingsHistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        DialingsHistoryView(data: HistoryViewModel())
-    }
+#Preview {
+    DialingsHistoryView(data: HistoryViewModel())    
 }

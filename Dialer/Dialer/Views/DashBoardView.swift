@@ -19,10 +19,6 @@ struct DashBoardView: View {
     @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
         
-    private var isIOS16AndPlus: Bool {
-        guard #available(iOS 16.0, *) else { return false }
-        return true
-    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -77,27 +73,14 @@ struct DashBoardView: View {
                 
                 Spacer()
             }
-            .blur(radius: showPurchaseSheet ? 3 : 0)
-            .allowsHitTesting(!showPurchaseSheet)
-            
-            if !isIOS16AndPlus {
-                if showPurchaseSheet {
-                    Color.black.opacity(0.001)
-                        .onTapGesture {
-                            withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)) {
-                                showPurchaseSheet = false
-                            }
-                        }
-                }
-                makePurchaseDetailView()
-            }
-            
+            .blur(radius: showPurchaseSheet ? 1 : 0)
         }
-        .sheet(isPresented: isIOS16AndPlus ? $showPurchaseSheet : .constant(false)) {
-            if #available(iOS 16.0, *) {
-                makePurchaseDetailView()
-                    .presentationDetents([.height(400)])
-            }
+        .sheet(isPresented: $showPurchaseSheet) {
+            PurchaseDetailView(
+                isPresented: $showPurchaseSheet,
+                data: data
+            )
+            .presentationDetents([.height(400)])
         }
         .sheet(isPresented: $showWelcomeView) {
             WhatsNewView(isPresented: $showWelcomeView)
@@ -129,13 +112,6 @@ struct DashBoardView: View {
         }
         .trackAppearance(.dashboard)
     }
-    
-    private func makePurchaseDetailView() -> PurchaseDetailView {
-        PurchaseDetailView(
-            isPresented: $showPurchaseSheet,
-            isIOS16: isIOS16AndPlus,
-            data: data)
-    }
 }
 
 private extension DashBoardView {
@@ -150,11 +126,9 @@ private extension DashBoardView {
     }
 }
 
-struct DashBoardView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            DashBoardView()
-                .environmentObject(MainViewModel())
-        }
+#Preview {
+    NavigationStack {
+        DashBoardView()
+            .environmentObject(MainViewModel())
     }
 }

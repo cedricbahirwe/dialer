@@ -94,11 +94,9 @@ struct MySpaceView: View {
     }
 }
 
-struct MySpaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            MySpaceView()
-                .environmentObject(MainViewModel())
-        }
+#Preview {
+    NavigationStack {
+        MySpaceView()
+            .environmentObject(MainViewModel())
     }
 }

@@ -92,9 +92,6 @@ struct ThanksYouView: View {
     }
 }
 
-struct CongratulationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ThanksYouView(isPresented: .constant(true))
-        //            .preferredColorScheme(.dark)
-    }
+#Preview {
+    ThanksYouView(isPresented: .constant(true))
 }
