@@ -89,6 +89,7 @@
 		CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70629AFF4F3004BBE32 /* Logger.swift */; };
 		CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */; };
 		CB94D3AF2BCB1AC800CC60A9 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */; };
+		CB94D3B12BCB2CD800CC60A9 /* BiometricsAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB94D3B02BCB2CD800CC60A9 /* BiometricsAccessibility.swift */; };
 		CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB02294C8F4900D95C82 /* AppNotification.swift */; };
 		CBA9BB05294C8F7000D95C82 /* DialerLocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */; };
 		CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13182785A54100D32E1F /* TappeableText.swift */; };
@@ -205,6 +206,7 @@
 		CB92F70629AFF4F3004BBE32 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
+		CB94D3B02BCB2CD800CC60A9 /* BiometricsAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsAccessibility.swift; sourceTree = "<group>"; };
 		CBA9BB02294C8F4900D95C82 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotification.swift; sourceTree = "<group>"; };
 		CBAF13182785A54100D32E1F /* TappeableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappeableText.swift; sourceTree = "<group>"; };
@@ -376,19 +378,20 @@
 		82EEBCF426C1336000B1720A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */,
-				CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */,
-				CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */,
-				825F996526720B46009E4A7B /* ContactsFetcher.swift */,
-				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
-				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
-				CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */,
-				CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */,
-				CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */,
-				CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */,
-				CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */,
 				CB338CDB29AF6BDC00BEAD9A /* AppConfiguration.swift */,
 				F4EE6CE72A6531D800F7EEDA /* AppConstants.swift */,
+				CB676C68279149B30050B3B9 /* AppReviewing.swift */,
+				821BE13426FB28CB00A3CA02 /* AppVersioning.swift */,
+				CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */,
+				CB94D3B02BCB2CD800CC60A9 /* BiometricsAccessibility.swift */,
+				825F996526720B46009E4A7B /* ContactsFetcher.swift */,
+				CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */,
+				CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */,
+				CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */,
+				CB3B81E529ABD0D8001FAFF6 /* FirebaseManager.swift */,
+				CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */,
+				CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */,
+				CB45381328AB911600F3F24C /* UserDefaults+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 				CB56DDC62A4DB1F20007AF55 /* CircleView.swift in Sources */,
 				8207FA9526776AB600412AE1 /* TransactionModel.swift in Sources */,
 				CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */,
+				CB94D3B12BCB2CD800CC60A9 /* BiometricsAccessibility.swift in Sources */,
 				CB18BD5729AE929F00A7B45C /* MerchantsListView.swift in Sources */,
 				CBC262C42784D233000B8E0E /* RecentDialCode.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
@@ -984,7 +988,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.5.1;
+				MARKETING_VERSION = 5.6.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1013,7 +1017,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.5.1;
+				MARKETING_VERSION = 5.6.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1151,7 +1155,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.5.1;
+				MARKETING_VERSION = 5.6.0;
 				OTHER_LDFLAGS = (
 					"-Xlinker",
 					"-no_warn_duplicate_libraries",
@@ -1284,7 +1288,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.5.1;
+				MARKETING_VERSION = 5.6.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";

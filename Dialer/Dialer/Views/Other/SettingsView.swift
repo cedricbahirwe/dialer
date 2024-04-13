@@ -19,7 +19,7 @@ struct SettingsView: View {
     @State private var showDialog = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     HStack(spacing: 3) {
@@ -195,9 +195,7 @@ extension SettingsView {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-            .environmentObject(MainViewModel())
-    }
+#Preview {
+    SettingsView()
+        .environmentObject(MainViewModel())
 }

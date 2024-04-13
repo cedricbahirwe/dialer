@@ -7,34 +7,46 @@
 
 import SwiftUI
 
+enum AppRoute {
+    case transfer
+}
+
 struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
-    
     @State private var showPurchaseSheet = true
+    @State private var navPath: [AppRoute] = []
     
     var body: some View {
-        NavigationView {
-            DashBoardView()
+        NavigationStack(path: $navPath) {
+            DashBoardView(navPath: $navPath)
+                .navigationDestination(for: AppRoute.self) { route in
+                    switch route {
+                    case .transfer:
+                        TransferView()
+                    }
+                }
         }
-        .navigationViewStyle(.stack)
         .onAppear(perform: setupAppearance)
-        .alert(Text("App Update"),
-               isPresented: forceUpdate.isPresented,
-               presenting: forceUpdate.updateAlert) { alert in
-            
+        .fullScreenCover(isPresented: $data.hasReachSync) {
+            ThanksYouView(isPresented: $data.hasReachSync)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            Task {
+                await RemoteConfigs.shared.fetchRemoteValues()
+            }
+        }
+        .alert(
+            Text("App Update"),
+            isPresented: forceUpdate.isPresented,
+            presenting: forceUpdate.updateAlert)
+        { alert in
             ForEach(alert.buttons) {
                 Button($0.title, action: $0.action)
             }
-        } message: { Text($0.message) }
-            .fullScreenCover(isPresented: $data.hasReachSync) {
-                ThanksYouView(isPresented: $data.hasReachSync)
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                Task {
-                    await RemoteConfigs.shared.fetchRemoteValues()
-                }
-            }
+        } message: {
+            Text($0.message)
+        }
     }
     
     private func setupAppearance() {
@@ -54,10 +66,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(MainViewModel())
-            .environmentObject(ForceUpdateManager())
-    }
+#Preview {
+    ContentView()
+        .environmentObject(MainViewModel())
+        .environmentObject(ForceUpdateManager())
 }

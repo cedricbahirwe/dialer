@@ -102,12 +102,9 @@ struct WhatsNewView: View {
     }
 }
 
-struct WhatsNewView_Previews: PreviewProvider {
-    static var previews: some View {
-        WhatsNewView(isPresented: .constant(true))
-    }
+#Preview {
+    WhatsNewView(isPresented: .constant(true))
 }
-
 
 private struct ChangeLog: Identifiable {
     var id: UUID { UUID() }

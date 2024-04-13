@@ -84,8 +84,6 @@ struct CircleView: View {
     }
 }
 
-struct CircleView_Previews: PreviewProvider {
-    static var previews: some View {
-        CircleView()
-    }
+#Preview {
+    CircleView()
 }

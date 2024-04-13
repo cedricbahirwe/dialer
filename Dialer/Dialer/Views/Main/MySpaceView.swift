@@ -30,7 +30,7 @@ struct MySpaceView: View {
     var body: some View {
         List {
             if !store.ussdCodes.isEmpty {
-                Section("Other") {
+                Section("Custom USSDs") {
                     ForEach(store.ussdCodes) { code in
                         HStack {
                             Text(LocalizedStringKey(code.title))
@@ -64,7 +64,33 @@ struct MySpaceView: View {
                 .listRowBackground(rowBackground)
             }
         }
+        .scrollContentBackground(.hidden)
         .background(Color.primaryBackground)
+        .overlay {
+            if store.ussdCodes.isEmpty {
+                VStack {
+                   Text("👋🏽")
+                        .font(.system(size: 60))
+                    
+                    Text("Welcome to your safe spot.")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .fontDesign(.rounded)
+                    
+                    Text("Let's start by adding a new custom USSD")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    
+                    Button("Add New") {
+                        editedUSSDModel = .init()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
+                    .padding()
+                }
+                .padding()
+            }
+        }
         .navigationTitle("My Space")
         .sheet(item: $editedUSSDModel.onChange(observeUSSDChange)) { newCode in
             NewDialingView(store: store,
@@ -94,11 +120,9 @@ struct MySpaceView: View {
     }
 }
 
-struct MySpaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            MySpaceView()
-                .environmentObject(MainViewModel())
-        }
+#Preview {
+    NavigationStack {
+        MySpaceView()
+            .environmentObject(MainViewModel())
     }
 }

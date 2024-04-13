@@ -23,10 +23,10 @@ struct AboutView: View {
                     .cornerRadius(15)
                 Text("Dialer")
                     .font(.system(.title3, design: .rounded).weight(.bold))
-
+                
             }
             .padding(.top, 30)
-
+            
             Text("Version \(appVersion) (\(buildVersion))")
                 .fontWeight(.bold)
             
@@ -36,7 +36,7 @@ struct AboutView: View {
                 Link("Cédric Bahirwe.", destination: DialerlLinks.authorLinkedIn)
             }
             .font(.body.weight(.semibold))
-
+            
             Spacer()
         }
         .frame(maxWidth: .infinity)
@@ -53,11 +53,9 @@ struct AboutView: View {
     }
 }
 
-struct AboutView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            AboutView()
-                .navigationBarTitleDisplayMode(.inline)
-        }
+#Preview {
+    NavigationStack {
+        AboutView()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }

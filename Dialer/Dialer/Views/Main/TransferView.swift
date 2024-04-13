@@ -196,7 +196,7 @@ struct TransferView: View {
                     }
                     .listRowBackground(rowBackground)
                 }
-                .hideListBackground()
+                .scrollContentBackground(.hidden)
             } else {
                 Spacer()
             }
@@ -204,14 +204,9 @@ struct TransferView: View {
         .sheet(item: $presentedSheet) { sheet in
             switch sheet {
             case .qrScanner:
-                if #available(iOS 16.0, *) {
-                    CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
-                        .ignoresSafeArea()
-                        .presentationDetents([.medium, .large])
-                    
-                } else {
-                    CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
-                }
+                CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
+                    .ignoresSafeArea()
+                    .presentationDetents([.medium, .large])
             case .merchants:
                 CreateMerchantView(merchantStore: merchantStore)
             case .contacts:
@@ -374,11 +369,7 @@ private extension TransferView {
     }
 }
 
-struct SendingView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TransferView()
-                .environmentObject(UserMerchantStore())
-        }
-    }
+#Preview {
+    TransferView()
+        .environmentObject(UserMerchantStore())
 }
