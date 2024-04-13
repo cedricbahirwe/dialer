@@ -13,7 +13,6 @@ struct TransferView: View {
     
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
-    @State private var didCopyToClipBoard = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
@@ -109,41 +108,21 @@ struct TransferView: View {
                         }                
                     }
                     
-                    HStack {
-                        if UIApplication.hasSupportForUSSD {
-                            Button(action: {
-                                hideKeyboard()
-                                transferMoney()
-                            }) {
-                                Text("Dial USSD")
-                                    .font(.subheadline.bold())
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 48)
-                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                    .cornerRadius(8)
-                                    .foregroundColor(Color.white)
-                            }
-                            .disabled(transaction.isValid == false)
-                        } else {
-                            Button(action: copyToClipBoard) {
-                                Label("Copy USSD code", systemImage: "doc.on.doc.fill")
-                                    .foregroundColor(.white)
-                                    .font(.subheadline.bold())
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 48)
-                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                    .cornerRadius(8)
-                                    .foregroundColor(Color.white)
-                            }
-                            .disabled(transaction.isValid == false || didCopyToClipBoard)
-                        }
+                    Button(action: {
+                        hideKeyboard()
+                        transferMoney()
+                    }) {
+                        Text("Dial USSD")
+                            .font(.subheadline.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                            .cornerRadius(8)
+                            .foregroundColor(Color.white)
                     }
+                    .disabled(transaction.isValid == false)
                 }
                 .padding(.top)
-                
-                if didCopyToClipBoard {
-                    CopiedUSSDLabel()
-                }
             }
             .padding()
             
@@ -217,7 +196,7 @@ struct TransferView: View {
                     }
                     .listRowBackground(rowBackground)
                 }
-                .hideListBackground()
+                .scrollContentBackground(.hidden)
             } else {
                 Spacer()
             }
@@ -225,14 +204,9 @@ struct TransferView: View {
         .sheet(item: $presentedSheet) { sheet in
             switch sheet {
             case .qrScanner:
-                if #available(iOS 16.0, *) {
-                    CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
-                        .ignoresSafeArea()
-                        .presentationDetents([.medium, .large])
-                    
-                } else {
-                    CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
-                }
+                CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
+                    .ignoresSafeArea()
+                    .presentationDetents([.medium, .large])
             case .merchants:
                 CreateMerchantView(merchantStore: merchantStore)
             case .contacts:
@@ -335,10 +309,9 @@ private extension TransferView {
         }
     }
     
-    func cleanPhoneNumber(_ value: Contact?) {
-        guard let contact = value else { return }
-        let firstNumber = contact.phoneNumbers.first!
-        transaction.number = firstNumber
+    func cleanPhoneNumber(_ contact: Contact) {
+        guard let selectedPhoneNumber = contact.phoneNumbers.first else { return }
+        transaction.number = selectedPhoneNumber
     }
     
     
@@ -373,17 +346,6 @@ private extension TransferView {
         }
     }
     
-    func copyToClipBoard() {
-        UIPasteboard.general.string = transaction.fullCode
-        withAnimation { didCopyToClipBoard = true }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            withAnimation {
-                didCopyToClipBoard = false
-            }
-        }
-    }
-    
     func openScanner() {
         hideKeyboard()
         presentedSheet = .qrScanner
@@ -407,11 +369,7 @@ private extension TransferView {
     }
 }
 
-struct SendingView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TransferView()
-                .environmentObject(UserMerchantStore())
-        }
-    }
+#Preview {
+    TransferView()
+        .environmentObject(UserMerchantStore())
 }

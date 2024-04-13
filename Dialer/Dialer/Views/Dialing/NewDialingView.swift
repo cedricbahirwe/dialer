@@ -18,7 +18,7 @@ struct NewDialingView: View {
     @FocusState  private var focusedField: Field?
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 VStack(spacing: 10) {
                     if titleAlreadyExists() {
@@ -181,8 +181,6 @@ extension NewDialingView {
     }
 }
 
-struct NewDialingView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewDialingView(store: MainViewModel())
-    }
+#Preview {
+    NewDialingView(store: MainViewModel())
 }

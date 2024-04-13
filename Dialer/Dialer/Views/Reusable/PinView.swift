@@ -52,12 +52,10 @@ struct PinView: View {
     }
 }
 
-struct PinView_Previews: PreviewProvider {
-    static var previews: some View {
-        PinView(input: .constant("*182#"))
-            .previewLayout(.sizeThatFits)
-            .font(.title2)
-    }
+#Preview {
+    PinView(input: .constant("*182#"))
+        .previewLayout(.sizeThatFits)
+        .font(.title2)
 }
 
 extension PinView {

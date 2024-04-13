@@ -7,36 +7,6 @@
 
 import SwiftUI
 
-struct BiometricsAccessibility: ViewModifier {
-    private let biometrics = BiometricsAuth.shared
-    var onEvaluation: (Bool) -> Void
-    @AppStorage(UserDefaultsKeys.allowBiometrics)
-    private var allowBiometrics = false
-    
-    func body(content: Content) -> some View {
-        content
-            .onTapGesture(perform: manageBiometrics)
-    }
-    
-    private func manageBiometrics() {
-        if allowBiometrics {
-            Task { @MainActor in
-                let state = await biometrics.onStateChanged()
-                onEvaluation(state)
-            }
-        } else {
-            onEvaluation(true)
-        }
-    }
-}
-
-extension Bool {
-    static var isIOS16AndPlus: Bool {
-        guard #available(iOS 16.0.0, *) else { return false }
-        return true
-    }
-}
-
 extension View {
     
     /// Tracking screen appearance and disappearance
@@ -56,6 +26,7 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
+    /// Neumorphic design used for input fields all over
     func withNeumorphStyle() -> some View {
         self
             .overlay(
@@ -72,17 +43,5 @@ extension View {
                     .offset(x: -2, y: -2)
                     .clipped()
             )
-    }
-}
-
-
-extension List {
-    @ViewBuilder
-    func hideListBackground() -> some View {
-        if #available(iOS 16.0, *) {
-            self.scrollContentBackground(.hidden)
-        } else {
-            self
-        }
     }
 }

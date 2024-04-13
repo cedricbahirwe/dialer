@@ -16,9 +16,6 @@ enum UserDefaultsKeys {
     // Onboarding
     static let showWelcomeView = "showWelcomeView"
     
-    // Electricity
-    static let meterNumbers = "meterNumbers"
-    
     // Biometrics
     static let allowBiometrics = "allowBiometrics"
     

@@ -14,17 +14,13 @@ final class ContactsViewModel: ObservableObject {
     
     private let contactsDict: [ContactsDictionary]
     
-    var contacts: [Contact] {
-        contactsDict.flatMap(\.contacts)
-    }
-    
     @Published private(set) var selectedContact: Contact
     
     var completion: (Contact) -> Void
     
     
     var searchedContacts: [ContactsDictionary] {
-        let contacts = contacts.sorted(by: { $0.names < $1.names })
+        let contacts = contactsDict.flatMap(\.contacts).sorted(by: { $0.names < $1.names })
         if searchQuery.isEmpty {
             return contactsDict
         } else {

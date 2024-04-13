@@ -39,11 +39,9 @@ struct DashItemView: View {
     }
 }
 
-struct DashItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        DashItemView(title: "Title", icon: "house.fill")
-            .padding()
-            .previewLayout(.fixed(width: 200, height: 150))
-            .previewDisplayName("DashItem View")
-    }
+#Preview {
+    DashItemView(title: "Title", icon: "house.fill")
+        .padding()
+        .previewLayout(.fixed(width: 200, height: 150))
+        .previewDisplayName("DashItem View")
 }

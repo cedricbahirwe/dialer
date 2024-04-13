@@ -8,10 +8,6 @@
 import Foundation
 import SwiftUI
 
-protocol ClipBoardDelegate {
-    func didSelectOption(with code: DialerQuickCode)
-}
-
 final class MainViewModel: ObservableObject {
     
     private(set) var history = HistoryViewModel()
@@ -24,13 +20,9 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
-
-    var utilityDelegate: ClipBoardDelegate?
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
-    @Published private(set) var elecMeters: [ElectricityMeter] = []
-
     @Published private(set) var ussdCodes: [USSDCode] = []
     
     @Published var presentedSheet: DialerSheet?
@@ -64,10 +56,6 @@ final class MainViewModel: ObservableObject {
         } else {
             throw DialingError.canNotDial
         }
-    }
-    
-    func getPurchaseDetailUSSDCode() -> String {
-        purchaseDetail.getFullUSSDCode()
     }
     
     /// Perform an independent dial, without storing or tracking.
@@ -118,59 +106,9 @@ extension MainViewModel {
 // MARK: - Quick USSD actions.
 extension MainViewModel {
     private func performQuickDial(for quickCode: DialerQuickCode) {
-        if UIApplication.hasSupportForUSSD {
-            Task {
-                await Self.performQuickDial(for: quickCode)
-            }
-        } else {
-            utilityDelegate?.didSelectOption(with: quickCode)
+        Task {
+            await Self.performQuickDial(for: quickCode)
         }
-    }
-
-    func checkMobileWalletBalance() {
-        performQuickDial(for: .mobileWalletBalance)
-    }
-
-    func getElectricity(for meterNumber: String, amount: Int) {
-        let number = meterNumber.replacingOccurrences(of: " ", with: "")
-        performQuickDial(for: .electricity(meter: number, amount: amount))
-    }
-}
-
-// MARK: Electricity Storage
-extension MainViewModel {
-    
-    func containsMeter(with number: String) -> Bool {
-        guard let meter = try? ElectricityMeter(number) else { return false }
-        return elecMeters.contains(meter)
-    }
-
-    /// Store a given  `MeterNumber`  locally.
-    /// - Parameter code: the code to be added.
-    func storeMeter(_ number: ElectricityMeter) {
-        guard elecMeters.contains(where: { $0.id == number.id }) == false else { return }
-        elecMeters.append(number)
-        saveMeterNumbersLocally(elecMeters)
-    }
-
-    /// Save MeterNumber(s) locally.
-    private func saveMeterNumbersLocally(_ meters: [ElectricityMeter]) {
-        do {
-            try DialerStorage.shared.saveElectricityMeters(meters)
-        } catch {
-            Tracker.shared.logError(error: error)
-            Log.debug("Could not save meter numbers locally: ", error.localizedDescription)
-        }
-    }
-
-    /// Retrieve all locally stored Meter Numbers codes
-    func retrieveMeterNumbers() {
-        elecMeters = DialerStorage.shared.getMeterNumbers()
-    }
-
-    func deleteMeter(at offSets: IndexSet) {
-        elecMeters.remove(atOffsets: offSets)
-        saveMeterNumbersLocally(elecMeters)
     }
 }
 

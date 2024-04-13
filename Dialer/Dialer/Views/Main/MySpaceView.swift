@@ -10,12 +10,13 @@ import SwiftUI
 
 struct MySpaceView: View {
     // MARK: - Environment Properties
+    
     @EnvironmentObject private var store: MainViewModel
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.editMode) private var editMode
 
     // MARK: - Private Properties
-    @State private var didCopyToClipBoard = false
+    
     @State private var editedUSSDModel: NewDialingView.UIModel?
 
     private var rowBackground: Color {
@@ -28,30 +29,12 @@ struct MySpaceView: View {
 
     var body: some View {
         List {
-            Section {
-                NavigationLink {
-                    ElectricityView()
-                } label: {
-                    Text("Buy Electricity")
-                }
-
-                TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
-            } header: {
-                HStack {
-                    Text("Most Popular")
-                    Spacer()
-                    CopiedUSSDLabel()
-                        .opacity(didCopyToClipBoard ? 1 : 0)
-                }
-            }
-            .listRowBackground(rowBackground)
-
             if !store.ussdCodes.isEmpty {
-                Section("Other") {
+                Section("Custom USSDs") {
                     ForEach(store.ussdCodes) { code in
                         HStack {
                             Text(LocalizedStringKey(code.title))
-
+                            
                             Spacer()
                             if editMode?.wrappedValue.isEditing == true {
                                 Text("Edit")
@@ -72,7 +55,7 @@ struct MySpaceView: View {
                                 Task {
                                     await MainViewModel.performQuickDial(for: .other(code.ussd))
                                 }
-
+                                
                             }
                         }
                     }
@@ -81,7 +64,33 @@ struct MySpaceView: View {
                 .listRowBackground(rowBackground)
             }
         }
+        .scrollContentBackground(.hidden)
         .background(Color.primaryBackground)
+        .overlay {
+            if store.ussdCodes.isEmpty {
+                VStack {
+                   Text("👋🏽")
+                        .font(.system(size: 60))
+                    
+                    Text("Welcome to your safe spot.")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .fontDesign(.rounded)
+                    
+                    Text("Let's start by adding a new custom USSD")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    
+                    Button("Add New") {
+                        editedUSSDModel = .init()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
+                    .padding()
+                }
+                .padding()
+            }
+        }
         .navigationTitle("My Space")
         .sheet(item: $editedUSSDModel.onChange(observeUSSDChange)) { newCode in
             NewDialingView(store: store,
@@ -102,9 +111,6 @@ struct MySpaceView: View {
             }
         }
         .trackAppearance(.mySpace)
-        .onAppear() {
-            store.utilityDelegate = self
-        }
     }
 
     private func observeUSSDChange(_ editedUSSD: NewDialingView.UIModel?) {
@@ -112,30 +118,11 @@ struct MySpaceView: View {
             editMode?.wrappedValue = .inactive
         }
     }
-
-    private func copyToClipBoard(fullCode: String) {
-        UIPasteboard.general.string = fullCode
-        withAnimation { didCopyToClipBoard = true }
-
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            withAnimation {
-                didCopyToClipBoard = false
-            }
-        }
-    }
 }
 
-extension MySpaceView: ClipBoardDelegate {
-    func didSelectOption(with code: DialerQuickCode) {
-        copyToClipBoard(fullCode: code.ussd)
-    }
-}
-
-struct MySpaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            MySpaceView()
-                .environmentObject(MainViewModel())
-        }
+#Preview {
+    NavigationStack {
+        MySpaceView()
+            .environmentObject(MainViewModel())
     }
 }

@@ -23,7 +23,7 @@ struct CircleView: View {
                     Text("%")
                 }
                 
-                Text("Intime")
+                Text("Drios")
                     .foregroundColor(.secondary)
                 
             }
@@ -84,8 +84,6 @@ struct CircleView: View {
     }
 }
 
-struct CircleView_Previews: PreviewProvider {
-    static var previews: some View {
-        CircleView()
-    }
+#Preview {
+    CircleView()
 }

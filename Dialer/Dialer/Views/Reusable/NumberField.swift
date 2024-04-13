@@ -34,11 +34,8 @@ struct NumberField: View {
     }
 }
 
-
-struct NumberField_Previews: PreviewProvider {
-    static var previews: some View {
-        NumberField("placeholder", text: .constant(""))
-            .padding()
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    NumberField("placeholder", text: .constant(""))
+        .padding()
+        .previewLayout(.sizeThatFits)
 }

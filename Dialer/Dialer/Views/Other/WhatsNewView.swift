@@ -102,12 +102,9 @@ struct WhatsNewView: View {
     }
 }
 
-struct WhatsNewView_Previews: PreviewProvider {
-    static var previews: some View {
-        WhatsNewView(isPresented: .constant(true))
-    }
+#Preview {
+    WhatsNewView(isPresented: .constant(true))
 }
-
 
 private struct ChangeLog: Identifiable {
     var id: UUID { UUID() }
@@ -126,7 +123,7 @@ private extension ChangeLog {
         ChangeLog("phone.circle", "Airtime", "Ability to quickly generate USSD for buying airtime."),
         ChangeLog("clock.arrow.circlepath", "History", "Get direct access to your frequently used USSD codes."),
         ChangeLog("francsign.circle", "Transfer/Pay", "Get the right USSD code for transferring to your friend or paying to the store."),
-        ChangeLog("wrench.and.screwdriver", "My Space", "A unified space for buying electricity, Voice packs, Internet and more.")
+        ChangeLog("wrench.and.screwdriver", "My Space", "A unified space for you to create your own codes to use whenever you need to.")
     ]
     
     static var latestLogs: [ChangeLog] {
