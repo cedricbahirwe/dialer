@@ -7,7 +7,6 @@
 
 import Foundation
 
-#warning("Need to rethink this")
 enum DialerQuickCode {
     case other(String)
 
