@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct ContactsListView: View {
-    @Environment(\.dismiss) private var dismiss
-    
     @StateObject private var contactsVM: ContactsViewModel
-    
     @FocusState private var isSearching: Bool
     
     init(contacts: [Contact],
@@ -23,58 +20,59 @@ struct ContactsListView: View {
     
     var body: some View {
         NavigationView {
-        VStack {
-            searchBarView
-            
-            if contactsVM.searchedContacts.isEmpty {
-                emptyResultsView
-            } else {
+            VStack {
+                searchBarView
                 
-                List {
-                    ForEach(contactsVM.searchedContacts) { section in
-                        Section(String(section.letter)) {
-                            ForEach(section.contacts) { contact in
-                                ContactRowView(contact: contact)
-                                    .onTapGesture {
-                                        contactsVM.handleSelection(contact)
-                                    }
+                if contactsVM.searchedContacts.isEmpty {
+                    emptyResultsView
+                } else {
+                    
+                    List {
+                        ForEach(contactsVM.searchedContacts) { section in
+                            Section(String(section.letter)) {
+                                ForEach(section.contacts) { contact in
+                                    ContactRowView(contact: contact)
+                                        .onTapGesture {
+                                            contactsVM.handleSelection(contact)
+                                        }
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .padding(.top, 10)
-        .background(Color.primaryBackground)
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                
-                Button(action: {
-                    isSearching = false
-                }) {
-                    Text("Search")
-                        .font(.system(size: 18, design: .rounded))
-                        .foregroundColor(.blue)
-                        .padding(5)
+            .padding(.top, 10)
+            .background(Color.primaryBackground)
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button(action: {
+                        isSearching = false
+                    }) {
+                        Text("Search")
+                            .font(.system(size: 18, design: .rounded))
+                            .foregroundColor(.blue)
+                            .padding(5)
+                    }
                 }
             }
-        }
-        .actionSheet(isPresented: $contactsVM.showPhoneNumberSelector) {
-            ActionSheet(title: Text("Phone Number."),
-                        message: Text("Select a phone number to send to"),
-                        buttons: alertButtons)
-        }
-        .onAppear() {
-            DispatchQueue.main.asyncAfter(deadline: .now() ) {
-                withAnimation {
-                    isSearching = true
+            .actionSheet(isPresented: $contactsVM.showPhoneNumberSelector) {
+                ActionSheet(title: Text("Phone Number."),
+                            message: Text("Select a phone number to send to"),
+                            buttons: alertButtons)
+            }
+            .onAppear() {
+                DispatchQueue.main.asyncAfter(deadline: .now() ) {
+                    withAnimation {
+                        isSearching = true
+                    }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationBarTitleDisplayMode(.inline)
     }
-    }
+    
     private var alertButtons: [ActionSheet.Button] {
         var buttons: [ActionSheet.Button] = contactsVM.selectedContact.phoneNumbers.map({
             phoneNumber in
@@ -129,7 +127,7 @@ private extension ContactsListView {
                     }
                 }
             }
-            .background(Color("offBackground"))
+            .background(Color.offBackground)
             .cornerRadius(6)
 
             if isSearching {

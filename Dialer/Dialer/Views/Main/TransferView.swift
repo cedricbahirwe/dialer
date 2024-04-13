@@ -335,10 +335,9 @@ private extension TransferView {
         }
     }
     
-    func cleanPhoneNumber(_ value: Contact?) {
-        guard let contact = value else { return }
-        let firstNumber = contact.phoneNumbers.first!
-        transaction.number = firstNumber
+    func cleanPhoneNumber(_ contact: Contact) {
+        guard let selectedPhoneNumber = contact.phoneNumbers.first else { return }
+        transaction.number = selectedPhoneNumber
     }
     
     
