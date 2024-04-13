@@ -1,6 +1,6 @@
 # Dialer
 
-### An intuitive USSD client to handle most of the common actions for you.
+### An intuitive USSD client to simplify most of your daily operations.
 ### Access Rwanda Network providers USSD codes, and simplify packages activation nightmare.
 Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
@@ -13,38 +13,18 @@ Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 * Quick MTN Momo transfer (Client and Merchant support).
 * Contacts Filtering.
 * Settings
-* Transaction Amount Limit 
+* Transaction Amount Limit
 
-## TakeAways 🚀
-
-- What makes a great app
-- SDLC(Software Development Life Cycle) in practice
-- Following Apple Human Interface Guidelines (HIG)
-- Deep Dive into Home Screen Quick Actions
-- Local DataBase Management at Scale in iOS
-
-## Technology 🧑🏽‍💻 
+## Tech Stack 🧑🏽‍💻 
 - SwiftUI & UIKit
-- UserNotifications & LocalAuthentication
+- Firebase
+- UserNotifications
+- LocalAuthentication
 - StoreKit
 - Contacts & CoreTelephony
 - XCTest
 
-## Screenshots
-
-Home Light                 |  Home Dark
-:-------------------------:|:-------------------------:
-![](Shots/light.png)  |  ![](Shots/dark.png)
-
-Transfer                    |  Settings
-:-------------------------:|:-------------------------:
-![](Shots/send.png)  |  ![](Shots/settings.png)
-
-Utilities                  |  Electricity Payment
-:-------------------------:|:-------------------------:
-![](Shots/utilities.png)  |  ![](Shots/electricity.png)
-
-## Contributing
+## Contribution
 
 - PRs are very welcome!✨
 
