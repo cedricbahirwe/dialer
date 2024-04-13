@@ -13,7 +13,6 @@ struct TransferView: View {
     
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
-    @State private var didCopyToClipBoard = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
     @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
@@ -109,41 +108,21 @@ struct TransferView: View {
                         }                
                     }
                     
-                    HStack {
-                        if UIApplication.hasSupportForUSSD {
-                            Button(action: {
-                                hideKeyboard()
-                                transferMoney()
-                            }) {
-                                Text("Dial USSD")
-                                    .font(.subheadline.bold())
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 48)
-                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                    .cornerRadius(8)
-                                    .foregroundColor(Color.white)
-                            }
-                            .disabled(transaction.isValid == false)
-                        } else {
-                            Button(action: copyToClipBoard) {
-                                Label("Copy USSD code", systemImage: "doc.on.doc.fill")
-                                    .foregroundColor(.white)
-                                    .font(.subheadline.bold())
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 48)
-                                    .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
-                                    .cornerRadius(8)
-                                    .foregroundColor(Color.white)
-                            }
-                            .disabled(transaction.isValid == false || didCopyToClipBoard)
-                        }
+                    Button(action: {
+                        hideKeyboard()
+                        transferMoney()
+                    }) {
+                        Text("Dial USSD")
+                            .font(.subheadline.bold())
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                            .cornerRadius(8)
+                            .foregroundColor(Color.white)
                     }
+                    .disabled(transaction.isValid == false)
                 }
                 .padding(.top)
-                
-                if didCopyToClipBoard {
-                    CopiedUSSDLabel()
-                }
             }
             .padding()
             
@@ -369,17 +348,6 @@ private extension TransferView {
             transaction.amount = String(cleanAmount.dropFirst())
         } else {
             transaction.amount = cleanAmount
-        }
-    }
-    
-    func copyToClipBoard() {
-        UIPasteboard.general.string = transaction.fullCode
-        withAnimation { didCopyToClipBoard = true }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            withAnimation {
-                didCopyToClipBoard = false
-            }
         }
     }
     

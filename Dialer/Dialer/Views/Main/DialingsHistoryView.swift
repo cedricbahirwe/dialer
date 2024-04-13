@@ -45,15 +45,10 @@ struct DialingsHistoryView: View {
                                 .font(.system(size: 16, weight: .bold, design: .serif))
                         }
                     }
-                    Group {
-                        if UIApplication.hasSupportForUSSD {
-                            Text("The estimations are based on the recent USSD codes used.")
-                        } else {
-                            Text("The estimations are based on the recent USSD codes copied.")
-                        }
-                    }
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    
+                    Text("The estimations are based on the recent USSD codes used.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
                 .font(.system(size: 26, weight: .bold, design: .serif))
                 .opacity(0.9)

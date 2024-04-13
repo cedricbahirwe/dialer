@@ -23,7 +23,7 @@ struct CircleView: View {
                     Text("%")
                 }
                 
-                Text("Intime")
+                Text("Drios")
                     .foregroundColor(.secondary)
                 
             }

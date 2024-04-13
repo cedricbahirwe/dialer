@@ -11,7 +11,6 @@ struct PurchaseDetailView: View {
     @Binding var isPresented: Bool
     let isIOS16: Bool
     @ObservedObject var data: MainViewModel
-    @State private var didCopyToClipBoard: Bool = false
     @State private var bottomState = CGSize.zero
     
     private let defaultSheetHeight: CGFloat = 300
@@ -38,41 +37,19 @@ struct PurchaseDetailView: View {
                     .cornerRadius(8)
                     .overlay(fieldBorder )
                 
-                if UIApplication.hasSupportForUSSD {
-                    Button(action: {
-                        Task {
-                            await data.confirmPurchase()
-                        }
-                    }) {
-                        Text("Confirm")
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 45)
-                            .background(Color.blue.opacity((!data.hasValidAmount) ? 0.5 : 1))
-                            .cornerRadius(8)
-                            .foregroundColor(.white)
+                Button(action: {
+                    Task {
+                        await data.confirmPurchase()
                     }
-                    .disabled(!data.hasValidAmount)
-                } else {
-                    VStack(spacing: 6) {
-                        Button(action: {
-                            Task {
-                                await data.confirmPurchase()
-                            }
-                            copyToClipBoard()
-                        }) {
-                            Label("Copy USSD code", systemImage: "doc.on.doc.fill")
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 45)
-                                .background(Color.primary.opacity((!data.hasValidAmount) ? 0.5 : 1))
-                                .cornerRadius(8)
-                                .foregroundColor(Color(.systemBackground))
-                        }
-                        .disabled(!data.hasValidAmount)
-                        if didCopyToClipBoard {
-                            CopiedUSSDLabel()
-                        }
-                    }
+                }) {
+                    Text("Confirm")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.blue.opacity((!data.hasValidAmount) ? 0.5 : 1))
+                        .cornerRadius(8)
+                        .foregroundColor(.white)
                 }
+                .disabled(!data.hasValidAmount)
             }
             
             PinView(input: inputBinding())
@@ -155,20 +132,6 @@ private extension PurchaseDetailView {
                 data.purchaseDetail.amount = Int($0) ?? 0
             }
         )
-    }
-    
-    func copyToClipBoard() {
-        let fullCode = data.getPurchaseDetailUSSDCode()
-        UIPasteboard.general.string = fullCode
-        withAnimation {
-            didCopyToClipBoard = true
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            withAnimation {
-                didCopyToClipBoard = false
-            }
-        }
     }
 }
 

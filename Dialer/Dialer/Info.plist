@@ -52,18 +52,7 @@
 		</dict>
 	</dict>
 	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeCompose</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Check your bundle balance</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Check Balance</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>BalanceAction</string>
-		</dict>
-	</array>
+	<array/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

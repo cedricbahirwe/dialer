@@ -12,22 +12,12 @@ final class DialerQuickCodeTests: XCTestCase {
 
     func testQuickCodesSuite() throws {
         try testMomoQuickCode()
-        try testElectricityQuickCode()
         try testOtherQuickCode()
     }
 
     func testMomoQuickCode() throws {
         let code1 =  DialerQuickCode.mobileWalletBalance
         XCTAssertEqual(code1.ussd, "*182*6*1#")
-    }
-
-
-    func testElectricityQuickCode() throws {
-        let meter = "1000000"
-        let amount = 1_000
-        let code1 =  DialerQuickCode.electricity(meter: meter,
-                                                 amount: amount)
-        XCTAssertEqual(code1.ussd, "*182*2*2*1*1*1000000*1000#")
     }
 
     func testOtherQuickCode() throws {

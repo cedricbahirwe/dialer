@@ -10,7 +10,6 @@ import FirebaseFirestore
 
 final class DialerStorage {
     typealias RecentCodes = [RecentDialCode]
-    typealias ElectricityMeters = [ElectricityMeter]
     typealias USSDCodes = [USSDCode]
     
     private let LocalKeys = UserDefaultsKeys.self
@@ -78,15 +77,6 @@ final class DialerStorage {
             .sorted { $0.detail.purchaseDate > $1.detail.purchaseDate }
     }
     
-    func saveElectricityMeters(_ meters: ElectricityMeters) throws {
-        let data = try encodeData(meters)
-        userDefaults.setValue(data, forKey: LocalKeys.meterNumbers)
-    }
-    
-    func getMeterNumbers() -> ElectricityMeters {
-        decodeDatasArray(key: LocalKeys.meterNumbers, type: ElectricityMeters.self)
-    }
-
     func saveUSSDCodes(_ ussds: USSDCodes) throws {
         let data = try encodeData(ussds)
         userDefaults.setValue(data, forKey: LocalKeys.customUSSDCodes)

@@ -10,12 +10,13 @@ import SwiftUI
 
 struct MySpaceView: View {
     // MARK: - Environment Properties
+    
     @EnvironmentObject private var store: MainViewModel
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.editMode) private var editMode
 
     // MARK: - Private Properties
-    @State private var didCopyToClipBoard = false
+    
     @State private var editedUSSDModel: NewDialingView.UIModel?
 
     private var rowBackground: Color {
@@ -28,30 +29,12 @@ struct MySpaceView: View {
 
     var body: some View {
         List {
-            Section {
-                NavigationLink {
-                    ElectricityView()
-                } label: {
-                    Text("Buy Electricity")
-                }
-
-                TappeableText("Check Mobile Balance", onTap: store.checkMobileWalletBalance)
-            } header: {
-                HStack {
-                    Text("Most Popular")
-                    Spacer()
-                    CopiedUSSDLabel()
-                        .opacity(didCopyToClipBoard ? 1 : 0)
-                }
-            }
-            .listRowBackground(rowBackground)
-
             if !store.ussdCodes.isEmpty {
                 Section("Other") {
                     ForEach(store.ussdCodes) { code in
                         HStack {
                             Text(LocalizedStringKey(code.title))
-
+                            
                             Spacer()
                             if editMode?.wrappedValue.isEditing == true {
                                 Text("Edit")
@@ -72,7 +55,7 @@ struct MySpaceView: View {
                                 Task {
                                     await MainViewModel.performQuickDial(for: .other(code.ussd))
                                 }
-
+                                
                             }
                         }
                     }
@@ -102,32 +85,12 @@ struct MySpaceView: View {
             }
         }
         .trackAppearance(.mySpace)
-        .onAppear() {
-            store.utilityDelegate = self
-        }
     }
 
     private func observeUSSDChange(_ editedUSSD: NewDialingView.UIModel?) {
         if editedUSSD == nil {
             editMode?.wrappedValue = .inactive
         }
-    }
-
-    private func copyToClipBoard(fullCode: String) {
-        UIPasteboard.general.string = fullCode
-        withAnimation { didCopyToClipBoard = true }
-
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            withAnimation {
-                didCopyToClipBoard = false
-            }
-        }
-    }
-}
-
-extension MySpaceView: ClipBoardDelegate {
-    func didSelectOption(with code: DialerQuickCode) {
-        copyToClipBoard(fullCode: code.ussd)
     }
 }
 

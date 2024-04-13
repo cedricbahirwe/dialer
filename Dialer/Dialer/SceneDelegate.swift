@@ -13,7 +13,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // List of known shortcut actions.
     enum ActionType: String {
-        case balanceAction = "BalanceAction"
         case dialAction = "DialAction"
     }
     
@@ -134,9 +133,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         */
         if let actionTypeValue = ActionType(rawValue: shortcutItem.type) {
             switch actionTypeValue {
-            case .balanceAction:
-                dialingStore.checkMobileWalletBalance()
-                
             case .dialAction:
                 // Go to that particular code shortcut.
                 if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
@@ -149,7 +145,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         return true
-    }
-
+    }    
 }
-
