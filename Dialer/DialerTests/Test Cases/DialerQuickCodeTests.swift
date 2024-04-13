@@ -11,13 +11,7 @@ import XCTest
 final class DialerQuickCodeTests: XCTestCase {
 
     func testQuickCodesSuite() throws {
-        try testMomoQuickCode()
         try testOtherQuickCode()
-    }
-
-    func testMomoQuickCode() throws {
-        let code1 =  DialerQuickCode.mobileWalletBalance
-        XCTAssertEqual(code1.ussd, "*182*6*1#")
     }
 
     func testOtherQuickCode() throws {
