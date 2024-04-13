@@ -7,29 +7,6 @@
 
 import SwiftUI
 
-struct BiometricsAccessibility: ViewModifier {
-    private let biometrics = BiometricsAuth.shared
-    var onEvaluation: (Bool) -> Void
-    @AppStorage(UserDefaultsKeys.allowBiometrics)
-    private var allowBiometrics = false
-    
-    func body(content: Content) -> some View {
-        content
-            .onTapGesture(perform: manageBiometrics)
-    }
-    
-    private func manageBiometrics() {
-        if allowBiometrics {
-            Task { @MainActor in
-                let state = await biometrics.onStateChanged()
-                onEvaluation(state)
-            }
-        } else {
-            onEvaluation(true)
-        }
-    }
-}
-
 extension View {
     
     /// Tracking screen appearance and disappearance
@@ -49,6 +26,7 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
+    /// Neumorphic design used for input fields all over
     func withNeumorphStyle() -> some View {
         self
             .overlay(

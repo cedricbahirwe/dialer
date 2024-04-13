@@ -7,14 +7,25 @@
 
 import SwiftUI
 
+enum AppRoute {
+    case transfer
+}
+
 struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
     @State private var showPurchaseSheet = true
+    @State private var navPath: [AppRoute] = []
     
     var body: some View {
-        NavigationStack {
-            DashBoardView()
+        NavigationStack(path: $navPath) {
+            DashBoardView(navPath: $navPath)
+                .navigationDestination(for: AppRoute.self) { route in
+                    switch route {
+                    case .transfer:
+                        TransferView()
+                    }
+                }
         }
         .onAppear(perform: setupAppearance)
         .fullScreenCover(isPresented: $data.hasReachSync) {

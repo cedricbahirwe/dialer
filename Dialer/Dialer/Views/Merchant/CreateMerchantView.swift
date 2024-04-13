@@ -42,9 +42,10 @@ struct CreateMerchantView: View {
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                        .foregroundColor(Color.white)
                 }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.roundedRectangle(radius: 8))
             }
             .frame(maxHeight: .infinity, alignment: .top)
         }

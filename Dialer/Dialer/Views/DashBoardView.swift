@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DashBoardView: View {
+    @Binding var navPath: [AppRoute]
+    
     @EnvironmentObject private var data: MainViewModel
     
     @AppStorage(UserDefaultsKeys.showWelcomeView)
@@ -16,9 +18,7 @@ struct DashBoardView: View {
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
-    @State private var presentTransferView = false
     @State private var showPurchaseSheet = false
-        
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -38,9 +38,11 @@ struct DashBoardView: View {
                         DashItemView(
                             title: "Transfer/Pay",
                             icon: "paperplane.circle")
-                        .onTapForBiometrics {
-                            presentTransferView = $0
-                            Tracker.shared.logEvent(.transferOpened)
+                        .onTapForBiometrics { success in
+                            if success {
+                                navPath.append(.transfer)
+                                Tracker.shared.logEvent(.transferOpened)
+                            }
                         }
                     }
                     
@@ -66,10 +68,6 @@ struct DashBoardView: View {
                     }
                 }
                 .padding()
-                
-                NavigationLink(isActive: $presentTransferView) {
-                    TransferView()
-                } label: { EmptyView() }
                 
                 Spacer()
             }
@@ -128,7 +126,7 @@ private extension DashBoardView {
 
 #Preview {
     NavigationStack {
-        DashBoardView()
+        DashBoardView(navPath: .constant([]))
             .environmentObject(MainViewModel())
     }
 }
