@@ -1,5 +1,5 @@
 //
-//  SendingView.swift
+//  TransferView.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 10/06/2021.
@@ -68,46 +68,33 @@ struct TransferView: View {
                         .focused($focusedState, equals: .number)
                         .accessibilityIdentifier("transferNumberField")
                         
-                        if transaction.type == .merchant {
-                            
-                            Button(action: openScanner) {
-                                Image(systemName: "qrcode.viewfinder")
-                                    .imageScale(.large)
-                                    .frame(width: 48, height: 48)
-                                    .background(Color.accentColor)
-                                    .cornerRadius(8)
-                                    .foregroundColor(.white)
+                        
+                        Button(action: {
+                            if transaction.type == .client {
+                                hideKeyboard()
+                                presentedSheet = .contacts
+                                Tracker.shared.logEvent(.conctactsOpened)
+                            } else {
+                                openScanner()
                             }
+                        }) {
+                            (transaction.type == .merchant ?
+                             Image(systemName: "qrcode.viewfinder") : Image(systemName: "person.fill"))
+                            .imageScale(.large)
+                            .frame(width: 48, height: 48)
+                            .background(Color.accentColor)
+                            .cornerRadius(8)
+                            .foregroundColor(.white)
                         }
                     }
                     
                     if transaction.type == .merchant {
-                        Text("The code should be a 5-6 digits number")
+                        Text("Merchant code should be a 5-6 digits number")
                             .font(.caption).foregroundColor(.blue)
                     }
                 }
                 
                 VStack(spacing: 18) {
-                    if transaction.type == .client {
-                        Button(action: {
-                            hideKeyboard()
-                            presentedSheet = .contacts
-                            Tracker.shared.logEvent(.conctactsOpened)
-                        }) {
-                            HStack {
-                                Image(systemName: "person.fill")
-                                Text("Pick a contact")
-                            }
-                            .font(.subheadline.bold())
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 48)
-                            .background(Color(.systemBackground))
-                            .cornerRadius(8)
-                            .shadow(color: .lightShadow, radius: 6, x: -6, y: -6)
-                            .shadow(color: .darkShadow, radius: 6, x: 6, y: 6)
-                        }                
-                    }
-                    
                     Button(action: {
                         hideKeyboard()
                         transferMoney()
@@ -370,6 +357,8 @@ private extension TransferView {
 }
 
 #Preview {
-    TransferView()
-        .environmentObject(UserMerchantStore())
+    NavigationStack {
+        TransferView()
+            .environmentObject(UserMerchantStore())
+    }
 }
