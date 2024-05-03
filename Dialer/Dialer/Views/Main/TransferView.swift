@@ -218,32 +218,34 @@ struct TransferView: View {
         .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(merchantStore.merchants) { merchant in
-                            Text("#\(merchant.code)")
-                                .font(.callout)
-                                .fontWeight(.medium)
-                                .foregroundColor(.blue)
-                                .padding(6)
-                                .background(.blue.opacity(0.03), in: .capsule)
-                                .background(.ultraThinMaterial, in: .capsule)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    withAnimation {
-                                        transaction.number = merchant.code
+                HStack  {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(merchantStore.merchants) { merchant in
+                                Text("#\(merchant.code)")
+                                    .font(.callout)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.blue)
+                                    .padding(6)
+                                    .background(.blue.opacity(0.03), in: .capsule)
+                                    .background(.ultraThinMaterial, in: .capsule)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        withAnimation {
+                                            transaction.number = merchant.code
+                                        }
+                                        Tracker.shared.logMerchantSelection(merchant)
                                     }
-                                    Tracker.shared.logMerchantSelection(merchant)
-                                }
+                            }
                         }
                     }
-                }
-                
-                Button(action: goToNextFocus) {
-                    Text("Next")
-                        .font(.system(size: 18, design: .rounded))
-                        .foregroundColor(.blue)
-                        .padding(5)
+                    
+                    Button(action: goToNextFocus) {
+                        Text("Next")
+                            .font(.system(size: 18, design: .rounded))
+                            .foregroundColor(.blue)
+                            .padding(5)
+                    }
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
