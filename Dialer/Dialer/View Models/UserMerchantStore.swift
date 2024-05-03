@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserMerchantStore: MerchantStore {
+final class UserMerchantStore: MerchantStore {
     
     override func getMerchants() async {
         guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash, !userId.isEmpty else { return }

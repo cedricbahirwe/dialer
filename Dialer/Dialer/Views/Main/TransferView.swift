@@ -218,7 +218,26 @@ struct TransferView: View {
         .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(merchantStore.merchants) { merchant in
+                            Text("#\(merchant.code)")
+                                .font(.callout)
+                                .fontWeight(.medium)
+                                .foregroundColor(.blue)
+                                .padding(6)
+                                .background(.blue.opacity(0.03), in: .capsule)
+                                .background(.ultraThinMaterial, in: .capsule)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    withAnimation {
+                                        transaction.number = merchant.code
+                                    }
+                                    Tracker.shared.logMerchantSelection(merchant)
+                                }
+                        }
+                    }
+                }
                 
                 Button(action: goToNextFocus) {
                     Text("Next")

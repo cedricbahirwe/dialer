@@ -38,6 +38,7 @@ class MerchantStore: ObservableObject {
         } catch {
             Tracker.shared.logError(error: error)
             Log.debug("Could not save merchant: ", error)
+            stopFetch()
             return false
         }
     }
