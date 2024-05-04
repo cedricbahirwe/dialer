@@ -223,8 +223,8 @@ struct TransferView: View {
                                     .foregroundColor(.blue)
                                     .padding(6)
                                     .background(.blue.opacity(0.03), in: .capsule)
-                                    .background(.ultraThinMaterial.shadow(.inner(radius: 2)), in: .capsule)
-                                    .contentShape(Rectangle())
+                                    .background(.ultraThinMaterial, in: .capsule)
+                                    .contentShape(.capsule)
                                     .onTapGesture {
                                         setMerchantSelection(merchant)
                                     }
@@ -234,7 +234,7 @@ struct TransferView: View {
                     .opacity(transaction.type == .merchant ? 1 : 0)
                     
                     Button(action: goToNextFocus) {
-                        Text("Next")
+                        Text(focusedState == .number ? " Finish" : "Next")
                             .font(.system(size: 18, design: .rounded))
                             .foregroundColor(.blue)
                             .padding(5)
