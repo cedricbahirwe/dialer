@@ -50,7 +50,7 @@ struct ContactsListView: View {
                     Button(action: {
                         isSearching = false
                     }) {
-                        Text("Search")
+                        Image(systemName: "chevron.down")
                             .font(.system(size: 18, design: .rounded))
                             .foregroundColor(.blue)
                             .padding(5)
@@ -162,9 +162,11 @@ private extension ContactsListView {
 }
 
 #Preview {
-    Group {
-        ContactsListView(
-            contacts: [MockPreviewData.contact1, MockPreviewData.contact2],
-            selection: MockPreviewData.contact1) { _ in }
-    }
+    ContactsListView(
+        contacts: [
+            MockPreviewData.contact1,
+            MockPreviewData.contact2
+        ],
+        selection: MockPreviewData.contact1
+    ) { _ in }
 }

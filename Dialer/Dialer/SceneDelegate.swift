@@ -16,8 +16,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         case dialAction = "DialAction"
     }
     
-    static let codeIdentifierInfoKey = "CodeIdentifier"
-
     var window: UIWindow?
     var savedShortCutItem: UIApplicationShortcutItem!
 
@@ -135,7 +133,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             switch actionTypeValue {
             case .dialAction:
                 // Go to that particular code shortcut.
-                if let codeIdentifier = shortcutItem.userInfo?[SceneDelegate.codeIdentifierInfoKey] as? String {
+                if let codeIdentifier = shortcutItem.userInfo?[RecentDialCode.codeIdentifierInfoKey] as? String {
                     // Find the code from the userInfo identifier.
                     if let foundRecentCode = dialingStore.history.getRecentDialCode(with: codeIdentifier) {
                         await dialingStore.history.performRecentDialing(for: foundRecentCode)
