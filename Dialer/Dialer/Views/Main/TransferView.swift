@@ -137,17 +137,13 @@ struct TransferView: View {
                                     }
                                     Spacer()
                                     Text("#\(merchant.code)")
-                                        .font(.callout)
-                                        .fontWeight(.medium)
+                                        .font(.callout.weight(.medium))
                                         .foregroundColor(.blue)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    withAnimation {
-                                        transaction.number = merchant.code
-                                    }
-                                    Tracker.shared.logMerchantSelection(merchant)
+                                    setMerchantSelection(merchant)
                                 }
                                 .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             }
@@ -178,7 +174,7 @@ struct TransferView: View {
                         }
                     } footer: {
                         if !merchantStore.merchants.isEmpty {
-                            Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings > Contact Us***")
+                            Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings -> Contact Us***")
                         }
                     }
                     .listRowBackground(rowBackground)
@@ -223,22 +219,19 @@ struct TransferView: View {
                         HStack(spacing: 8) {
                             ForEach(merchantStore.merchants) { merchant in
                                 Text("#\(merchant.code)")
-                                    .font(.callout)
-                                    .fontWeight(.medium)
+                                    .font(.callout.weight(.medium))
                                     .foregroundColor(.blue)
                                     .padding(6)
                                     .background(.blue.opacity(0.03), in: .capsule)
-                                    .background(.ultraThinMaterial, in: .capsule)
+                                    .background(.ultraThinMaterial.shadow(.inner(radius: 2)), in: .capsule)
                                     .contentShape(Rectangle())
                                     .onTapGesture {
-                                        withAnimation {
-                                            transaction.number = merchant.code
-                                        }
-                                        Tracker.shared.logMerchantSelection(merchant)
+                                        setMerchantSelection(merchant)
                                     }
                             }
                         }
                     }
+                    .opacity(transaction.type == .merchant ? 1 : 0)
                     
                     Button(action: goToNextFocus) {
                         Text("Next")
@@ -331,7 +324,7 @@ private extension TransferView {
         }
     }
     
-    /// Create a validation for the  `Number` field value
+    /// Create a validation for the `Number` field value
     /// - Parameter value: the validated data
     func handleNumberField(_ value: String) {
         let value = String(value.filter(\.isNumber))
@@ -374,6 +367,13 @@ private extension TransferView {
         case .failure(let error):
             Tracker.shared.logError(error: error)
         }
+    }
+    
+    func setMerchantSelection(_ merchant: Merchant) {
+        withAnimation {
+            transaction.number = merchant.code
+        }
+        Tracker.shared.logMerchantSelection(merchant)
     }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Contact: Identifiable {
-    var id: String { names + phoneNumbers.description }
+    let id = UUID()
     let names: String
     private(set) var phoneNumbers: [String]
     
@@ -30,8 +30,7 @@ struct ContactsDictionary: Identifiable {
 }
 
 extension ContactsDictionary {
-    static func transform(_ contacts: [Contact]) -> [Self] {
-        // Transform the array of Contact objects into an array of ContactsDictionary objects
+    static func transform(_ contacts: [Contact]) -> [ContactsDictionary] {
         let contactsDictionary = Dictionary(grouping: contacts) { contact in
             contact.names.prefix(1).uppercased().first ?? Character(" ")
         }.map { (letter, contacts) in
