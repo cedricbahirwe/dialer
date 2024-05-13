@@ -32,6 +32,10 @@ struct TransferView: View {
         }
     }
     
+    private var isMerchant: Bool {
+        transaction.type == .merchant
+    }
+    
     private var navigationTitle: String {
         transaction.type == .merchant ? "Pay Merchant" : "Transfer momo"
     }
@@ -44,7 +48,7 @@ struct TransferView: View {
                 VStack(spacing: 10) {
                     if transaction.type == .client && !transaction.amount.isEmpty {
                         feeHintView
-                            .font(.caption).foregroundColor(.blue)
+                            .font(.caption).foregroundStyle(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.estimatedFee)
                     }
@@ -57,7 +61,7 @@ struct TransferView: View {
                 
                 VStack(spacing: 10) {
                     if transaction.type == .client {
-                        Text(selectedContact.names).font(.caption).foregroundColor(.blue)
+                        Text(selectedContact.names).font(.caption).foregroundStyle(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: transaction.type)
                     }
@@ -78,19 +82,18 @@ struct TransferView: View {
                                 openScanner()
                             }
                         }) {
-                            (transaction.type == .merchant ?
-                             Image(systemName: "qrcode.viewfinder") : Image(systemName: "person.fill"))
-                            .imageScale(.large)
-                            .frame(width: 48, height: 48)
-                            .background(Color.accentColor)
-                            .cornerRadius(8)
-                            .foregroundColor(.white)
+                            Image(systemName: isMerchant ?  "qrcode.viewfinder" : "person.fill")
+                                .imageScale(.large)
+                                .frame(width: 48, height: 48)
+                                .background(Color.accentColor)
+                                .cornerRadius(8)
+                                .foregroundStyle(.white)
                         }
                     }
                     
                     if transaction.type == .merchant {
                         Text("Merchant code should be a 5-6 digits number")
-                            .font(.caption).foregroundColor(.blue)
+                            .font(.caption).foregroundStyle(.blue)
                     }
                 }
                 
@@ -105,7 +108,7 @@ struct TransferView: View {
                             .frame(height: 48)
                             .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
                             .cornerRadius(8)
-                            .foregroundColor(Color.white)
+                            .foregroundStyle(Color.white)
                     }
                     .disabled(transaction.isValid == false)
                 }
@@ -128,7 +131,7 @@ struct TransferView: View {
                                     HStack(spacing: 4) {
                                         if merchant.code == transaction.number {
                                             Image(systemName: "checkmark")
-                                                .foregroundColor(.blue)
+                                                .foregroundStyle(.blue)
                                                 .font(.body.weight(.semibold))
                                         }
                                         
@@ -138,7 +141,7 @@ struct TransferView: View {
                                     Spacer()
                                     Text("#\(merchant.code)")
                                         .font(.callout.weight(.medium))
-                                        .foregroundColor(.blue)
+                                        .foregroundStyle(.blue)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .contentShape(Rectangle())
@@ -214,29 +217,12 @@ struct TransferView: View {
         .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                HStack  {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(merchantStore.merchants) { merchant in
-                                Text("#\(merchant.code)")
-                                    .font(.callout.weight(.medium))
-                                    .foregroundColor(.blue)
-                                    .padding(6)
-                                    .background(.blue.opacity(0.03), in: .capsule)
-                                    .background(.ultraThinMaterial, in: .capsule)
-                                    .contentShape(.capsule)
-                                    .onTapGesture {
-                                        setMerchantSelection(merchant)
-                                    }
-                            }
-                        }
-                    }
-                    .opacity(transaction.type == .merchant ? 1 : 0)
-                    
+                HStack {
+                    Spacer()
                     Button(action: goToNextFocus) {
                         Text(focusedState == .number ? " Finish" : "Next")
                             .font(.system(size: 18, design: .rounded))
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                             .padding(5)
                     }
                 }
@@ -245,7 +231,7 @@ struct TransferView: View {
                 Button(action: switchPaymentType) {
                     Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
                         .font(.system(size: 18, design: .rounded))
-                        .foregroundColor(.blue)
+                        .foregroundStyle(.blue)
                         .padding(5)
                 }
             }
