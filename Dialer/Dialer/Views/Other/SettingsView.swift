@@ -166,16 +166,27 @@ extension SettingsView {
             }
         }
         
+        @State private var animateSymbol = false
+        
+        private var iconImageView: some View {
+            item.icon
+                .resizable()
+                .scaledToFit()
+                .padding(6)
+                .frame(width: 28, height: 28)
+                .background(item.color)
+                .cornerRadius(6)
+                .foregroundColor(.white)
+        }
+        
         var contentView: some View {
             HStack(spacing: 0) {
-                item.icon
-                    .resizable()
-                    .scaledToFit()
-                    .padding(6)
-                    .frame(width: 28, height: 28)
-                    .background(item.color)
-                    .cornerRadius(6)
-                    .foregroundColor(.white)
+                if #available(iOS 17.0, *) {
+                    iconImageView
+                        .symbolEffect(.bounce.down, value: animateSymbol)
+                } else {
+                    iconImageView
+                }
                 
                 VStack(alignment: .leading) {
                     Text(item.title)
@@ -190,6 +201,11 @@ extension SettingsView {
                 .padding(.leading, 15)
                 
                 Spacer(minLength: 1)
+            }
+            .onAppear() {
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                    animateSymbol = true
+                }
             }
         }
     }

@@ -97,14 +97,14 @@ struct DashBoardView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if allowBiometrics {
-                    gearGradient
+                    settingsImage
                         .onTapForBiometrics {
                             if $0 {
                                 data.showSettingsView()
                             }
                         }
                 } else {
-                    Button(action: data.showSettingsView) { gearGradient }
+                    Button(action: data.showSettingsView) { settingsImage }
                 }
             }
         }
@@ -113,14 +113,23 @@ struct DashBoardView: View {
 }
 
 private extension DashBoardView {
-    var gearGradient: some View {
-        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+    private var settingsGradientIcon: some View {
+        Image(systemName: "gear")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
             .frame(width: 30, height: 30)
-            .mask(
-                Image(systemName: "gear")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+            .foregroundStyle(
+                LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
             )
+    }
+    @ViewBuilder
+    var settingsImage: some View {
+        if #available(iOS 17.0, *) {
+            settingsGradientIcon
+                .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
+        } else {
+            settingsGradientIcon
+        }
     }
 }
 
