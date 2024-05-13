@@ -79,7 +79,7 @@ struct WhatsNewView: View {
                 
                 Image(systemName: log.icon)
                     .resizable()
-                    .foregroundColor(.mainRed)
+                    .foregroundStyle(.mainRed)
                     .brightness(0.1)
                     .scaledToFit()
                     .frame(width: 30, height: 30)

@@ -88,7 +88,7 @@ struct SettingsView: View {
                 
             }
             
-            .foregroundColor(.primary.opacity(0.8))
+            .foregroundStyle(.primary.opacity(0.8))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
@@ -176,7 +176,7 @@ extension SettingsView {
                 .frame(width: 28, height: 28)
                 .background(item.color)
                 .cornerRadius(6)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
         }
         
         var contentView: some View {
@@ -193,7 +193,7 @@ extension SettingsView {
                         .font(.system(.callout, design: .rounded))
                     Text(item.subtitle)
                         .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     
                 }
                 .multilineTextAlignment(.leading)

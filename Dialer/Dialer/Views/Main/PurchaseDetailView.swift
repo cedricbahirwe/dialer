@@ -44,7 +44,7 @@ struct PurchaseDetailView: View {
                         .frame(height: 45)
                         .background(Color.blue.opacity((!data.hasValidAmount) ? 0.5 : 1))
                         .cornerRadius(8)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 .disabled(!data.hasValidAmount)
             }

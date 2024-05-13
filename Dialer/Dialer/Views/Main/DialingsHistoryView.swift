@@ -48,7 +48,7 @@ struct DialingsHistoryView: View {
                     
                     Text("The estimations are based on the recent USSD codes used.")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
                 .font(.system(size: 26, weight: .bold, design: .serif))
                 .opacity(0.9)

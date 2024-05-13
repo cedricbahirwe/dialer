@@ -39,7 +39,7 @@ struct MySpaceView: View {
                             if editMode?.wrappedValue.isEditing == true {
                                 Text("Edit")
                                     .font(.caption)
-                                    .foregroundColor(.white)
+                                    .foregroundStyle(.white)
                                     .frame(maxHeight: .infinity)
                                     .frame(width: 60)
                                     .background(Color.blue)

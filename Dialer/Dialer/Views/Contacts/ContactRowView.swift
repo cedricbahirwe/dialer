@@ -24,7 +24,7 @@ struct ContactRowView: View {
                 }
             }
             .font(.system(.footnote, design: .rounded))
-            .foregroundColor(.secondary)
+            .foregroundStyle(.secondary)
             .lineLimit(1)
             .minimumScaleFactor(0.5)
         }

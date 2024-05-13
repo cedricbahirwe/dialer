@@ -25,7 +25,7 @@ struct NumberField: View {
             .keyboardType(keyboardType)
             .textInputAutocapitalization(.never)
             .disableAutocorrection(true)
-            .foregroundColor(.primary)
+            .foregroundStyle(.primary)
             .padding()
             .frame(height: 48)
             .background(Color.primaryBackground)

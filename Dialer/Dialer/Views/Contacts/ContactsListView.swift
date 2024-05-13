@@ -52,7 +52,7 @@ struct ContactsListView: View {
                     }) {
                         Image(systemName: "chevron.down")
                             .font(.system(size: 18, design: .rounded))
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                             .padding(5)
                     }
                 }
@@ -92,7 +92,7 @@ struct ContactsListView: View {
             Text("No Results found")
                 .font(.title2)
             Text("Try a different name or\nphone number")
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             
         }
@@ -107,7 +107,7 @@ private extension ContactsListView {
         HStack {
             HStack(spacing: 2) {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .padding(9)
                 
                 TextField("Search by name or phone", text: $contactsVM.searchQuery) { isEditing in
@@ -122,7 +122,7 @@ private extension ContactsListView {
                 if isSearching {
                     Button(action: clearSearch) {
                         Image(systemName: "multiply.circle.fill")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .padding(.trailing, 9)
                     }
                 }
