@@ -67,7 +67,7 @@ private extension MerchantsListView {
                     .font(.callout)
                 Text("ID: \(merchant.hashCode.uuidString)")
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .italic()
                     .lineLimit(1)
                     .truncationMode(.middle)

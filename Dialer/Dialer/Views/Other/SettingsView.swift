@@ -88,7 +88,7 @@ struct SettingsView: View {
                 
             }
             
-            .foregroundColor(.primary.opacity(0.8))
+            .foregroundStyle(.primary.opacity(0.8))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
@@ -166,23 +166,34 @@ extension SettingsView {
             }
         }
         
+        @State private var animateSymbol = false
+        
+        private var iconImageView: some View {
+            item.icon
+                .resizable()
+                .scaledToFit()
+                .padding(6)
+                .frame(width: 28, height: 28)
+                .background(item.color)
+                .cornerRadius(6)
+                .foregroundStyle(.white)
+        }
+        
         var contentView: some View {
             HStack(spacing: 0) {
-                item.icon
-                    .resizable()
-                    .scaledToFit()
-                    .padding(6)
-                    .frame(width: 28, height: 28)
-                    .background(item.color)
-                    .cornerRadius(6)
-                    .foregroundColor(.white)
+                if #available(iOS 17.0, *) {
+                    iconImageView
+                        .symbolEffect(.bounce.down, value: animateSymbol)
+                } else {
+                    iconImageView
+                }
                 
                 VStack(alignment: .leading) {
                     Text(item.title)
                         .font(.system(.callout, design: .rounded))
                     Text(item.subtitle)
                         .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     
                 }
                 .multilineTextAlignment(.leading)
@@ -190,6 +201,11 @@ extension SettingsView {
                 .padding(.leading, 15)
                 
                 Spacer(minLength: 1)
+            }
+            .onAppear() {
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                    animateSymbol = true
+                }
             }
         }
     }

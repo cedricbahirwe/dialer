@@ -13,17 +13,17 @@ struct DashItemView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
-                .frame(width: 25, height: 25)
-                .mask(
-                    Image(systemName: icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                )
+                Image(systemName: icon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundStyle(
+                        LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+                    )
 
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         }

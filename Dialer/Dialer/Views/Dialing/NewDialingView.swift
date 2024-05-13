@@ -24,7 +24,7 @@ struct NewDialingView: View {
                     if titleAlreadyExists() {
                         Text("This name is already used by another USSD code.")
                             .font(.caption)
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: model.editedCode)
                     }
@@ -33,7 +33,7 @@ struct NewDialingView: View {
                         .disableAutocorrection(true)
                         .focused($focusedField, equals: .title)
                         .submitLabel(.next)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                         .padding()
                         .frame(height: 48)
                         .background(Color.primaryBackground)
@@ -48,7 +48,7 @@ struct NewDialingView: View {
                     if ussdAlreadyExists() {
                         Text("This USSD code is already saved under another name")
                             .font(.caption)
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: model.editedCode)
                     }
@@ -61,7 +61,7 @@ struct NewDialingView: View {
                         .frame(height: 48)
                         .background(Color.blue.opacity(isUSSDValid() ? 1 : 0.3))
                         .cornerRadius(8)
-                        .foregroundColor(Color.white)
+                        .foregroundStyle(Color.white)
                 }
                 .disabled(isUSSDValid() == false)
                 

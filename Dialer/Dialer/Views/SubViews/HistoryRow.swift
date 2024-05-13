@@ -13,7 +13,7 @@ struct HistoryRow: View {
         HStack {
             if recentCode.count > 20 {
                 Image(systemName: "flame.fill")
-                    .foregroundColor(.red)
+                    .foregroundStyle(.red)
             } else {
                 Circle()
                     .fill(getColor())
@@ -36,7 +36,7 @@ struct HistoryRow: View {
                     Text(recentCode.detail.purchaseDate, style: .date)
                 }
                 .font(.footnote)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
 
             }
             .frame(maxWidth: .infinity, alignment: .leading)

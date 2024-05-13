@@ -44,7 +44,7 @@ struct CreateMerchantView: View {
                         .frame(height: 48)
                         .background(Color.blue)
                         .cornerRadius(8)
-                        .foregroundColor(Color.white)
+                        .foregroundStyle(Color.white)
                 }
             }
             .frame(maxHeight: .infinity, alignment: .top)

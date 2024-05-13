@@ -26,7 +26,7 @@ struct ThanksYouView: View {
                 
                 Text("Thanks for using Dialer for the past month!")
                     .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                 
@@ -41,13 +41,13 @@ struct ThanksYouView: View {
                         .frame(height: 45)
                         .background(Color.accentColor)
                         .cornerRadius(8)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 
                 Text("Remaining time: ^[\(timeRemaining) second](inflect: true)")
                     .font(.callout)
                     .fontWeight(.semibold)
-                    .foregroundColor(Color.red.opacity(0.8))
+                    .foregroundStyle(Color.red.opacity(0.8))
             }
             .padding(20)
             .frame(maxWidth: .infinity)

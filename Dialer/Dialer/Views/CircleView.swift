@@ -14,7 +14,7 @@ struct CircleView: View {
         VStack {
             VStack(spacing: 10) {
                 Text("This Month")
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
                     Text("50")
@@ -24,7 +24,7 @@ struct CircleView: View {
                 }
                 
                 Text("Drios")
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                 
             }
             .padding(30)
