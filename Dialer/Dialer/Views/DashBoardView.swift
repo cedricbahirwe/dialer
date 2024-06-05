@@ -93,6 +93,10 @@ struct DashBoardView: View {
             }
         }
         .background(Color.primaryBackground)
+        .task {
+            data.history.retrieveHistoryCodes()
+            data.retrieveUSSDCodes()
+        }
         .navigationTitle("Dialer")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

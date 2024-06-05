@@ -60,6 +60,7 @@ final class HistoryViewModel: ObservableObject {
     /// Save RecentCode(s) locally.
     func saveRecentCodesLocally() {
         do {
+            guard !recentCodes.isEmpty else { return }
             try DialerStorage.shared.saveRecentCodes(recentCodes)
         } catch {
             Tracker.shared.logError(error: error)
