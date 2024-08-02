@@ -28,9 +28,6 @@ struct ContentView: View {
                 }
         }
         .onAppear(perform: setupAppearance)
-        .fullScreenCover(isPresented: $data.hasReachSync) {
-            ThanksYouView(isPresented: $data.hasReachSync)
-        }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {
                 await RemoteConfigs.shared.fetchRemoteValues()

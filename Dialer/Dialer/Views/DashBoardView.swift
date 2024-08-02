@@ -73,6 +73,9 @@ struct DashBoardView: View {
             }
             .blur(radius: showPurchaseSheet ? 1 : 0)
         }
+        .fullScreenCover(isPresented: .constant(true)) {
+            UserDetailsCreationView()
+        }
         .sheet(isPresented: $showPurchaseSheet) {
             PurchaseDetailView(
                 isPresented: $showPurchaseSheet,

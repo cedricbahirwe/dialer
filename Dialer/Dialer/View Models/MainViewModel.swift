@@ -13,13 +13,13 @@ final class MainViewModel: ObservableObject {
     private(set) var history = HistoryViewModel()
         
     /// Used to show Congratulations Screen
-    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
-        didSet(newValue) {
-            if newValue == false {
-                DialerStorage.shared.clearSyncDate()
-            }
-        }
-    }
+//    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
+//        didSet(newValue) {
+//            if newValue == false {
+//                DialerStorage.shared.clearSyncDate()
+//            }
+//        }
+//    }
     
     @Published var purchaseDetail = PurchaseDetailModel()
     
