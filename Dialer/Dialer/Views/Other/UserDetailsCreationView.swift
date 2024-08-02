@@ -29,7 +29,7 @@ struct UserDetailsCreationView: View {
                     .multilineTextAlignment(.center)
                     .bold()
                     .focused($isFocused)
-                    .textContentType(.none)
+                    .textContentType(.nickname)
                     .overlay {
                         if username.isEmpty {
                             Text("Username")
@@ -40,9 +40,9 @@ struct UserDetailsCreationView: View {
                     }
                 
                 VStack(spacing: 24.0) {
-                    Text("we'll use this throughout the app 👀")
-                        .font(.callout)
-                        .hidden()
+//                    Text("we'll use this throughout the app 👀")
+//                        .font(.callout)
+//                        .hidden()
                     Button {
                         
                     } label: {
