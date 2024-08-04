@@ -7,9 +7,35 @@
 
 import SwiftUI
 
+enum DialerTheme: String, Codable, CaseIterable {
+    case system, light, dark
+    
+    
+    var rawCapitalized: String { rawValue.capitalized }
+    
+    func getIconSystemName() -> String {
+        switch self {
+        case .system: "gear"
+        case .light: "sun.max"
+        case .dark: "moon.fill"
+        }
+    }
+    
+    var asColorScheme: ColorScheme? {
+        switch self {
+        case .system: nil
+        case .light: .light
+        case .dark: .dark
+        }
+    }
+}
+
 struct SettingsView: View {
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
+    
+    @AppStorage(UserDefaultsKeys.appTheme)
+    private var appTheme: DialerTheme = .system
     
     @EnvironmentObject var dataStore: MainViewModel
     
@@ -17,6 +43,7 @@ struct SettingsView: View {
     
     @State private var alertItem: AlertDialog?
     @State private var showDialog = false
+
     
     var body: some View {
         NavigationStack {
@@ -28,6 +55,20 @@ struct SettingsView: View {
                             .toggleStyle(SwitchToggleStyle())
                             .labelsHidden()
                     }
+                    
+                    Menu {
+                        
+                        ForEach(DialerTheme.allCases, id: \.self) { theme in
+                            Button(theme.rawCapitalized, systemImage: theme.getIconSystemName()) {
+                                setAppTheme(theme)
+                            }
+                        }
+
+                    } label: {
+                        SettingsRow(item: .init(sysIcon: "circle.lefthalf.filled.inverse", color: .green, title: "Change Mode", subtitle: "Current Mode: **\((appTheme).rawCapitalized)**"))
+                    }
+                    
+                    
                     
                     if !dataStore.ussdCodes.isEmpty {
                         SettingsRow(.deleteUSSDs,
@@ -87,7 +128,6 @@ struct SettingsView: View {
                 }
                 
             }
-            
             .foregroundStyle(.primary.opacity(0.8))
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
@@ -134,9 +174,12 @@ struct SettingsView: View {
     
     
     private func openTwitter() {
-        
         guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
         UIApplication.shared.open(url)
+    }
+    
+    private func setAppTheme(_ newTheme: DialerTheme) {
+        self.appTheme = newTheme
     }
 }
 
@@ -144,10 +187,19 @@ extension SettingsView {
     
     struct SettingsRow: View {
         
-        init(_ option: SettingsOption,
-             action: @escaping () -> Void) {
-            self.item = option.getSettingsItem()
+        
+        init(item: SettingsItem, action: @escaping () -> Void) {
+            self.item = item
             self.action = action
+        }
+        
+        init(item: SettingsItem) {
+            self.item = item
+            self.action = nil
+        }
+        
+        init(_ option: SettingsOption, action: @escaping () -> Void) {
+            self.init(item: option.getSettingsItem(), action: action)
         }
         
         init(_ option: SettingsOption) {

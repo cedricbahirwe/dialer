@@ -16,6 +16,10 @@ struct ContentView: View {
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
     @State private var showPurchaseSheet = true
     @State private var navPath: [AppRoute] = []
+    @AppStorage(UserDefaultsKeys.appTheme)
+    private var appTheme: DialerTheme = .system
+    
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -28,6 +32,7 @@ struct ContentView: View {
                 }
         }
         .onAppear(perform: setupAppearance)
+        .preferredColorScheme(appTheme.asColorScheme)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {
                 await RemoteConfigs.shared.fetchRemoteValues()
@@ -44,10 +49,12 @@ struct ContentView: View {
         } message: {
             Text($0.message)
         }
+        
     }
     
     private func setupAppearance() {
         
+        print("I appear")
         let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
         let descriptor2 = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
         

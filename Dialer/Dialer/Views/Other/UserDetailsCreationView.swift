@@ -30,9 +30,11 @@ struct UserDetailsCreationView: View {
                     .bold()
                     .focused($isFocused)
                     .textContentType(.nickname)
+                    .textInputAutocapitalization(.never)
                     .overlay {
+                        
                         if username.isEmpty {
-                            Text("Username")
+                            Text("username")
                                 .foregroundStyle(.secondary)
                                 .font(.title.bold())
                                 .allowsHitTesting(false)
@@ -72,7 +74,7 @@ struct UserDetailsCreationView: View {
             .padding()
         }
         .foregroundStyle(.white)
-        .background(.black, ignoresSafeAreaEdges: .all)
+        .background(.matteBlack, ignoresSafeAreaEdges: .all)
         .onAppear() {
             DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {
                 isFocused = true
