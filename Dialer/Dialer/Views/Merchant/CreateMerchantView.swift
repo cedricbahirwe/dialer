@@ -96,8 +96,8 @@ private extension CreateMerchantView {
         func getMerchant() throws -> Merchant {
             guard name.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
             else { throw Error.invalidInput("Name should be more or equal to 3 characters") }
-            guard (5...6).contains(code.count)
-            else { throw Error.invalidInput("Code should be 5 or 6 digits")  }
+            guard (AppConstants.merchantDigitsRange).contains(code.count)
+            else { throw Error.invalidInput("Code should be 5 to 7 digits")  }
             guard code.allSatisfy(\.isNumber)
             else { throw Error.invalidInput("Code contains only digits")  }
 

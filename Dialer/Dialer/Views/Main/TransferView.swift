@@ -66,12 +66,14 @@ struct TransferView: View {
                             .animation(.default, value: transaction.type)
                     }
                     HStack {
-                        NumberField(transaction.type == .client ?
-                                    "Enter Receiver's number" :
-                                        "Enter Merchant Code", text: $transaction.number.onChange(handleNumberField).animation())
+                        NumberField(
+                            transaction.type == .client
+                            ? "Enter Receiver's number"
+                            : "Enter Merchant Code",
+                            text: $transaction.number.animation())
+                        .onChange(of: transaction.number, perform: handleNumberField)
                         .focused($focusedState, equals: .number)
                         .accessibilityIdentifier("transferNumberField")
-                        
                         
                         Button(action: {
                             if transaction.type == .client {
@@ -89,11 +91,6 @@ struct TransferView: View {
                                 .cornerRadius(8)
                                 .foregroundStyle(.white)
                         }
-                    }
-                    
-                    if transaction.type == .merchant {
-                        Text("Merchant code should be a 5-6 digits number")
-                            .font(.caption).foregroundStyle(.blue)
                     }
                 }
                 
@@ -315,12 +312,13 @@ private extension TransferView {
     func handleNumberField(_ value: String) {
         let value = String(value.filter(\.isNumber))
         
-        if transaction.type == .merchant {
-            transaction.number = String(value.prefix(6))
-            selectedContact = .empty
-        } else {
+        switch transaction.type {
+        case .client:
             let matchedContacts = allContacts.filter({ $0.phoneNumbers.contains(value.lowercased())})
             selectedContact = matchedContacts.isEmpty ? .empty : matchedContacts.first!
+        case .merchant:
+            transaction.number = String(value.prefix(AppConstants.merchantMaxDigits))
+            selectedContact = .empty
         }
     }
     

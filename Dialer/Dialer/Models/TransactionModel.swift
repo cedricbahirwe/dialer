@@ -12,17 +12,17 @@ struct Transaction: Identifiable {
     var amount: String
     var number: String
     var type: TransactionType
-    
+
     private var trailingCode: String {
         // Need strategy to deal with country code
         number.replacingOccurrences(of: " ", with: "") + "*" + amount
     }
-    
-    
+
+
     var doubleAmount: Double {
         Double(amount) ?? 0
     }
-    
+
     var estimatedFee: Int {
         if type == .client {
             for range in Self.transactionFees {
@@ -35,9 +35,7 @@ struct Transaction: Identifiable {
             return 0
         }
     }
-    
-    
-    
+
     var fullCode: String {
         if type == .client {
             return "*182*1*1*\(trailingCode)#"
@@ -45,36 +43,26 @@ struct Transaction: Identifiable {
             return "*182*8*1*\(trailingCode)#"
         }
     }
-    
-    
+
     /// Determines whether a transaction is valid
-    /// Need better operation to handle edge cases (long/short  numbers)
+    /// Need better operation to handle edge cases (long/short numbers)
     var isValid: Bool {
         switch type {
         case .client:
             return doubleAmount > 0 && number.count >= 8
         case .merchant:
-            return doubleAmount > 0 && (5...6).contains(number.count)
+            // TODO: Needs a firebase remote config to set the merchant digits count
+            return doubleAmount > 0 && (AppConstants.merchantDigitsRange).contains(number.count)
         }
     }
-    
+
     enum TransactionType: String {
         case client, merchant
-        
+
         mutating func toggle() {
             self = self == .client ? .merchant : .client
         }
     }
-    
+
     static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
-}
-
-
-struct Item {
-    var age: Int
-    var name: String
-}
-
-extension Item {
-    var locationID: String { "\(name) + \(age)"}
 }
