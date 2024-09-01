@@ -9,10 +9,9 @@ import SwiftUI
 
 enum DialerTheme: String, Codable, CaseIterable {
     case system, light, dark
-    
-    
+
     var rawCapitalized: String { rawValue.capitalized }
-    
+
     func getIconSystemName() -> String {
         switch self {
         case .system: "gear"
@@ -20,7 +19,7 @@ enum DialerTheme: String, Codable, CaseIterable {
         case .dark: "moon.fill"
         }
     }
-    
+
     var asColorScheme: ColorScheme? {
         switch self {
         case .system: nil
@@ -33,18 +32,18 @@ enum DialerTheme: String, Codable, CaseIterable {
 struct SettingsView: View {
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
-    
+
     @AppStorage(UserDefaultsKeys.appTheme)
     private var appTheme: DialerTheme = .system
-    
+
     @EnvironmentObject var dataStore: MainViewModel
-    
+
     @StateObject private var mailComposer = MailComposer()
-    
+
     @State private var alertItem: AlertDialog?
     @State private var showDialog = false
 
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -55,21 +54,20 @@ struct SettingsView: View {
                             .toggleStyle(SwitchToggleStyle())
                             .labelsHidden()
                     }
-                    
-                    Menu {
-                        
-                        ForEach(DialerTheme.allCases, id: \.self) { theme in
-                            Button(theme.rawCapitalized, systemImage: theme.getIconSystemName()) {
-                                setAppTheme(theme)
-                            }
-                        }
 
-                    } label: {
-                        SettingsRow(item: .init(sysIcon: "circle.lefthalf.filled.inverse", color: .green, title: "Change Mode", subtitle: "Current Mode: **\((appTheme).rawCapitalized)**"))
-                    }
-                    
-                    
-                    
+                    //                    Menu {
+                    //                        ForEach(DialerTheme.allCases, id: \.self) { theme in
+                    //                            Button(theme.rawCapitalized, systemImage: theme.getIconSystemName()) {
+                    //                                setAppTheme(theme)
+                    //                            }
+                    //                        }
+                    //
+                    //                    } label: {
+                    //                        SettingsRow(item: .init(sysIcon: "circle.lefthalf.filled.inverse", color: .green, title: "Change Mode", subtitle: "Current Mode: **\((appTheme).rawCapitalized)**"))
+                    //                    }
+
+
+
                     if !dataStore.ussdCodes.isEmpty {
                         SettingsRow(.deleteUSSDs,
                                     action: presentUSSDsRemovalSheet)
@@ -82,11 +80,11 @@ struct SettingsView: View {
                                     titleVisibility: .visible,
                                     presenting: alertItem)
                 { item in
-                    
+
                     Button("Delete",
                            role: .destructive,
                            action: item.action)
-                    
+
                     Button("Cancel",
                            role: .cancel) {
                         alertItem = nil
@@ -97,7 +95,7 @@ struct SettingsView: View {
                         Text(item.title ?? "")
                     }
                 }
-                
+
                 Section {
                     SettingsRow(.contactUs, action: mailComposer.openMail)
                         .alert("No Email Client Found",
@@ -115,18 +113,18 @@ struct SettingsView: View {
                 } header: {
                     sectionHeader("Reach Out")
                 }
-                
+
                 Section {
                     NavigationLink(destination: AboutView()) {
                         SettingsRow(.about)
                     }
-                    
+
                     SettingsRow(.review, action: ReviewHandler.requestReviewManually)
-                    
+
                 } header: {
                     sectionHeader("Colophon")
                 }
-                
+
             }
             .foregroundStyle(.primary.opacity(0.8))
             .navigationTitle("Help & More")
@@ -153,63 +151,63 @@ struct SettingsView: View {
             .trackAppearance(.settings)
         }
     }
-    
+
     private func presentUSSDsRemovalSheet() {
         alertItem = .init("Confirmation",
                           message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
                           action: dataStore.removeAllUSSDs)
         showDialog.toggle()
     }
-    
+
     private func copyEmail() {
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = DialerlLinks.dialerTwitter
     }
-    
+
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.title3.weight(.semibold))
             .textCase(nil)
     }
-    
-    
+
+
     private func openTwitter() {
         guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
         UIApplication.shared.open(url)
     }
-    
+
     private func setAppTheme(_ newTheme: DialerTheme) {
         self.appTheme = newTheme
     }
 }
 
 extension SettingsView {
-    
+
     struct SettingsRow: View {
-        
-        
+
+
         init(item: SettingsItem, action: @escaping () -> Void) {
             self.item = item
             self.action = action
         }
-        
+
         init(item: SettingsItem) {
             self.item = item
             self.action = nil
         }
-        
+
         init(_ option: SettingsOption, action: @escaping () -> Void) {
             self.init(item: option.getSettingsItem(), action: action)
         }
-        
+
         init(_ option: SettingsOption) {
             self.item = option.getSettingsItem()
             self.action = nil
         }
-        
+
         private let item: SettingsItem
         private let action: (() -> Void)?
-        
+
         var body: some View {
             if let action = action {
                 Button(action: action) { contentView }
@@ -217,9 +215,9 @@ extension SettingsView {
                 contentView
             }
         }
-        
+
         @State private var animateSymbol = false
-        
+
         private var iconImageView: some View {
             item.icon
                 .resizable()
@@ -230,7 +228,7 @@ extension SettingsView {
                 .cornerRadius(6)
                 .foregroundStyle(.white)
         }
-        
+
         var contentView: some View {
             HStack(spacing: 0) {
                 if #available(iOS 17.0, *) {
@@ -239,19 +237,19 @@ extension SettingsView {
                 } else {
                     iconImageView
                 }
-                
+
                 VStack(alignment: .leading) {
                     Text(item.title)
                         .font(.system(.callout, design: .rounded))
                     Text(item.subtitle)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(.secondary)
-                    
+
                 }
                 .multilineTextAlignment(.leading)
                 .minimumScaleFactor(0.8)
                 .padding(.leading, 15)
-                
+
                 Spacer(minLength: 1)
             }
             .onAppear() {
