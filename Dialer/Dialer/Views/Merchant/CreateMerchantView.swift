@@ -9,10 +9,10 @@ import SwiftUI
 
 struct CreateMerchantView: View {
     @ObservedObject var merchantStore: MerchantStore
-    
+
     @Environment(\.dismiss) private var dismiss
     @State private var model = Model()
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             Text("Create Merchant")
@@ -23,7 +23,7 @@ struct CreateMerchantView: View {
             VStack(alignment: .leading, spacing: 15) {
                 Group {
                     TextField("Merchant Name", text: $model.name)
-                    
+
 
                     TextField("Merchant Code", text: $model.code)
                         .keyboardType(.numberPad)
