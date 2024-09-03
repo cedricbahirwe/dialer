@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let forceUpdateManager = ForceUpdateManager()
     let merchantStore = MerchantStore()
     let userMerchantStore = UserMerchantStore()
+    let userStore = UserStore()
 
     
     /// - Tag: willConnectTo
@@ -45,6 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView()
             .environmentObject(dialingStore)
             .environmentObject(merchantStore)
+            .environmentObject(userStore)
             .environmentObject(userMerchantStore)
             .environmentObject(forceUpdateManager)
         

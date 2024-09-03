@@ -30,7 +30,7 @@ final class ForceUpdateManager: ObservableObject {
     }
 
     func checkAppVersion() {
-        // Check if half day has passed
+        // Checks if half day has passed (43,200 seconds)
         if let lastAskedDate = DialerStorage.shared.getLastAskedDateToUpdate() {
             guard Date.now.timeIntervalSince(lastAskedDate) >= 43_200 else { return }
         }

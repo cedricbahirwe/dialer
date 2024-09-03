@@ -55,18 +55,19 @@ struct SettingsView: View {
                             .labelsHidden()
                     }
 
-                    //                    Menu {
-                    //                        ForEach(DialerTheme.allCases, id: \.self) { theme in
-                    //                            Button(theme.rawCapitalized, systemImage: theme.getIconSystemName()) {
-                    //                                setAppTheme(theme)
-                    //                            }
-                    //                        }
-                    //
-                    //                    } label: {
-                    //                        SettingsRow(item: .init(sysIcon: "circle.lefthalf.filled.inverse", color: .green, title: "Change Mode", subtitle: "Current Mode: **\((appTheme).rawCapitalized)**"))
-                    //                    }
-
-
+                    Menu {
+                        ForEach(DialerTheme.allCases, id: \.self) { theme in
+                            Button(theme.rawCapitalized, systemImage: theme.getIconSystemName()) {
+                                setAppTheme(theme)
+                            }
+                        }
+                    } label: {
+                        SettingsRow(item: .init(
+                            sysIcon: "circle.lefthalf.filled.inverse",
+                            color: .green,
+                            title: "Change Mode",
+                            subtitle: "Current Mode: **\((appTheme).rawCapitalized)**"))
+                    }
 
                     if !dataStore.ussdCodes.isEmpty {
                         SettingsRow(.deleteUSSDs,

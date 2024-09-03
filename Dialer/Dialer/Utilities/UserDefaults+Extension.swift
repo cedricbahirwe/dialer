@@ -36,5 +36,8 @@ enum UserDefaultsKeys {
     
     // Manually switch Dialer Theme
     static let appTheme = "appTheme"
+
+    // Should show Username onboarding UI
+    static let showUsernameSheet = "showUsernameSheet"
 }
 

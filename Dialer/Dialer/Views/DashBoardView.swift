@@ -22,6 +22,9 @@ struct DashBoardView: View {
     @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
     @Environment(\.colorScheme) private var colorScheme
 
+    @AppStorage(UserDefaultsKeys.showUsernameSheet)
+    private var showUsernameSheet = true
+
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -75,9 +78,10 @@ struct DashBoardView: View {
             }
             .blur(radius: showPurchaseSheet ? 1 : 0)
         }
-//        .fullScreenCover(isPresented: .constant(true)) {
-//            UserDetailsCreationView()
-//        }
+        .fullScreenCover(isPresented: $showUsernameSheet) {
+//            MerchantsListView()
+            UserDetailsCreationView()
+        }
         .sheet(isPresented: $showPurchaseSheet) {
             PurchaseDetailView(
                 isPresented: $showPurchaseSheet,

@@ -11,7 +11,8 @@ import FirebaseFirestore
 enum FBCollection: String {
     case merchants
     case devices
-    
+    case users
+
     var name: String {
         #if DEBUG
             return rawValue + "-dev"
