@@ -7,7 +7,8 @@
 
 import CoreLocation
 
-class BaseViewModel {
+@MainActor
+class BaseViewModel: ObservableObject {
     @Published private(set) var isFetching = false
 
     func startFetch() {
@@ -23,7 +24,7 @@ class BaseViewModel {
     }
 }
 
-class MerchantStore: BaseViewModel, ObservableObject {
+class MerchantStore: BaseViewModel {
     @Published private(set) var merchants: [Merchant]
     let merchantProvider: MerchantProtocol
 

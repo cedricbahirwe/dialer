@@ -21,6 +21,8 @@ struct UserDetailsCreationView: View {
     @State private var usernameAvailable: Bool = false
     @State private var recoveryFileURL: URL?
 
+    @State private var isRestoringUser = false
+
     private var isUsernameValid: Bool {
         username.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3 &&
         username.trimmingCharacters(in: .whitespacesAndNewlines).count <= 30
@@ -87,13 +89,26 @@ struct UserDetailsCreationView: View {
                         TextField(
                             "Recovery code...",
                             text: $enteredRecoveryCode)
-                        Button("Continue", action: {})
+                        .foregroundStyle(.black)
+                        Button("Continue", action: restoreUser)
                     } message: {
                         Text("This code will restore your information on the app.")
                     }
                 }
                 .padding()
 
+        }
+        .overlay {
+            if isRestoringUser {
+                ZStack {
+                    Color.black.ignoresSafeArea()
+                    ProgressView("Wait a moment...")
+                        .font(.title2)
+                        .fontDesign(.rounded)
+                        .fontWeight(.semibold)
+                        .tint(.white)
+                }
+            }
         }
         .foregroundStyle(.white)
         .background(.matteBlack, ignoresSafeAreaEdges: .all)
@@ -124,6 +139,23 @@ struct UserDetailsCreationView: View {
         }
     }
 
+    private func restoreUser() {
+        hideKeyboard()
+        Task {
+            withAnimation {
+                isRestoringUser = true
+            }
+            let success = await userStore.restoreUser(enteredRecoveryCode)
+            enteredRecoveryCode = ""
+            if success {
+                showUsernameSheet = false
+            }
+            withAnimation {
+                isRestoringUser = false
+            }
+        }
+    }
+
     func makeRecoveryCodeFile() {
         guard let recoveryCode = userStore.recoveryCode else { return }
         let tempDirectoryURL = FileManager.default.temporaryDirectory
@@ -147,7 +179,6 @@ struct UserDetailsCreationView: View {
             .padding(6)
             .background(.white.opacity(0.95), in: .rect(cornerRadius: 8))
     }
-
 
     private var usernameFieldView: some View {
         TextField("", text: $username)

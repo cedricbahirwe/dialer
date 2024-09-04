@@ -9,7 +9,8 @@
 import Foundation
 import SwiftUI
 
-class UserStore: BaseViewModel, ObservableObject {
+@MainActor
+class UserStore: BaseViewModel {
     @Published private(set) var users: [DialerUser]
     private let userProvider: UserProtocol
 
@@ -27,7 +28,6 @@ class UserStore: BaseViewModel, ObservableObject {
         startFetch()
 
         let result = await userProvider.getAllUsers()
-        print("Got users", result.count)
 
         stopFetch()
         let sortedResult = result.sorted(by: { $0.username < $1.username })
@@ -47,7 +47,7 @@ class UserStore: BaseViewModel, ObservableObject {
     func saveUser(_ username: String) async -> Bool {
         let savedDevice = DialerStorage.shared.getSavedDevice()
         let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
-        let recoveryCode = ROT13.string(username.uppercased()) + "_" + ROT13.string(device.deviceHash)
+        let recoveryCode = ROT13.string(username) + "_" + ROT13.string(device.deviceHash)
 
         let user = DialerUser(
             username: username,
@@ -70,6 +70,24 @@ class UserStore: BaseViewModel, ObservableObject {
             stopFetch()
             return false
         }
+    }
+
+    func restoreUser(_ recoveryCode: String) async -> Bool {
+        let components = recoveryCode.components(separatedBy: "_")
+        guard components.count == 2 else { return  false }
+        let username = ROT13.string(components[0])
+        guard let user  = await userProvider.getUser(username: username)
+        else { return false }
+
+        let isRestored = user.recoveryCode == recoveryCode
+        if isRestored {
+            do {
+                try DialerStorage.shared.saveDevice(user.device)
+            } catch {
+                Tracker.shared.logError(error: error)
+            }
+        }
+        return isRestored
     }
 
     struct ROT13 {
