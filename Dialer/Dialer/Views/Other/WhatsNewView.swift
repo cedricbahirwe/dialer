@@ -106,7 +106,6 @@ private extension WhatsNewView {
 
 #Preview {
     WhatsNewView(isPresented: .constant(true))
-        .preferredColorScheme(.dark)
 }
 
 private struct ChangeLog: Identifiable {
@@ -127,7 +126,7 @@ private extension ChangeLog {
             ChangeLog("paperplane.circle", "Transfer & Pay", "Easily find the USSD code for sending money or making store payments."),
             ChangeLog("phone.circle", "Buy Airtime", "Quickly generate the right USSD code to top up airtime in seconds."),
             ChangeLog("clock.arrow.circlepath", "Usage History", "Instantly access your most frequently used USSD codes."),
-            ChangeLog("wrench.and.screwdriver", "My Space", "Personalize and manage your own USSD codes for quick access whenever needed."),
+            ChangeLog("folder", "My Space", "Personalize and manage your own USSD codes for quick access whenever needed."),
         ]
     }
 }
