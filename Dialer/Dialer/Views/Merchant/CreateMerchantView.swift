@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateMerchantView: View {
     @ObservedObject var merchantStore: MerchantStore
-
+    
     @Environment(\.dismiss) private var dismiss
     @State private var model = Model()
     
@@ -19,24 +19,24 @@ struct CreateMerchantView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.vertical)
-
+            
             VStack(alignment: .leading, spacing: 15) {
                 Group {
                     TextField("Merchant Name", text: $model.name)
-
-
+                    
+                    
                     TextField("Merchant Code", text: $model.code)
                         .keyboardType(.numberPad)
-
+                    
                     TextField("Merchant Address", text: $model.address)
                 }
-                .autocorrectionDisabled(true)
+                .autocorrectionDisabled()
                 .font(.callout)
                 .padding()
                 .frame(height: 48)
                 .background(Color.primaryBackground)
                 .withNeumorphStyle()
-
+                
                 Button(action: saveMerchant) {
                     Text("Save Merchant")
                         .font(.subheadline.bold())
@@ -62,7 +62,7 @@ struct CreateMerchantView: View {
         }
         .trackAppearance(.newMerchant)
     }
-
+    
     private func saveMerchant()  {
         do {
             let merchant = try model.getMerchant()
@@ -83,7 +83,7 @@ private extension CreateMerchantView {
         var name = ""
         var code = ""
         var address = ""
-
+        
         enum Error: Swift.Error {
             case invalidInput(String)
             var message: String {
@@ -92,7 +92,7 @@ private extension CreateMerchantView {
                 }
             }
         }
-
+        
         func getMerchant() throws -> Merchant {
             guard name.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
             else { throw Error.invalidInput("Name should be more or equal to 3 characters") }
@@ -100,7 +100,7 @@ private extension CreateMerchantView {
             else { throw Error.invalidInput("Code should be 5 to 7 digits")  }
             guard code.allSatisfy(\.isNumber)
             else { throw Error.invalidInput("Code contains only digits")  }
-
+            
             let userId = DialerStorage.shared.getSavedDevice()?.deviceHash ?? "-"
             return Merchant(name: name, address: address.isEmpty ? nil : address, code: code, ownerId: userId)
         }

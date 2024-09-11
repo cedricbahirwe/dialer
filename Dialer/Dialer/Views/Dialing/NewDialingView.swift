@@ -111,7 +111,7 @@ extension NewDialingView {
 
     private func cleanCode(_ value: String) {
         withAnimation {
-            model.editedCode = value.trimmingCharacters(in: .whitespaces)
+            model.editedCode = value.withoutSpacing()
         }
     }
 

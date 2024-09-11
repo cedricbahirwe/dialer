@@ -78,11 +78,15 @@ struct DashBoardView: View {
             }
             .blur(radius: showPurchaseSheet ? 1 : 0)
         }
-        .fullScreenCover(isPresented: $showUsernameSheet) {
-//            MerchantsListView()
+        .fullScreenCover(isPresented: $showUsernameSheet,
+                         onDismiss: {
+            showWelcomeView = true
+        }) {
             UserDetailsCreationView()
         }
-        .sheet(isPresented: $showPurchaseSheet) {
+        .sheet(
+            isPresented: $showPurchaseSheet
+        ) {
             PurchaseDetailView(
                 isPresented: $showPurchaseSheet,
                 data: data
