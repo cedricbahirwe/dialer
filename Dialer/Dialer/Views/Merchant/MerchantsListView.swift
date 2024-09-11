@@ -19,6 +19,7 @@ struct MerchantsListView: View {
                 }
                 .onDelete(perform: merchantStore.deleteMerchants)
             }
+            .navigationTitle("\(merchantStore.merchants.count) merchants")
             .overlay {
                 if merchantStore.isFetching {
                     Color.black.opacity(0.8).ignoresSafeArea()

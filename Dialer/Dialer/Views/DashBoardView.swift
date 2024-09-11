@@ -19,7 +19,12 @@ struct DashBoardView: View {
     private var allowBiometrics = false
     
     @State private var showPurchaseSheet = false
-    
+    @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
+    @Environment(\.colorScheme) private var colorScheme
+
+    @AppStorage(UserDefaultsKeys.showUsernameSheet)
+    private var showUsernameSheet = true
+
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -73,7 +78,15 @@ struct DashBoardView: View {
             }
             .blur(radius: showPurchaseSheet ? 1 : 0)
         }
-        .sheet(isPresented: $showPurchaseSheet) {
+        .fullScreenCover(isPresented: $showUsernameSheet,
+                         onDismiss: {
+            showWelcomeView = true
+        }) {
+            UserDetailsCreationView()
+        }
+        .sheet(
+            isPresented: $showPurchaseSheet
+        ) {
             PurchaseDetailView(
                 isPresented: $showPurchaseSheet,
                 data: data
@@ -88,11 +101,17 @@ struct DashBoardView: View {
             case .settings:
                 SettingsView()
                     .environmentObject(data)
+                    .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
+
             case .history:
                 DialingsHistoryView(data: data.history)
             }
         }
         .background(Color.primaryBackground)
+        .task {
+            data.history.retrieveHistoryCodes()
+            data.retrieveUSSDCodes()
+        }
         .navigationTitle("Dialer")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

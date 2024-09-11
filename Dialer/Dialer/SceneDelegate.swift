@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let forceUpdateManager = ForceUpdateManager()
     let merchantStore = MerchantStore()
     let userMerchantStore = UserMerchantStore()
+    let userStore = UserStore()
 
     
     /// - Tag: willConnectTo
@@ -45,6 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView()
             .environmentObject(dialingStore)
             .environmentObject(merchantStore)
+            .environmentObject(userStore)
             .environmentObject(userMerchantStore)
             .environmentObject(forceUpdateManager)
         
@@ -108,8 +110,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        dialingStore.history.retrieveHistoryCodes()
-        dialingStore.retrieveUSSDCodes()
         DialerStorage.shared.storeSyncDate()
 
     }
@@ -122,7 +122,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         dialingStore.history.saveRecentCodesLocally()
 
         // Schedule Morning Daily Reminder
-        DialerNotificationCenter.shared.scheduleMorningNotification()
+        DialerNotificationCenter.shared.deleteNotifications()
     }
     
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) async -> Bool {

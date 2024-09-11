@@ -82,6 +82,46 @@ extension FirebaseManager: DeviceManagerProtocol {
 
 }
 
+extension FirebaseManager: UserProtocol {
+
+    func createUser(_ user: DialerUser) async throws -> Bool {
+        try await create(user, in: .users)
+    }
+
+    func getUser(by id: String) async -> DialerUser? {
+        nil
+    }
+
+    func getUser(username: String) async -> DialerUser? {
+        do {
+            let snapshot = try await db.collection(.users)
+                .whereField("username", isEqualTo: username)
+                .limit(to: 1)
+                .getDocuments()
+
+            let item = try snapshot.documents.first?.data(as: DialerUser.self)
+
+            return item
+        } catch {
+            Tracker.shared.logError(error: error)
+            Log.debug("Can not get \(type(of: DialerUser.self)), Error: \(error).")
+            return nil
+        }
+    }
+
+    func updateUser(_ user: DialerUser) async throws -> Bool {
+        false
+    }
+
+    func deleteUser(_ userID: String) async throws {
+        fatalError()
+    }
+
+    func getAllUsers() async -> [DialerUser] {
+        await getAll(in: .users)
+    }
+}
+
 protocol MerchantProtocol {
     func createMerchant(_ merchant: Merchant) async throws-> Bool
     func getMerchant(by id: String) async -> Merchant?
@@ -89,6 +129,15 @@ protocol MerchantProtocol {
     func deleteMerchant(_ merchantID: String) async throws
     func getAllMerchants() async -> [Merchant]
     func getMerchantsFor(_ userID: String) async -> [Merchant]
+}
+
+protocol UserProtocol {
+    func createUser(_ user: DialerUser) async throws-> Bool
+    func getUser(by id: String) async -> DialerUser?
+    func getUser(username: String) async -> DialerUser?
+    func updateUser(_ user: DialerUser) async throws-> Bool
+    func deleteUser(_ userID: String) async throws
+    func getAllUsers() async -> [DialerUser]
 }
 
 protocol DeviceManagerProtocol {

@@ -16,6 +16,10 @@ struct ContentView: View {
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
     @State private var showPurchaseSheet = true
     @State private var navPath: [AppRoute] = []
+    @AppStorage(UserDefaultsKeys.appTheme)
+    private var appTheme: DialerTheme = .system
+    
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -28,9 +32,7 @@ struct ContentView: View {
                 }
         }
         .onAppear(perform: setupAppearance)
-        .fullScreenCover(isPresented: $data.hasReachSync) {
-            ThanksYouView(isPresented: $data.hasReachSync)
-        }
+        .preferredColorScheme(appTheme.asColorScheme)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {
                 await RemoteConfigs.shared.fetchRemoteValues()
@@ -47,6 +49,7 @@ struct ContentView: View {
         } message: {
             Text($0.message)
         }
+        
     }
     
     private func setupAppearance() {

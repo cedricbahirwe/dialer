@@ -7,14 +7,31 @@
 
 import CoreLocation
 
-class MerchantStore: ObservableObject {
-    @Published private(set) var merchants: [Merchant]
+@MainActor
+class BaseViewModel: ObservableObject {
     @Published private(set) var isFetching = false
+
+    func startFetch() {
+        DispatchQueue.main.async {
+            self.isFetching = true
+        }
+    }
+
+    func stopFetch() {
+        DispatchQueue.main.async {
+            self.isFetching = false
+        }
+    }
+}
+
+class MerchantStore: BaseViewModel {
+    @Published private(set) var merchants: [Merchant]
     let merchantProvider: MerchantProtocol
 
     init(_ merchantProvider: MerchantProtocol = FirebaseManager()) {
         self.merchants = []
         self.merchantProvider = merchantProvider
+        super.init()
         Task {
             await getMerchants()
         }
@@ -85,19 +102,6 @@ class MerchantStore: ObservableObject {
             DispatchQueue.main.async {
                 self.merchants.insert(merchant, at: index)
             }
-        }
-    }
-    
-
-    func startFetch() {
-        DispatchQueue.main.async {
-            self.isFetching = true
-        }
-    }
-
-    func stopFetch() {
-        DispatchQueue.main.async {
-            self.isFetching = false
         }
     }
 }

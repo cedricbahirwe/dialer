@@ -18,7 +18,7 @@ class FirebaseTracker {
     }
 
     func setAnalyticUserInfo() {
-        let device = getDeviceAccount()
+        let device = FirebaseTracker.makeDeviceAccount()
 
         Analytics.setUserID(device.deviceHash)
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
@@ -81,7 +81,7 @@ class FirebaseTracker {
         sessions.removeValue(forKey: screen)
     }
 
-    private func getDeviceAccount() -> DeviceAccount {
+    static func makeDeviceAccount() -> DeviceAccount {
         let device = UIDevice.current
         let deviceName = device.name
         let deviceModel = device.model
