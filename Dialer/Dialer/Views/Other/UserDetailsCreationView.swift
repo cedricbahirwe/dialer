@@ -24,14 +24,19 @@ struct UserDetailsCreationView: View {
     @State private var isRestoringUser = false
 
     private var isUsernameValid: Bool {
-        username.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3 &&
-        username.trimmingCharacters(in: .whitespacesAndNewlines).count <= 30
+        return username.count >= 3 &&
+        username.count <= 30
+    }
+
+    private var isValidRecoveryCode: Bool {
+        !enteredRecoveryCode.withoutSpacing().isEmpty
     }
 
     @FocusState private var isFocused: Bool
 
     var body: some View {
         VStack {
+            Spacer()
             Group {
                 userStore.recoveryCode == nil
                 ? Text("I am **Dialer**")
@@ -39,11 +44,9 @@ struct UserDetailsCreationView: View {
             }
             .font(.title)
             .fontDesign(.rounded)
+            .padding(.bottom, 24)
 
             if userStore.recoveryCode == nil {
-
-                Spacer()
-
                 Text("How should I call you?")
                     .fontWeight(.heavy)
             }
@@ -51,17 +54,14 @@ struct UserDetailsCreationView: View {
             VStack(spacing: 20) {
 
                 if let recoveryCode = userStore.recoveryCode {
-                    Spacer()
                     recoveryCodeView(recoveryCode)
-                    Spacer()
                 } else {
-                    Spacer()
                     usernameFieldView
                     usernameActionsView
-                    Spacer()
-                    Spacer()
                 }
             }
+            Spacer()
+            Spacer()
         }
         .padding(.horizontal)
         .frame(
@@ -70,33 +70,41 @@ struct UserDetailsCreationView: View {
         )
         .fontDesign(.rounded)
         .safeAreaInset(edge: .top) {
-            Text(userStore.recoveryCode == nil ? "Hello!" : "Glad to have you")
+            Text(userStore.recoveryCode == nil ? "Hello 👋🏽" : "Glad to have you")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .fontDesign(.rounded)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .overlay(alignment: .trailing) {
-                    Button("Restore") {
-                        showRestoreAlert.toggle()
-                    }
-                    .foregroundStyle(Color.accentColor)
-                    .disabled(userStore.recoveryCode != nil)
-                    .bold()
-                    .alert(
-                        "Enter your recovery code",
-                        isPresented: $showRestoreAlert
-                    ) {
-                        TextField(
-                            "Recovery code...",
-                            text: $enteredRecoveryCode)
-                        .foregroundStyle(.black)
-                        Button("Continue", action: restoreUser)
-                    } message: {
-                        Text("This code will restore your information on the app.")
+                    if userStore.recoveryCode == nil {
+                        Button("Restore") {
+                            showRestoreAlert.toggle()
+                        }
+                        .foregroundStyle(Color.accentColor)
+                        .disabled(userStore.recoveryCode != nil)
+                        .bold()
+                        .alert(
+                            "Enter your recovery code",
+                            isPresented: $showRestoreAlert
+                        ) {
+                            TextField(
+                                "Recovery code...",
+                                text: $enteredRecoveryCode)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .foregroundStyle(.black)
+
+                            Button("Cancel") {
+                                enteredRecoveryCode = ""
+                            }
+                            Button("Continue", action: restoreUser)
+                                .disabled(!isValidRecoveryCode)
+                        } message: {
+                            Text("This code will restore your information on the app.")
+                        }
                     }
                 }
                 .padding()
-
         }
         .overlay {
             if isRestoringUser {
@@ -117,9 +125,17 @@ struct UserDetailsCreationView: View {
                 isFocused = true
             }
         }
+        .preferredColorScheme(.dark)
+        .trackAppearance(.newMerchant)
     }
 
     private func validateUsername(_ username: String) {
+        let cleanUsername = username.filter({ !$0.isWhitespace })
+        if username != cleanUsername {
+            self.username = cleanUsername
+            return
+        }
+
         withAnimation {
             self.usernameAvailable = userStore.isUsernameAvailable(username)
         }
@@ -146,6 +162,7 @@ struct UserDetailsCreationView: View {
                 isRestoringUser = true
             }
             let success = await userStore.restoreUser(enteredRecoveryCode)
+
             enteredRecoveryCode = ""
             if success {
                 showUsernameSheet = false
@@ -182,15 +199,13 @@ struct UserDetailsCreationView: View {
 
     private var usernameFieldView: some View {
         TextField("", text: $username)
-            .font(.title)
+            .font(.title.bold())
             .multilineTextAlignment(.center)
-            .bold()
             .focused($isFocused)
             .textContentType(.nickname)
             .textInputAutocapitalization(.never)
             .onChange(of: username, perform: validateUsername)
             .overlay {
-
                 if username.isEmpty {
                     Text("username")
                         .foregroundStyle(.secondary)
@@ -205,9 +220,7 @@ struct UserDetailsCreationView: View {
                 Text("This username is not available")
                     .foregroundStyle(Color.accentColor.gradient)
             }
-            //                    Text("we'll use this throughout the app 👀")
-            //                        .font(.callout)
-            //                        .hidden()
+
             Button(action: saveUser) {
                 Group {
                     if isValidating {
