@@ -55,6 +55,7 @@
 		CB1CC86C29C4524200FF2116 /* FirebaseCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */; };
 		CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */; };
 		CB230D112C5D8397006B795D /* UserDetailsCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */; };
+		CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2478232C9784B20093EAAC /* InsightsView.swift */; };
 		CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A55112ADD369A0088008F /* MailComposer.swift */; };
 		CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD329AF626500BEAD9A /* Tracker.swift */; };
 		CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */; };
@@ -181,6 +182,7 @@
 		CB1CC86B29C4524200FF2116 /* FirebaseCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCRUD.swift; sourceTree = "<group>"; };
 		CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModelTests.swift; sourceTree = "<group>"; };
 		CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCreationView.swift; sourceTree = "<group>"; };
+		CB2478232C9784B20093EAAC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		CB2A55112ADD369A0088008F /* MailComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
 		CB338CD329AF626500BEAD9A /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTracker.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 		82FBCC05261BB2F400F00FAE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CB2478222C9784960093EAAC /* Insights */,
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
 				8201D9B3261A3C94007D6892 /* DashBoardView.swift */,
 				CB2A55102ADD36510088008F /* Dialing */,
@@ -464,6 +467,14 @@
 				CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */,
 			);
 			path = ModelTests;
+			sourceTree = "<group>";
+		};
+		CB2478222C9784960093EAAC /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				CB2478232C9784B20093EAAC /* InsightsView.swift */,
+			);
+			path = Insights;
 			sourceTree = "<group>";
 		};
 		CB2A55102ADD36510088008F /* Dialing */ = {
@@ -721,6 +732,7 @@
 				82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
+				CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
 				CBE73C5E2A2C76BF00C7712B /* MockPreviewData.swift in Sources */,
 				CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */,

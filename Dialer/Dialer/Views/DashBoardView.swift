@@ -25,8 +25,10 @@ struct DashBoardView: View {
     @AppStorage(UserDefaultsKeys.showUsernameSheet)
     private var showUsernameSheet = true
 
+    @State private var showInsights = false
+
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack(alignment: .bottomTrailing) {
             VStack {
                 VStack(spacing: 29) {
                     HStack(spacing: 20) {
@@ -77,6 +79,39 @@ struct DashBoardView: View {
                 Spacer()
             }
             .blur(radius: showPurchaseSheet ? 1 : 0)
+
+            HStack {
+                if showInsights {
+                    Spacer()
+                }
+                Button {
+                    withAnimation(.spring) {
+                        showInsights.toggle()
+                    }
+                } label: {
+                    Image(systemName: "bubbles.and.sparkles.fill")
+                        .resizable()
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(
+                            LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .padding()
+//                        .background(.thinMaterial, in: .circle)
+                        .frame(width: 50, height: 50)
+                        .padding(showInsights  ? 20 : 0)
+                }
+            }
+//            .padding(20)
+            .frame(
+                maxWidth: showInsights ? .infinity : nil,
+                maxHeight: showInsights ? .infinity : nil,
+                alignment: showInsights ? .bottom : .bottom
+            )
+            .background(showInsights ? Color.white : Color.white,
+                        in: .rect(cornerRadius: showInsights ? 0 : 25))
+            .padding(showInsights  ? 0 : 20)
+            .ignoresSafeArea()
+
         }
         .fullScreenCover(isPresented: $showUsernameSheet,
                          onDismiss: {
@@ -124,9 +159,15 @@ struct DashBoardView: View {
                         }
                 } else {
                     Button(action: data.showSettingsView) { settingsImage }
+                        .opacity(showInsights ? 0 : 1)
                 }
             }
+
+            ToolbarItem(placement: .bottomBar) {
+
+            }
         }
+        .toolbar(showInsights ? .hidden : .automatic, for: .navigationBar)
         .trackAppearance(.dashboard)
     }
 }
