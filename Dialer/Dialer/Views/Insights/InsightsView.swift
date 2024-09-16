@@ -45,6 +45,11 @@ struct InsightsView: View {
 
     @Binding var isPresented: Bool
     @State private var insights: [Insight] = Insight.examples
+
+    private let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     var total: Double {
         insights.map { $0.count }.reduce(0, +)
     }
@@ -152,11 +157,6 @@ struct InsightsView: View {
         }
     }
 
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-
     struct SpendingCategoryOverview: View {
         let overview: InsightsView.Insight
         var body: some View {
@@ -190,7 +190,7 @@ struct InsightsView: View {
             }
             .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.thickMaterial, in: .rect(cornerRadius: 26))
+            .background(.thinMaterial, in: .rect(cornerRadius: 28))
         }
     }
 }

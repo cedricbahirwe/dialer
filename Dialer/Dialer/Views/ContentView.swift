@@ -9,6 +9,7 @@ import SwiftUI
 
 enum AppRoute {
     case transfer
+    case insights
 }
 
 struct ContentView: View {
@@ -28,6 +29,8 @@ struct ContentView: View {
                     switch route {
                     case .transfer:
                         TransferView()
+                    case .insights:
+                        InsightsView(isPresented: .constant(true))
                     }
                 }
         }

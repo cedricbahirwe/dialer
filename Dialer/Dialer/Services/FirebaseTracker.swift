@@ -41,6 +41,20 @@ class FirebaseTracker {
         }
     }
 
+    func recordTransaction(_ transaction: Transaction) {
+        guard let crudManager = self.deviceProvider as? FirebaseCRUD else { return }
+        let record = RecordInsight(details: .momo(transaction))
+        Task {
+            do {
+                let created = try await crudManager.create(record, in: .transactions)
+                print("Record created", created)
+            } catch {
+                print("Record error:")
+                print(error.localizedDescription)
+            }
+        }
+    }
+
     // MARK: - Session tracker
     
     /// Creates a start time for a screen session.

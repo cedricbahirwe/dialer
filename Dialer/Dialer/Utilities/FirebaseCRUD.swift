@@ -12,6 +12,7 @@ enum FBCollection: String {
     case merchants
     case devices
     case users
+    case transactions
 
     var name: String {
         #if DEBUG
