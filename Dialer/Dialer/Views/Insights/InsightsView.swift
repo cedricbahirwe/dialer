@@ -10,6 +10,7 @@ import SwiftUI
 import Charts
 
 struct InsightsView: View {
+    @EnvironmentObject private insightsStore: DialerInsightStore
     struct Insight: Identifiable {
         let id = UUID()
         private let name: InsightType
@@ -197,5 +198,6 @@ struct InsightsView: View {
 
 #Preview {
     InsightsView(isPresented: .constant(true))
+        .environmentObject(DialerInsightStore())
     //        .preferredColorScheme(.dark)
 }

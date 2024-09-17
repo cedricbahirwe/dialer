@@ -42,9 +42,13 @@ extension FirebaseTracker: TrackerProtocol {
             parameters: objectParams
         )
 
-        recordTransaction(transaction)
+        recordTransaction(.momo(transaction))
     }
-    
+
+    func logTransaction(record: RecordDetails) {
+        recordTransaction(record)
+    }
+
     func logMerchantSelection(_ merchant: Merchant) {
         guard let ownerId = merchant.ownerId else { return }
         logEvent(

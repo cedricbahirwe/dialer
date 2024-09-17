@@ -94,6 +94,8 @@
 		CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */; };
 		CB94D3AF2BCB1AC800CC60A9 /* DialerQuickCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */; };
 		CB94D3B12BCB2CD800CC60A9 /* BiometricsAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB94D3B02BCB2CD800CC60A9 /* BiometricsAccessibility.swift */; };
+		CB9515E92C998CF400D8F35C /* TransactionInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9515E82C998CF300D8F35C /* TransactionInsight.swift */; };
+		CB9515EB2C998DCA00D8F35C /* DialerInsightStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9515EA2C998DCA00D8F35C /* DialerInsightStore.swift */; };
 		CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB02294C8F4900D95C82 /* AppNotification.swift */; };
 		CBA9BB05294C8F7000D95C82 /* DialerLocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */; };
 		CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAF13182785A54100D32E1F /* TappeableText.swift */; };
@@ -215,6 +217,8 @@
 		CB92F70829AFF52D004BBE32 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCode.swift; sourceTree = "<group>"; };
 		CB94D3B02BCB2CD800CC60A9 /* BiometricsAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsAccessibility.swift; sourceTree = "<group>"; };
+		CB9515E82C998CF300D8F35C /* TransactionInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInsight.swift; sourceTree = "<group>"; };
+		CB9515EA2C998DCA00D8F35C /* DialerInsightStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerInsightStore.swift; sourceTree = "<group>"; };
 		CBA9BB02294C8F4900D95C82 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotification.swift; sourceTree = "<group>"; };
 		CBAF13182785A54100D32E1F /* TappeableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappeableText.swift; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 				CB45380F28AB7E8B00F3F24C /* USSDCode.swift */,
 				CBC262C52784D243000B8E0E /* PurchaseDetailModel.swift */,
 				8207FA9426776AB600412AE1 /* TransactionModel.swift */,
+				CB9515E82C998CF300D8F35C /* TransactionInsight.swift */,
 				8248440A26FDBB2300DB0643 /* SettingsItem.swift */,
 				8248440C26FDBB3200DB0643 /* SettingsOption.swift */,
 				CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */,
@@ -434,6 +439,7 @@
 				CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */,
 				CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */,
 				CB8508B32C879A7300D2080F /* UserStore.swift */,
+				CB9515EA2C998DCA00D8F35C /* DialerInsightStore.swift */,
 				CB2A55112ADD369A0088008F /* MailComposer.swift */,
 			);
 			path = "View Models";
@@ -742,6 +748,7 @@
 				CB230D112C5D8397006B795D /* UserDetailsCreationView.swift in Sources */,
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
+				CB9515EB2C998DCA00D8F35C /* DialerInsightStore.swift in Sources */,
 				CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */,
 				CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */,
 				CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */,
@@ -767,6 +774,7 @@
 				CB1099502A616EFA00E99555 /* ContactsViewModel.swift in Sources */,
 				CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */,
 				CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */,
+				CB9515E92C998CF400D8F35C /* TransactionInsight.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */,
 				CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */,

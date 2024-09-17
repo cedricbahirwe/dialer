@@ -224,7 +224,7 @@ struct TransferView: View {
                     }
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button(action: switchPaymentType) {
                     Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
                         .font(.system(size: 18, design: .rounded))

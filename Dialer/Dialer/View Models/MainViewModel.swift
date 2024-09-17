@@ -36,6 +36,7 @@ final class MainViewModel: ObservableObject {
             try await dialCode(from: purchase)
             history.storeCode(code: .init(detail: purchase))
             self.purchaseDetail = PurchaseDetailModel()
+            Tracker.shared.logTransaction(record: .airtime(purchase))
         } catch let error as DialingError {
             Log.debug(error.message)
         } catch let error {

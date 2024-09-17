@@ -143,7 +143,7 @@ struct SettingsView: View {
                     .background(.thinMaterial)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
                         dataStore.dismissSettingsView()
                     }.font(.body.bold())

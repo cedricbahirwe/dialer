@@ -20,7 +20,7 @@ class FirebaseTracker {
     func setAnalyticUserInfo() {
         let device = FirebaseTracker.makeDeviceAccount()
 
-        Analytics.setUserID(device.deviceHash)
+        Analytics.setUserID(device.deviceHash.uuidString)
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
         Analytics.setUserProperty(device.name, forName: "name")
         Analytics.setUserProperty(device.systemVersion, forName: "system_version")
@@ -41,13 +41,31 @@ class FirebaseTracker {
         }
     }
 
-    func recordTransaction(_ transaction: Transaction) {
+    func recordTransaction(_ details: RecordDetails) {
         guard let crudManager = self.deviceProvider as? FirebaseCRUD else { return }
-        let record = RecordInsight(details: .momo(transaction))
+        let insight = TransactionInsight(details: details)
         Task {
             do {
-                let created = try await crudManager.create(record, in: .transactions)
+                let created = try await crudManager.create(insight, in: .transactions)
                 print("Record created", created)
+                if created {
+                    let insights: [TransactionInsight] = await crudManager.getAll(in: .transactions)
+
+                    print("Some insights", insights.count)
+                    if !insights.isEmpty {
+                        let n1 = insights[0]
+//                        switch n1.details {
+//
+//                        case .momo(_):
+//                            <#code#>
+//                        case .airtime(_):
+//                            <#code#>
+//                        case .other:
+//                            <#code#>
+//                        }
+
+                    }
+                }
             } catch {
                 print("Record error:")
                 print(error.localizedDescription)
@@ -101,13 +119,13 @@ class FirebaseTracker {
         let deviceModel = device.model
         let deviceSystemVersion = device.systemVersion
         let deviceSystemName = device.systemName
-        let deviceIdentifier = DialerStorage.shared.getOneTimeUniqueAppID()!.uuidString
+        let deviceIdentifier = DialerStorage.shared.getOneTimeUniqueAppID()!
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let bundleID = Bundle.main.bundleIdentifier
         
         let deviceAccount = DeviceAccount(
-            id: deviceIdentifier,
+            id: deviceIdentifier.uuidString,
             name: deviceName,
             model: deviceModel,
             systemVersion: deviceSystemVersion,

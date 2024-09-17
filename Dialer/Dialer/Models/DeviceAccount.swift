@@ -16,7 +16,7 @@ struct DeviceAccount: Codable {
     let systemVersion: String
     let systemName: String
 
-    let deviceHash: String
+    let deviceHash: UUID
     let appVersion: String?
     let bundleVersion: String?
     let bundleId: String?
@@ -37,7 +37,7 @@ struct DeviceAccount: Codable {
         return dictionary
     }
     
-    init(id: String? = nil, name: String, model: String, systemVersion: String, systemName: String, deviceHash: String, appVersion: String?, bundleVersion: String?, bundleId: String?, lastVisitedDate: String?) {
+    init(id: String? = nil, name: String, model: String, systemVersion: String, systemName: String, deviceHash: UUID, appVersion: String?, bundleVersion: String?, bundleId: String?, lastVisitedDate: String?) {
         self.id = id
         self.name = name
         self.model = model
@@ -52,8 +52,8 @@ struct DeviceAccount: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.deviceHash = try container.decode(String.self, forKey: .deviceHash)
-        self._id = try container.decodeIfPresent(DocumentID<String>.self, forKey: .id) ?? DocumentID(wrappedValue: deviceHash)
+        self.deviceHash = try container.decode(UUID.self, forKey: .deviceHash)
+        self._id = try container.decodeIfPresent(DocumentID<String>.self, forKey: .id) ?? DocumentID(wrappedValue: deviceHash.uuidString)
         self.name = try container.decode(String.self, forKey: .name)
         self.model = try container.decode(String.self, forKey: .model)
         self.systemVersion = try container.decode(String.self, forKey: .systemVersion)

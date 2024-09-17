@@ -13,11 +13,11 @@ struct Merchant: Codable, Identifiable {
     let name: String
     let address: String?
     let code: String
-    let ownerId: String?
+    let ownerId: UUID?
     let hashCode: UUID
     let createdDate: Date?
     
-    init(_ id: String? = nil, name: String, address: String?, code: String, ownerId: String) {
+    init(_ id: String? = nil, name: String, address: String?, code: String, ownerId: UUID?) {
         self.id = id
         self.name = name
         self.address = address
