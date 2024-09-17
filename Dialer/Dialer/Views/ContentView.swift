@@ -76,4 +76,7 @@ struct ContentView: View {
     ContentView()
         .environmentObject(MainViewModel())
         .environmentObject(ForceUpdateManager())
+        .environmentObject(DialerInsightStore())
+        .environmentObject(UserMerchantStore())
+        .environmentObject(UserStore())
 }

@@ -16,14 +16,30 @@ struct TransactionInsight: Codable {
     var ownerID: UUID
     let createdDate: Date
 
+    var amount: Int {
+        switch details {
+        case .momo(let transaction):
+            transaction.amount
+        case .airtime(let purchaseDetailModel):
+            purchaseDetailModel.amount
+        case .other:
+            0
+        }
+    }
+
     private enum CodingKeys: String, CodingKey {
         case id, ownerID, type, details, createdDate
     }
 
-    init(id: String? = nil, createdDate: Date = Date(), details: RecordDetails) {
+    init(
+        id: String? = nil,
+        createdDate: Date = Date(),
+        details: RecordDetails,
+        ownerID: UUID
+    ) {
         self.id = id
         self.details = details
-        self.ownerID = UUID()
+        self.ownerID = ownerID
         self.type = details.type
         self.createdDate = createdDate
     }

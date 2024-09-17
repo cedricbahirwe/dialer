@@ -10,49 +10,22 @@ import SwiftUI
 import Charts
 
 struct InsightsView: View {
-    @EnvironmentObject private insightsStore: DialerInsightStore
-    struct Insight: Identifiable {
-        let id = UUID()
-        private let name: InsightType
-        let count: Double
-        let color: Color
-        var title: String { name.rawValue.capitalized }
-        var icon: Image {
-            switch name {
-            case .merchant:
-                Image(systemName: "storefront")
-            case .user:
-                Image(systemName: "person.fill")
-            case .airtime:
-                Image(systemName: "simcard")
-            case .other:
-                Image(systemName: "ellipsis")
-            }
-        }
-        static let examples = [
-            Insight(name: .merchant, count: 47, color: Color.orange),
-            Insight(name: .user, count: 26, color: Color.indigo),
-            Insight(name: .airtime, count: 19, color: Color.blue),
-            Insight(name: .other, count: 8, color: Color.red),
-        ]
-
-        enum InsightType: String {
-            case merchant
-            case user
-            case airtime
-            case other
+    @EnvironmentObject private var insightsStore: DialerInsightStore
+    @Binding var isPresented: Bool
+    private var insights: [Insight] {
+        if insightsStore.insights.isEmpty {
+            Insight.examples
+        } else {
+            Insight.makeInsights(insightsStore.insights)
         }
     }
-
-    @Binding var isPresented: Bool
-    @State private var insights: [Insight] = Insight.examples
 
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    var total: Double {
-        insights.map { $0.count }.reduce(0, +)
+    var total: Int {
+        insights.map { $0.totalAmount  }.reduce(0, +)
     }
     static let periods = ["Week", "Month", "Year"]
     @State private var selectedPeriod: String = periods[1]
@@ -60,7 +33,7 @@ struct InsightsView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Good day, Driosman")
+                Text("Good day, Driosman \(insightsStore.insights.count)")
                     .font(.title2.weight(.semibold))
                     .fontDesign(.rounded)
                     .padding([.horizontal, .top])
@@ -78,12 +51,19 @@ struct InsightsView: View {
                             .foregroundStyle(insight.color)
                             .cornerRadius(15)
                             .shadow(color: insight.color, radius: 3)
-                            .annotation(position: .overlay, alignment: .center, overflowResolution: .automatic) {
-                                Text((insight.count / total), format: .percent.precision(.fractionLength(0)))
-                                    .font(.caption2)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 3)
-                                    .background(.thinMaterial, in: .capsule)
+                            .annotation(
+                                position: .overlay,
+                                alignment: .center,
+                                overflowResolution: .automatic
+                            ) {
+                                Text(
+                                    Double(insight.totalAmount) / Double(total),
+                                    format: .percent.precision(.fractionLength(1))
+                                )
+                                .font(.caption2)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 3)
+                                .background(.thinMaterial, in: .capsule)
                             }
                         }
                         .chartLegend(.hidden)
@@ -106,7 +86,7 @@ struct InsightsView: View {
                             .font(.caption)
                             .foregroundStyle(.primary)
 
-                            Text((total*100).formatted(.currency(code: "RWF")))
+                            Text(total, format: .currency(code: "RWF"))
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .fontDesign(.rounded)
@@ -139,12 +119,13 @@ struct InsightsView: View {
 
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(insights) { insight in
-                                SpendingCategoryOverview(overview: insight)
+                                SpendingCategoryOverview(overview: insight, totalAmount: total)
                             }
                         }
                     }
                     .padding(20)
                 }
+                .frame(maxHeight: .infinity, alignment: .top)
                 .background (
                     Color(.systemBackground)
                         .clipShape(.rect(topLeadingRadius: 30, topTrailingRadius: 30))
@@ -156,24 +137,28 @@ struct InsightsView: View {
             }
 
         }
+        .task {
+            await insightsStore.getInsights()
+        }
     }
 
     struct SpendingCategoryOverview: View {
         let overview: InsightsView.Insight
+        let totalAmount: Int
         var body: some View {
             VStack(alignment: .leading) {
 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text((100*overview.count).formatted(.currency(code: "RWF")))
+                        Text(overview.totalAmount, format: .currency(code: "RWF"))
                             .fontWeight(.bold)
                             .fontDesign(.rounded)
                             .minimumScaleFactor(0.75)
                         //                            .frame(maxWidth: .infinity, alignment: .leading)
                         Spacer()
                         Text(
-                            (overview.count/100),
-                            format: .percent.precision(.fractionLength(0))
+                        Double(overview.totalAmount)/Double(totalAmount),
+                            format: .percent.precision(.fractionLength(1))
                         )
                         .font(.caption)
                         .fontWeight(.semibold)
@@ -181,6 +166,7 @@ struct InsightsView: View {
 
                     Text(overview.title)
                         .font(.callout)
+                        .fontDesign(.rounded)
                 }
 
                 overview.icon
@@ -193,6 +179,69 @@ struct InsightsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(.thinMaterial, in: .rect(cornerRadius: 28))
         }
+    }
+
+    struct Insight: Identifiable {
+        let id = UUID()
+        private let name: RecordType
+
+        var count: Int
+        var totalAmount: Int
+
+        var title: String {
+            name.rawValue.capitalized
+        }
+
+        var icon: Image {
+            switch name {
+            case .merchant:
+                Image(systemName: "storefront")
+            case .user:
+                Image(systemName: "person.fill")
+            case .airtime:
+                Image(systemName: "simcard")
+            case .other:
+                Image(systemName: "ellipsis")
+            }
+        }
+        var color: Color {
+            switch name {
+            case .merchant: .orange
+            case .user: .indigo
+            case .airtime: .blue
+            case .other: .red
+            }
+        }
+        static let examples = [
+            Insight(name: .merchant, count: 47, totalAmount: 100),
+            Insight(name: .user, count: 26, totalAmount: 200),
+            Insight(name: .airtime, count: 19, totalAmount: 210),
+            Insight(name: .other, count: 8, totalAmount: 110),
+        ]
+
+        static func makeInsights(_ insights: [TransactionInsight]) -> [Insight] {
+            var insightsResult = [Insight]()
+
+            for insight in insights {
+                if let foundIndex = insightsResult.firstIndex(where: {
+                    $0.name == insight.type
+                }) {
+                    insightsResult[foundIndex].count += 1
+                    insightsResult[foundIndex].totalAmount += insight.amount
+                } else {
+                    let new = Insight(
+                        name: insight.type,
+                        count: 1,
+                        totalAmount: insight.amount
+                    )
+                    insightsResult.append(new)
+                }
+
+            }
+
+            return insightsResult
+        }
+
     }
 }
 

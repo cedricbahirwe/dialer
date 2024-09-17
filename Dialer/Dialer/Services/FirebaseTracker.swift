@@ -43,32 +43,15 @@ class FirebaseTracker {
 
     func recordTransaction(_ details: RecordDetails) {
         guard let crudManager = self.deviceProvider as? FirebaseCRUD else { return }
-        let insight = TransactionInsight(details: details)
+        let savedDevice = DialerStorage.shared.getSavedDevice()
+        let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
+
+        let insight = TransactionInsight(details: details, ownerID: device.deviceHash)
         Task {
             do {
-                let created = try await crudManager.create(insight, in: .transactions)
-                print("Record created", created)
-                if created {
-                    let insights: [TransactionInsight] = await crudManager.getAll(in: .transactions)
-
-                    print("Some insights", insights.count)
-                    if !insights.isEmpty {
-                        let n1 = insights[0]
-//                        switch n1.details {
-//
-//                        case .momo(_):
-//                            <#code#>
-//                        case .airtime(_):
-//                            <#code#>
-//                        case .other:
-//                            <#code#>
-//                        }
-
-                    }
-                }
+                _ = try await crudManager.create(insight, in: .transactions)
             } catch {
-                print("Record error:")
-                print(error.localizedDescription)
+                print("Insight Creation error:", error.localizedDescription)
             }
         }
     }

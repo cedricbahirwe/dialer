@@ -25,9 +25,9 @@ extension FirebaseTracker: TrackerProtocol {
     func logTransaction(transaction: Transaction) {
         var params: [EventParameterKey: Any] = [
             .transId : transaction.id,
-            .transAmount : transaction.doubleAmount,
+            .transAmount : transaction.amount,
             .transType : transaction.type.rawValue,
-            .transCode : transaction.fullCode,
+//            .transCode : transaction.fullCode,
             .transTime : Date.now.formatted()
         ]
 

@@ -71,6 +71,7 @@ struct PurchaseDetailView: View {
                 if newValue {
                     Tracker.shared.startSession(for: .buyAirtime)
                 } else {
+                    data.purchaseDetail = .init()
                     Tracker.shared.stopSession(for: .buyAirtime)
                 }
             }

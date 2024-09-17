@@ -86,7 +86,8 @@ struct DashBoardView: View {
                 }
                 Button {
                     withAnimation(.spring) {
-                        showInsights.toggle()
+                        navPath.append(.insights)
+//                        showInsights.toggle()
                     }
                 } label: {
                     Image(systemName: "bubbles.and.sparkles.fill")
