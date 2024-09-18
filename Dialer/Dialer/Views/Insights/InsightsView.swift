@@ -104,7 +104,7 @@ struct InsightsView: View {
                 if insights.isEmpty {
                     ContentUnavailableView(
                         "No insights found yet.",
-                        systemImage: "magnifyingglass",
+                        systemImage: "exclamationmark.circle",
                         description: Text("Make some transactions to see insights.")
                     )
                 }
@@ -117,7 +117,7 @@ struct InsightsView: View {
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Insights \(insightsStore.filteredInsightsByPeriod.count)")
+                Text("Insights")
                     .font(.title2.weight(.semibold))
                     .fontDesign(.rounded)
             }

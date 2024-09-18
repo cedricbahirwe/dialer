@@ -55,11 +55,18 @@ struct DashBoardView: View {
                     
                     HStack(spacing: 15) {
                         DashItemView(
-                            title: "History",
-                            icon: "clock.arrow.circlepath")
+                            title: "Insights",
+                            icon: "bubbles.and.sparkles.fill")
                         .onTapGesture {
-                            data.showHistoryView()
+                            navPath.append(.insights)
                         }
+
+//                        DashItemView(
+//                            title: "History",
+//                            icon: "clock.arrow.circlepath")
+//                        .onTapGesture {
+//                            data.showHistoryView()
+//                        }
                         
                         NavigationLink {
                             MySpaceView()

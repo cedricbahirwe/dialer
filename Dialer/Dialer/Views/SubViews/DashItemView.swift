@@ -39,9 +39,7 @@ struct DashItemView: View {
     }
 }
 
-#Preview {
+#Preview("DashItem View", traits: .fixedLayout(width: 200, height: 130)) {
     DashItemView(title: "Title", icon: "house.fill")
-        .padding()
-        .previewLayout(.fixed(width: 200, height: 150))
-        .previewDisplayName("DashItem View")
+        .padding(.horizontal)
 }
