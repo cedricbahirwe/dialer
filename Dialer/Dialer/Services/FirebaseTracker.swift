@@ -7,9 +7,7 @@
 
 import Foundation
 import UIKit
-//#if canImport(FirebaseAnalytics)
 //import FirebaseAnalytics
-//#endif
 
 class FirebaseTracker {
     private var sessions: [ScreenName: Date] = [:]

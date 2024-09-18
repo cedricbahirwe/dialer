@@ -35,6 +35,9 @@ struct InsightsTotalView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .fontDesign(.serif)
+                .lineLimit(3)
+                .frame(maxWidth: 230)
+                .multilineTextAlignment(.center)
         }
     }
 }

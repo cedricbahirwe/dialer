@@ -97,7 +97,6 @@ extension FirebaseManager: InsightProtocol {
         do {
             let querySnapshot = try await db.collection(.transactions)
                 .whereField("ownerId", isEqualTo: userID.uuidString)
-                .order(by: "name")
                 .getDocuments()
 
             return await getAllWithQuery(querySnapshot)

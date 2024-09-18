@@ -14,7 +14,7 @@ struct InsightsView: View {
     @EnvironmentObject private var insightsStore: DialerInsightStore
     private var insights: [Insight] {
         if insightsStore.filteredInsightsByPeriod.isEmpty {
-            []//Insight.examples[
+            []//Insight.examples
         } else {
             Insight.makeInsights(insightsStore.filteredInsightsByPeriod)
         }
@@ -30,7 +30,7 @@ struct InsightsView: View {
     @State private var selectedInsight: Insight?
 
     var body: some View {
-        VStack {
+        ZStack {
             VStack(alignment: .leading, spacing: 20) {
                 if #available(iOS 17.0, *) {
                     ZStack {
@@ -100,6 +100,15 @@ struct InsightsView: View {
                 )
             }
             .opacity(insights.isEmpty ? 0 : 1)
+            .overlay {
+                if insights.isEmpty {
+                    ContentUnavailableView(
+                        "No insights found yet.",
+                        systemImage: "magnifyingglass",
+                        description: Text("Make some transactions to see insights.")
+                    )
+                }
+            }
         }
         .task {
             await insightsStore.getInsights()

@@ -27,8 +27,7 @@ class DialerInsightStore: BaseViewModel {
     @Published private(set) var selectedPeriod = InsightFilterPeriod.year
 
     var filteredInsightsByPeriod: [TransactionInsight] {
-        []
-//        filterInsightsByPeriod(insights, period: selectedPeriod)
+        filterInsightsByPeriod(allInsights, period: selectedPeriod)
     }
 
     private let insightsProvider: InsightProtocol
@@ -48,8 +47,9 @@ class DialerInsightStore: BaseViewModel {
     }
 
     func getInsights() async {
+        guard let device = DialerStorage.shared.getSavedDevice() else { return }
         startFetch()
-        let result = await insightsProvider.getAllInsights()
+        let result = await insightsProvider.getInsights(for: device.deviceHash)
         stopFetch()
         let sortedInsights = result.sorted(by: {
             $0.createdDate > $1.createdDate
