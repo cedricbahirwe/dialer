@@ -15,13 +15,14 @@ struct UserDetailsCreationView: View {
     @EnvironmentObject private var userStore: UserStore
 
     @State private var username = ""
-    @State private var enteredRecoveryCode = ""
+    @State private var enteredRecoveryCode = "qevbf_N11R5054-5646-43SO-9255-063NS11R3266"
     @State private var showRestoreAlert = false
     @State private var isValidating = false
     @State private var usernameAvailable: Bool = false
     @State private var recoveryFileURL: URL?
 
     @State private var isRestoringUser = false
+    @Environment(\.colorScheme) private var colorScheme
 
     private var isUsernameValid: Bool {
         return username.count >= 3 &&
@@ -92,7 +93,7 @@ struct UserDetailsCreationView: View {
                                 text: $enteredRecoveryCode)
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Color.accentColor)
 
                             Button("Cancel") {
                                 enteredRecoveryCode = ""

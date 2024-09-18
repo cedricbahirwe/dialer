@@ -92,6 +92,22 @@ extension FirebaseManager: InsightProtocol {
     func getAllInsights() async -> [TransactionInsight] {
         await getAll(in: .transactions)
     }
+
+    func getInsights(for userID: UUID) async -> [TransactionInsight] {
+        do {
+            let querySnapshot = try await db.collection(.transactions)
+                .whereField("ownerId", isEqualTo: userID.uuidString)
+                .order(by: "name")
+                .getDocuments()
+
+            return await getAllWithQuery(querySnapshot)
+
+        } catch {
+            Log.debug("Can not get \(type(of: TransactionInsight.self)), Error: \(error).")
+            Tracker.shared.logError(error: error)
+            return []
+        }
+    }
 }
 
 extension FirebaseManager: UserProtocol {
@@ -163,4 +179,5 @@ protocol DeviceManagerProtocol {
 protocol InsightProtocol {
     func saveInsight(_ insight: TransactionInsight) async throws -> Bool
     func getAllInsights() async -> [TransactionInsight]
+    func getInsights(for userID: UUID) async -> [TransactionInsight]
 }

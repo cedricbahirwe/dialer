@@ -57,6 +57,9 @@
 		CB230D112C5D8397006B795D /* UserDetailsCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */; };
 		CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2478232C9784B20093EAAC /* InsightsView.swift */; };
 		CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A55112ADD369A0088008F /* MailComposer.swift */; };
+		CB2C5BB52C9B02EA00224480 /* SpendingCategoryOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */; };
+		CB2C5BB72C9B0B3A00224480 /* InsightsChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB62C9B0B3A00224480 /* InsightsChartsView.swift */; };
+		CB2C5BB92C9B0BE800224480 /* InsightsTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB82C9B0BE800224480 /* InsightsTotalView.swift */; };
 		CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD329AF626500BEAD9A /* Tracker.swift */; };
 		CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */; };
 		CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB338CD729AF668300BEAD9A /* FirebaseTracker+Extensions.swift */; };
@@ -105,7 +108,6 @@
 		CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */; };
 		CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */; };
 		CBCAE5CE294A88630061C273 /* DialerLocalNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */; };
-		CBCCF9E92C9A3AED00D0EE46 /* Worldview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCCF9E82C9A3AED00D0EE46 /* Worldview.swift */; };
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
@@ -187,6 +189,9 @@
 		CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCreationView.swift; sourceTree = "<group>"; };
 		CB2478232C9784B20093EAAC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		CB2A55112ADD369A0088008F /* MailComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
+		CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoryOverview.swift; sourceTree = "<group>"; };
+		CB2C5BB62C9B0B3A00224480 /* InsightsChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsChartsView.swift; sourceTree = "<group>"; };
+		CB2C5BB82C9B0BE800224480 /* InsightsTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTotalView.swift; sourceTree = "<group>"; };
 		CB338CD329AF626500BEAD9A /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		CB338CD529AF62D700BEAD9A /* FirebaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTracker.swift; sourceTree = "<group>"; };
 		CB338CD729AF668300BEAD9A /* FirebaseTracker+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseTracker+Extensions.swift"; sourceTree = "<group>"; };
@@ -229,7 +234,6 @@
 		CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerExternalLinks.swift; sourceTree = "<group>"; };
 		CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashItemView.swift; sourceTree = "<group>"; };
 		CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotificationCenter.swift; sourceTree = "<group>"; };
-		CBCCF9E82C9A3AED00D0EE46 /* Worldview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worldview.swift; sourceTree = "<group>"; };
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
@@ -481,7 +485,9 @@
 			isa = PBXGroup;
 			children = (
 				CB2478232C9784B20093EAAC /* InsightsView.swift */,
-				CBCCF9E82C9A3AED00D0EE46 /* Worldview.swift */,
+				CB2C5BB62C9B0B3A00224480 /* InsightsChartsView.swift */,
+				CB2C5BB82C9B0BE800224480 /* InsightsTotalView.swift */,
+				CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */,
 			);
 			path = Insights;
 			sourceTree = "<group>";
@@ -754,10 +760,12 @@
 				CB9515EB2C998DCA00D8F35C /* DialerInsightStore.swift in Sources */,
 				CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */,
 				CB3B81F029ABD3A2001FAFF6 /* ScreenName.swift in Sources */,
+				CB2C5BB72C9B0B3A00224480 /* InsightsChartsView.swift in Sources */,
 				CB92F70529AFEC99004BBE32 /* TimeInterval+Extensions.swift in Sources */,
 				825022E62673676B007ABB56 /* DialingsHistoryView.swift in Sources */,
 				821C0738264DDFFB00DBD545 /* PinView.swift in Sources */,
 				825F996A26720B7E009E4A7B /* ContactModel.swift in Sources */,
+				CB2C5BB92C9B0BE800224480 /* InsightsTotalView.swift in Sources */,
 				CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */,
 				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
 				CBCAE5CE294A88630061C273 /* DialerLocalNotificationCenter.swift in Sources */,
@@ -778,7 +786,6 @@
 				CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */,
 				CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */,
 				CB9515E92C998CF400D8F35C /* TransactionInsight.swift in Sources */,
-				CBCCF9E92C9A3AED00D0EE46 /* Worldview.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */,
 				CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */,
@@ -794,6 +801,7 @@
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */,
+				CB2C5BB52C9B02EA00224480 /* SpendingCategoryOverview.swift in Sources */,
 				CB8508B42C879A7300D2080F /* UserStore.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,
 				CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */,
@@ -1019,6 +1027,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Dialer/Preview Content\"";
 				DEVELOPMENT_TEAM = 6V9B6LUW22;
 				DIALER_FIREBASE_FILE_NAME = "GoogleService-Info";
+				ENABLE_DEBUG_DYLIB = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1052,6 +1061,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Dialer/Preview Content\"";
 				DEVELOPMENT_TEAM = 6V9B6LUW22;
 				DIALER_FIREBASE_FILE_NAME = "GoogleService-Info";
+				ENABLE_DEBUG_DYLIB = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1203,6 +1213,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dialer/Preview Content\"";
 				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				ENABLE_DEBUG_DYLIB = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1349,6 +1360,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Dialer/Preview Content\"";
 				DEVELOPMENT_TEAM = 6V9B6LUW22;
+				ENABLE_DEBUG_DYLIB = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";

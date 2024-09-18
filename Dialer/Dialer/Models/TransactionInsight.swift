@@ -13,7 +13,7 @@ struct TransactionInsight: Codable {
     @DocumentID private var id: String?
     let details: RecordDetails
     let type: RecordType
-    var ownerID: UUID
+    var ownerId: UUID
     let createdDate: Date
 
     var amount: Int {
@@ -28,7 +28,7 @@ struct TransactionInsight: Codable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, ownerID, type, details, createdDate
+        case id, ownerId, type, details, createdDate
     }
 
     init(
@@ -39,7 +39,7 @@ struct TransactionInsight: Codable {
     ) {
         self.id = id
         self.details = details
-        self.ownerID = ownerID
+        self.ownerId = ownerID
         self.type = details.type
         self.createdDate = createdDate
     }
@@ -47,7 +47,7 @@ struct TransactionInsight: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decodeIfPresent(String.self, forKey: .id)
-        self.ownerID = try container.decode(UUID.self, forKey: .ownerID)
+        self.ownerId = try container.decode(UUID.self, forKey: .ownerId)
         self.type = try container.decode(RecordType.self, forKey: .type)
         self.createdDate = try container.decode(Date.self, forKey: .createdDate)
         self.details = try RecordDetails(from: decoder)
@@ -56,7 +56,7 @@ struct TransactionInsight: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(id, forKey: .id)
-        try container.encode(ownerID, forKey: .ownerID)
+        try container.encode(ownerId, forKey: .ownerId)
         try container.encode(type, forKey: .type)
         try container.encode(createdDate, forKey: .createdDate)
         try container.encode(details, forKey: .details)

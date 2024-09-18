@@ -7,16 +7,16 @@
 //
 
 import SwiftUI
-import Charts
 
 struct InsightsView: View {
-    @EnvironmentObject private var insightsStore: DialerInsightStore
     @Binding var isPresented: Bool
+
+    @EnvironmentObject private var insightsStore: DialerInsightStore
     private var insights: [Insight] {
-        if insightsStore.insights.isEmpty {
-            Insight.examples
+        if insightsStore.filteredInsightsByPeriod.isEmpty {
+            []//Insight.examples[
         } else {
-            Insight.makeInsights(insightsStore.insights)
+            Insight.makeInsights(insightsStore.filteredInsightsByPeriod)
         }
     }
 
@@ -25,91 +25,44 @@ struct InsightsView: View {
         GridItem(.flexible())
     ]
     var total: Int {
-        insights.map { $0.totalAmount  }.reduce(0, +)
+        insights.map(\.totalAmount).reduce(0, +)
     }
-    static let periods = ["Week", "Month", "Year"]
-    @State private var selectedPeriod: String = periods[1]
+    @State private var selectedInsight: Insight?
 
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Good day, Driosman \(insightsStore.insights.count)")
-                    .font(.title2.weight(.semibold))
-                    .fontDesign(.rounded)
-                    .padding([.horizontal, .top])
                 if #available(iOS 17.0, *) {
                     ZStack {
-                        Chart(insights) { insight in
-                            SectorMark(
-                                angle: .value(
-                                    Text(verbatim: insight.title),
-                                    insight.count
-                                ),
-                                innerRadius: .ratio(0.8),
-                                angularInset: 4
-                            )
-                            .foregroundStyle(insight.color)
-                            .cornerRadius(15)
-                            .shadow(color: insight.color, radius: 3)
-                            .annotation(
-                                position: .overlay,
-                                alignment: .center,
-                                overflowResolution: .automatic
-                            ) {
-                                Text(
-                                    Double(insight.totalAmount) / Double(total),
-                                    format: .percent.precision(.fractionLength(1))
-                                )
-                                .font(.caption2)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 3)
-                                .background(.thinMaterial, in: .capsule)
-                            }
-                        }
-                        .chartLegend(.hidden)
+                        InsightsChartsView(insights: insights, total: total)
+                            .animation(.smooth, value: insights)
+                            .aspectRatio(1, contentMode: .fit)
 
-
-                        VStack(spacing: 5) {
-                            Menu {
-                                ForEach(Self.periods, id: \.self) { period in
-                                    Button(period) {
-                                        selectedPeriod = period
-                                    }
-                                    .disabled(period == selectedPeriod)
-                                }
-                            } label: {
-                                HStack(spacing: 2) {
-                                    Text("Spent this **\(selectedPeriod)**")
-                                    Image(systemName: "arrowtriangle.down.fill")
-                                }
-                            }
-                            .font(.caption)
-                            .foregroundStyle(.primary)
-
-                            Text(total, format: .currency(code: "RWF"))
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .fontDesign(.rounded)
-                        }
+                        InsightsTotalView(
+                            total: total,
+                            periods: insightsStore.periods,
+                            selectedPeriod: insightsStore.selectedPeriod,
+                            onSelectePeriod: insightsStore.setFilterPeriod
+                        )
                     }
                     .frame(maxWidth: .infinity)
-                    .aspectRatio(1, contentMode: .fit)
                     .padding(.horizontal, 32)
+                    .padding(.top, 16)
                     .frame(maxWidth: .infinity)
                 }
 
                 HStack(spacing: 16) {
-                    ForEach(Self.periods, id: \.self) { period in
-                        Button(period) {
-                            selectedPeriod = period
+                    ForEach(insightsStore.periods, id: \.self) { period in
+                        Button(period.capiltalized) {
+//                            withAnimation {
+                                insightsStore.setFilterPeriod(period)
+//                            }
                         }
                         .bold()
-                        .foregroundStyle(period == selectedPeriod ? .primary : .secondary)
-
+                        .foregroundStyle(period == insightsStore.selectedPeriod ? .primary : .secondary)
                     }
                 }
                 .frame(maxWidth: .infinity)
-
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Spending Categories")
@@ -118,8 +71,19 @@ struct InsightsView: View {
                             .fontWeight(.bold)
 
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(insights) { insight in
-                                SpendingCategoryOverview(overview: insight, totalAmount: total)
+                            ForEach(insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
+                                SpendingCategoryOverview(
+                                    overview: insight,
+                                    isSelected: selectedInsight?.id == insight.id,
+                                    totalAmount: total
+                                )
+                                .onTapGesture {
+                                    if selectedInsight?.id == insight.id {
+                                        selectedInsight = nil
+                                    } else {
+                                        selectedInsight = insight
+                                    }
+                                }
                             }
                         }
                     }
@@ -135,53 +99,37 @@ struct InsightsView: View {
                         .ignoresSafeArea()
                 )
             }
-
+            .opacity(insights.isEmpty ? 0 : 1)
         }
         .task {
             await insightsStore.getInsights()
         }
-    }
-
-    struct SpendingCategoryOverview: View {
-        let overview: InsightsView.Insight
-        let totalAmount: Int
-        var body: some View {
-            VStack(alignment: .leading) {
-
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(overview.totalAmount, format: .currency(code: "RWF"))
-                            .fontWeight(.bold)
-                            .fontDesign(.rounded)
-                            .minimumScaleFactor(0.75)
-                        //                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                        Text(
-                        Double(overview.totalAmount)/Double(totalAmount),
-                            format: .percent.precision(.fractionLength(1))
-                        )
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                    }
-
-                    Text(overview.title)
-                        .font(.callout)
-                        .fontDesign(.rounded)
-                }
-
-                overview.icon
-                    .frame(width: 32, height: 32)
-                    .background(overview.color, in: .circle)
-                    .foregroundStyle(.white)
-
+        .background(.offBackground)
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Insights \(insightsStore.filteredInsightsByPeriod.count)")
+                    .font(.title2.weight(.semibold))
+                    .fontDesign(.rounded)
             }
-            .padding(12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.thinMaterial, in: .rect(cornerRadius: 28))
+
+            ToolbarItem(placement: .topBarTrailing) {
+                if insightsStore.isFetching {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                } else {
+                    Button("Refresh") {
+                        Task {
+                            await insightsStore.getInsights()
+                        }
+                    }
+                }
+            }
         }
+        .trackAppearance(.insights)
     }
 
-    struct Insight: Identifiable {
+    struct Insight: Identifiable, Equatable {
         let id = UUID()
         private let name: RecordType
 
@@ -246,7 +194,9 @@ struct InsightsView: View {
 }
 
 #Preview {
-    InsightsView(isPresented: .constant(true))
-        .environmentObject(DialerInsightStore())
+    NavigationStack {
+        InsightsView(isPresented: .constant(true))
+            .environmentObject(DialerInsightStore())
+    }
     //        .preferredColorScheme(.dark)
 }

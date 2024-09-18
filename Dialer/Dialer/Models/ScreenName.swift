@@ -23,4 +23,6 @@ enum ScreenName: String, Codable {
     case newUsername
 
     case about
+
+    case insights
 }

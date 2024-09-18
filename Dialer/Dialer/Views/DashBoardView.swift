@@ -13,7 +13,7 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     
     @AppStorage(UserDefaultsKeys.showWelcomeView)
-    private var showWelcomeView: Bool = true
+    private var showWelcomeView: Bool = false
     
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
@@ -198,5 +198,6 @@ private extension DashBoardView {
     NavigationStack {
         DashBoardView(navPath: .constant([]))
             .environmentObject(MainViewModel())
+            .environmentObject(UserStore())
     }
 }
