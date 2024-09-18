@@ -6,16 +6,10 @@
 //
 
 import Foundation
-import FirebaseAnalytics
 
 extension FirebaseTracker: TrackerProtocol {
     func logEvent(name: AnalyticsEventType, parameters: [String : Any]?) {
-        var completeParameters: [String : Any] = parameters ?? [:]
-        completeParameters[AnalyticsParameterExtendSession] = true
-        Analytics.logEvent(
-            name.stringValue,
-            parameters: completeParameters
-        )
+        logAnalyticsEvent(name.stringValue, parameters: parameters)
     }
     
     func logEvent(name: AnalyticsEventType) {

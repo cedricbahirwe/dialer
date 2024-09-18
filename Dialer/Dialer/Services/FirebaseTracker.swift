@@ -6,7 +6,10 @@
 //
 
 import Foundation
-import FirebaseAnalytics
+import UIKit
+//#if canImport(FirebaseAnalytics)
+//import FirebaseAnalytics
+//#endif
 
 class FirebaseTracker {
     private var sessions: [ScreenName: Date] = [:]
@@ -20,11 +23,11 @@ class FirebaseTracker {
     func setAnalyticUserInfo() {
         let device = FirebaseTracker.makeDeviceAccount()
 
-        Analytics.setUserID(device.deviceHash.uuidString)
-        Analytics.setUserProperty(device.appVersion, forName: "app_version")
-        Analytics.setUserProperty(device.name, forName: "name")
-        Analytics.setUserProperty(device.systemVersion, forName: "system_version")
-        Analytics.setUserProperty(device.appVersion, forName: "app_version")
+//        Analytics.setUserID(device.deviceHash.uuidString)
+//        Analytics.setUserProperty(device.appVersion, forName: "app_version")
+//        Analytics.setUserProperty(device.name, forName: "name")
+//        Analytics.setUserProperty(device.systemVersion, forName: "system_version")
+//        Analytics.setUserProperty(device.appVersion, forName: "app_version")
 
         Task {
             do {
@@ -39,6 +42,15 @@ class FirebaseTracker {
                 }
             }
         }
+    }
+
+    func logAnalyticsEvent(_ eventName: String, parameters: [String: Any]?) {
+//        var completeParameters: [String : Any] = parameters ?? [:]
+//        completeParameters[AnalyticsParameterExtendSession] = true
+//        Analytics.logEvent(
+//            eventName,
+//            parameters: completeParameters
+//        )
     }
 
     func recordTransaction(_ details: RecordDetails) {

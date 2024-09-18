@@ -105,6 +105,7 @@
 		CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */; };
 		CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */; };
 		CBCAE5CE294A88630061C273 /* DialerLocalNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */; };
+		CBCCF9E92C9A3AED00D0EE46 /* Worldview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCCF9E82C9A3AED00D0EE46 /* Worldview.swift */; };
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
@@ -228,6 +229,7 @@
 		CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerExternalLinks.swift; sourceTree = "<group>"; };
 		CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashItemView.swift; sourceTree = "<group>"; };
 		CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotificationCenter.swift; sourceTree = "<group>"; };
+		CBCCF9E82C9A3AED00D0EE46 /* Worldview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worldview.swift; sourceTree = "<group>"; };
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				CB2478232C9784B20093EAAC /* InsightsView.swift */,
+				CBCCF9E82C9A3AED00D0EE46 /* Worldview.swift */,
 			);
 			path = Insights;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */,
 				CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */,
 				CB9515E92C998CF400D8F35C /* TransactionInsight.swift in Sources */,
+				CBCCF9E92C9A3AED00D0EE46 /* Worldview.swift in Sources */,
 				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
 				CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */,
 				CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */,
@@ -931,7 +935,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -939,6 +943,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "";
 			};
 			name = Debug;
 		};
@@ -990,13 +995,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1016,7 +1022,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1049,7 +1055,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1172,7 +1178,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(DIALER_APP_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1181,6 +1187,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "";
 			};
 			name = "DEV - Debug";
 		};
@@ -1199,7 +1206,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1317,7 +1324,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEV";
@@ -1325,6 +1332,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "DEV - Release";
@@ -1344,7 +1352,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1511,7 +1519,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = exactVersion;
-				version = 10.25.0;
+				version = 11.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

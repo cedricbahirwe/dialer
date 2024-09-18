@@ -34,8 +34,7 @@ struct ContactRowView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     ContactRowView(contact: MockPreviewData.contact1)
         .padding()
-        .previewLayout(.sizeThatFits)
 }
