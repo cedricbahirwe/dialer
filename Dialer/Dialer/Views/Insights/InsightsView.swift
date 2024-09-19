@@ -26,24 +26,23 @@ struct InsightsView: View {
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 20) {
-                if #available(iOS 17.0, *) {
-                    ZStack {
-                        InsightsChartsView(insights: insightsStore.insights, total: total)
-                            .animation(.smooth, value: insightsStore.selectedPeriod)
-                            .aspectRatio(1, contentMode: .fit)
 
-                        InsightsTotalView(
-                            total: total,
-                            periods: insightsStore.periods,
-                            selectedPeriod: insightsStore.selectedPeriod,
-                            onSelectePeriod: insightsStore.setFilterPeriod
-                        )
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 32)
-                    .padding(.top, 16)
-                    .frame(maxWidth: .infinity)
+                ZStack {
+                    InsightsChartsView(insights: insightsStore.insights, total: total)
+                        .animation(.smooth, value: insightsStore.selectedPeriod)
+                        .aspectRatio(1, contentMode: .fit)
+
+                    InsightsTotalView(
+                        total: total,
+                        periods: insightsStore.periods,
+                        selectedPeriod: insightsStore.selectedPeriod,
+                        onSelectePeriod: insightsStore.setFilterPeriod
+                    )
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 32)
+                .padding(.top, 16)
+                .frame(maxWidth: .infinity)
 
                 HStack(spacing: 16) {
                     ForEach(insightsStore.periods, id: \.self) { period in
@@ -85,7 +84,6 @@ struct InsightsView: View {
                 .background (
                     Color(.systemBackground)
                         .clipShape(.rect(topLeadingRadius: 30, topTrailingRadius: 30))
-                    //                        .shadow(color: .darkShadow, radius: 5)
                         .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
                         .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)
                         .ignoresSafeArea()
@@ -112,7 +110,7 @@ struct InsightsView: View {
             )
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
-            .presentationBackground(.regularMaterial)
+            .presentationBackground(.thinMaterial)
             .presentationCornerRadius(30)
             .presentationContentInteraction(.scrolls)
         }

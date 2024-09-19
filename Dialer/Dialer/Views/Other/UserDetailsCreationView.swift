@@ -14,7 +14,7 @@ struct UserDetailsCreationView: View {
 
     @EnvironmentObject private var userStore: UserStore
 
-    @State private var username = "simulator"
+    @State private var username = ""
     @State private var enteredRecoveryCode = ""
     @State private var showRestoreAlert = false
     @State private var isValidating = false

@@ -228,16 +228,12 @@ extension SettingsView {
                 .background(item.color)
                 .cornerRadius(6)
                 .foregroundStyle(.white)
+                .symbolEffect(.bounce.down, value: animateSymbol)
         }
 
         var contentView: some View {
             HStack(spacing: 0) {
-                if #available(iOS 17.0, *) {
-                    iconImageView
-                        .symbolEffect(.bounce.down, value: animateSymbol)
-                } else {
-                    iconImageView
-                }
+                iconImageView
 
                 VStack(alignment: .leading) {
                     Text(item.title)

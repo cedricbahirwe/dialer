@@ -16,12 +16,16 @@ struct SpendingCategoryOverview: View {
         VStack(alignment: .leading) {
 
             VStack(alignment: .leading) {
+                Text(overview.totalAmount, format: .currency(code: "RWF"))
+                    .fontWeight(.bold)
+                    .fontDesign(.rounded)
+                    .minimumScaleFactor(0.6)
+                    .lineLimit(2)
+
                 HStack {
-                    Text(overview.totalAmount, format: .currency(code: "RWF"))
-                        .fontWeight(.bold)
+                    Text(overview.title)
+                        .font(.callout)
                         .fontDesign(.rounded)
-                        .minimumScaleFactor(0.75)
-                    //                            .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
                     Text(
                     Double(overview.totalAmount)/Double(totalAmount),
@@ -31,9 +35,6 @@ struct SpendingCategoryOverview: View {
                     .fontWeight(.semibold)
                 }
 
-                Text(overview.title)
-                    .font(.callout)
-                    .fontDesign(.rounded)
             }
 
             overview.icon

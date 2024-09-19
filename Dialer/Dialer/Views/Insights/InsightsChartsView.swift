@@ -20,7 +20,7 @@ struct InsightsChartsView: View {
             SectorMark(
                 angle: .value(
                     Text(verbatim: insight.title),
-                    insight.count
+                    insight.totalAmount
                 ),
                 innerRadius: .ratio(0.8),
 //                outerRadius: .inset(0),

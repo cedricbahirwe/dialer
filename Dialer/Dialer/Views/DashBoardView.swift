@@ -107,7 +107,7 @@ struct DashBoardView: View {
 //                        .background(.thinMaterial, in: .circle)
                         .frame(width: 50, height: 50)
                         .padding(showInsights  ? 20 : 0)
-                }
+                }.hidden()
             }
 //            .padding(20)
             .frame(
@@ -189,12 +189,8 @@ private extension DashBoardView {
     }
     @ViewBuilder
     var settingsImage: some View {
-        if #available(iOS 17.0, *) {
-            settingsGradientIcon
-                .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
-        } else {
-            settingsGradientIcon
-        }
+        settingsGradientIcon
+            .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
     }
 }
 

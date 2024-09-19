@@ -10,64 +10,61 @@ import SwiftUI
 
 struct InsightTransactionsView: View {
     @ObservedObject var store: InsightHistoryViewModel
-    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                VStack {
-                    if store.insight.transactions.isEmpty {
-                        emptyHistoryView
-                    } else {
-                        List {
-                            ForEach(store.insight.transactions) { transaction in
-                                TransactionHistoryRow(transaction: transaction)
-                            }
-                        }
+        VStack {
+            if store.insight.transactions.isEmpty {
+                emptyHistoryView
+            } else {
+                List {
+                    ForEach(store.insight.transactions) { transaction in
+                        TransactionHistoryRow(transaction: transaction)
+                            .listRowBackground(
+                                UnevenRoundedRectangle(
+                                    topLeadingRadius: store.insight.transactions.first?.id == transaction.id ? 15 : 0,
+                                    bottomLeadingRadius: store.insight.transactions.last?.id == transaction.id ? 15 : 0,
+                                    bottomTrailingRadius: store.insight.transactions.last?.id == transaction.id ? 15 : 0,
+                                    topTrailingRadius: store.insight.transactions.first?.id == transaction.id ? 15 : 0
+                                )
+                                .foregroundStyle(.thickMaterial)
+                                .opacity(0.5)
+                            )
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
-//            .background(Color.primaryBackground)
-//            .navigationTitle("History")
-            .toolbar(.hidden, for: .navigationBar)
-            .safeAreaInset(edge: .bottom) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Total")
-                        Text(":")
-                        Spacer()
-                        HStack(spacing: 3) {
-                            Text("\(store.insight.totalAmount)")
-                            Text("RWF")
-                                .font(.system(size: 16, weight: .bold, design: .serif))
-                        }
-                    }
-
-                    Text("The estimations are based on the recent USSD codes used.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                .font(.system(size: 26, weight: .bold, design: .serif))
-                .opacity(0.9)
-                .padding(8)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .truncationMode(.middle)
-                .padding(.horizontal)
-                .frame(maxWidth: .infinity)
-                .background(.thinMaterial)
-            }
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        dismiss()
-                    }
-                }
-            }
-            .trackAppearance(.insightTransaction)
         }
+        .toolbar(.hidden, for: .navigationBar)
+        .safeAreaInset(edge: .bottom) {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Total")
+                    Text(":")
+                    Spacer()
+                    HStack(spacing: 3) {
+                        Text("\(store.insight.totalAmount)")
+                        Text("RWF")
+                            .font(.system(size: 16, weight: .bold, design: .serif))
+                    }
+                }
+                
+                Text("The estimations are based on the recent USSD codes used.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .font(.system(size: 26, weight: .bold, design: .serif))
+            .opacity(0.9)
+            .padding(8)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            .truncationMode(.middle)
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity)
+            .background(.thinMaterial)
+        }
+        .trackAppearance(.insightTransaction)
     }
-
+    
     private var emptyHistoryView: some View {
         Group {
             Spacer()
