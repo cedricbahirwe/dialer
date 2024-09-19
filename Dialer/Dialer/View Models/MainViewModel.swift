@@ -10,7 +10,7 @@ import SwiftUI
 
 final class MainViewModel: ObservableObject {
     
-    private(set) var history = HistoryViewModel()
+//    private(set) var history = HistoryViewModel()
         
     /// Used to show Congratulations Screen
 //    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
@@ -34,15 +34,13 @@ final class MainViewModel: ObservableObject {
         
         do {
             try await dialCode(from: purchase)
-            history.storeCode(code: .init(detail: purchase))
-            self.purchaseDetail = AirtimeTransaction()
             Tracker.shared.logTransaction(record: .airtime(purchase))
+            self.purchaseDetail = AirtimeTransaction()
         } catch let error as DialingError {
             Log.debug(error.message)
         } catch let error {
             Log.debug(error.localizedDescription)
         }
-        
     }
     
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
@@ -86,19 +84,13 @@ extension MainViewModel {
     enum DialerSheet: Int, Identifiable {
         var id: Int { rawValue }
         case settings
-        case history
     }
-    
-    func showHistoryView() {
-        Tracker.shared.logEvent(.historyOpened)
-        presentedSheet = .history
-    }
-    
+
     func showSettingsView() {
         Tracker.shared.logEvent(.settingsOpened)
         presentedSheet = .settings
     }
-    
+
     func dismissSettingsView() {
         presentedSheet = nil
     }

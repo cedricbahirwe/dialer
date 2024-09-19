@@ -20,13 +20,7 @@ struct DialingsHistoryView: View {
                         List {
                             ForEach(data.recentCodes) { recentCode in
                                 HistoryRow(recentCode: recentCode)
-                                    .onTapGesture {
-                                        Task {
-                                            await data.performRecentDialing(for: recentCode)
-                                        }
-                                    }
                             }
-                            .onDelete(perform: data.deletePastCode)
                         }
                     }
                 }

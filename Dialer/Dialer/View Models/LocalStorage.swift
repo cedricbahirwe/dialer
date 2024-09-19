@@ -67,15 +67,16 @@ final class DialerStorage {
         return false
     }
     
-    func saveRecentCodes(_ codes: RecentCodes) throws {
-        let data = try encodeData(codes)
-        userDefaults.setValue(data, forKey: LocalKeys.recentCodes)
-    }
-    
+//    func saveRecentCodes(_ codes: RecentCodes) throws {
+//        let data = try encodeData(codes)
+//        userDefaults.setValue(data, forKey: LocalKeys.recentCodes)
+//    }
+//    
     func getSortedRecentCodes() -> RecentCodes {
         decodeDatasArray(key: LocalKeys.recentCodes, type: RecentCodes.self)
             .sorted { $0.detail.purchaseDate > $1.detail.purchaseDate }
     }
+
     func clearRecentCodes() {
         userDefaults.removeObject(forKey: LocalKeys.recentCodes)
     }

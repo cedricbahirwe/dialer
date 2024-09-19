@@ -145,14 +145,10 @@ struct DashBoardView: View {
                 SettingsView()
                     .environmentObject(data)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
-
-            case .history:
-                DialingsHistoryView(data: data.history)
             }
         }
         .background(Color.primaryBackground)
         .task {
-            data.history.retrieveHistoryCodes()
             data.retrieveUSSDCodes()
             await AirtimeToInsightMigrator.shared.migrate()
         }

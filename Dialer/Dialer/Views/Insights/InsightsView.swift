@@ -35,7 +35,7 @@ struct InsightsView: View {
                 if #available(iOS 17.0, *) {
                     ZStack {
                         InsightsChartsView(insights: insights, total: total)
-                            .animation(.smooth, value: insights)
+                            .animation(.smooth, value: insightsStore.selectedPeriod)
                             .aspectRatio(1, contentMode: .fit)
 
                         InsightsTotalView(
@@ -54,9 +54,7 @@ struct InsightsView: View {
                 HStack(spacing: 16) {
                     ForEach(insightsStore.periods, id: \.self) { period in
                         Button(period.capiltalized) {
-//                            withAnimation {
-                                insightsStore.setFilterPeriod(period)
-//                            }
+                            insightsStore.setFilterPeriod(period)
                         }
                         .bold()
                         .foregroundStyle(period == insightsStore.selectedPeriod ? .primary : .secondary)
@@ -66,9 +64,9 @@ struct InsightsView: View {
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Spending Categories")
-                            .font(.title3)
+                            .font(.title3.bold())
                             .fontDesign(.rounded)
-                            .fontWeight(.bold)
+
 
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
@@ -138,12 +136,18 @@ struct InsightsView: View {
         .trackAppearance(.insights)
     }
 
-    struct Insight: Identifiable, Equatable {
+    struct Insight: Identifiable {
         let id = UUID()
         private let name: RecordType
+        var transactions: [TransactionInsight]
 
-        var count: Int
-        var totalAmount: Int
+        var count: Int {
+            transactions.count
+        }
+
+        var totalAmount: Int {
+            transactions.map(\.amount).reduce(0, +)
+        }
 
         var title: String {
             name.rawValue.capitalized
@@ -170,26 +174,24 @@ struct InsightsView: View {
             }
         }
         static let examples = [
-            Insight(name: .merchant, count: 47, totalAmount: 100),
-            Insight(name: .user, count: 26, totalAmount: 200),
-            Insight(name: .airtime, count: 19, totalAmount: 210),
-            Insight(name: .other, count: 8, totalAmount: 110),
+            Insight(name: .merchant, transactions: []),
+            Insight(name: .user, transactions: []),
+            Insight(name: .airtime, transactions: []),
+            Insight(name: .other, transactions: []),
         ]
 
-        static func makeInsights(_ insights: [TransactionInsight]) -> [Insight] {
+        static func makeInsights(_ transactions: [TransactionInsight]) -> [Insight] {
             var insightsResult = [Insight]()
 
-            for insight in insights {
+            for transaction in transactions {
                 if let foundIndex = insightsResult.firstIndex(where: {
-                    $0.name == insight.type
+                    $0.name == transaction.type
                 }) {
-                    insightsResult[foundIndex].count += 1
-                    insightsResult[foundIndex].totalAmount += insight.amount
+                    insightsResult[foundIndex].transactions.append(transaction)
                 } else {
                     let new = Insight(
-                        name: insight.type,
-                        count: 1,
-                        totalAmount: insight.amount
+                        name: transaction.type,
+                        transactions: [transaction]
                     )
                     insightsResult.append(new)
                 }

@@ -43,7 +43,6 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
     case settingsOpened
     case transferOpened
     case airtimeOpened
-    case historyOpened
     case mySpaceOpened
     
     // Activities

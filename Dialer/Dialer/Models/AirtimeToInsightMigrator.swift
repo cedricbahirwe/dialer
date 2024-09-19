@@ -20,6 +20,7 @@ actor AirtimeToInsightMigrator {
     func migrate() async {
         guard !isMigrating else { return }
         let storedCodes = DialerStorage.shared.getSortedRecentCodes()
+        print("Finding", storedCodes.count)
         guard !storedCodes.isEmpty else { return }
         guard let device = DialerStorage.shared.getSavedDevice() else { return }
 
