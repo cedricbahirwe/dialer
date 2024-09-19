@@ -45,11 +45,6 @@ class FirebaseTracker {
     func logAnalyticsEvent(_ eventName: String, parameters: [String: Any]?) {
         var completeParameters: [String : Any] = parameters ?? [:]
         completeParameters[AnalyticsParameterExtendSession] = true
-        for element in completeParameters.values {
-            if element is UUID {
-                print("The envent is", eventName)
-            }
-        }
         Analytics.logEvent(
             eventName,
             parameters: completeParameters
