@@ -113,4 +113,11 @@ enum  RecordType: String, Codable {
     case user
     case airtime
     case other
+
+    var formatted: String {
+        switch self {
+        case .user: "P2P"
+        default: rawValue.capitalized
+        }
+    }
 }

@@ -19,7 +19,7 @@
 		823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823FA768261A556200ABE045 /* PurchaseDetailView.swift */; };
 		8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440A26FDBB2300DB0643 /* SettingsItem.swift */; };
 		8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248440C26FDBB3200DB0643 /* SettingsOption.swift */; };
-		8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* HistoryRow.swift */; };
+		8255017A263B467A00CB1BC2 /* TransactionHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82550179263B467A00CB1BC2 /* TransactionHistoryRow.swift */; };
 		8255E68E2693959800657EFB /* ThanksYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255E68D2693959800657EFB /* ThanksYouView.swift */; };
 		825F996326720AE6009E4A7B /* TransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996226720AE6009E4A7B /* TransferView.swift */; };
 		825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F996526720B46009E4A7B /* ContactsFetcher.swift */; };
@@ -149,7 +149,7 @@
 		8248440A26FDBB2300DB0643 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		8248440C26FDBB3200DB0643 /* SettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOption.swift; sourceTree = "<group>"; };
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
-		82550179263B467A00CB1BC2 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
+		82550179263B467A00CB1BC2 /* TransactionHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryRow.swift; sourceTree = "<group>"; };
 		8255E68D2693959800657EFB /* ThanksYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksYouView.swift; sourceTree = "<group>"; };
 		825F996226720AE6009E4A7B /* TransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferView.swift; sourceTree = "<group>"; };
 		825F996526720B46009E4A7B /* ContactsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFetcher.swift; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				8255E68D2693959800657EFB /* ThanksYouView.swift */,
-				82550179263B467A00CB1BC2 /* HistoryRow.swift */,
+				82550179263B467A00CB1BC2 /* TransactionHistoryRow.swift */,
 				CBAF13182785A54100D32E1F /* TappeableText.swift */,
 				CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */,
 			);
@@ -794,7 +794,7 @@
 				CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */,
 				CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */,
 				CB9515E92C998CF400D8F35C /* TransactionInsight.swift in Sources */,
-				8255017A263B467A00CB1BC2 /* HistoryRow.swift in Sources */,
+				8255017A263B467A00CB1BC2 /* TransactionHistoryRow.swift in Sources */,
 				CB3B81E229ABC742001FAFF6 /* Merchant.swift in Sources */,
 				CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */,
 				CBE73C612A2C789C00C7712B /* ContactRowView.swift in Sources */,

@@ -17,10 +17,21 @@ enum MockPreviewData {
     
     static let emptyPurchase = AirtimeTransaction()
 
-    static let insight = TransactionInsight(
-        details: .airtime(MockPreviewData.emptyPurchase),
+    static let airtimeInsight = TransactionInsight(
+        details: .airtime(.init(amount: 1000, purchaseDate: .now)),
         ownerID: .init()
     )
+
+    static let merchantInsight = TransactionInsight(
+        details: .momo(.init(amount: 121200, number: "004050", type: .merchant)),
+        ownerID: .init()
+    )
+
+    static let clientInsight = TransactionInsight(
+        details: .momo(.init(amount: 15020, number: "0782628511", type: .client)),
+        ownerID: .init()
+    )
+
     static let merchants = [
         Merchant(Optional("JkSKq9QM4vrBjeZHpg4d"), name: "La gardienne", address: "12 KN 41St, Kigali", code: "004422", ownerId: UUID()),
         Merchant(Optional("eHJNvwKhbdB1sdV19F3P"), name: "Cedrics", address: "", code: "12345", ownerId: UUID()),

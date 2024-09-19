@@ -110,6 +110,11 @@ struct InsightsView: View {
             InsightTransactionsView(
                 store: InsightHistoryViewModel(insight: insight)
             )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+            .presentationBackground(.regularMaterial)
+            .presentationCornerRadius(30)
+            .presentationContentInteraction(.scrolls)
         }
         .toolbarTitleDisplayMode(.inline)
         .toolbar {

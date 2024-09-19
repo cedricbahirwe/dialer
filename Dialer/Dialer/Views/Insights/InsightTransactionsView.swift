@@ -20,15 +20,16 @@ struct InsightTransactionsView: View {
                         emptyHistoryView
                     } else {
                         List {
-                            ForEach(store.insight.transactions) { recentCode in
-//                                HistoryRow(recentCode: recentCode)
+                            ForEach(store.insight.transactions) { transaction in
+                                TransactionHistoryRow(transaction: transaction)
                             }
                         }
                     }
                 }
             }
-            .background(Color.primaryBackground)
-            .navigationTitle("History")
+//            .background(Color.primaryBackground)
+//            .navigationTitle("History")
+            .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .bottom) {
                 VStack(alignment: .leading) {
                     HStack {
