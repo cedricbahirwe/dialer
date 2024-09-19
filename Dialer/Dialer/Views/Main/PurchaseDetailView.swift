@@ -58,7 +58,6 @@ struct PurchaseDetailView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(
             Color.primaryBackground
-                .cornerRadius(15)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
         )

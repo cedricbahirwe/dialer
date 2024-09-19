@@ -64,7 +64,7 @@ extension FirebaseTracker: TrackerProtocol {
     func logSignIn(account: DeviceAccount) {
         logEvent(
             name: AppAnalyticsEventType.logIn,
-            parameters: account.toDictionary()
+            parameters: account.toAnalytics()
         )
     }
 

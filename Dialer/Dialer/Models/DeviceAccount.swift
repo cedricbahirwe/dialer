@@ -22,18 +22,15 @@ struct DeviceAccount: Codable {
     let bundleId: String?
     let lastVisitedDate: String?
 
-    func toDictionary() -> [String: Any] {
+    func toAnalytics() -> [String: Any] {
         var dictionary: [String: Any] = [:]
         dictionary["id"] = id
         dictionary["name"] = name
+        dictionary["app_version"] = appVersion
         dictionary["model"] = model
         dictionary["system_version"] = systemVersion
         dictionary["system_name"] = systemName
-        dictionary["device_hash"] = deviceHash
-        dictionary["app_version"] = appVersion
         dictionary["bundle_version"] = bundleVersion
-        dictionary["bundle_id"] = bundleId
-        dictionary["last_visited_date"] = lastVisitedDate
         return dictionary
     }
     

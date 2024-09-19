@@ -45,7 +45,7 @@ struct SpendingCategoryOverview: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.thinMaterial, in: .rect(cornerRadius: 28))
+        .background(.thinMaterial, in: .rect(cornerRadius: 20))
         .background(isSelected ? Color.blue : .clear, in: .circle)
     }
 }
