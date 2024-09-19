@@ -12,21 +12,15 @@ struct InsightsView: View {
     @Binding var isPresented: Bool
 
     @EnvironmentObject private var insightsStore: DialerInsightStore
-    private var insights: [Insight] {
-        if insightsStore.filteredInsightsByPeriod.isEmpty {
-            []//Insight.examples
-        } else {
-            Insight.makeInsights(insightsStore.filteredInsightsByPeriod)
-        }
-    }
 
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     var total: Int {
-        insights.map(\.totalAmount).reduce(0, +)
+        insightsStore.insights.map(\.totalAmount).reduce(0, +)
     }
+
     @State private var selectedInsight: Insight?
 
     var body: some View {
@@ -34,7 +28,7 @@ struct InsightsView: View {
             VStack(alignment: .leading, spacing: 20) {
                 if #available(iOS 17.0, *) {
                     ZStack {
-                        InsightsChartsView(insights: insights, total: total)
+                        InsightsChartsView(insights: insightsStore.insights, total: total)
                             .animation(.smooth, value: insightsStore.selectedPeriod)
                             .aspectRatio(1, contentMode: .fit)
 
@@ -69,7 +63,7 @@ struct InsightsView: View {
 
 
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
+                            ForEach(insightsStore.insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
                                 SpendingCategoryOverview(
                                     overview: insight,
                                     isSelected: selectedInsight?.id == insight.id,
@@ -97,9 +91,9 @@ struct InsightsView: View {
                         .ignoresSafeArea()
                 )
             }
-            .opacity(insights.isEmpty ? 0 : 1)
+            .opacity(insightsStore.insights.isEmpty ? 0 : 1)
             .overlay {
-                if insights.isEmpty {
+                if insightsStore.insights.isEmpty {
                     ContentUnavailableView(
                         "No insights found yet.",
                         systemImage: "exclamationmark.circle",
@@ -112,6 +106,11 @@ struct InsightsView: View {
             await insightsStore.getInsights()
         }
         .background(.offBackground)
+        .sheet(item: $selectedInsight) { insight in
+            InsightTransactionsView(
+                store: InsightHistoryViewModel(insight: insight)
+            )
+        }
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -137,7 +136,7 @@ struct InsightsView: View {
     }
 
     struct Insight: Identifiable {
-        let id = UUID()
+        let id: String?
         private let name: RecordType
         var transactions: [TransactionInsight]
 
@@ -173,12 +172,6 @@ struct InsightsView: View {
             case .other: .red
             }
         }
-        static let examples = [
-            Insight(name: .merchant, transactions: []),
-            Insight(name: .user, transactions: []),
-            Insight(name: .airtime, transactions: []),
-            Insight(name: .other, transactions: []),
-        ]
 
         static func makeInsights(_ transactions: [TransactionInsight]) -> [Insight] {
             var insightsResult = [Insight]()
@@ -190,6 +183,7 @@ struct InsightsView: View {
                     insightsResult[foundIndex].transactions.append(transaction)
                 } else {
                     let new = Insight(
+                        id: transaction.id,
                         name: transaction.type,
                         transactions: [transaction]
                     )

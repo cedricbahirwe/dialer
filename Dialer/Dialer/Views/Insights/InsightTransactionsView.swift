@@ -1,25 +1,27 @@
 //
-//  DialingsHistoryView.swift
+//  InsightTransactionsView.swift
 //  Dialer
 //
-//  Created by Cédric Bahirwe on 11/06/2021.
+//  Created by Cédric Bahirwe on 19/09/2024.
+//  Copyright © 2024 Cédric Bahirwe. All rights reserved.
 //
 
 import SwiftUI
 
-struct DialingsHistoryView: View {
-    let data: HistoryViewModel
+struct InsightTransactionsView: View {
+    @ObservedObject var store: InsightHistoryViewModel
     @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
-                    if data.recentCodes.isEmpty {
+                    if store.insight.transactions.isEmpty {
                         emptyHistoryView
                     } else {
                         List {
-                            ForEach(data.recentCodes) { recentCode in
-                                HistoryRow(recentCode: recentCode)
+                            ForEach(store.insight.transactions) { recentCode in
+//                                HistoryRow(recentCode: recentCode)
                             }
                         }
                     }
@@ -34,12 +36,12 @@ struct DialingsHistoryView: View {
                         Text(":")
                         Spacer()
                         HStack(spacing: 3) {
-                            Text("\(data.estimatedTotalPrice)")
+                            Text("\(store.insight.totalAmount)")
                             Text("RWF")
                                 .font(.system(size: 16, weight: .bold, design: .serif))
                         }
                     }
-                    
+
                     Text("The estimations are based on the recent USSD codes used.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -61,10 +63,10 @@ struct DialingsHistoryView: View {
                     }
                 }
             }
-            .trackAppearance(.history)
+            .trackAppearance(.insightTransaction)
         }
     }
-    
+
     private var emptyHistoryView: some View {
         Group {
             Spacer()
@@ -79,6 +81,10 @@ struct DialingsHistoryView: View {
     }
 }
 
-#Preview {
-    DialingsHistoryView(data: HistoryViewModel())    
-}
+//#Preview {
+//    InsightTransactionsView(
+//        store: InsightHistoryViewModel(
+//            insight: MockPreviewData.insight
+//        )
+//    )
+//}

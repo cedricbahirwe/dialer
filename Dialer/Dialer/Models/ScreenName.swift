@@ -13,7 +13,7 @@ enum ScreenName: String, Codable {
 
     case buyAirtime
     case transfer
-    case history
+    case insights
     case mySpace
 
     case newDialing
@@ -23,6 +23,5 @@ enum ScreenName: String, Codable {
     case newUsername
 
     case about
-
-    case insights
+    case insightTransaction
 }

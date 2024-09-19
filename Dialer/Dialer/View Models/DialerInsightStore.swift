@@ -26,8 +26,12 @@ class DialerInsightStore: BaseViewModel {
     let periods = InsightFilterPeriod.allCases
     @Published private(set) var selectedPeriod = InsightFilterPeriod.year
 
-    var filteredInsightsByPeriod: [TransactionInsight] {
+    private var filteredInsightsByPeriod: [TransactionInsight] {
         filterInsightsByPeriod(allInsights, period: selectedPeriod)
+    }
+
+    var insights: [InsightsView.Insight] {
+        InsightsView.Insight.makeInsights(filteredInsightsByPeriod)
     }
 
     private let insightsProvider: InsightProtocol

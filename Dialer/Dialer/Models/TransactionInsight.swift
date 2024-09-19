@@ -9,8 +9,8 @@
 import Foundation
 import FirebaseFirestore
 
-struct TransactionInsight: Codable {
-    @DocumentID private var id: String?
+struct TransactionInsight: Identifiable, Codable {
+    @DocumentID var id: String?
     let details: RecordDetails
     let type: RecordType
     var ownerId: UUID
@@ -46,7 +46,7 @@ struct TransactionInsight: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decodeIfPresent(String.self, forKey: .id)
+        self._id = try container.decode(DocumentID<String>.self, forKey: .id)
         self.ownerId = try container.decode(UUID.self, forKey: .ownerId)
         self.type = try container.decode(RecordType.self, forKey: .type)
         self.createdDate = try container.decode(Date.self, forKey: .createdDate)
