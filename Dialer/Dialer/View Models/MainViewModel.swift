@@ -21,7 +21,7 @@ final class MainViewModel: ObservableObject {
 //        }
 //    }
     
-    @Published var purchaseDetail = PurchaseDetailModel()
+    @Published var purchaseDetail = AirtimeTransaction()
     
     @Published private(set) var ussdCodes: [USSDCode] = []
     
@@ -35,7 +35,7 @@ final class MainViewModel: ObservableObject {
         do {
             try await dialCode(from: purchase)
             history.storeCode(code: .init(detail: purchase))
-            self.purchaseDetail = PurchaseDetailModel()
+            self.purchaseDetail = AirtimeTransaction()
             Tracker.shared.logTransaction(record: .airtime(purchase))
         } catch let error as DialingError {
             Log.debug(error.message)
@@ -48,7 +48,7 @@ final class MainViewModel: ObservableObject {
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
-    private func dialCode(from purchase: PurchaseDetailModel) async throws {
+    private func dialCode(from purchase: AirtimeTransaction) async throws {
         
         let newUrl = purchase.getFullUSSDCode()
         

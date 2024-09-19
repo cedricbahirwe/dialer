@@ -12,7 +12,7 @@ struct RecentDialCode: Identifiable, Codable {
         lhs.id == rhs.id
     }
     
-    init(id: UUID = UUID(), detail: PurchaseDetailModel, count: Int = 1) {
+    init(id: UUID = UUID(), detail: AirtimeTransaction, count: Int = 1) {
         self.id = id
         self.detail = detail
         self.count = count
@@ -20,7 +20,7 @@ struct RecentDialCode: Identifiable, Codable {
     
     private(set) var id: UUID
     private(set) var count: Int
-    var detail: PurchaseDetailModel
+    var detail: AirtimeTransaction
     var totalPrice: Int { detail.amount * count }
     
     mutating func increaseCount() { count += 1 }

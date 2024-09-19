@@ -154,6 +154,7 @@ struct DashBoardView: View {
         .task {
             data.history.retrieveHistoryCodes()
             data.retrieveUSSDCodes()
+            await AirtimeToInsightMigrator.shared.migrate()
         }
         .navigationTitle("Dialer")
         .toolbar {

@@ -76,7 +76,10 @@ final class DialerStorage {
         decodeDatasArray(key: LocalKeys.recentCodes, type: RecentCodes.self)
             .sorted { $0.detail.purchaseDate > $1.detail.purchaseDate }
     }
-    
+    func clearRecentCodes() {
+        userDefaults.removeObject(forKey: LocalKeys.recentCodes)
+    }
+
     func saveUSSDCodes(_ ussds: USSDCodes) throws {
         let data = try encodeData(ussds)
         userDefaults.setValue(data, forKey: LocalKeys.customUSSDCodes)

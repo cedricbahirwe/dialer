@@ -15,7 +15,7 @@ enum MockPreviewData {
     
     static let recentDial = RecentDialCode(detail: emptyPurchase)
     
-    static let emptyPurchase = PurchaseDetailModel()
+    static let emptyPurchase = AirtimeTransaction()
     
     static let merchants = [
         Merchant(Optional("JkSKq9QM4vrBjeZHpg4d"), name: "La gardienne", address: "12 KN 41St, Kigali", code: "004422", ownerId: UUID()),

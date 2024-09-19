@@ -65,7 +65,7 @@ struct TransactionInsight: Codable {
 
 enum RecordDetails: Codable {
     case momo(Transaction)
-    case airtime(PurchaseDetailModel)
+    case airtime(AirtimeTransaction)
     case other
     private enum CodingKeys: String, CodingKey {
         case type, details
@@ -89,7 +89,7 @@ enum RecordDetails: Codable {
         case .merchant, .user:
             self = .momo(try Transaction(from: dataDecoder))
         case .airtime:
-            self = .airtime(try PurchaseDetailModel(from: dataDecoder))
+            self = .airtime(try AirtimeTransaction(from: dataDecoder))
         case .other:
             self = .other
         }

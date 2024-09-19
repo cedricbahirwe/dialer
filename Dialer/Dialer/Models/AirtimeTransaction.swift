@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-struct PurchaseDetailModel: Hashable, Codable {
+struct AirtimeTransaction: Hashable, Codable {
     var amount: Int = 0
     var purchaseDate: Date = .now
     
     private var prefixCode: String { "*182*2*1*1*1*" }
 }
 
-extension PurchaseDetailModel {
+extension AirtimeTransaction {
     
     func getRedactedFullCode() -> String {
         return "\(prefixCode)\(amount)*PIN#"
