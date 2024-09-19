@@ -34,8 +34,7 @@ struct NumberField: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     NumberField("placeholder", text: .constant(""))
         .padding()
-        .previewLayout(.sizeThatFits)
 }

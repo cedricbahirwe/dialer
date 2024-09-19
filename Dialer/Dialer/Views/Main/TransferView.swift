@@ -15,8 +15,8 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction = Transaction(amount: "", number: "", type: .merchant)
-    
+    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant)
+
     @State private var presentedSheet: Sheet?
     
     private var rowBackground: Color {
@@ -224,7 +224,7 @@ struct TransferView: View {
                     }
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button(action: switchPaymentType) {
                     Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
                         .font(.system(size: 18, design: .rounded))
@@ -303,7 +303,7 @@ private extension TransferView {
         guard transaction.isValid else { return }
         Task {
             await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
-            Tracker.shared.logTransaction(transaction: transaction)
+            Tracker.shared.logTransaction(transaction: transaction.cleaned)
         }
     }
     

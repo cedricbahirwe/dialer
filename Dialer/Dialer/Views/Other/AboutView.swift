@@ -43,7 +43,7 @@ struct AboutView: View {
         .background(Color.primaryBackground)
         .navigationBarTitle("About")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("Done") {
                     dataStore.dismissSettingsView()
                 }.font(.body.bold())

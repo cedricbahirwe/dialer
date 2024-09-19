@@ -40,10 +40,10 @@ extension FirebaseManager: MerchantProtocol {
         await getAll(in: .merchants)
     }
 
-    func getMerchantsFor(_ userID: String) async -> [Merchant] {
+    func getMerchantsFor(_ userID: UUID) async -> [Merchant] {
         do {
             let querySnapshot = try await db.collection(.merchants)
-                .whereField("ownerId", isEqualTo: userID)
+                .whereField("ownerId", isEqualTo: userID.uuidString)
                 .order(by: "name")
                 .getDocuments()
             
@@ -59,6 +59,7 @@ extension FirebaseManager: MerchantProtocol {
 }
 
 // MARK: - Device Provider
+
 extension FirebaseManager: DeviceManagerProtocol {
     func saveDevice(_ device: DeviceAccount) async throws -> Bool {
         try await create(device, in: .devices)
@@ -69,7 +70,7 @@ extension FirebaseManager: DeviceManagerProtocol {
     }
 
     func updateDevice(_ device: DeviceAccount) async throws -> Bool {
-        return try await updateItemWithID(device.deviceHash, content: device, in: .devices)
+        return try await updateItemWithID(device.deviceHash.uuidString, content: device, in: .devices)
     }
 
     func deleteDevice(_ deviceID: String) async throws {
@@ -80,6 +81,32 @@ extension FirebaseManager: DeviceManagerProtocol {
         await getAll(in: .devices)
     }
 
+}
+
+
+extension FirebaseManager: InsightProtocol {
+    func saveInsight(_ insight: TransactionInsight) async throws -> Bool {
+        try await create(insight, in: .transactions)
+    }
+
+    func getAllInsights() async -> [TransactionInsight] {
+        await getAll(in: .transactions)
+    }
+
+    func getInsights(for userID: UUID) async -> [TransactionInsight] {
+        do {
+            let querySnapshot = try await db.collection(.transactions)
+                .whereField("ownerId", isEqualTo: userID.uuidString)
+                .getDocuments()
+
+            return await getAllWithQuery(querySnapshot)
+
+        } catch {
+            Log.debug("Can not get \(type(of: TransactionInsight.self)), Error: \(error).")
+            Tracker.shared.logError(error: error)
+            return []
+        }
+    }
 }
 
 extension FirebaseManager: UserProtocol {
@@ -128,7 +155,7 @@ protocol MerchantProtocol {
     func updateMerchant(_ merchant: Merchant) async throws-> Bool
     func deleteMerchant(_ merchantID: String) async throws
     func getAllMerchants() async -> [Merchant]
-    func getMerchantsFor(_ userID: String) async -> [Merchant]
+    func getMerchantsFor(_ userID: UUID) async -> [Merchant]
 }
 
 protocol UserProtocol {
@@ -146,4 +173,10 @@ protocol DeviceManagerProtocol {
     func updateDevice(_ device: DeviceAccount) async throws -> Bool
     func deleteDevice(_ deviceID: String) async throws
     func getAllDevices() async -> [DeviceAccount]
+}
+
+protocol InsightProtocol {
+    func saveInsight(_ insight: TransactionInsight) async throws -> Bool
+    func getAllInsights() async -> [TransactionInsight]
+    func getInsights(for userID: UUID) async -> [TransactionInsight]
 }

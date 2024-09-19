@@ -13,7 +13,7 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     
     @AppStorage(UserDefaultsKeys.showWelcomeView)
-    private var showWelcomeView: Bool = true
+    private var showWelcomeView: Bool = false
     
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
@@ -26,58 +26,56 @@ struct DashBoardView: View {
     private var showUsernameSheet = true
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack {
-                VStack(spacing: 29) {
-                    HStack(spacing: 20) {
-                        DashItemView(
-                            title: "Buy airtime",
-                            icon: "wallet.pass")
-                        .onTapGesture {
-                            withAnimation {
-                                showPurchaseSheet = true
-                                Tracker.shared.logEvent(.airtimeOpened)
-                            }
-                        }
-                        
-                        DashItemView(
-                            title: "Transfer/Pay",
-                            icon: "paperplane.circle")
-                        .onTapForBiometrics { success in
-                            if success {
-                                navPath.append(.transfer)
-                                Tracker.shared.logEvent(.transferOpened)
-                            }
+        VStack {
+            VStack(spacing: 29) {
+                HStack(spacing: 20) {
+                    DashItemView(
+                        title: "Buy airtime",
+                        icon: "wallet.pass")
+                    .onTapGesture {
+                        withAnimation {
+                            showPurchaseSheet = true
+                            Tracker.shared.logEvent(.airtimeOpened)
                         }
                     }
                     
-                    HStack(spacing: 15) {
-                        DashItemView(
-                            title: "History",
-                            icon: "clock.arrow.circlepath")
-                        .onTapGesture {
-                            data.showHistoryView()
+                    DashItemView(
+                        title: "Transfer/Pay",
+                        icon: "paperplane.circle")
+                    .onTapForBiometrics { success in
+                        if success {
+                            navPath.append(.transfer)
+                            Tracker.shared.logEvent(.transferOpened)
                         }
-                        
-                        NavigationLink {
-                            MySpaceView()
-                        } label: {
-                            DashItemView(
-                                title: "My Space",
-                                icon: "person.crop.circle.badge")
-                            .onAppear() {
-                                Tracker.shared.logEvent(.mySpaceOpened)
-                            }
-                        }
-                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .padding()
                 
-                Spacer()
+                HStack(spacing: 15) {
+                    DashItemView(
+                        title: "Insights",
+                        icon: "bubbles.and.sparkles.fill")
+                    .onTapGesture {
+                        navPath.append(.insights)
+                    }
+                    
+                    NavigationLink {
+                        MySpaceView()
+                    } label: {
+                        DashItemView(
+                            title: "My Space",
+                            icon: "person.crop.circle.badge")
+                        .onAppear() {
+                            Tracker.shared.logEvent(.mySpaceOpened)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
-            .blur(radius: showPurchaseSheet ? 1 : 0)
+            .padding()
+            
+            Spacer()
         }
+        .blur(radius: showPurchaseSheet ? 1 : 0)
         .fullScreenCover(isPresented: $showUsernameSheet,
                          onDismiss: {
             showWelcomeView = true
@@ -92,6 +90,7 @@ struct DashBoardView: View {
                 data: data
             )
             .presentationDetents([.height(400)])
+            .presentationCornerRadius(20)
         }
         .sheet(isPresented: $showWelcomeView) {
             WhatsNewView(isPresented: $showWelcomeView)
@@ -102,19 +101,16 @@ struct DashBoardView: View {
                 SettingsView()
                     .environmentObject(data)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
-
-            case .history:
-                DialingsHistoryView(data: data.history)
             }
         }
         .background(Color.primaryBackground)
         .task {
-            data.history.retrieveHistoryCodes()
             data.retrieveUSSDCodes()
+            await AirtimeToInsightMigrator.shared.migrate()
         }
         .navigationTitle("Dialer")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 if allowBiometrics {
                     settingsImage
                         .onTapForBiometrics {
@@ -125,6 +121,10 @@ struct DashBoardView: View {
                 } else {
                     Button(action: data.showSettingsView) { settingsImage }
                 }
+            }
+            
+            ToolbarItem(placement: .bottomBar) {
+                
             }
         }
         .trackAppearance(.dashboard)
@@ -143,12 +143,8 @@ private extension DashBoardView {
     }
     @ViewBuilder
     var settingsImage: some View {
-        if #available(iOS 17.0, *) {
-            settingsGradientIcon
-                .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
-        } else {
-            settingsGradientIcon
-        }
+        settingsGradientIcon
+            .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
     }
 }
 
@@ -156,5 +152,6 @@ private extension DashBoardView {
     NavigationStack {
         DashBoardView(navPath: .constant([]))
             .environmentObject(MainViewModel())
+            .environmentObject(UserStore())
     }
 }

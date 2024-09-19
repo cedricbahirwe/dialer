@@ -10,7 +10,7 @@ import SwiftUI
 
 final class MainViewModel: ObservableObject {
     
-    private(set) var history = HistoryViewModel()
+//    private(set) var history = HistoryViewModel()
         
     /// Used to show Congratulations Screen
 //    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
@@ -21,7 +21,7 @@ final class MainViewModel: ObservableObject {
 //        }
 //    }
     
-    @Published var purchaseDetail = PurchaseDetailModel()
+    @Published var purchaseDetail = AirtimeTransaction()
     
     @Published private(set) var ussdCodes: [USSDCode] = []
     
@@ -34,20 +34,19 @@ final class MainViewModel: ObservableObject {
         
         do {
             try await dialCode(from: purchase)
-            history.storeCode(code: .init(detail: purchase))
-            self.purchaseDetail = PurchaseDetailModel()
+            Tracker.shared.logTransaction(record: .airtime(purchase))
+            self.purchaseDetail = AirtimeTransaction()
         } catch let error as DialingError {
             Log.debug(error.message)
         } catch let error {
             Log.debug(error.localizedDescription)
         }
-        
     }
     
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
-    private func dialCode(from purchase: PurchaseDetailModel) async throws {
+    private func dialCode(from purchase: AirtimeTransaction) async throws {
         
         let newUrl = purchase.getFullUSSDCode()
         
@@ -85,19 +84,13 @@ extension MainViewModel {
     enum DialerSheet: Int, Identifiable {
         var id: Int { rawValue }
         case settings
-        case history
     }
-    
-    func showHistoryView() {
-        Tracker.shared.logEvent(.historyOpened)
-        presentedSheet = .history
-    }
-    
+
     func showSettingsView() {
         Tracker.shared.logEvent(.settingsOpened)
         presentedSheet = .settings
     }
-    
+
     func dismissSettingsView() {
         presentedSheet = nil
     }

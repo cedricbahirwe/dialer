@@ -22,6 +22,7 @@ struct UserDetailsCreationView: View {
     @State private var recoveryFileURL: URL?
 
     @State private var isRestoringUser = false
+    @Environment(\.colorScheme) private var colorScheme
 
     private var isUsernameValid: Bool {
         return username.count >= 3 &&
@@ -92,7 +93,7 @@ struct UserDetailsCreationView: View {
                                 text: $enteredRecoveryCode)
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
-                            .foregroundStyle(.black)
+                            .foregroundStyle(Color.accentColor)
 
                             Button("Cancel") {
                                 enteredRecoveryCode = ""

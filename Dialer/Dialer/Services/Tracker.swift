@@ -16,7 +16,7 @@ protocol TrackerProtocol: AnyObject {
     func logEvent(name: AnalyticsEventType, parameters: [String: Any]?)
     func logEvent(name: AnalyticsEventType)
     func logTransaction(transaction: Transaction)
-    func logTransaction(transaction: Transaction, user: DeviceAccount)
+    func logTransaction(record: RecordDetails)
     func logMerchantSelection(_ merchant: Merchant)
     func logMerchantScan(_ merchantCode: String)
     func logSignIn(account: DeviceAccount)
@@ -43,7 +43,6 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
     case settingsOpened
     case transferOpened
     case airtimeOpened
-    case historyOpened
     case mySpaceOpened
     
     // Activities

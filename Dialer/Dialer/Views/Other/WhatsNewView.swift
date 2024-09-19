@@ -125,7 +125,7 @@ private extension ChangeLog {
         [
             ChangeLog("paperplane.circle", "Transfer & Pay", "Easily find the USSD code for sending money or making store payments."),
             ChangeLog("phone.circle", "Buy Airtime", "Quickly generate the right USSD code to top up airtime in seconds."),
-            ChangeLog("clock.arrow.circlepath", "Usage History", "Instantly access your most frequently used USSD codes."),
+            ChangeLog("bubbles.and.sparkles.fill", "Insights", "Gain valuable insights into your transaction history and USSD code usage."),
             ChangeLog("folder", "My Space", "Personalize and manage your own USSD codes for quick access whenever needed."),
         ]
     }

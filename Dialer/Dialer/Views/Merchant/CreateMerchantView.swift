@@ -101,7 +101,7 @@ private extension CreateMerchantView {
             guard code.allSatisfy(\.isNumber)
             else { throw Error.invalidInput("Code contains only digits")  }
             
-            let userId = DialerStorage.shared.getSavedDevice()?.deviceHash ?? "-"
+            let userId = DialerStorage.shared.getSavedDevice()?.deviceHash
             return Merchant(name: name, address: address.isEmpty ? nil : address, code: code, ownerId: userId)
         }
     }

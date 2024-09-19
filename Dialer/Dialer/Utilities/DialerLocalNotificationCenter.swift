@@ -98,7 +98,6 @@ extension DialerNotificationCenter {
     func printNotifications() {
         Task {
             let pendingNotifs = await notificationCenter.pendingNotificationRequests()
-            
             Log.debug("Pending Notifications Count: ", pendingNotifs.count)
             
         }

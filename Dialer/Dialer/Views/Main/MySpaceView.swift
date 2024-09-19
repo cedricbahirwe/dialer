@@ -98,7 +98,7 @@ struct MySpaceView: View {
                            isEditing: isEditingMode)
         }
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     editedUSSDModel = .init()
                 } label: {

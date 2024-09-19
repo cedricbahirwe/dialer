@@ -12,6 +12,8 @@ import SwiftUI
 @MainActor
 class UserStore: BaseViewModel {
     @Published private(set) var users: [DialerUser]
+    @Published private(set) var recoveryCode: String?
+
     private let userProvider: UserProtocol
 
     init(_ userProvider: UserProtocol = FirebaseManager()) {
@@ -42,12 +44,10 @@ class UserStore: BaseViewModel {
         !users.map(\.username).map({ $0.lowercased() }).contains(username.lowercased())
     }
 
-    @Published var recoveryCode: String?
-
     func saveUser(_ username: String) async -> Bool {
         let savedDevice = DialerStorage.shared.getSavedDevice()
         let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
-        let recoveryCode = ROT13.string(username) + "_" + ROT13.string(device.deviceHash)
+        let recoveryCode = ROT13.string(username) + "_" + ROT13.string(device.deviceHash.uuidString)
 
         let user = DialerUser(
             username: username,

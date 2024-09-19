@@ -11,7 +11,7 @@ import XCTest
 final class PurchaseDetailModelTests: XCTestCase {
     
     func testPinLessPurchase() throws {
-        let purchase = PurchaseDetailModel(amount: 1000)
+        let purchase = AirtimeTransaction(amount: 1000)
         let expectedUnpinCode = "*182*2*1*1*1*1000#"
         
         XCTAssertEqual(expectedUnpinCode, purchase.getFullUSSDCode())

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import FirebaseAnalytics
 
 class FirebaseTracker {
@@ -20,7 +21,7 @@ class FirebaseTracker {
     func setAnalyticUserInfo() {
         let device = FirebaseTracker.makeDeviceAccount()
 
-        Analytics.setUserID(device.deviceHash)
+        Analytics.setUserID(device.deviceHash.uuidString)
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
         Analytics.setUserProperty(device.name, forName: "name")
         Analytics.setUserProperty(device.systemVersion, forName: "system_version")
@@ -37,6 +38,30 @@ class FirebaseTracker {
                         logError(error: error)
                     }
                 }
+            }
+        }
+    }
+
+    func logAnalyticsEvent(_ eventName: String, parameters: [String: Any]?) {
+        var completeParameters: [String : Any] = parameters ?? [:]
+        completeParameters[AnalyticsParameterExtendSession] = true
+        Analytics.logEvent(
+            eventName,
+            parameters: completeParameters
+        )
+    }
+
+    func recordTransaction(_ details: RecordDetails) {
+        guard let crudManager = self.deviceProvider as? FirebaseCRUD else { return }
+        let savedDevice = DialerStorage.shared.getSavedDevice()
+        let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
+
+        let insight = TransactionInsight(details: details, ownerID: device.deviceHash)
+        Task {
+            do {
+                _ = try await crudManager.create(insight, in: .transactions)
+            } catch {
+                print("Insight Creation error:", error.localizedDescription)
             }
         }
     }
@@ -87,13 +112,13 @@ class FirebaseTracker {
         let deviceModel = device.model
         let deviceSystemVersion = device.systemVersion
         let deviceSystemName = device.systemName
-        let deviceIdentifier = DialerStorage.shared.getOneTimeUniqueAppID()!.uuidString
+        let deviceIdentifier = DialerStorage.shared.getOneTimeUniqueAppID()!
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let bundleID = Bundle.main.bundleIdentifier
         
         let deviceAccount = DeviceAccount(
-            id: deviceIdentifier,
+            id: deviceIdentifier.uuidString,
             name: deviceName,
             model: deviceModel,
             systemVersion: deviceSystemVersion,

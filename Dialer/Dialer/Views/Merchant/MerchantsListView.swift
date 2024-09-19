@@ -32,13 +32,13 @@ struct MerchantsListView: View {
                 CreateMerchantView(merchantStore: merchantStore)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
 
                     Button("Cancel", role: .cancel) {
                         dismiss()
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showCreateView.toggle()
                     } label: {
@@ -64,7 +64,7 @@ private extension MerchantsListView {
                     .font(.title3.weight(.semibold))
                 Text("Address: \(merchant.address ?? "-")")
                 Text("Merchant Code: **\(merchant.code)**")
-                Text("Owner: \(merchant.ownerId ?? "-")")
+                Text("Owner: \(merchant.ownerId?.uuidString ?? "-")")
                     .font(.callout)
                 Text("ID: \(merchant.hashCode.uuidString)")
                     .font(.caption)
