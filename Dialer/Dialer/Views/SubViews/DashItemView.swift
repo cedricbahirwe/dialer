@@ -39,6 +39,7 @@ struct DashItemView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview("DashItem View", traits: .fixedLayout(width: 200, height: 130)) {
     DashItemView(title: "Title", icon: "house.fill")
         .padding(.horizontal)

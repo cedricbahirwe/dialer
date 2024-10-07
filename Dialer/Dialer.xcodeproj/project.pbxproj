@@ -88,6 +88,7 @@
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */; };
+		CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B32CB3F0E800415777 /* ChartInsight.swift */; };
 		CB8508B42C879A7300D2080F /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8508B32C879A7300D2080F /* UserStore.swift */; };
 		CB8508B62C879C1300D2080F /* DialerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8508B52C879C1300D2080F /* DialerUser.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
@@ -216,6 +217,7 @@
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAccount.swift; sourceTree = "<group>"; };
+		CB7F33B32CB3F0E800415777 /* ChartInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInsight.swift; sourceTree = "<group>"; };
 		CB8508B32C879A7300D2080F /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		CB8508B52C879C1300D2080F /* DialerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUser.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
@@ -303,24 +305,25 @@
 			isa = PBXGroup;
 			children = (
 				CBE61A412C9C1D7B003E1795 /* AirtimeToInsightMigrator.swift */,
-				825F996926720B7E009E4A7B /* ContactModel.swift */,
-				CBC262C32784D233000B8E0E /* RecentDialCode.swift */,
-				CB45380F28AB7E8B00F3F24C /* USSDCode.swift */,
 				CBC262C52784D243000B8E0E /* AirtimeTransaction.swift */,
-				8207FA9426776AB600412AE1 /* TransactionModel.swift */,
-				CB9515E82C998CF300D8F35C /* TransactionInsight.swift */,
-				8248440A26FDBB2300DB0643 /* SettingsItem.swift */,
-				8248440C26FDBB3200DB0643 /* SettingsOption.swift */,
 				CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */,
+				CB7F33B32CB3F0E800415777 /* ChartInsight.swift */,
 				CBE3D8A6290C147300DF5C09 /* CodePin.swift */,
+				825F996926720B7E009E4A7B /* ContactModel.swift */,
+				CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */,
 				CBA9BB04294C8F7000D95C82 /* DialerLocalNotification.swift */,
 				CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */,
-				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
-				CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */,
-				CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */,
 				CB8508B52C879C1300D2080F /* DialerUser.swift */,
 				CB1099512A6201A600E99555 /* DialingError.swift */,
+				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
 				CBA9BB01294C8F4500D95C82 /* Protocol */,
+				CBC262C32784D233000B8E0E /* RecentDialCode.swift */,
+				CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */,
+				8248440A26FDBB2300DB0643 /* SettingsItem.swift */,
+				8248440C26FDBB3200DB0643 /* SettingsOption.swift */,
+				CB9515E82C998CF300D8F35C /* TransactionInsight.swift */,
+				8207FA9426776AB600412AE1 /* TransactionModel.swift */,
+				CB45380F28AB7E8B00F3F24C /* USSDCode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				CB94D3B12BCB2CD800CC60A9 /* BiometricsAccessibility.swift in Sources */,
 				CB18BD5729AE929F00A7B45C /* MerchantsListView.swift in Sources */,
 				CB8508B62C879C1300D2080F /* DialerUser.swift in Sources */,
+				CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */,
 				CBC262C42784D233000B8E0E /* RecentDialCode.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */,
@@ -1039,7 +1043,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1051,6 +1055,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1073,7 +1078,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1085,6 +1090,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1225,7 +1231,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1240,6 +1246,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1372,7 +1379,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dialer/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1384,6 +1391,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

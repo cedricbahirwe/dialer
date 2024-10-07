@@ -30,7 +30,11 @@ struct ContentView: View {
                     case .transfer:
                         TransferView()
                     case .insights:
-                        InsightsView(isPresented: .constant(true))
+                        if #available(iOS 17.0, *) {
+                            InsightsView()
+                        } else {
+                            Text("Something went wrong for sure")
+                        }
                     }
                 }
         }

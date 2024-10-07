@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SpendingCategoryOverview: View {
-    let overview: InsightsView.Insight
+    let overview: ChartInsight
     let isSelected: Bool
     let totalAmount: Int
     var body: some View {
@@ -17,15 +17,13 @@ struct SpendingCategoryOverview: View {
 
             VStack(alignment: .leading) {
                 Text(overview.totalAmount, format: .currency(code: "RWF"))
-                    .fontWeight(.bold)
-                    .fontDesign(.rounded)
+                    .font(.system(.body, design: .rounded, weight: .bold))
                     .minimumScaleFactor(0.6)
                     .lineLimit(2)
 
                 HStack {
                     Text(overview.title)
-                        .font(.callout)
-                        .fontDesign(.rounded)
+                        .font(.system(.callout, design: .rounded))
                     Spacer()
                     Text(
                     Double(overview.totalAmount)/Double(totalAmount),

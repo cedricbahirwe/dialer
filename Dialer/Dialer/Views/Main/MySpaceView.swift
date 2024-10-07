@@ -73,9 +73,7 @@ struct MySpaceView: View {
                         .font(.system(size: 60))
                     
                     Text("Welcome to your safe spot.")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .fontDesign(.rounded)
+                        .font(.system(.title2, design: .rounded, weight: .bold))
                     
                     Text("Let's start by adding a new custom USSD")
                         .font(.headline)

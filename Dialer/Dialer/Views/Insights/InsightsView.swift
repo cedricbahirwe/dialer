@@ -8,9 +8,8 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct InsightsView: View {
-    @Binding var isPresented: Bool
-
     @EnvironmentObject private var insightsStore: DialerInsightStore
 
     private let columns = [
@@ -21,7 +20,7 @@ struct InsightsView: View {
         insightsStore.insights.map(\.totalAmount).reduce(0, +)
     }
 
-    @State private var selectedInsight: Insight?
+    @State private var selectedInsight: ChartInsight?
 
     var body: some View {
         ZStack {
@@ -57,9 +56,7 @@ struct InsightsView: View {
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Spending Categories")
-                            .font(.title3.bold())
-                            .fontDesign(.rounded)
-
+                            .font(.system(.title3, design: .rounded, weight: .bold))
 
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(insightsStore.insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
@@ -118,8 +115,7 @@ struct InsightsView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Insights")
-                    .font(.title2.weight(.semibold))
-                    .fontDesign(.rounded)
+                    .font(.system(.title2, design: .rounded, weight: .semibold))
             }
 
             ToolbarItem(placement: .topBarTrailing) {
@@ -137,73 +133,12 @@ struct InsightsView: View {
         }
         .trackAppearance(.insights)
     }
-
-    struct Insight: Identifiable {
-        let id: String?
-        private let name: RecordType
-        var transactions: [TransactionInsight]
-
-        var count: Int {
-            transactions.count
-        }
-
-        var totalAmount: Int {
-            transactions.map(\.amount).reduce(0, +)
-        }
-
-        var title: String {
-            name.rawValue.capitalized
-        }
-
-        var icon: Image {
-            switch name {
-            case .merchant:
-                Image(systemName: "storefront")
-            case .user:
-                Image(systemName: "person.fill")
-            case .airtime:
-                Image(systemName: "simcard")
-            case .other:
-                Image(systemName: "ellipsis")
-            }
-        }
-        var color: Color {
-            switch name {
-            case .merchant: .orange
-            case .user: .indigo
-            case .airtime: .blue
-            case .other: .red
-            }
-        }
-
-        static func makeInsights(_ transactions: [TransactionInsight]) -> [Insight] {
-            var insightsResult = [Insight]()
-
-            for transaction in transactions {
-                if let foundIndex = insightsResult.firstIndex(where: {
-                    $0.name == transaction.type
-                }) {
-                    insightsResult[foundIndex].transactions.append(transaction)
-                } else {
-                    let new = Insight(
-                        id: transaction.id,
-                        name: transaction.type,
-                        transactions: [transaction]
-                    )
-                    insightsResult.append(new)
-                }
-
-            }
-
-            return insightsResult
-        }
-
-    }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     NavigationStack {
-        InsightsView(isPresented: .constant(true))
+        InsightsView()
             .environmentObject(DialerInsightStore())
     }
     //        .preferredColorScheme(.dark)

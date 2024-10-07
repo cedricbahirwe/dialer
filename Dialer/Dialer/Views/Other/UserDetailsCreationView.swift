@@ -43,8 +43,7 @@ struct UserDetailsCreationView: View {
                 ? Text("I am **Dialer**")
                 : Text(username).fontWeight(.bold)
             }
-            .font(.title)
-            .fontDesign(.rounded)
+            .font(.system(.title, design: .rounded))
             .padding(.bottom, 24)
 
             if userStore.recoveryCode == nil {
@@ -69,12 +68,11 @@ struct UserDetailsCreationView: View {
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .fontDesign(.rounded)
+        .font(.system(.body, design: .rounded))
+//        .fontDesign(.rounded)
         .safeAreaInset(edge: .top) {
             Text(userStore.recoveryCode == nil ? "Hello 👋🏽" : "Glad to have you")
-                .font(.title2)
-                .fontWeight(.semibold)
-                .fontDesign(.rounded)
+                .font(.system(.title2, design: .rounded, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .center)
                 .overlay(alignment: .trailing) {
                     if userStore.recoveryCode == nil {
@@ -112,9 +110,7 @@ struct UserDetailsCreationView: View {
                 ZStack {
                     Color.black.ignoresSafeArea()
                     ProgressView("Wait a moment...")
-                        .font(.title2)
-                        .fontDesign(.rounded)
-                        .fontWeight(.semibold)
+                        .font(.system(.title2, design: .rounded, weight: .semibold))
                         .tint(.white)
                 }
             }
@@ -190,8 +186,7 @@ struct UserDetailsCreationView: View {
     @ViewBuilder
     func makeRecoveryCodeLabel(_ recoveryCode: String) -> some View {
         Label(recoveryCode, systemImage: "square.and.arrow.up")
-            .fontWeight(.medium)
-            .fontDesign(.monospaced)
+            .font(.system(.body, design: .monospaced, weight: .medium))
             .lineLimit(1)
             .truncationMode(.middle)
             .padding(6)

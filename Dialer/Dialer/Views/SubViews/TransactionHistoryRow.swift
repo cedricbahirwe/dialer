@@ -30,14 +30,14 @@ struct TransactionHistoryRow: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Text(transaction.amount, format: .currency(code: "RWF"))
-                .fontDesign(.rounded)
-                .fontWeight(.semibold)
+                .font(.system(.body, design: .rounded, weight: .semibold))
         }
         .contentShape(Rectangle())
         .padding(4)
     }
 }
 
+@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     TransactionHistoryRow(
         transaction: MockPreviewData.clientInsight

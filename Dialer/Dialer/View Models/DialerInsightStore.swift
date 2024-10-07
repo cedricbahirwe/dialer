@@ -30,8 +30,8 @@ class DialerInsightStore: BaseViewModel {
         filterInsightsByPeriod(allInsights, period: selectedPeriod)
     }
 
-    var insights: [InsightsView.Insight] {
-        InsightsView.Insight.makeInsights(filteredInsightsByPeriod)
+    var insights: [ChartInsight] {
+        ChartInsight.makeInsights(filteredInsightsByPeriod)
     }
 
     private let insightsProvider: InsightProtocol

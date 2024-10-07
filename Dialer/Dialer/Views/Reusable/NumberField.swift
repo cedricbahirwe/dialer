@@ -34,6 +34,7 @@ struct NumberField: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     NumberField("placeholder", text: .constant(""))
         .padding()

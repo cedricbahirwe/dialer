@@ -82,15 +82,21 @@ struct DashBoardView: View {
         }) {
             UserDetailsCreationView()
         }
-        .sheet(
-            isPresented: $showPurchaseSheet
-        ) {
-            PurchaseDetailView(
-                isPresented: $showPurchaseSheet,
-                data: data
-            )
-            .presentationDetents([.height(400)])
-            .presentationCornerRadius(20)
+        .sheet(isPresented: $showPurchaseSheet) {
+            if #available(iOS 16.4, *) {
+                PurchaseDetailView(
+                    isPresented: $showPurchaseSheet,
+                    data: data
+                )
+                .presentationDetents([.height(400)])
+                .presentationCornerRadius(20)
+            } else {
+                PurchaseDetailView(
+                    isPresented: $showPurchaseSheet,
+                    data: data
+                )
+                .presentationDetents([.height(400)])
+            }
         }
         .sheet(isPresented: $showWelcomeView) {
             WhatsNewView(isPresented: $showWelcomeView)
@@ -143,8 +149,12 @@ private extension DashBoardView {
     }
     @ViewBuilder
     var settingsImage: some View {
-        settingsGradientIcon
-            .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
+        if #available(iOS 17.0, *) {
+            settingsGradientIcon
+                .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
+        } else {
+            settingsGradientIcon
+        }
     }
 }
 
