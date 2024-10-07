@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct DashBoardView: View {
     @Binding var navPath: [AppRoute]
@@ -90,6 +91,20 @@ struct DashBoardView: View {
         }) {
             UserDetailsCreationView()
         }
+        .task {
+            if #available(iOS 17.0, *) {
+                do {
+//                    try Tips.resetDatastore()
+                    try Tips.configure([
+                        .displayFrequency(.immediate),
+                        .datastoreLocation(.applicationDefault)
+                    ])
+                }
+                catch {
+                    Log.debug("Error initializing TipKit \(error.localizedDescription)")
+                }
+            }
+        }
         .sheet(isPresented: $showPurchaseSheet) {
             if #available(iOS 16.4, *) {
                 PurchaseDetailView(
@@ -163,6 +178,17 @@ private extension DashBoardView {
         } else {
             settingsGradientIcon
         }
+    }
+}
+
+@available(iOS 17.0, *)
+struct QRCodeScannerTip: Tip {
+    var title: Text {
+        Text("Scan MoMo QR code to pay.")
+    }
+
+    var image: Image? {
+        Image(systemName: "qrcode").resizable()
     }
 }
 
