@@ -239,7 +239,6 @@ extension SettingsView {
                     iconImageView
                 }
 
-
                 VStack(alignment: .leading) {
                     Text(item.title)
                         .font(.system(.callout, design: .rounded))
