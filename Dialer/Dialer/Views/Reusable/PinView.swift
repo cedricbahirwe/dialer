@@ -52,9 +52,9 @@ struct PinView: View {
     }
 }
 
-#Preview {
+@available(iOS 17.0, *)
+#Preview(traits: .sizeThatFitsLayout) {
     PinView(input: .constant("*182#"))
-        .previewLayout(.sizeThatFits)
         .font(.title2)
 }
 

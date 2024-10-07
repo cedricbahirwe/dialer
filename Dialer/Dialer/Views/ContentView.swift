@@ -28,8 +28,8 @@ struct ContentView: View {
                     case .transfer:
                         TransferView()
                     case .insights:
-                        if false {//} #available(iOS 17.0, *) {
-//                            InsightsView()
+                        if #available(iOS 17.0, *) {
+                            InsightsView()
                         } else {
                             DialingsHistoryView()
                         }

@@ -52,7 +52,7 @@ struct DashBoardView: View {
                 
                 HStack(spacing: 15) {
                     Group {
-                        if false {//#available(iOS 17.0, *) {
+                        if #available(iOS 17.0, *) {
                             DashItemView(
                                 title: "Insights",
                                 icon: "bubbles.and.sparkles.fill")
