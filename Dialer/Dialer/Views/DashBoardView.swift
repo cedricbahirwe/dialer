@@ -51,13 +51,21 @@ struct DashBoardView: View {
                 }
                 
                 HStack(spacing: 15) {
-                    DashItemView(
-                        title: "Insights",
-                        icon: "bubbles.and.sparkles.fill")
+                    Group {
+                        if false {//#available(iOS 17.0, *) {
+                            DashItemView(
+                                title: "Insights",
+                                icon: "bubbles.and.sparkles.fill")
+                        } else {
+                            DashItemView(
+                                title: "History",
+                                icon: "clock.arrow.circlepath")
+                        }
+                    }
                     .onTapGesture {
                         navPath.append(.insights)
                     }
-                    
+
                     NavigationLink {
                         MySpaceView()
                     } label: {

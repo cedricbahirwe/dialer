@@ -19,9 +19,7 @@ struct ContentView: View {
     @State private var navPath: [AppRoute] = []
     @AppStorage(UserDefaultsKeys.appTheme)
     private var appTheme: DialerTheme = .system
-    
-    @Environment(\.colorScheme) private var colorScheme
-    
+
     var body: some View {
         NavigationStack(path: $navPath) {
             DashBoardView(navPath: $navPath)
@@ -30,10 +28,10 @@ struct ContentView: View {
                     case .transfer:
                         TransferView()
                     case .insights:
-                        if #available(iOS 17.0, *) {
-                            InsightsView()
+                        if false {//} #available(iOS 17.0, *) {
+//                            InsightsView()
                         } else {
-                            Text("Something went wrong for sure")
+                            DialingsHistoryView()
                         }
                     }
                 }

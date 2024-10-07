@@ -89,6 +89,7 @@
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */; };
 		CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B32CB3F0E800415777 /* ChartInsight.swift */; };
+		CB7F33B62CB3F47600415777 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */; };
 		CB8508B42C879A7300D2080F /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8508B32C879A7300D2080F /* UserStore.swift */; };
 		CB8508B62C879C1300D2080F /* DialerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8508B52C879C1300D2080F /* DialerUser.swift */; };
 		CB895D782806FE84002AA0BE /* BiometricAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */; };
@@ -218,6 +219,7 @@
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAccount.swift; sourceTree = "<group>"; };
 		CB7F33B32CB3F0E800415777 /* ChartInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInsight.swift; sourceTree = "<group>"; };
+		CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
 		CB8508B32C879A7300D2080F /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		CB8508B52C879C1300D2080F /* DialerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUser.swift; sourceTree = "<group>"; };
 		CB895D772806FE84002AA0BE /* BiometricAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticator.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				823FA768261A556200ABE045 /* PurchaseDetailView.swift */,
+				CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */,
 				825F996226720AE6009E4A7B /* TransferView.swift */,
 				CB45381528AB9C6500F3F24C /* MySpaceView.swift */,
 			);
@@ -820,6 +823,7 @@
 				8255E68E2693959800657EFB /* ThanksYouView.swift in Sources */,
 				CB338CDC29AF6BDC00BEAD9A /* AppConfiguration.swift in Sources */,
 				828D79D726E1029800439F9A /* SettingsView.swift in Sources */,
+				CB7F33B62CB3F47600415777 /* DialingsHistoryView.swift in Sources */,
 				CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */,
 				CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,

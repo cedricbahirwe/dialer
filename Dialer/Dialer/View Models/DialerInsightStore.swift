@@ -22,7 +22,12 @@ enum InsightFilterPeriod: String, CaseIterable {
 @MainActor
 class DialerInsightStore: BaseViewModel {
 
-    @Published private var allInsights: [TransactionInsight]
+    @Published private(set) var allInsights: [TransactionInsight]
+
+    var generalTotal: Int {
+        allInsights.map(\.amount).reduce(0, +)
+    }
+
     let periods = InsightFilterPeriod.allCases
     @Published private(set) var selectedPeriod = InsightFilterPeriod.year
 
