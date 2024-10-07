@@ -76,6 +76,10 @@ final class PhoneContacts: ObservableObject {
 
     @MainActor
     class func getMtnContacts(requestIfNeeded: Bool = true) async throws -> [Contact] {
+        if !PhoneContacts.shared.contacts.isEmpty {
+            return PhoneContacts.shared.contacts
+        }
+
         var contacts: [CNContact] = []
         do {
             contacts = try await PhoneContacts.getContacts(requestIfNeeded: requestIfNeeded)
