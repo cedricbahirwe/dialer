@@ -9,14 +9,22 @@ import SwiftUI
 
 struct TransactionHistoryRow: View {
     let transaction: TransactionInsight
+    @StateObject private var phoneManager = PhoneContacts.shared
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 switch transaction.details {
                 case .momo(let summary):
-                    Text("\(transaction.type.formatted): \(Text(summary.number))")
-                        .fontWeight(.medium)
-                        .minimumScaleFactor(0.9)
+                    Group {
+                        if let ownerName = phoneManager.getContact(for: summary) {
+                            Text("Sent to \(ownerName)")
+                        } else {
+                            Text("\(transaction.type.formatted): \(Text(summary.number))")
+                        }
+                    }
+                    .fontWeight(.medium)
+                    .minimumScaleFactor(0.9)
                 default:
                     Text(transaction.type.formatted)
                         .fontWeight(.medium)

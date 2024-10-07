@@ -24,7 +24,7 @@ struct CodePin: Codable {
             throw ValidationError.invalidCount(value.count)
         }
 
-        // # This needs improvements
+        // TODO: # This needs improvements
         let digits = Array(value)
         self.a = digits[0].wholeNumberValue!
         self.b = digits[1].wholeNumberValue!
@@ -38,7 +38,7 @@ struct CodePin: Codable {
             throw ValidationError.invalidCount(String(value).count)
         }
 
-        // # This needs improvements
+        // TODO: # This needs improvements
         let digits = Array(String(value))
         self.a = digits[0].wholeNumberValue!
         self.b = digits[1].wholeNumberValue!

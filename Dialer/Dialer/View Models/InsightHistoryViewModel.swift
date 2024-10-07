@@ -14,5 +14,4 @@ final class InsightHistoryViewModel: ObservableObject {
     init(insight: ChartInsight) {
         self.insight = insight
     }
-
 }

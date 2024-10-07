@@ -98,6 +98,7 @@ struct InsightsView: View {
             }
         }
         .task {
+            insightsStore.setFilterPeriod(.year)
             await insightsStore.getInsights()
         }
         .background(.offBackground)

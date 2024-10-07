@@ -12,15 +12,32 @@ private enum PhonePermission: Error {
     case emptyContacts, containerError
 }
 
-final class PhoneContacts {
-    
-    private init() {}
-    
-    class private func getContacts() async throws -> [CNContact] {
+final class PhoneContacts: ObservableObject {
+    static let shared  = PhoneContacts()
+    @Published private var contacts: [Contact] = []
+
+    private init() {
+        Task {
+            try? await PhoneContacts.getMtnContacts(requestIfNeeded: false)
+        }
+    }
+
+    func getContact(for transaction: Transaction) -> String? {
+        guard transaction.type == .client else { return nil }
+        return contacts.first {
+            $0.phoneNumbers.contains(transaction.number)
+        }?.names
+    }
+
+    class private func getContacts(requestIfNeeded: Bool) async throws -> [CNContact] {
         switch CNContactStore.authorizationStatus(for: .contacts) {
         case .authorized: break;
         case .notDetermined:
-            try await CNContactStore().requestAccess(for: .contacts)
+            if requestIfNeeded {
+                try await CNContactStore().requestAccess(for: .contacts)
+            } else {
+                return []
+            }
         default:
             return []
         }
@@ -56,11 +73,12 @@ final class PhoneContacts {
     
         return Array(Set(results))
     }
-    
-    class func getMtnContacts() async throws -> [Contact] {
+
+    @MainActor
+    class func getMtnContacts(requestIfNeeded: Bool = true) async throws -> [Contact] {
         var contacts: [CNContact] = []
         do {
-            contacts = try await PhoneContacts.getContacts()
+            contacts = try await PhoneContacts.getContacts(requestIfNeeded: requestIfNeeded)
         } catch {
             Log.debug(error.localizedDescription)
             throw PhonePermission.emptyContacts
@@ -82,7 +100,8 @@ final class PhoneContacts {
                 }
             }
         }
-        
+
+        PhoneContacts.shared.contacts = resultingContacts
         return resultingContacts
     }
 }
