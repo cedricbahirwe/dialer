@@ -92,7 +92,6 @@ struct DashBoardView: View {
             UserDetailsCreationView()
         }
         .task {
-//            showUsernameSheet = 
             if #available(iOS 17.0, *) {
                 do {
 //                    try Tips.resetDatastore()

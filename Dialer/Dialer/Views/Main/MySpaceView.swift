@@ -23,7 +23,7 @@ struct MySpaceView: View {
         Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
     }
 
-    private var isEditingMode: Bool {
+    private var isEditing: Bool {
         editMode?.wrappedValue == .active
     }
 
@@ -49,7 +49,7 @@ struct MySpaceView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            if isEditingMode {
+                            if isEditing {
                                 editedUSSDModel = .init(code)
                             } else {
                                 Task {
@@ -79,7 +79,7 @@ struct MySpaceView: View {
                         .font(.headline)
                         .foregroundStyle(.secondary)
                     
-                    Button("Add New") {
+                    Button("Add custom USSD Code") {
                         editedUSSDModel = .init()
                     }
                     .buttonStyle(.borderedProminent)
@@ -90,10 +90,12 @@ struct MySpaceView: View {
             }
         }
         .navigationTitle("My Space")
-        .sheet(item: $editedUSSDModel.onChange(observeUSSDChange)) { newCode in
-            NewDialingView(store: store,
-                           model: newCode,
-                           isEditing: isEditingMode)
+        .sheet(item: $editedUSSDModel.onChange(observeUSSDChange)) {
+            NewDialingView(
+                store: store,
+                model: $0,
+                isEditing: isEditing
+            )
         }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {

@@ -212,7 +212,10 @@ struct TransferView: View {
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
-        .onAppear(perform: initialization)
+        .task {
+            performInitialization()
+            await merchantStore.getMerchants()
+        }
         .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
@@ -228,11 +231,15 @@ struct TransferView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: switchPaymentType) {
-                    Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
-                        .font(.system(size: 18, design: .rounded))
-                        .foregroundStyle(.blue)
-                        .padding(5)
+                    HStack {
+                        Image(systemName:  "arrow.left.arrow.right.circle")
+                        Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
+                    }
+                    .font(.system(size: 18, design: .rounded))
+                    .foregroundStyle(.blue)
+                    .padding(5)
                 }
+                .fixedSize()
             }
         }
     }
@@ -276,7 +283,7 @@ private extension TransferView {
         }
     }
     
-    func initialization() {
+    func performInitialization() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             focusedState = .amount
         }
