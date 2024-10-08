@@ -19,7 +19,8 @@ class FirebaseTracker {
     }
 
     func setAnalyticUserInfo() {
-        let device = FirebaseTracker.makeDeviceAccount()
+        var device = FirebaseTracker.getDevice()
+        device.lastVisitedDate = Date.now.formatted()
 
         Analytics.setUserID(device.deviceHash.uuidString)
         Analytics.setUserProperty(device.appVersion, forName: "app_version")
@@ -53,8 +54,7 @@ class FirebaseTracker {
 
     func recordTransaction(_ details: RecordDetails) {
         guard let crudManager = self.deviceProvider as? FirebaseCRUD else { return }
-        let savedDevice = DialerStorage.shared.getSavedDevice()
-        let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
+        let device = FirebaseTracker.getDevice()
 
         let insight = TransactionInsight(details: details, ownerID: device.deviceHash)
         Task {
@@ -67,7 +67,7 @@ class FirebaseTracker {
     }
 
     // MARK: - Session tracker
-    
+
     /// Creates a start time for a screen session.
     /// Date will be used in stop session method to get the session length
     /// - Parameter screen: Screen enum that indicates the screen to measure the session.
@@ -93,20 +93,27 @@ class FirebaseTracker {
         // screen_session_length - Name of the Event
         // name - Name of the screen parameter
         // length - The session time in milliseconds
-        #if DEBUG
-        #else
+#if DEBUG
+#else
         logEvent(name: AppAnalyticsEventType.screenSessionLength,
                  parameters: [
                     EventParameterKey.name.rawValue: screen.rawValue,
                     EventParameterKey.length.rawValue: seconds
                  ])
-        #endif
-       
+#endif
+
         /// 4. remove start date from cache
         sessions.removeValue(forKey: screen)
     }
 
-    static func makeDeviceAccount() -> DeviceAccount {
+    static func getDevice() -> DeviceAccount {
+        if let storedDevice = DialerStorage.shared.getSavedDevice() {
+            return storedDevice
+        }
+        return makeDeviceAccount()
+    }
+
+    private static func makeDeviceAccount() -> DeviceAccount {
         let device = UIDevice.current
         let deviceName = device.name
         let deviceModel = device.model
@@ -116,7 +123,7 @@ class FirebaseTracker {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let bundleID = Bundle.main.bundleIdentifier
-        
+
         let deviceAccount = DeviceAccount(
             id: deviceIdentifier.uuidString,
             name: deviceName,
@@ -128,7 +135,7 @@ class FirebaseTracker {
             bundleVersion: bundleVersion,
             bundleId: bundleID,
             lastVisitedDate: Date.now.formatted())
-        
+
         return deviceAccount
     }
 }

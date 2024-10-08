@@ -68,7 +68,7 @@ class DialerInsightStore: BaseViewModel {
 
     func createInsight(_ insight: TransactionInsight) async -> Bool {
         let savedDevice = DialerStorage.shared.getSavedDevice()
-        let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
+        let device = savedDevice ?? FirebaseTracker.getDevice()
         var insightToUpdate = insight
         insightToUpdate.ownerId = device.deviceHash
 
