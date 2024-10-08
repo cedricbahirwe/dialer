@@ -102,8 +102,8 @@ struct SettingsView: View {
                         .alert("No Email Client Found",
                                isPresented: $mailComposer.showMailErrorAlert) {
                             Button("OK", role: .cancel) { }
-                            Button("Copy Support Email", action: copyEmail)
-                            Button("Open Twitter", action: openTwitter)
+                            Button("Copy Support Email", action: mailComposer.copySupportEmail)
+                            Button("Open Twitter", action: mailComposer.openTwitter)
                         } message: {
                             Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to \(DialerlLinks.supportEmail) as well."
                             )
@@ -160,21 +160,10 @@ struct SettingsView: View {
         showDialog.toggle()
     }
 
-    private func copyEmail() {
-        let pasteBoard = UIPasteboard.general
-        pasteBoard.string = DialerlLinks.dialerTwitter
-    }
-
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.title3.weight(.semibold))
             .textCase(nil)
-    }
-
-
-    private func openTwitter() {
-        guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
-        UIApplication.shared.open(url)
     }
 
     private func setAppTheme(_ newTheme: DialerTheme) {
