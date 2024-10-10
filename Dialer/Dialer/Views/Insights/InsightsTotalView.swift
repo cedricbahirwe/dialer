@@ -32,9 +32,7 @@ struct InsightsTotalView: View {
             .foregroundStyle(.primary)
 
             Text(total, format: .currency(code: "RWF"))
-                .font(.title)
-                .fontWeight(.bold)
-                .fontDesign(.serif)
+                .font(.system(.title, design: .monospaced, weight: .bold))
                 .lineLimit(3)
                 .frame(maxWidth: 230)
                 .multilineTextAlignment(.center)

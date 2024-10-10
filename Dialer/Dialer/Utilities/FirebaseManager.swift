@@ -70,7 +70,23 @@ extension FirebaseManager: DeviceManagerProtocol {
     }
 
     func updateDevice(_ device: DeviceAccount) async throws -> Bool {
+        updateUserDevice(device)
         return try await updateItemWithID(device.deviceHash.uuidString, content: device, in: .devices)
+    }
+
+    private func updateUserDevice(_ device: DeviceAccount) {
+        Task {
+            if let docID = try? await db.collection(.users)
+                .whereField("device.deviceHash", isEqualTo: device.deviceHash.uuidString)
+                .getDocuments()
+                .documents.first?.documentID {
+                let deviceDictionary = try Firestore.Encoder().encode(device)
+
+                try await db.collection(.users)
+                    .document(docID)
+                    .updateData(["device": deviceDictionary])
+            }
+        }
     }
 
     func deleteDevice(_ deviceID: String) async throws {

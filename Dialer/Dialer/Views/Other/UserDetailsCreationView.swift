@@ -13,6 +13,7 @@ struct UserDetailsCreationView: View {
     private var showUsernameSheet = true
 
     @EnvironmentObject private var userStore: UserStore
+    @StateObject private var mailComposer = MailComposer()
 
     @State private var username = ""
     @State private var enteredRecoveryCode = ""
@@ -43,8 +44,7 @@ struct UserDetailsCreationView: View {
                 ? Text("I am **Dialer**")
                 : Text(username).fontWeight(.bold)
             }
-            .font(.title)
-            .fontDesign(.rounded)
+            .font(.system(.title, design: .rounded))
             .padding(.bottom, 24)
 
             if userStore.recoveryCode == nil {
@@ -69,52 +69,71 @@ struct UserDetailsCreationView: View {
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .fontDesign(.rounded)
+        .font(.system(.body, design: .rounded))
+//        .fontDesign(.rounded)
         .safeAreaInset(edge: .top) {
             Text(userStore.recoveryCode == nil ? "Hello 👋🏽" : "Glad to have you")
-                .font(.title2)
-                .fontWeight(.semibold)
-                .fontDesign(.rounded)
+                .font(.system(.title2, design: .rounded, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .center)
                 .overlay(alignment: .trailing) {
                     if userStore.recoveryCode == nil {
-                        Button("Restore") {
-                            showRestoreAlert.toggle()
-                        }
-                        .foregroundStyle(Color.accentColor)
-                        .disabled(userStore.recoveryCode != nil)
-                        .bold()
-                        .alert(
-                            "Enter your recovery code",
-                            isPresented: $showRestoreAlert
-                        ) {
-                            TextField(
-                                "Recovery code...",
-                                text: $enteredRecoveryCode)
-                            .textInputAutocapitalization(.never)
-                            .autocorrectionDisabled()
-                            .foregroundStyle(Color.accentColor)
-
-                            Button("Cancel") {
-                                enteredRecoveryCode = ""
+                        HStack {
+                            Button("Help", action: mailComposer.openMail)
+                            .alert("No Email Client Found",
+                                   isPresented: $mailComposer.showMailErrorAlert) {
+                                Button("OK", role: .cancel) { }
+                                Button("Copy Support Email", action: mailComposer.copySupportEmail)
+                                Button("Open Twitter", action: mailComposer.openTwitter)
+                            } message: {
+                                Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to \(DialerlLinks.supportEmail) as well."
+                                )
                             }
-                            Button("Continue", action: restoreUser)
-                                .disabled(!isValidRecoveryCode)
-                        } message: {
-                            Text("This code will restore your information on the app.")
+                            .foregroundStyle(Color.accentColor)
+                            .bold()
+                            .disabled(userStore.recoveryCode != nil)
+
+
+                            Spacer()
+                            Button("Restore") {
+                                showRestoreAlert.toggle()
+                            }
+                            .foregroundStyle(Color.accentColor)
+                            .disabled(userStore.recoveryCode != nil)
+                            .bold()
+                            .alert(
+                                "Enter your recovery code",
+                                isPresented: $showRestoreAlert
+                            ) {
+                                TextField(
+                                    "Recovery code...",
+                                    text: $enteredRecoveryCode)
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .foregroundStyle(Color.accentColor)
+
+                                Button("Cancel") {
+                                    enteredRecoveryCode = ""
+                                }
+                                Button("Continue", action: restoreUser)
+                                    .disabled(!isValidRecoveryCode)
+                            } message: {
+                                Text("This code will restore your information on the app.")
+                            }
                         }
+
                     }
                 }
                 .padding()
+        }
+        .sheet(isPresented: $mailComposer.showMailView) {
+            mailComposer.makeMailView()
         }
         .overlay {
             if isRestoringUser {
                 ZStack {
                     Color.black.ignoresSafeArea()
                     ProgressView("Wait a moment...")
-                        .font(.title2)
-                        .fontDesign(.rounded)
-                        .fontWeight(.semibold)
+                        .font(.system(.title2, design: .rounded, weight: .semibold))
                         .tint(.white)
                 }
             }
@@ -190,8 +209,7 @@ struct UserDetailsCreationView: View {
     @ViewBuilder
     func makeRecoveryCodeLabel(_ recoveryCode: String) -> some View {
         Label(recoveryCode, systemImage: "square.and.arrow.up")
-            .fontWeight(.medium)
-            .fontDesign(.monospaced)
+            .font(.system(.body, design: .monospaced, weight: .medium))
             .lineLimit(1)
             .truncationMode(.middle)
             .padding(6)

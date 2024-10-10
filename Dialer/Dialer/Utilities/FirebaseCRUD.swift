@@ -124,7 +124,6 @@ extension FirebaseCRUD {
                 try db.collection(collection)
                     .document(itemID)
                     .setData(from: content)
-                
                 continuation.resume(returning: true)
             } catch {
                 Log.debug("Error updating item: \(error)")

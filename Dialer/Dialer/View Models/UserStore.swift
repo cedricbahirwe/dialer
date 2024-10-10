@@ -46,7 +46,7 @@ class UserStore: BaseViewModel {
 
     func saveUser(_ username: String) async -> Bool {
         let savedDevice = DialerStorage.shared.getSavedDevice()
-        let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
+        let device = savedDevice ?? FirebaseTracker.getDevice()
         let recoveryCode = ROT13.string(username) + "_" + ROT13.string(device.deviceHash.uuidString)
 
         let user = DialerUser(

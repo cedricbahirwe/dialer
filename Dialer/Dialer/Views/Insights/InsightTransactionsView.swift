@@ -36,31 +36,7 @@ struct InsightTransactionsView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
         .safeAreaInset(edge: .bottom) {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Total")
-                    Text(":")
-                    Spacer()
-                    HStack(spacing: 3) {
-                        Text("\(store.insight.totalAmount)")
-                        Text("RWF")
-                            .font(.system(size: 16, weight: .bold, design: .serif))
-                    }
-                }
-                
-                Text("The estimations are based on the recent USSD codes used.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-            .font(.system(size: 26, weight: .bold, design: .serif))
-            .opacity(0.9)
-            .padding(8)
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
-            .truncationMode(.middle)
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity)
-            .background(.thinMaterial)
+            TotalEstimationView(total: store.insight.totalAmount)
         }
         .trackAppearance(.insightTransaction)
     }
@@ -86,3 +62,33 @@ struct InsightTransactionsView: View {
 //        )
 //    )
 //}
+
+struct TotalEstimationView: View {
+    let total: Int
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Total :")
+                Spacer()
+                HStack(spacing: 3) {
+                    Text("\(total)")
+                    Text("RWF")
+                        .font(.system(size: 16, weight: .bold, design: .serif))
+                }
+            }
+
+            Text("The estimations are based on the recent USSD codes used.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .font(.system(size: 26, weight: .bold, design: .serif))
+        .opacity(0.9)
+        .padding(8)
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+        .truncationMode(.middle)
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity)
+        .background(.thinMaterial)
+    }
+}

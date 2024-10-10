@@ -19,10 +19,20 @@ class MailComposer: ObservableObject {
             showMailErrorAlert = true
         }
     }
-    
+
+    func openTwitter() {
+        guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
+        UIApplication.shared.open(url)
+    }
+
+    func copySupportEmail() {
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = DialerlLinks.dialerTwitter
+    }
+
     @MainActor func makeMailView() -> MailView {
         MailView(recipientEmail: DialerlLinks.supportEmail,
-                 subject: "Dialer Question",
+                 subject: "Dialer Support Question",
                  bodyMessage: getEmailBody())
     }
     
@@ -32,7 +42,7 @@ class MailComposer: ObservableObject {
         let deviceName = UIDevice.current.localizedModel
         body.append(contentsOf: deviceName)
         
-        let iosVersion = "iOS Version: \(UIDevice.current.systemVersion)"
+        let iosVersion = "\niOS Version: \(UIDevice.current.systemVersion)"
         body.append(iosVersion)
         
         if let appVersion  = UIApplication.appVersion {

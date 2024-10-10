@@ -20,7 +20,7 @@ struct DeviceAccount: Codable {
     let appVersion: String?
     let bundleVersion: String?
     let bundleId: String?
-    let lastVisitedDate: String?
+    var lastVisitedDate: String?
 
     func toAnalytics() -> [String: Any] {
         var dictionary: [String: Any] = [:]

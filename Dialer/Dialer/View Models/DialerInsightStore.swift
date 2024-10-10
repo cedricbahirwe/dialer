@@ -22,7 +22,12 @@ enum InsightFilterPeriod: String, CaseIterable {
 @MainActor
 class DialerInsightStore: BaseViewModel {
 
-    @Published private var allInsights: [TransactionInsight]
+    @Published private(set) var allInsights: [TransactionInsight]
+
+    var generalTotal: Int {
+        allInsights.map(\.amount).reduce(0, +)
+    }
+
     let periods = InsightFilterPeriod.allCases
     @Published private(set) var selectedPeriod = InsightFilterPeriod.year
 
@@ -30,8 +35,8 @@ class DialerInsightStore: BaseViewModel {
         filterInsightsByPeriod(allInsights, period: selectedPeriod)
     }
 
-    var insights: [InsightsView.Insight] {
-        InsightsView.Insight.makeInsights(filteredInsightsByPeriod)
+    var insights: [ChartInsight] {
+        ChartInsight.makeInsights(filteredInsightsByPeriod)
     }
 
     private let insightsProvider: InsightProtocol
@@ -63,7 +68,7 @@ class DialerInsightStore: BaseViewModel {
 
     func createInsight(_ insight: TransactionInsight) async -> Bool {
         let savedDevice = DialerStorage.shared.getSavedDevice()
-        let device = savedDevice ?? FirebaseTracker.makeDeviceAccount()
+        let device = savedDevice ?? FirebaseTracker.getDevice()
         var insightToUpdate = insight
         insightToUpdate.ownerId = device.deviceHash
 

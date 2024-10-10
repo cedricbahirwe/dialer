@@ -18,7 +18,6 @@ struct TransferView: View {
     @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant)
 
     @State private var presentedSheet: Sheet?
-    
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
@@ -74,7 +73,7 @@ struct TransferView: View {
                         .onChange(of: transaction.number, perform: handleNumberField)
                         .focused($focusedState, equals: .number)
                         .accessibilityIdentifier("transferNumberField")
-                        
+
                         Button(action: {
                             if transaction.type == .client {
                                 hideKeyboard()
@@ -187,9 +186,12 @@ struct TransferView: View {
         .sheet(item: $presentedSheet) { sheet in
             switch sheet {
             case .qrScanner:
-                CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
-                    .ignoresSafeArea()
-                    .presentationDetents([.medium, .large])
+                if #available(iOS 17.0, *) {
+                    codeScannerView
+                        .popoverTip(QRCodeScannerTip())
+                } else {
+                    codeScannerView
+                }
             case .merchants:
                 CreateMerchantView(merchantStore: merchantStore)
             case .contacts:
@@ -210,7 +212,10 @@ struct TransferView: View {
         }
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
-        .onAppear(perform: initialization)
+        .task {
+            performInitialization()
+            await merchantStore.getMerchants()
+        }
         .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
@@ -226,11 +231,15 @@ struct TransferView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: switchPaymentType) {
-                    Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
-                        .font(.system(size: 18, design: .rounded))
-                        .foregroundStyle(.blue)
-                        .padding(5)
+                    HStack {
+                        Image(systemName:  "arrow.left.arrow.right.circle")
+                        Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
+                    }
+                    .font(.system(size: 18, design: .rounded))
+                    .foregroundStyle(.blue)
+                    .padding(5)
                 }
+                .fixedSize()
             }
         }
     }
@@ -241,6 +250,12 @@ struct TransferView: View {
     
     private func deleteMerchant(at offSets: IndexSet) {
         merchantStore.deleteMerchants(at: offSets)
+    }
+
+    private var codeScannerView: some View {
+        CodeScannerView(codeTypes: [.qr], completion: handleQRScan)
+            .ignoresSafeArea()
+            .presentationDetents([.medium, .large])
     }
 }
 
@@ -268,7 +283,7 @@ private extension TransferView {
         }
     }
     
-    func initialization() {
+    func performInitialization() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             focusedState = .amount
         }

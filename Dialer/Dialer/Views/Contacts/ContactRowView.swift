@@ -34,6 +34,7 @@ struct ContactRowView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     ContactRowView(contact: MockPreviewData.contact1)
         .padding()

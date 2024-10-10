@@ -9,10 +9,9 @@
 import Foundation
 
 final class InsightHistoryViewModel: ObservableObject {
-    @Published private(set) var insight: InsightsView.Insight
+    @Published private(set) var insight: ChartInsight
 
-    init(insight: InsightsView.Insight) {
+    init(insight: ChartInsight) {
         self.insight = insight
     }
-
 }

@@ -14,6 +14,7 @@ enum ScreenName: String, Codable {
     case buyAirtime
     case transfer
     case insights
+    case history
     case mySpace
 
     case newDialing

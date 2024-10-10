@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct DashBoardView: View {
     @Binding var navPath: [AppRoute]
@@ -51,13 +52,21 @@ struct DashBoardView: View {
                 }
                 
                 HStack(spacing: 15) {
-                    DashItemView(
-                        title: "Insights",
-                        icon: "bubbles.and.sparkles.fill")
+                    Group {
+                        if #available(iOS 17.0, *) {
+                            DashItemView(
+                                title: "Insights",
+                                icon: "bubbles.and.sparkles.fill")
+                        } else {
+                            DashItemView(
+                                title: "History",
+                                icon: "clock.arrow.circlepath")
+                        }
+                    }
                     .onTapGesture {
                         navPath.append(.insights)
                     }
-                    
+
                     NavigationLink {
                         MySpaceView()
                     } label: {
@@ -82,15 +91,35 @@ struct DashBoardView: View {
         }) {
             UserDetailsCreationView()
         }
-        .sheet(
-            isPresented: $showPurchaseSheet
-        ) {
-            PurchaseDetailView(
-                isPresented: $showPurchaseSheet,
-                data: data
-            )
-            .presentationDetents([.height(400)])
-            .presentationCornerRadius(20)
+        .task {
+            if #available(iOS 17.0, *) {
+                do {
+//                    try Tips.resetDatastore()
+                    try Tips.configure([
+                        .displayFrequency(.immediate),
+                        .datastoreLocation(.applicationDefault)
+                    ])
+                }
+                catch {
+                    Log.debug("Error initializing TipKit \(error.localizedDescription)")
+                }
+            }
+        }
+        .sheet(isPresented: $showPurchaseSheet) {
+            if #available(iOS 16.4, *) {
+                PurchaseDetailView(
+                    isPresented: $showPurchaseSheet,
+                    data: data
+                )
+                .presentationDetents([.height(400)])
+                .presentationCornerRadius(20)
+            } else {
+                PurchaseDetailView(
+                    isPresented: $showPurchaseSheet,
+                    data: data
+                )
+                .presentationDetents([.height(400)])
+            }
         }
         .sheet(isPresented: $showWelcomeView) {
             WhatsNewView(isPresented: $showWelcomeView)
@@ -143,8 +172,23 @@ private extension DashBoardView {
     }
     @ViewBuilder
     var settingsImage: some View {
-        settingsGradientIcon
-            .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
+        if #available(iOS 17.0, *) {
+            settingsGradientIcon
+                .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
+        } else {
+            settingsGradientIcon
+        }
+    }
+}
+
+@available(iOS 17.0, *)
+struct QRCodeScannerTip: Tip {
+    var title: Text {
+        Text("Scan MoMo QR code to pay.")
+    }
+
+    var image: Image? {
+        Image(systemName: "qrcode").resizable()
     }
 }
 
