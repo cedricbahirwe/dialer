@@ -61,7 +61,7 @@ class FirebaseTracker {
             do {
                 _ = try await crudManager.create(insight, in: .transactions)
             } catch {
-                print("Insight Creation error:", error.localizedDescription)
+                Log.debug("Insight Creation error:", error.localizedDescription)
             }
         }
     }

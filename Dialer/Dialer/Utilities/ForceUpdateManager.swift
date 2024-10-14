@@ -45,9 +45,11 @@ final class ForceUpdateManager: ObservableObject {
             let actions = [
                 UpdateAlert.Action("Download v.\(version)", action: openAppOnStore)
             ]
-            self.updateAlert = .init(title: "Please, Update your app!",
-                                     message: "You haven't updated your app for a long time! Quickly download the latest version to take advantage of the new features. It's quick and easy !",
-                                     buttons: actions)
+            self.updateAlert = .init(
+                title: "New Version is available!",
+                message: "Update now to unlock awesome new features—quick and easy!",
+                buttons: actions
+            )
 
         case .minorUpdate(let version):
             let actions: [UpdateAlert.Action] = [
@@ -57,10 +59,11 @@ final class ForceUpdateManager: ObservableObject {
                 .init("Download \(version)", action: openAppOnStore)
             ]
 
-            self.updateAlert = .init(title: "New Version is available!",
-                                     message: "A new version of the app is available. Download it as soon as possible to enjoy all the latest features!",
-                                     buttons: actions)
-
+            self.updateAlert = .init(
+                title: "New Version is available!",
+                message: "Update now to enjoy the latest features and improvements!",
+                buttons: actions
+            )
         }
     }
 

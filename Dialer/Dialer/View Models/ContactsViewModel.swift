@@ -9,16 +9,15 @@ import Foundation
 
 final class ContactsViewModel: ObservableObject {
     @Published var searchQuery = ""
-    
+
     @Published var showPhoneNumberSelector: Bool = false
-    
+
     private let contactsDict: [ContactsDictionary]
-    
+
     @Published private(set) var selectedContact: Contact
-    
-    var completion: (Contact) -> Void
-    
-    
+
+    var onSelectContact: (Contact) -> Void
+
     var searchedContacts: [ContactsDictionary] {
         let contacts = contactsDict.flatMap(\.contacts).sorted(by: { $0.names < $1.names })
         if searchQuery.isEmpty {
@@ -28,31 +27,28 @@ final class ContactsViewModel: ObservableObject {
                 contact.names.range(of: searchQuery, options: [.caseInsensitive, .diacriticInsensitive]) != nil ||
                 contact.phoneNumbers.reduce("", +).contains(searchQuery)
             }
-            
+
             return ContactsDictionary.transform(filteredContacts)
         }
     }
-    
-    init(_ contacts: [Contact], selection: Contact, completion: @escaping (Contact) -> Void) {
+
+    init(_ contacts: [Contact], selection: Contact, onSelectContact: @escaping (Contact) -> Void) {
         self.contactsDict = ContactsDictionary.transform(contacts)
         self.selectedContact = selection
-        self.completion = completion
+        self.onSelectContact = onSelectContact
     }
-    
-    
-    
-    func handleSelection(_ contact: Contact) {
+
+    func handleContactSelection(_ contact: Contact) {
         selectedContact = contact
         if contact.phoneNumbers.count == 1 {
-            completion(selectedContact)
+            onSelectContact(selectedContact)
         } else {
             showPhoneNumberSelector.toggle()
         }
     }
-    
+
     func managePhoneNumber(_ phone: String) {
         selectedContact.updatePhones([phone])
-        completion(selectedContact)
+        onSelectContact(selectedContact)
     }
-    
 }
