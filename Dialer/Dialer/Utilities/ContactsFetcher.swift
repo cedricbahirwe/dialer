@@ -88,7 +88,7 @@ final class PhoneContacts: ObservableObject {
             throw PhonePermission.emptyContacts
         }
         
-        var resultingContacts: [Contact] = []
+        var resultingContactsSet: Set<Contact> = []
 
         for contact in contacts {
             if contact.phoneNumbers.count > 0  {
@@ -97,14 +97,17 @@ final class PhoneContacts: ObservableObject {
                 
                 var pureMtnNumbers = mtnNumbersFormat.compactMap { $0.value.value(forKey: "digits") as? String }
                 pureMtnNumbers = pureMtnNumbers.map { $0.asMtnNumber() }
-                if pureMtnNumbers.isEmpty == false {
-                    let newContact = Contact(names: contact.givenName + " " +  contact.familyName,
-                                             phoneNumbers: pureMtnNumbers)
-                    resultingContacts.append(newContact)
+                if !pureMtnNumbers.isEmpty {
+                    let newContact = Contact(
+                        id: contact.identifier,
+                        names: contact.givenName + " " +  contact.familyName,
+                        phoneNumbers: pureMtnNumbers)
+                    resultingContactsSet.insert(newContact)
                 }
             }
         }
 
+        let resultingContacts = Array(resultingContactsSet)
         PhoneContacts.shared.contacts = resultingContacts
         return resultingContacts
     }

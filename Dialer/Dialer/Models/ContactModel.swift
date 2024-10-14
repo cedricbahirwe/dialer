@@ -7,16 +7,26 @@
 
 import Foundation
 
-struct Contact: Identifiable {
-    let id = UUID()
+struct Contact: Identifiable, Hashable {
+    static func == (lhs: Contact, rhs: Contact) -> Bool {
+        lhs.names == rhs.names && lhs.phoneNumbers == rhs.phoneNumbers
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(names)
+        hasher.combine(phoneNumbers)
+    }
+
+    let id: String
     let names: String
     private(set) var phoneNumbers: [String]
     
-    init(names: String, phoneNumbers: [String]) {
+    init(id: String = UUID().uuidString, names: String, phoneNumbers: [String]) {
+        self.id = id
         self.names = names
         self.phoneNumbers = phoneNumbers
     }
-    
+
     mutating func updatePhones(_ numbers: [String]) {
         phoneNumbers = numbers
     }

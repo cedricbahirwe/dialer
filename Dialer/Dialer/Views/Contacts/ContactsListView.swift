@@ -13,8 +13,14 @@ struct ContactsListView: View {
     
     init(contacts: [Contact],
          selection: Contact,
-         completion: @escaping (Contact) -> Void) {
-        self._contactsVM = StateObject(wrappedValue: ContactsViewModel(contacts, selection: selection, completion: completion))
+         onSelectContact: @escaping (Contact) -> Void) {
+        self._contactsVM = StateObject(
+            wrappedValue: ContactsViewModel(
+                contacts,
+                selection: selection,
+                onSelectContact: onSelectContact
+            )
+        )
         UITableView.appearance().backgroundColor = UIColor.primaryBackground
     }
     
@@ -33,7 +39,7 @@ struct ContactsListView: View {
                                 ForEach(section.contacts) { contact in
                                     ContactRowView(contact: contact)
                                         .onTapGesture {
-                                            contactsVM.handleSelection(contact)
+                                            contactsVM.handleContactSelection(contact)
                                         }
                                 }
                             }

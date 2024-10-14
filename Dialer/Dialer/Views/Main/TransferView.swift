@@ -198,7 +198,7 @@ struct TransferView: View {
                 ContactsListView(
                     contacts: allContacts,
                     selection: selectedContact,
-                    completion: {
+                    onSelectContact: {
                         selectedContact = $0
                         cleanPhoneNumber(selectedContact)
                         presentedSheet = nil
