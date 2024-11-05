@@ -17,14 +17,14 @@ struct InsightsTotalView: View {
         VStack(spacing: 5) {
             Menu {
                 ForEach(periods, id: \.self) { period in
-                    Button(period.capiltalized) {
+                    Button(period.capitalized) {
                         onSelectePeriod(period)
                     }
                     .disabled(period == selectedPeriod)
                 }
             } label: {
                 HStack(spacing: 2) {
-                    Text("Spent this **\(selectedPeriod.capiltalized)**")
+                    Text("Spent this **\(selectedPeriod.capitalized)**")
                     Image(systemName: "arrowtriangle.down.fill")
                 }
             }

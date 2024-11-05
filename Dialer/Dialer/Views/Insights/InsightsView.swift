@@ -45,7 +45,7 @@ struct InsightsView: View {
 
                 HStack(spacing: 16) {
                     ForEach(insightsStore.periods, id: \.self) { period in
-                        Button(period.capiltalized) {
+                        Button(period.capitalized) {
                             insightsStore.setFilterPeriod(period)
                         }
                         .bold()
@@ -88,12 +88,23 @@ struct InsightsView: View {
             }
             .opacity(insightsStore.insights.isEmpty ? 0 : 1)
             .overlay {
-                if insightsStore.insights.isEmpty {
-                    ContentUnavailableView(
-                        "No insights found yet.",
-                        systemImage: "exclamationmark.circle",
-                        description: Text("Make some transactions to see insights.")
-                    )
+                if insightsStore.allInsights.isEmpty {
+                    ContentUnavailableView {
+                        Label("No insights found yet.", systemImage: "exclamationmark.circle")
+                    } description: {
+                        Text("Make some transactions to see insights.")
+                    }
+                } else if insightsStore.insights.isEmpty {
+                    ContentUnavailableView {
+                        Label("No insights found for this \(insightsStore.selectedPeriod.capitalized).", systemImage: "exclamationmark.circle")
+
+                    } description: {
+                        Text("It looks like there are no transactions recorded for this \(insightsStore.selectedPeriod.capitalized).")
+                    } actions: {
+                        Button("Reset Filter") {
+                            insightsStore.setFilterPeriod(.year)
+                        }
+                    }
                 }
             }
         }

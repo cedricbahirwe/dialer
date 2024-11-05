@@ -14,7 +14,7 @@ enum InsightFilterPeriod: String, CaseIterable {
     case month
     case year
 
-    var capiltalized: String {
+    var capitalized: String {
         rawValue.capitalized
     }
 }
@@ -87,7 +87,7 @@ class DialerInsightStore: BaseViewModel {
         }
     }
 
-    func filterInsightsByPeriod(_ insights: [TransactionInsight], period: InsightFilterPeriod) -> [TransactionInsight] {
+    private func filterInsightsByPeriod(_ insights: [TransactionInsight], period: InsightFilterPeriod) -> [TransactionInsight] {
         let calendar = Calendar.current
         let now = Date()
 
