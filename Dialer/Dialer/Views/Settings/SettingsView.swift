@@ -10,6 +10,8 @@ import AuthenticationServices
 
 struct SettingsView: View {
     @StateObject private var settingsStore = SettingsStore()
+    @StateObject private var mailComposer = MailComposer()
+    @EnvironmentObject var dataStore: MainViewModel
 
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
@@ -17,13 +19,8 @@ struct SettingsView: View {
     @AppStorage(UserDefaultsKeys.appTheme)
     private var appTheme: DialerTheme = .system
 
-    @EnvironmentObject var dataStore: MainViewModel
-
-    @StateObject private var mailComposer = MailComposer()
-
     @State private var alertItem: AlertDialog?
-    @State private var showDialog = false
-
+    @State private var showUssdDeletionDialog = false
 
     var body: some View {
         NavigationStack {
@@ -83,7 +80,7 @@ struct SettingsView: View {
                     sectionHeader("General settings")
                 }
                 .confirmationDialog("Confirmation",
-                                    isPresented: $showDialog,
+                                    isPresented: $showUssdDeletionDialog,
                                     titleVisibility: .visible,
                                     presenting: alertItem)
                 { item in
@@ -168,7 +165,7 @@ struct SettingsView: View {
             message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
             action: dataStore.removeAllUSSDs
         )
-        showDialog.toggle()
+        showUssdDeletionDialog.toggle()
     }
 
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
