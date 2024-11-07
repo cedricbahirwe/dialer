@@ -147,7 +147,7 @@ class FirebaseTracker {
 
     private static func formattedCurrentDateTime() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Example format, adjust as needed
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: Date())
     }
 
