@@ -6,30 +6,10 @@
 //
 
 import SwiftUI
-
-enum DialerTheme: String, Codable, CaseIterable {
-    case system, light, dark
-
-    var rawCapitalized: String { rawValue.capitalized }
-
-    func getIconSystemName() -> String {
-        switch self {
-        case .system: "gear"
-        case .light: "sun.max"
-        case .dark: "moon.fill"
-        }
-    }
-
-    var asColorScheme: ColorScheme? {
-        switch self {
-        case .system: nil
-        case .light: .light
-        case .dark: .dark
-        }
-    }
-}
+import AuthenticationServices
 
 struct SettingsView: View {
+    @State private var isLoggedIn = false
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
 
@@ -42,11 +22,33 @@ struct SettingsView: View {
 
     @State private var alertItem: AlertDialog?
     @State private var showDialog = false
-
+    @State private var userInfo: AppleInfo? = DialerStorage.shared.getAppleInfo()
 
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    if isLoggedIn, let userInfo {
+                        UserProfilePreview(
+                            info: userInfo,
+                            onSignOut: {
+                                withAnimation {
+                                    signoutFromApple()
+                                }
+                            }
+                        )
+                    } else {
+                        signInWithAppleView
+                            .frame(height: 45)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                    }
+                } header: {
+                    if isLoggedIn {
+                        sectionHeader("Account")
+                    }
+                }
+
                 Section {
                     HStack(spacing: 3) {
                         SettingsRow(.biometrics)
@@ -149,8 +151,86 @@ struct SettingsView: View {
                     }.font(.body.bold())
                 }
             }
+            .task {
+                await checkAuthenticationState()
+            }
             .trackAppearance(.settings)
         }
+    }
+
+    private var signInWithAppleView: some View {
+        SignInWithAppleButton(
+            onRequest: { request in
+                request.requestedScopes = [.fullName, .email]
+            },
+            onCompletion: { result in
+                switch result {
+                case .success(let authResults):
+                    if let appleIDCredential  = authResults.credential as? ASAuthorizationAppleIDCredential {
+                        // Only Save info it does not exist
+                        let userIdentifier = appleIDCredential.user
+
+                        if DialerStorage.shared.getAppleInfo() == nil {
+                            let fullName = appleIDCredential.fullName
+                            let email = appleIDCredential.email
+
+                            let info = AppleInfo(
+                                userId: userIdentifier,
+                                fullname: fullName,
+                                email: email
+                            )
+
+                            self.userInfo = info
+
+                            do {
+                                try DialerStorage.shared.saveAppleInfo(info)
+                            } catch {
+                                Tracker.shared.logError(error: error)
+                            }
+                        }
+
+                        // Store the `userIdentifier` in the keychain.
+                        self.saveUserInKeychain(userIdentifier)
+
+                        self.isLoggedIn = true
+                    }
+                case .failure(let error):
+                    print("Auth Failed: ", error)
+                }
+            }
+        )
+    }
+
+    private func saveUserInKeychain(_ userIdentifier: String) {
+        do {
+            try KeychainItem(service: Bundle.main.bundleIdentifier!, account: "userIdentifier").saveItem(userIdentifier)
+        } catch {
+            print("Unable to save userIdentifier to keychain.")
+        }
+    }
+
+    private func checkAuthenticationState() async {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        do {
+            let credentialState = try await appleIDProvider.credentialState(forUserID: KeychainItem.currentUserIdentifier)
+            switch credentialState {
+            case .authorized:
+                isLoggedIn = true
+            case .revoked, .notFound:
+                // The Apple ID credential is either revoked or was not found.
+                signoutFromApple()
+            default:
+                break
+            }
+        } catch {
+            signoutFromApple()
+        }
+    }
+
+    private func signoutFromApple() {
+        KeychainItem.deleteUserIdentifierFromKeychain()
+//        DialerStorage.shared.removeAppleSignInInfo()
+        isLoggedIn = false
     }
 
     private func presentUSSDsRemovalSheet() {
@@ -174,8 +254,6 @@ struct SettingsView: View {
 extension SettingsView {
 
     struct SettingsRow: View {
-
-
         init(item: SettingsItem, action: @escaping () -> Void) {
             self.item = item
             self.action = action
@@ -254,4 +332,42 @@ extension SettingsView {
 #Preview {
     SettingsView()
         .environmentObject(MainViewModel())
+}
+
+struct AppleInfo: Codable {
+    let userId: String
+    let fullname: PersonNameComponents?
+    let email: String?
+}
+struct UserProfilePreview: View {
+    let info: AppleInfo
+    var onSignOut: () -> Void
+    var body: some View {
+        HStack {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 55)
+                .foregroundStyle(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.red, Color.blue]),
+                        startPoint: .topLeading,
+                        endPoint: .trailing
+                    )
+                )
+            
+            VStack(alignment: .leading) {
+                Text(info.fullname?.formatted() ?? "Unknown")
+                Text(info.email ?? "-")
+                    .font(.caption)
+                    .foregroundStyle(.blue)
+            }
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button("Sign Out", action: onSignOut)
+                .font(.callout)
+                .foregroundStyle(.red)
+        }
+    }
 }

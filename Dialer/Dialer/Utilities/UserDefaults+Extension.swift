@@ -39,5 +39,7 @@ enum UserDefaultsKeys {
 
     // Should show Username onboarding UI
     static let showUsernameSheet = "showUsernameSheet"
-}
 
+    // Apple Sign In Info
+    static let appleSignInInfo = "appleSignInInfo"
+}

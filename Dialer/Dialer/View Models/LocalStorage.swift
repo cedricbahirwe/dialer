@@ -120,6 +120,19 @@ final class DialerStorage {
     func isDailyNotificationEnabled() -> Bool {
         userDefaults.bool(forKey: LocalKeys.dailyNotificationEnabled)
     }
+
+    func saveAppleInfo(_ info: AppleInfo) throws {
+        let data = try encodeData(info)
+        userDefaults.set(data, forKey: LocalKeys.appleSignInInfo)
+    }
+
+    func getAppleInfo() -> AppleInfo? {
+        decodeData(key: LocalKeys.appleSignInInfo, as: AppleInfo.self)
+    }
+
+    func removeAppleSignInInfo() {
+        userDefaults.removeObject(forKey: LocalKeys.appleSignInInfo)
+    }
 }
 
 private extension DialerStorage {

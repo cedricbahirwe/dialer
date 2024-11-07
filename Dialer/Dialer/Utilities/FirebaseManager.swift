@@ -111,7 +111,7 @@ extension FirebaseManager: InsightProtocol {
 
     func getInsights(for userID: UUID) async -> [TransactionInsight] {
         do {
-            let querySnapshot = try await db.collection("transactions")
+            let querySnapshot = try await db.collection(.transactions)
                 .whereField("ownerId", isEqualTo: userID.uuidString)
                 .getDocuments()
 
