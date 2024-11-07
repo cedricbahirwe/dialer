@@ -11,15 +11,15 @@ import FirebaseFirestore
 struct DeviceAccount: Codable {
     @DocumentID private var id: String?
 
-    let name: String
-    let model: String
-    let systemVersion: String
-    let systemName: String
+    var name: String
+    var model: String
+    var systemVersion: String
+    var systemName: String
 
-    let deviceHash: UUID
-    let appVersion: String?
-    let bundleVersion: String?
-    let bundleId: String?
+    var deviceHash: UUID
+    var appVersion: String?
+    var bundleVersion: String?
+    var bundleId: String?
     var lastVisitedDate: String?
 
     func toAnalytics() -> [String: Any] {

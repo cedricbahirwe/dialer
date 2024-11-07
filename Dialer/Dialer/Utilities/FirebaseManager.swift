@@ -163,6 +163,20 @@ extension FirebaseManager: UserProtocol {
     func getAllUsers() async -> [DialerUser] {
         await getAll(in: .users)
     }
+
+    func saveUserAppleInfo(_ userID: UUID, info: AppleInfo) async throws -> Bool {
+        guard let docID = try? await db.collection(.users)
+            .whereField("device.deviceHash", isEqualTo: userID.uuidString)
+            .getDocuments()
+            .documents.first?.documentID else { return false }
+        let deviceDictionary = try Firestore.Encoder().encode(info)
+
+        try await db.collection(.users)
+            .document(docID)
+            .updateData(["apple": deviceDictionary])
+        print("Reache")
+        return true
+    }
 }
 
 protocol MerchantProtocol {
@@ -181,6 +195,7 @@ protocol UserProtocol {
     func updateUser(_ user: DialerUser) async throws-> Bool
     func deleteUser(_ userID: String) async throws
     func getAllUsers() async -> [DialerUser]
+    func saveUserAppleInfo(_ userID: UUID, info: AppleInfo) async throws -> Bool
 }
 
 protocol DeviceManagerProtocol {

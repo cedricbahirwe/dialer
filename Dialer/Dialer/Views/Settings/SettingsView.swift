@@ -45,9 +45,9 @@ struct SettingsView: View {
                             .font(.footnote)
                     }
                 } header: {
-//                    if settingsStoreisLoggedIn {
+                    if settingsStore.isLoggedIn {
                         sectionHeader("Account")
-//                    }
+                    }
                 }
 
                 Section {
