@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AuthenticationServices
 
 struct SettingsView: View {
     @StateObject private var settingsStore = SettingsStore()
