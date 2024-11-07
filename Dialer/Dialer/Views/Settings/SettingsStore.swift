@@ -12,6 +12,11 @@ import AuthenticationServices
 @MainActor final class SettingsStore: ObservableObject {
     @Published private(set) var isLoggedIn = false
     @Published private(set) var userInfo: AppleInfo? = DialerStorage.shared.getAppleInfo()
+    private let userProvider : UserProtocol
+
+    init(_ userProvider: UserProtocol = FirebaseManager()) {
+        self.userProvider = userProvider
+    }
 
     private func setUserInfo(_ userInfo: AppleInfo) {
         self.userInfo = userInfo
@@ -19,6 +24,14 @@ import AuthenticationServices
 
     private func setIsLoggedIn(_ isLoggedIn: Bool) {
         self.isLoggedIn = isLoggedIn
+    }
+
+    private func updateDeviceWithAppleInfo(_ info: AppleInfo) {
+        guard let device = DialerStorage.shared.getSavedDevice() else { return }
+
+        Task {
+            try await userProvider.saveUserAppleInfo(device.deviceHash, info: info)
+        }
     }
 }
 
@@ -54,7 +67,10 @@ extension SettingsStore {
                 // Only Save info it does not exist
                 let userIdentifier = appleIDCredential.user
 
-                if DialerStorage.shared.getAppleInfo() == nil {
+                if let userInfo = DialerStorage.shared.getAppleInfo() {
+                    setUserInfo(userInfo)
+                    updateDeviceWithAppleInfo(userInfo)
+                } else {
                     let fullName = appleIDCredential.fullName
                     let email = appleIDCredential.email
 
@@ -64,19 +80,19 @@ extension SettingsStore {
                         email: email
                     )
 
-                    self.setUserInfo(info)
+                    setUserInfo(info)
 
                     do {
                         try DialerStorage.shared.saveAppleInfo(info)
+                        updateDeviceWithAppleInfo(info)
                     } catch {
                         Tracker.shared.logError(error: error)
                     }
                 }
 
                 // Store the `userIdentifier` in the keychain.
-                self.saveUserInKeychain(userIdentifier)
-
-                self.setIsLoggedIn(true)
+                saveUserInKeychain(userIdentifier)
+                setIsLoggedIn(true)
             }
         case .failure(let error):
             print("Auth Failed: ", error)

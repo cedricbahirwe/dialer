@@ -108,12 +108,50 @@ class FirebaseTracker {
 
     static func getDevice() -> DeviceAccount {
         if let storedDevice = DialerStorage.shared.getSavedDevice() {
-            return storedDevice
+            return refreshMetadata(storedDevice)
         }
         return makeDeviceAccount()
     }
 
     private static func makeDeviceAccount() -> DeviceAccount {
+        let metadata = getDeviceMetadata()
+        return DeviceAccount(
+            id: metadata.deviceIdentifier.uuidString,
+            name: metadata.deviceName,
+            model: metadata.deviceModel,
+            systemVersion: metadata.deviceSystemVersion,
+            systemName: metadata.deviceSystemName,
+            deviceHash: metadata.deviceIdentifier,
+            appVersion: metadata.appVersion,
+            bundleVersion: metadata.bundleVersion,
+            bundleId: metadata.bundleID,
+            lastVisitedDate: formattedCurrentDateTime()
+        )
+    }
+
+    private static func refreshMetadata(_ device: DeviceAccount) -> DeviceAccount {
+        var updatedDevice = device
+        let metadata = getDeviceMetadata()
+
+        updatedDevice.name = metadata.deviceName
+        updatedDevice.model = metadata.deviceModel
+        updatedDevice.systemVersion = metadata.deviceSystemVersion
+        updatedDevice.systemName = metadata.deviceSystemName
+        updatedDevice.appVersion = metadata.appVersion
+        updatedDevice.bundleVersion = metadata.bundleVersion
+        updatedDevice.bundleId = metadata.bundleID
+        updatedDevice.lastVisitedDate = formattedCurrentDateTime()
+
+        return updatedDevice
+    }
+
+    private static func formattedCurrentDateTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Example format, adjust as needed
+        return formatter.string(from: Date())
+    }
+
+    private static func getDeviceMetadata() -> (deviceName: String, deviceModel: String, deviceSystemVersion: String, deviceSystemName: String, deviceIdentifier: UUID, appVersion: String?, bundleVersion: String?, bundleID: String?) {
         let device = UIDevice.current
         let deviceName = device.name
         let deviceModel = device.model
@@ -124,18 +162,6 @@ class FirebaseTracker {
         let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let bundleID = Bundle.main.bundleIdentifier
 
-        let deviceAccount = DeviceAccount(
-            id: deviceIdentifier.uuidString,
-            name: deviceName,
-            model: deviceModel,
-            systemVersion: deviceSystemVersion,
-            systemName: deviceSystemName,
-            deviceHash: deviceIdentifier,
-            appVersion: appVersion,
-            bundleVersion: bundleVersion,
-            bundleId: bundleID,
-            lastVisitedDate: Date.now.formatted())
-
-        return deviceAccount
+        return (deviceName, deviceModel, deviceSystemVersion, deviceSystemName, deviceIdentifier, appVersion, bundleVersion, bundleID)
     }
 }

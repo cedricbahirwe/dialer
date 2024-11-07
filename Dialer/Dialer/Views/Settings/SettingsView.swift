@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct SettingsView: View {
     @StateObject private var settingsStore = SettingsStore()
@@ -44,9 +45,9 @@ struct SettingsView: View {
                             .font(.footnote)
                     }
                 } header: {
-//                    if settingsStoreisLoggedIn {
+                    if settingsStore.isLoggedIn {
                         sectionHeader("Account")
-//                    }
+                    }
                 }
 
                 Section {
