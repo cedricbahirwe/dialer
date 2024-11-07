@@ -31,17 +31,15 @@ struct SettingsView: View {
                     if isLoggedIn, let userInfo {
                         UserProfilePreview(
                             info: userInfo,
-                            onSignOut: {
-                                withAnimation {
-                                    signoutFromApple()
-                                }
-                            }
+                            onSignOut: signoutFromApple
                         )
                     } else {
                         signInWithAppleView
                             .frame(height: 45)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
+
+                        Text("Sign in with your Apple ID to sync your Dialer data (Merchants, Insights, and Preferences) across your Apple devices.")
+                            .foregroundStyle(.secondary)
+                            .font(.footnote)
                     }
                 } header: {
                     if isLoggedIn {
