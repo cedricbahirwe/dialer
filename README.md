@@ -5,23 +5,27 @@
 Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
 
-## ✅ Dones:
+## ✅ Features:
+* MTN Momo Support (Client and Merchants support)
+* MTN Merchant QR Code Extraction
+* Client Contacts selection
+* Airtime Purchase
+* Insights & History Overview
+* Personal MySpace
+* Merchants Storage
+* Biometrics Authentication
 * Support Light/Dark Mode.
-* History View to Track Past Dials.
-* Incognito mode for dials.
 * Home Screen Quick Actions.
-* Quick MTN Momo transfer (Client and Merchant support).
-* Contacts Filtering.
-* Settings
-* Transaction Amount Limit
 
-## Tech Stack 🧑🏽‍💻 
+## Tech Stack & Frameworks 🧑🏽‍💻 
 - SwiftUI & UIKit
 - Firebase
 - UserNotifications
 - LocalAuthentication
+- AuthenticationServices
 - StoreKit
-- Contacts & CoreTelephony
+- TipKit
+- Contacts
 - XCTest
 
 ## Contribution
