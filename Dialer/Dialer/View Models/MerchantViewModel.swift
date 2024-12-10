@@ -5,7 +5,7 @@
 //  Created by Cédric Bahirwe on 28/02/2023.
 //
 
-import CoreLocation
+import Foundation
 
 @MainActor
 class BaseViewModel: ObservableObject {

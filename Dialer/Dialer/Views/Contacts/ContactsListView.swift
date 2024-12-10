@@ -50,7 +50,7 @@ struct ContactsListView: View {
             .padding(.top, 10)
             .background(Color.primaryBackground)
             .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
+                ToolbarItem(placement: .keyboard) {
                     Spacer()
                     
                     Button(action: {
@@ -104,8 +104,6 @@ struct ContactsListView: View {
         }
         .frame(maxHeight: .infinity)
     }
-    
-    
 }
 
 private extension ContactsListView {

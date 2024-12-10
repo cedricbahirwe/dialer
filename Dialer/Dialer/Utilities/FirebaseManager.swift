@@ -5,7 +5,6 @@
 //  Created by Cédric Bahirwe on 26/02/2023.
 //
 
-import CoreLocation
 import FirebaseFirestore
 
 class FirebaseManager: FirebaseCRUD {
