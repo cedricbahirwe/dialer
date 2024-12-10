@@ -78,7 +78,7 @@ struct TransferView: View {
                             if transaction.type == .client {
                                 hideKeyboard()
                                 presentedSheet = .contacts
-                                Tracker.shared.logEvent(.conctactsOpened)
+                                Tracker.shared.logEvent(.contactsOpened)
                             } else {
                                 openScanner()
                             }
@@ -113,112 +113,17 @@ struct TransferView: View {
             .padding()
             
             if transaction.type == .merchant {
-                List {
-                    Section {
-                        if merchantStore.merchants.isEmpty {
-                            Text("No Merchants Saved Yet.")
-                                .opacity(0.5)
-                                .frame(maxWidth: .infinity)
-                                .frame(minHeight: 50)
-                            
-                        } else {
-                            ForEach(merchantStore.merchants) { merchant in
-                                HStack {
-                                    HStack(spacing: 4) {
-                                        if merchant.code == transaction.number {
-                                            Image(systemName: "checkmark")
-                                                .foregroundStyle(.blue)
-                                                .font(.body.weight(.semibold))
-                                        }
-                                        
-                                        Text(merchant.name)
-                                            .lineLimit(1)
-                                    }
-                                    Spacer()
-                                    Text("#\(merchant.code)")
-                                        .font(.callout.weight(.medium))
-                                        .foregroundStyle(.blue)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    setMerchantSelection(merchant)
-                                }
-                                .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-                            }
-                            .onDelete(perform: deleteMerchant)
-                        }
-                    } header: {
-                        HStack {
-                            Text("Saved Merchants")
-                                .font(.system(.body, design: .rounded))
-                                .fontWeight(.semibold)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                            
-                            Spacer(minLength: 1)
-                            
-                            if merchantStore.isFetching {
-                                ProgressView()
-                                    .tint(.blue)
-                            } else {
-                                Button {
-                                    presentedSheet = .merchants
-                                } label: {
-                                    Image(systemName: "plus.circle.fill")
-                                        .imageScale(.large)
-                                }
-                            }
-                            
-                        }
-                    } footer: {
-                        if !merchantStore.merchants.isEmpty {
-                            Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings -> Contact Us***")
-                        }
-                    }
-                    .listRowBackground(rowBackground)
-                }
-                .scrollContentBackground(.hidden)
+                MerchantSelectionView(
+                    merchantStore: merchantStore,
+                    selectedCode: transaction.number,
+                    onSelectMerchant: setMerchantSelection
+                )
             } else {
                 Spacer()
             }
         }
-        .sheet(item: $presentedSheet) { sheet in
-            switch sheet {
-            case .qrScanner:
-                if #available(iOS 17.0, *) {
-                    codeScannerView
-                        .popoverTip(QRCodeScannerTip())
-                } else {
-                    codeScannerView
-                }
-            case .merchants:
-                CreateMerchantView(merchantStore: merchantStore)
-            case .contacts:
-                ContactsListView(
-                    contacts: allContacts,
-                    selection: selectedContact,
-                    onSelectContact: {
-                        selectedContact = $0
-                        cleanPhoneNumber(selectedContact)
-                        presentedSheet = nil
-                    })
-            }
-        }
-        .actionSheet(isPresented: $showReportSheet) {
-            ActionSheet(
-                title: Text("Report a problem."),
-                buttons: alertButtons)
-        }
-        .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
-        .trackAppearance(.transfer)
-        .task {
-            performInitialization()
-            await merchantStore.getMerchants()
-        }
-        .navigationTitle(navigationTitle)
         .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
+            ToolbarItem(placement: .keyboard) {
                 HStack {
                     Spacer()
                     Button(action: goToNextFocus) {
@@ -242,14 +147,42 @@ struct TransferView: View {
                 .fixedSize()
             }
         }
+        .sheet(item: $presentedSheet) { sheet in
+            switch sheet {
+            case .qrScanner:
+                if #available(iOS 17.0, *) {
+                    codeScannerView
+                        .popoverTip(QRCodeScannerTip())
+                } else {
+                    codeScannerView
+                }
+            case .contacts:
+                ContactsListView(
+                    contacts: allContacts,
+                    selection: selectedContact,
+                    onSelectContact: {
+                        selectedContact = $0
+                        cleanPhoneNumber(selectedContact)
+                        presentedSheet = nil
+                    })
+            }
+        }
+        .actionSheet(isPresented: $showReportSheet) {
+            ActionSheet(
+                title: Text("Report a problem."),
+                buttons: alertButtons)
+        }
+        .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
+        .trackAppearance(.transfer)
+        .task {
+            performInitialization()
+            await merchantStore.getMerchants()
+        }
+        .navigationTitle(navigationTitle)
     }
     
     private var alertButtons: [ActionSheet.Button] {
         [.default(Text("This merchant code is incorrect")), .cancel()]
-    }
-    
-    private func deleteMerchant(at offSets: IndexSet) {
-        merchantStore.deleteMerchants(at: offSets)
     }
 
     private var codeScannerView: some View {
@@ -268,14 +201,14 @@ private extension TransferView {
     }
     enum Sheet: Int, Identifiable {
         var id: Int { rawValue }
-        case merchants
         case contacts
         case qrScanner
     }
 }
 
+// MARK: - Actions
+
 private extension TransferView {
-    
     func goToNextFocus() {
         focusedState = focusedState?.next()
         if transaction.isValid && focusedState == .number {

@@ -118,6 +118,7 @@
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
+		CBE41E6A2D089C880074FB4B /* MerchantSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE41E692D089C880074FB4B /* MerchantSelectionView.swift */; };
 		CBE61A422C9C1D7B003E1795 /* AirtimeToInsightMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61A412C9C1D7B003E1795 /* AirtimeToInsightMigrator.swift */; };
 		CBE61A462C9C2795003E1795 /* InsightHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61A452C9C2795003E1795 /* InsightHistoryViewModel.swift */; };
 		CBE61A482C9C28AC003E1795 /* InsightTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61A472C9C28AC003E1795 /* InsightTransactionsView.swift */; };
@@ -254,6 +255,7 @@
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
+		CBE41E692D089C880074FB4B /* MerchantSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantSelectionView.swift; sourceTree = "<group>"; };
 		CBE61A412C9C1D7B003E1795 /* AirtimeToInsightMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirtimeToInsightMigrator.swift; sourceTree = "<group>"; };
 		CBE61A452C9C2795003E1795 /* InsightHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightHistoryViewModel.swift; sourceTree = "<group>"; };
 		CBE61A472C9C28AC003E1795 /* InsightTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightTransactionsView.swift; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 			children = (
 				CB3B81E929ABD2B0001FAFF6 /* CreateMerchantView.swift */,
 				CB18BD5629AE929F00A7B45C /* MerchantsListView.swift */,
+				CBE41E692D089C880074FB4B /* MerchantSelectionView.swift */,
 			);
 			path = Merchant;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
+				CBE41E6A2D089C880074FB4B /* MerchantSelectionView.swift in Sources */,
 				CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */,
 				CBE61A462C9C2795003E1795 /* InsightHistoryViewModel.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
@@ -1084,7 +1088,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.0;
+				MARKETING_VERSION = 7.2.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1119,7 +1123,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.0;
+				MARKETING_VERSION = 7.2.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1272,7 +1276,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.0;
+				MARKETING_VERSION = 7.2.0;
 				OTHER_LDFLAGS = (
 					"-Xlinker",
 					"-no_warn_duplicate_libraries",
@@ -1420,7 +1424,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1.0;
+				MARKETING_VERSION = 7.2.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1583,7 +1587,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = exactVersion;
-				version = 11.4.0;
+				version = 11.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

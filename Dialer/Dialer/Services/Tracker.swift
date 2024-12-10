@@ -51,7 +51,7 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
     // Actions
     case transaction
     case merchantCodeSelected
-    case conctactsOpened = "contact_opened"
+    case contactsOpened = "contact_opened"
     case logIn = "app_login"
     case merchantCodeScanned
     var stringValue: String {
