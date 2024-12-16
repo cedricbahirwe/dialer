@@ -95,7 +95,7 @@ extension SettingsStore {
                 setIsLoggedIn(true)
             }
         case .failure(let error):
-            print("Auth Failed: ", error)
+            Log.debug("Auth Failed: ", error)
         }
     }
 }
@@ -107,7 +107,7 @@ private extension SettingsStore {
         do {
             try KeychainItem(service: Bundle.main.bundleIdentifier!, account: "userIdentifier").saveItem(userIdentifier)
         } catch {
-            print("Unable to save userIdentifier to keychain.")
+            Log.debug("Unable to save userIdentifier to keychain.")
         }
     }
 }

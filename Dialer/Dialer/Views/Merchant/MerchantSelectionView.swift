@@ -45,7 +45,6 @@ struct MerchantSelectionView: View {
                             .padding(9)
 
                         TextField("Search by name or code", text: $searchQuery) { isEditing in
-                            print("Searching ", isEditing)
                             withAnimation {
                                 self.isSearching = isEditing
                             }

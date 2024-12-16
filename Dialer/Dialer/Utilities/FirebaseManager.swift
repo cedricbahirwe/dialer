@@ -173,7 +173,6 @@ extension FirebaseManager: UserProtocol {
         try await db.collection(.users)
             .document(docID)
             .updateData(["apple": deviceDictionary])
-        print("Reache")
         return true
     }
 }
