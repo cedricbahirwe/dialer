@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MerchantSelectionView: View {
-    @ObservedObject var merchantStore: MerchantStore
+    @ObservedObject var merchantStore: UserMerchantStore
     var isPresented = false
     var selectedCode: String
     var onSelectMerchant: (Merchant) -> Void
@@ -170,8 +170,8 @@ private extension MerchantSelectionView {
                         Image(systemName: "magnifyingglass")
                             .imageScale(.large)
                     }
+                    .disabled(merchantStore.merchants.isEmpty)
                 }
-
             }
         } footer: {
             if !merchantStore.merchants.isEmpty {
