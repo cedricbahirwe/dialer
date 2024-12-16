@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MerchantSelectionView: View {
     @ObservedObject var merchantStore: UserMerchantStore
-    var isPresented = false
+    var isPresentedModally = false
     var selectedCode: String
     var onSelectMerchant: (Merchant) -> Void
     @FocusState private var isSearching: Bool
@@ -33,9 +33,11 @@ struct MerchantSelectionView: View {
         }
     }
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         VStack {
-            if isPresented {
+            if isPresentedModally {
                 HStack {
                     HStack(spacing: 2) {
                         Image(systemName: "magnifyingglass")
@@ -76,13 +78,13 @@ struct MerchantSelectionView: View {
             }
 
             List {
-                if isPresented {
+                if isPresentedModally {
                     savedMerchantsContent
                 } else {
                     merchantSelectionList
                 }
             }
-            .scrollContentBackground(isPresented ? .visible : .hidden)
+            .scrollContentBackground(isPresentedModally ? .visible : .hidden)
         }
         .sheet(isPresented: $showMerchantCreation) {
             CreateMerchantView(merchantStore: merchantStore)
@@ -92,7 +94,7 @@ struct MerchantSelectionView: View {
                 if #available(iOS 16.4, *) {
                     MerchantSelectionView(
                         merchantStore: merchantStore,
-                        isPresented: true,
+                        isPresentedModally: true,
                         selectedCode: selectedCode,
                         onSelectMerchant: onSelectMerchant
                     )
@@ -101,7 +103,7 @@ struct MerchantSelectionView: View {
                 } else {
                     MerchantSelectionView(
                         merchantStore: merchantStore,
-                        isPresented: true,
+                        isPresentedModally: true,
                         selectedCode: selectedCode,
                         onSelectMerchant: onSelectMerchant
                     )
@@ -110,7 +112,7 @@ struct MerchantSelectionView: View {
             }
         }
         .toolbar {
-            if isPresented {
+            if isPresentedModally {
                 ToolbarItem(placement: .keyboard) {
                     HStack {
                         Spacer()
@@ -182,7 +184,7 @@ private extension MerchantSelectionView {
     }
 
     private var savedMerchantsContent: some View {
-        ForEach(isPresented ? searchedMerchants : merchantStore.merchants) { merchant in
+        ForEach(isPresentedModally ? searchedMerchants : merchantStore.merchants) { merchant in
             HStack {
                 HStack(spacing: 4) {
                     if merchant.code == selectedCode {
@@ -203,6 +205,9 @@ private extension MerchantSelectionView {
             .contentShape(Rectangle())
             .onTapGesture {
                 onSelectMerchant(merchant)
+                if isPresentedModally {
+                    dismiss()
+                }
             }
             .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
         }
