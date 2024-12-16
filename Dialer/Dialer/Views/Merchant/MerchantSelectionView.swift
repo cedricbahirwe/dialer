@@ -132,6 +132,21 @@ struct MerchantSelectionView: View {
 }
 
 private extension MerchantSelectionView {
+    var savedMerchantsContent: some View {
+        SavedMerchantsContent(
+            isPresentedModally: isPresentedModally,
+            selectedCode: selectedCode,
+            merchants: isPresentedModally ? searchedMerchants : merchantStore.merchants,
+            onSelectMerchant: {
+                onSelectMerchant($0)
+                if isPresentedModally {
+                    dismiss()
+                }
+            },
+            onDeleteMerchant: deleteMerchant
+        )
+    }
+
     var merchantSelectionList: some View {
         Section {
             if merchantStore.merchants.isEmpty {
@@ -183,35 +198,40 @@ private extension MerchantSelectionView {
         .listRowBackground(rowBackground)
     }
 
-    private var savedMerchantsContent: some View {
-        ForEach(isPresentedModally ? searchedMerchants : merchantStore.merchants) { merchant in
-            HStack {
-                HStack(spacing: 4) {
-                    if merchant.code == selectedCode {
-                        Image(systemName: "checkmark")
-                            .foregroundStyle(.blue)
-                            .font(.body.weight(.semibold))
-                    }
+    struct SavedMerchantsContent: View {
+        let isPresentedModally: Bool
+        let selectedCode: String?
+        let merchants: [Merchant]
+        var onSelectMerchant: (Merchant) -> Void
+        var onDeleteMerchant: (IndexSet) -> Void
 
-                    Text(merchant.name)
-                        .lineLimit(1)
+        var body: some View {
+            ForEach(merchants) { merchant in
+                HStack {
+                    HStack(spacing: 4) {
+                        if merchant.code == selectedCode {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.blue)
+                                .font(.body.weight(.semibold))
+                        }
+
+                        Text(merchant.name)
+                            .lineLimit(1)
+                    }
+                    Spacer()
+                    Text("#\(merchant.code)")
+                        .font(.callout.weight(.medium))
+                        .foregroundStyle(.blue)
                 }
-                Spacer()
-                Text("#\(merchant.code)")
-                    .font(.callout.weight(.medium))
-                    .foregroundStyle(.blue)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                onSelectMerchant(merchant)
-                if isPresentedModally {
-                    dismiss()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    onSelectMerchant(merchant)
                 }
+                .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
             }
-            .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+            .onDelete(perform: onDeleteMerchant)
         }
-        .onDelete(perform: deleteMerchant)
     }
 
     private func deleteMerchant(at offSets: IndexSet) {
