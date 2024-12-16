@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct MerchantSelectionView: View {
-    @ObservedObject var merchantStore: MerchantStore
-    var isPresented = false
+    @ObservedObject var merchantStore: UserMerchantStore
+    var isPresentedModally = false
     var selectedCode: String
     var onSelectMerchant: (Merchant) -> Void
     @FocusState private var isSearching: Bool
@@ -33,9 +33,11 @@ struct MerchantSelectionView: View {
         }
     }
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         VStack {
-            if isPresented {
+            if isPresentedModally {
                 HStack {
                     HStack(spacing: 2) {
                         Image(systemName: "magnifyingglass")
@@ -43,7 +45,6 @@ struct MerchantSelectionView: View {
                             .padding(9)
 
                         TextField("Search by name or code", text: $searchQuery) { isEditing in
-                            print("Searching ", isEditing)
                             withAnimation {
                                 self.isSearching = isEditing
                             }
@@ -76,13 +77,13 @@ struct MerchantSelectionView: View {
             }
 
             List {
-                if isPresented {
+                if isPresentedModally {
                     savedMerchantsContent
                 } else {
                     merchantSelectionList
                 }
             }
-            .scrollContentBackground(isPresented ? .visible : .hidden)
+            .scrollContentBackground(isPresentedModally ? .visible : .hidden)
         }
         .sheet(isPresented: $showMerchantCreation) {
             CreateMerchantView(merchantStore: merchantStore)
@@ -92,7 +93,7 @@ struct MerchantSelectionView: View {
                 if #available(iOS 16.4, *) {
                     MerchantSelectionView(
                         merchantStore: merchantStore,
-                        isPresented: true,
+                        isPresentedModally: true,
                         selectedCode: selectedCode,
                         onSelectMerchant: onSelectMerchant
                     )
@@ -101,7 +102,7 @@ struct MerchantSelectionView: View {
                 } else {
                     MerchantSelectionView(
                         merchantStore: merchantStore,
-                        isPresented: true,
+                        isPresentedModally: true,
                         selectedCode: selectedCode,
                         onSelectMerchant: onSelectMerchant
                     )
@@ -110,7 +111,7 @@ struct MerchantSelectionView: View {
             }
         }
         .toolbar {
-            if isPresented {
+            if isPresentedModally {
                 ToolbarItem(placement: .keyboard) {
                     HStack {
                         Spacer()
@@ -130,6 +131,21 @@ struct MerchantSelectionView: View {
 }
 
 private extension MerchantSelectionView {
+    var savedMerchantsContent: some View {
+        SavedMerchantsContent(
+            isPresentedModally: isPresentedModally,
+            selectedCode: selectedCode,
+            merchants: isPresentedModally ? searchedMerchants : merchantStore.merchants,
+            onSelectMerchant: {
+                onSelectMerchant($0)
+                if isPresentedModally {
+                    dismiss()
+                }
+            },
+            onDeleteMerchant: deleteMerchant
+        )
+    }
+
     var merchantSelectionList: some View {
         Section {
             if merchantStore.merchants.isEmpty {
@@ -170,8 +186,8 @@ private extension MerchantSelectionView {
                         Image(systemName: "magnifyingglass")
                             .imageScale(.large)
                     }
+                    .disabled(merchantStore.merchants.isEmpty)
                 }
-
             }
         } footer: {
             if !merchantStore.merchants.isEmpty {
@@ -181,32 +197,40 @@ private extension MerchantSelectionView {
         .listRowBackground(rowBackground)
     }
 
-    private var savedMerchantsContent: some View {
-        ForEach(isPresented ? searchedMerchants : merchantStore.merchants) { merchant in
-            HStack {
-                HStack(spacing: 4) {
-                    if merchant.code == selectedCode {
-                        Image(systemName: "checkmark")
-                            .foregroundStyle(.blue)
-                            .font(.body.weight(.semibold))
-                    }
+    struct SavedMerchantsContent: View {
+        let isPresentedModally: Bool
+        let selectedCode: String?
+        let merchants: [Merchant]
+        var onSelectMerchant: (Merchant) -> Void
+        var onDeleteMerchant: (IndexSet) -> Void
 
-                    Text(merchant.name)
-                        .lineLimit(1)
+        var body: some View {
+            ForEach(merchants) { merchant in
+                HStack {
+                    HStack(spacing: 4) {
+                        if merchant.code == selectedCode {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.blue)
+                                .font(.body.weight(.semibold))
+                        }
+
+                        Text(merchant.name)
+                            .lineLimit(1)
+                    }
+                    Spacer()
+                    Text("#\(merchant.code)")
+                        .font(.callout.weight(.medium))
+                        .foregroundStyle(.blue)
                 }
-                Spacer()
-                Text("#\(merchant.code)")
-                    .font(.callout.weight(.medium))
-                    .foregroundStyle(.blue)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    onSelectMerchant(merchant)
+                }
+                .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                onSelectMerchant(merchant)
-            }
-            .listRowInsets(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+            .onDelete(perform: onDeleteMerchant)
         }
-        .onDelete(perform: deleteMerchant)
     }
 
     private func deleteMerchant(at offSets: IndexSet) {

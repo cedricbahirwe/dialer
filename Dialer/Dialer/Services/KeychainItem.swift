@@ -144,7 +144,7 @@ struct KeychainItem {
         do {
             try KeychainItem(service: Bundle.main.bundleIdentifier!, account: "userIdentifier").deleteItem()
         } catch {
-            print("Unable to delete userIdentifier from keychain")
+            Log.debug("Unable to delete userIdentifier from keychain")
         }
     }
 }
