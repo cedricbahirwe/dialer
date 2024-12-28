@@ -179,8 +179,7 @@ struct WrappedViewFour: View {
 
                 Spacer()
 
-                // Spotify Branding
-                Text("SPOTIFY.COM/WRAPPED")
+                Text("Dialer@WRAPPED")
                     .font(.caption)
                     .foregroundColor(.black.opacity(0.6))
 
