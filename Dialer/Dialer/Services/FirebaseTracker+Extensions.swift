@@ -21,7 +21,6 @@ extension FirebaseTracker: TrackerProtocol {
             .transId : transaction.id,
             .transAmount : transaction.amount,
             .transType : transaction.type.rawValue,
-//            .transCode : transaction.fullCode,
             .transTime : Date.now.formatted()
         ]
 

@@ -30,7 +30,9 @@ enum UserDefaultsKeys {
     static let lastAskedDateToUpdate = "lastAskedDateToUpdate"
     
     static let deviceAccount = "deviceAccount"
-    
+
+    static let dialerUser = "dialerUser"
+
     // Daily local notification scheduled
     static let dailyNotificationEnabled = "dailyNotificationEnabled"
     

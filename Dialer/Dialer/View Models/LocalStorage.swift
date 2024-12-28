@@ -109,6 +109,17 @@ final class DialerStorage {
         return userDevice
     }
 
+    func saveUser(_ user: DialerUser) throws {
+        let data = try encodeDataWithFirebase(user)
+        userDefaults.set(data, forKey: LocalKeys.dialerUser)
+    }
+
+    func getSavedUser() -> DialerUser? {
+        guard let user = decodeDataWithFirebase(key: LocalKeys.dialerUser, as: DialerUser.self)
+        else { return nil }
+        return user
+    }
+
     func removeAllUSSDCodes() {
         userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
     }

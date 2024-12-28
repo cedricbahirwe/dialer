@@ -20,6 +20,7 @@ struct DashBoardView: View {
     private var allowBiometrics = false
     
     @State private var showPurchaseSheet = false
+    @State private var showWrappedSheet = false
     @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
     @Environment(\.colorScheme) private var colorScheme
 
@@ -83,18 +84,33 @@ struct DashBoardView: View {
             .padding()
             
             Spacer()
+
+            WrappedPreview(onStart: {
+                showWrappedSheet = true
+            })
+            .padding()
         }
         .blur(radius: showPurchaseSheet ? 1 : 0)
-        .fullScreenCover(isPresented: $showUsernameSheet,
-                         onDismiss: {
-            showWelcomeView = true
-        }) {
-            UserDetailsCreationView()
-        }
+        .fullScreenCover(
+            isPresented: $showUsernameSheet,
+            onDismiss: {
+                showWelcomeView = true
+            }, content: {
+                UserDetailsCreationView()
+            }
+        )
+        .fullScreenCover(
+            isPresented: $showWrappedSheet,
+            onDismiss: {
+                // Disable in local storage may be?
+            }, content: {
+                WrappedNavigation()
+            }
+        )
         .task {
             if #available(iOS 17.0, *) {
                 do {
-//                    try Tips.resetDatastore()
+                    //                    try Tips.resetDatastore()
                     try Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)

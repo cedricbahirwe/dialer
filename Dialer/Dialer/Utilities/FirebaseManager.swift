@@ -98,6 +98,7 @@ extension FirebaseManager: DeviceManagerProtocol {
 
 }
 
+// MARK: - Insights
 
 extension FirebaseManager: InsightProtocol {
     func saveInsight(_ insight: TransactionInsight) async throws -> Bool {
@@ -132,6 +133,23 @@ extension FirebaseManager: UserProtocol {
 
     func getUser(by id: String) async -> DialerUser? {
         nil
+    }
+
+    func getUser(deviceHash: UUID) async -> DialerUser? {
+        do {
+            let snapshot = try await db.collection(.users)
+                .whereField("device.deviceHash", isEqualTo: deviceHash.uuidString)
+                .limit(to: 1)
+                .getDocuments()
+
+            let item = try snapshot.documents.first?.data(as: DialerUser.self)
+
+            return item
+        } catch {
+            Tracker.shared.logError(error: error)
+            Log.debug("Can not get \(type(of: DialerUser.self)), Error: \(error).")
+            return nil
+        }
     }
 
     func getUser(username: String) async -> DialerUser? {
@@ -190,6 +208,7 @@ protocol UserProtocol {
     func createUser(_ user: DialerUser) async throws-> Bool
     func getUser(by id: String) async -> DialerUser?
     func getUser(username: String) async -> DialerUser?
+    func getUser(deviceHash: UUID) async -> DialerUser?
     func updateUser(_ user: DialerUser) async throws-> Bool
     func deleteUser(_ userID: String) async throws
     func getAllUsers() async -> [DialerUser]

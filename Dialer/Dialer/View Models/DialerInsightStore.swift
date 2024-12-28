@@ -22,27 +22,27 @@ enum InsightFilterPeriod: String, CaseIterable {
 @MainActor
 class DialerInsightStore: BaseViewModel {
 
-    @Published private(set) var allInsights: [TransactionInsight]
+    @Published private(set) var transactionInsights: [TransactionInsight]
 
     var generalTotal: Int {
-        allInsights.map(\.amount).reduce(0, +)
+        transactionInsights.map(\.amount).reduce(0, +)
     }
 
     let periods = InsightFilterPeriod.allCases
     @Published private(set) var selectedPeriod = InsightFilterPeriod.year
 
     private var filteredInsightsByPeriod: [TransactionInsight] {
-        filterInsightsByPeriod(allInsights, period: selectedPeriod)
+        filterInsightsByPeriod(transactionInsights, period: selectedPeriod)
     }
 
-    var insights: [ChartInsight] {
+    var chartInsights: [ChartInsight] {
         ChartInsight.makeInsights(filteredInsightsByPeriod)
     }
 
     private let insightsProvider: InsightProtocol
 
     init(_ insightsProvider: InsightProtocol = FirebaseManager()) {
-        self.allInsights = []
+        self.transactionInsights = []
         self.insightsProvider = insightsProvider
         super.init()
         Task {
@@ -63,7 +63,7 @@ class DialerInsightStore: BaseViewModel {
         let sortedInsights = result.sorted(by: {
             $0.createdDate > $1.createdDate
         })
-        self.allInsights = sortedInsights
+        self.transactionInsights = sortedInsights
     }
 
     func createInsight(_ insight: TransactionInsight) async -> Bool {
