@@ -33,11 +33,13 @@ struct WrappedNavigation: View {
                     WrappedViewTwo(totalAmountSpent: totalAmountSpent)
                         .hideNavigationBar()
                         .task { scheduleGotoNextPage() }
-                case .three(let categoryName, let amountSpent, let percentage):
+                case .three(let categoryName, let amountSpent, let percentage, let iconName, let color):
                     WrappedViewThree(
                         categoryName: categoryName,
                         amountSpent: amountSpent,
-                        percentage: percentage
+                        percentage: percentage,
+                        imageName: iconName,
+                        color: color
                     )
                     .hideNavigationBar()
 //                    .task { scheduleGotoNextPage() }
@@ -57,6 +59,7 @@ struct WrappedNavigation: View {
                 }
             }
         }
+        .preferredColorScheme(.light)
         .toolbar(.hidden, for: .navigationBar)
         .overlay(alignment: .topLeading) {
             HStack {
@@ -69,7 +72,7 @@ struct WrappedNavigation: View {
                     }
                 Spacer()
 
-                Button.init {
+                Button {
                     dismiss()
                 } label: {
                     Image(systemName: "xmark")
@@ -86,6 +89,8 @@ struct WrappedNavigation: View {
     private func scheduleGotoNextPage() {
         guard let nextRoute = getNextRoute() else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
             navPath.append(nextRoute)
         }
     }
@@ -104,7 +109,10 @@ struct WrappedNavigation: View {
             return .three(
                 categoryName: popular.title,
                 amountSpent: popular.totalAmount,
-                percentage: Double(popular.totalAmount) / Double(insightsStore.generalTotal)
+                percentage: Double(popular.totalAmount) / Double(insightsStore.generalTotal),
+                iconName: popular.iconName,
+                color: popular.color
+//                popular.icon
             )
             case .three: return .four
             case .four: return .five

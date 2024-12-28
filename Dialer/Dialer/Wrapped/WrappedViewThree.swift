@@ -12,6 +12,8 @@ struct WrappedViewThree: View {
     let categoryName: String
     let amountSpent: Int
     let percentage: Double
+    let imageName: String
+    let color: Color
     @State private var animateShapes = false
 
     var body: some View {
@@ -23,11 +25,21 @@ struct WrappedViewThree: View {
             VStack {
                 Spacer()
 
-                Image(.dialitApplogo) // Replace with top cateegory icon & color
+//                Image(.dialitApplogo) // Replace with top cateegory icon & color
+//                    .resizable()
+//                    .frame(width: 250, height: 250)
+//                    .cornerRadius(15)
+//                    .shadow(radius: 10)
+
+                Image(systemName: imageName)
                     .resizable()
+                    .scaledToFit()
+                    .padding(50)
                     .frame(width: 250, height: 250)
-                    .cornerRadius(15)
+                    .background(color)
+                    .clipShape(.rect(cornerRadius: 15))
                     .shadow(radius: 10)
+                    .foregroundStyle(.white)
 
                 Spacer()
 
@@ -134,6 +146,8 @@ struct WrappedViewThree: View {
     WrappedViewThree(
         categoryName: "Merchant",
         amountSpent: 53400,
-        percentage: 0.68
+        percentage: 0.68,
+        imageName: "person",
+        color: .black
     )
 }

@@ -87,6 +87,8 @@ struct DashBoardView: View {
 
             WrappedPreview(onStart: {
                 showWrappedSheet = true
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred()
             })
             .padding()
         }

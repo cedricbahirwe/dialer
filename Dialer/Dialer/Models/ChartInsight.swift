@@ -27,17 +27,18 @@ struct ChartInsight: Identifiable {
     }
 
     var icon: Image {
+        Image(systemName: iconName)
+    }
+
+    var iconName: String {
         switch name {
-        case .merchant:
-            Image(systemName: "storefront")
-        case .user:
-            Image(systemName: "person.fill")
-        case .airtime:
-            Image(systemName: "simcard")
-        case .other:
-            Image(systemName: "ellipsis")
+        case .merchant: "storefront"
+        case .user: "person.fill"
+        case .airtime: "simcard"
+        case .other: "ellipsis"
         }
     }
+
     var color: Color {
         switch name {
         case .merchant: .orange
