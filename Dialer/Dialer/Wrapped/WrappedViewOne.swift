@@ -11,8 +11,6 @@ import SwiftUI
 struct WrappedViewOne: View {
     let username: String
     let numberOfTransactions: Int
-    @EnvironmentObject private var userStore: UserStore
-    @EnvironmentObject private var insightsStore: DialerInsightStore
 
     @State private var animateShapes = false
     @State private var navigateToNextPage = false
@@ -95,22 +93,10 @@ struct WrappedViewOne: View {
 }
 
 enum WrappedRoute: Hashable {
-    case one(username: String, transactionsCount: Int), two, three, four, five, six
-
-    func next() -> WrappedRoute? {
-        switch self {
-        case .one: return .two
-        case .two: return .three
-        case .three: return .four
-        case .four: return .five
-        case .five: return .six
-        case .six: return nil
-        }
-    }
+    case one(username: String, transactionsCount: Int)
+    case two(totalAmountSpent: Int), three, four, five, six
 }
 
 #Preview {
     WrappedViewOne(username: "cedric", numberOfTransactions: 10)
-        .environmentObject(UserStore())
-        .environmentObject(DialerInsightStore())
 }

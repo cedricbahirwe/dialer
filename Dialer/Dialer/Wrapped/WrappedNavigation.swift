@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct WrappedNavigation: View {
+    @EnvironmentObject private var userStore: UserStore
+    @EnvironmentObject private var insightsStore: DialerInsightStore
     @Environment(\.dismiss) private var dismiss
     @State private var navPath: [WrappedRoute] = [.one(username: "cedric", transactionsCount: 10)]
 
@@ -27,8 +29,8 @@ struct WrappedNavigation: View {
                     )
                     .hideNavigationBar()
                     .task { scheduleGotoNextPage() }
-                case .two:
-                    WrappedViewTwo()
+                case .two(let totalAmountSpent):
+                    WrappedViewTwo(totalAmountSpent: totalAmountSpent)
                         .hideNavigationBar()
                         .task { scheduleGotoNextPage() }
                 case .three:
@@ -60,29 +62,43 @@ struct WrappedNavigation: View {
                     .clipShape(.rect(cornerRadius: 8))
 
                 Spacer()
-                Image(systemName: "xmark")
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.white)
-                    .bold()
-                    .background(.quaternary, in: .circle)
-                    .onTapGesture {
-                        dismiss()
-                    }
 
+                Button.init {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.white)
+                        .bold()
+                        .background(.quaternary, in: .circle)
+                }
             }
             .padding()
         }
     }
 
     private func scheduleGotoNextPage() {
-        guard let nextRoute = navPath.last?.next() else {
-            dismiss()
-            return
-        }
-
+        guard let nextRoute = getNextRoute() else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             navPath.append(nextRoute)
         }
+    }
+
+    private func getNextRoute() -> WrappedRoute? {
+
+        guard let lastRoute = navPath.last, lastRoute != .six else {
+            dismiss()
+            return nil
+        }
+
+        switch lastRoute {
+        case .one: return .two(totalAmountSpent: insightsStore.generalTotal)
+            case .two: return .three
+            case .three: return .four
+            case .four: return .five
+            case .five: return .six
+            case .six: return nil
+            }
     }
 }
 
