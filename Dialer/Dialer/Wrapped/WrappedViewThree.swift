@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct WrappedViewThree: View {
+    let categoryName: String
+    let amountSpent: Int
+    let percentage: Double
     @State private var animateShapes = false
 
     var body: some View {
@@ -35,25 +38,25 @@ struct WrappedViewThree: View {
                         .fontWeight(.bold)
                         .foregroundStyle(.black)
 
-                    Text("Merchant")
+                    Text(categoryName)
                         .font(.system(.largeTitle, design: .monospaced, weight: .heavy))
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 20)
 
-                    Text("Anirudh Ravichander")
-                        .font(.subheadline)
-                        .foregroundStyle(.black.opacity(0.7))
+//                    Text("Anirudh Ravichander")
+//                        .font(.subheadline)
+//                        .foregroundStyle(.black.opacity(0.7))
 
                     Text("Amount Spent")
                         .font(.headline)
                         .foregroundStyle(.black)
 
-                    Text("\(62000.formatted(.currency(code: "RWF")))")
+                    Text("\(amountSpent.formatted(.currency(code: "RWF")))")
                         .font(.largeTitle.bold())
                         .foregroundStyle(.black)
 
-                    Text("Making \((0.517).formatted(.percent)) of your total transactions")
+                    Text("Making \((percentage).formatted(.percent.precision(.fractionLength(1)))) of your total transactions")
                         .font(.footnote)
                         .foregroundStyle(.black.opacity(0.6))
                 }
@@ -128,5 +131,9 @@ struct WrappedViewThree: View {
 }
 
 #Preview {
-    WrappedViewThree()
+    WrappedViewThree(
+        categoryName: "Merchant",
+        amountSpent: 53400,
+        percentage: 0.68
+    )
 }

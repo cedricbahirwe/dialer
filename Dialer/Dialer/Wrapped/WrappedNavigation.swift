@@ -33,10 +33,14 @@ struct WrappedNavigation: View {
                     WrappedViewTwo(totalAmountSpent: totalAmountSpent)
                         .hideNavigationBar()
                         .task { scheduleGotoNextPage() }
-                case .three:
-                    WrappedViewThree()
-                        .hideNavigationBar()
-                        .task { scheduleGotoNextPage() }
+                case .three(let categoryName, let amountSpent, let percentage):
+                    WrappedViewThree(
+                        categoryName: categoryName,
+                        amountSpent: amountSpent,
+                        percentage: percentage
+                    )
+                    .hideNavigationBar()
+//                    .task { scheduleGotoNextPage() }
                 case .four:
                     WrappedViewFour()
                         .hideNavigationBar()
@@ -60,7 +64,9 @@ struct WrappedNavigation: View {
                     .resizable()
                     .frame(width: 40, height: 40)
                     .clipShape(.rect(cornerRadius: 8))
-
+                    .onTapGesture {
+                        navPath.removeLast()
+                    }
                 Spacer()
 
                 Button.init {
@@ -93,7 +99,13 @@ struct WrappedNavigation: View {
 
         switch lastRoute {
         case .one: return .two(totalAmountSpent: insightsStore.generalTotal)
-            case .two: return .three
+        case .two:
+            guard let popular = insightsStore.getPopularInsight() else { return nil }
+            return .three(
+                categoryName: popular.title,
+                amountSpent: popular.totalAmount,
+                percentage: Double(popular.totalAmount) / Double(insightsStore.generalTotal)
+            )
             case .three: return .four
             case .four: return .five
             case .five: return .six

@@ -94,7 +94,9 @@ struct WrappedViewOne: View {
 
 enum WrappedRoute: Hashable {
     case one(username: String, transactionsCount: Int)
-    case two(totalAmountSpent: Int), three, four, five, six
+    case two(totalAmountSpent: Int)
+    case  three(categoryName: String, amountSpent: Int, percentage: Double)
+    case four, five, six
 }
 
 #Preview {

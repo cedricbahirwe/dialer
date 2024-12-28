@@ -50,6 +50,10 @@ class DialerInsightStore: BaseViewModel {
         }
     }
 
+    func getPopularInsight() -> ChartInsight? {
+        chartInsights.sorted(by: { $0.totalAmount >  $1.totalAmount }).first
+    }
+
     func setFilterPeriod(_ period: InsightFilterPeriod) {
         guard selectedPeriod != period else { return }
         self.selectedPeriod = period
