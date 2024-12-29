@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct WrappedViewSix: View {
+    var onReplay: () -> Void
     @State private var animateShapes = false
     var colors: [Color] {
         animateShapes ? [Color.black, Color.black.opacity(0.5)]  : [Color.black.opacity(0.5), Color.black]
@@ -61,12 +62,22 @@ struct WrappedViewSix: View {
                                 Text("Thanks for being with us.\nUntill we meet again...")
                                     .font(.system(size: 20, weight: .medium))
                                     .multilineTextAlignment(.center)
-                                    .foregroundStyle(.black)
+                                    .opacity(0.75)
+
+                                Button {
+                                    onReplay()
+                                } label: {
+                                    Label("Replay from beginning", systemImage: "arrow.clockwise")
+                                        .foregroundStyle(.white)
+                                }
+                                .padding(.top)
 
                             }
                                 .padding()
+                            
                         )
                         .padding(25)
+                        .colorScheme(.dark)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.top, 250)
@@ -95,5 +106,5 @@ struct StarSpike: Shape {
 }
 
 #Preview {
-    WrappedViewSix()
+    WrappedViewSix(onReplay: {})
 }

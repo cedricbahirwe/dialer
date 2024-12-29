@@ -10,7 +10,7 @@ import FirebaseRemoteConfig
 protocol RemoteConfigsProtocol: AnyObject {
     func fetchRemoteValues() async
     func string(for key: RemoteConfigsFlag) -> String?
-    func bool(for key: RemoteConfigsFlag) -> Bool?
+    func bool(for key: RemoteConfigsFlag) -> Bool
 }
 
 final class FirebaseRemoteConfig {
@@ -47,7 +47,7 @@ extension FirebaseRemoteConfig: RemoteConfigsProtocol {
         firebaseRemoteConfig[key.rawValue].stringValue
     }
 
-    func bool(for key: RemoteConfigsFlag) -> Bool? {
+    func bool(for key: RemoteConfigsFlag) -> Bool {
         firebaseRemoteConfig[key.rawValue].boolValue
     }
 }
@@ -61,5 +61,6 @@ final class RemoteConfigs {
 
 enum RemoteConfigsFlag: String {
     case latestAppVersion = "latest_app_version"
+    case show2024Wrapped = "show_2024_wrapped"
 }
 

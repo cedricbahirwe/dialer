@@ -13,7 +13,6 @@ import SwiftUI
 class UserStore: BaseViewModel {
     @Published private(set) var users: [DialerUser]
     @Published private(set) var recoveryCode: String?
-    @Published var localUser: DialerUser?
 
     private let userProvider: UserProtocol
 
@@ -23,7 +22,6 @@ class UserStore: BaseViewModel {
         super.init()
         Task {
             await getUsers()
-            await getLocalUser()
         }
     }
 
@@ -36,17 +34,6 @@ class UserStore: BaseViewModel {
         stopFetch()
         let sortedResult = result.sorted(by: { $0.username < $1.username })
         self.setUsers(to: sortedResult)
-    }
-
-    func getLocalUser() async {
-        self.localUser = DialerStorage.shared.getSavedUser()
-        guard let device = DialerStorage.shared.getSavedDevice() else { return }
-        print("Loading user")
-        self.localUser = await userProvider.getUser(deviceHash: device.deviceHash)
-        if let localUser {
-            try? DialerStorage.shared.saveUser(localUser)
-        }
-        print("Finished loading user", localUser?.username)
     }
 
     func setUsers(to newUsers: [DialerUser]) {
@@ -90,11 +77,10 @@ class UserStore: BaseViewModel {
         guard components.count == 2 else { return  false }
         let username = ROT13.string(components[0])
 
-        print("Username", username)
+
         guard let user  = await userProvider.getUser(username: username)
         else { return false }
 
-        Log.debug("Checking: ", user.recoveryCode, " against: ", recoveryCode)
         let isRestored = user.recoveryCode == recoveryCode
         if isRestored {
             do {

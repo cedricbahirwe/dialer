@@ -21,11 +21,11 @@ struct WrappedViewTwo: View {
                     ForEach(0..<25, id: \.self) { _ in
                         Text("\(totalAmountSpent)")
                             .font(.system(size: 180, weight: .bold))
-                            .foregroundColor(getRandomColor())
+                            .foregroundStyle(getRandomColor())
                             .background(getRandomBackground())
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(1)
-                            .minimumScaleFactor(0.5)
+                            .minimumScaleFactor(0.25)
                     }
                 }.padding(.horizontal)
                 .offset(y: offset)

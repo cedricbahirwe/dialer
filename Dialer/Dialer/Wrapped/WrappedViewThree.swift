@@ -48,10 +48,6 @@ struct WrappedViewThree: View {
                         .font(.system(.largeTitle, design: .monospaced, weight: .heavy))
                         .foregroundStyle(.black)
 
-//                    Text("Anirudh Ravichander")
-//                        .font(.subheadline)
-//                        .foregroundStyle(.black.opacity(0.7))
-
                     Text("Amount Spent")
                         .font(.headline)
                         .foregroundStyle(.black)
@@ -60,9 +56,9 @@ struct WrappedViewThree: View {
                         .font(.largeTitle.bold())
                         .foregroundStyle(.black)
 
-                    Text("Making \((percentage).formatted(.percent.precision(.fractionLength(1)))) of your total transactions")
+                    Text("Making **\((percentage).formatted(.percent.precision(.fractionLength(1))))** of your total transactions")
                         .font(.footnote)
-                        .foregroundStyle(.black.opacity(0.6))
+                        .foregroundStyle(.black.opacity(0.8))
                 }
                 .padding()
 
@@ -120,7 +116,7 @@ struct CircularLayers: View {
 
 // Neon Green Zigzag Shape
 // make this pulsating???ux??
-struct ZigZagShapeView: View, Shape {
+struct ZigZagShapeView: View {
     var gradient: Gradient = Gradient(colors: [.main, .mainRed.opacity(1)])
     var body: some View {
         Path { path in
@@ -157,28 +153,5 @@ struct ZigZagShapeView: View, Shape {
             )
         )
         .offset(x: 80)
-    }
-    func path(in rect: CGRect) -> Path {
-        Path { path in
-            // Start point
-            path.move(to: CGPoint(x: 10, y: 50))
-            // Zigzag points
-            path.addLine(to: CGPoint(x: 40, y: 100))
-            path.addLine(to: CGPoint(x: 60, y: 250))
-            path.addLine(to: CGPoint(x: 80, y: -60))
-            path.addLine(to: CGPoint(x: 100, y: 300))
-            path.addLine(to: CGPoint(x: 120, y: 100))
-            path.addLine(to: CGPoint(x: 140, y: -100))
-            path.addLine(to: CGPoint(x: 160, y: 100))
-            path.addLine(to: CGPoint(x: 180, y: 350))
-            path.addLine(to: CGPoint(x: 200, y: -40))
-            path.addLine(to: CGPoint(x: 220, y: 450))
-            path.addLine(to: CGPoint(x: 240, y: 100))
-            path.addLine(to: CGPoint(x: 260, y: 250))
-            path.addLine(to: CGPoint(x: 280, y: -40))
-            path.addLine(to: CGPoint(x: 300, y: 450))
-            path.addLine(to: CGPoint(x: 320, y: 100))
-
-        }
     }
 }

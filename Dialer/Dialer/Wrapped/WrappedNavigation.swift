@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct WrappedNavigation: View {
-    @EnvironmentObject private var userStore: UserStore
     @EnvironmentObject private var insightsStore: DialerInsightStore
     @Environment(\.dismiss) private var dismiss
     @State private var navPath: [WrappedRoute] = []
@@ -21,18 +20,17 @@ struct WrappedNavigation: View {
                 Image(.dialitApplogo)
             }
             .task {
+                insightsStore.setFilterPeriod(.year)
                 navPath.append(
                     .one(
-                        username: userStore.localUser?.username ?? "Dialer ",
                         transactionsCount: insightsStore.transactionInsights.count
                     )
                 )
             }
             .navigationDestination(for: WrappedRoute.self) { route in
                 switch route {
-                case .one(let username, let transactionsCount):
+                case .one(let transactionsCount):
                     WrappedViewOne(
-                        username: username,
                         numberOfTransactions: transactionsCount
                     )
                     .hideNavigationBar()
@@ -60,9 +58,11 @@ struct WrappedNavigation: View {
                         .hideNavigationBar()
                         .task { scheduleGotoNextPage() }
                 case .six:
-                    WrappedViewSix()
-                        .hideNavigationBar()
-//                        .task { scheduleGotoNextPage() }
+                    WrappedViewSix(onReplay: {
+                        navPath = [navPath[0]]
+                    })
+                    .hideNavigationBar()
+                    //                        .task { scheduleGotoNextPage() }
 
                 }
             }
@@ -112,13 +112,13 @@ struct WrappedNavigation: View {
         guard let lastRoute = navPath.last else { return nil }
 
         switch lastRoute {
-        case .one: return .two(totalAmountSpent: insightsStore.generalTotal)
+        case .one: return .two(totalAmountSpent: insightsStore.yearlyTotal)
         case .two:
             guard let popular = insightsStore.getPopularInsight() else { return nil }
             return .three(
                 categoryName: popular.title,
                 amountSpent: popular.totalAmount,
-                percentage: Double(popular.totalAmount) / Double(insightsStore.generalTotal),
+                percentage: Double(popular.totalAmount) / Double(insightsStore.yearlyTotal),
                 iconName: popular.iconName,
                 color: popular.color
             )
@@ -136,11 +136,10 @@ struct WrappedNavigation: View {
 
 #Preview {
     WrappedNavigation()
-        .environmentObject(UserStore())
         .environmentObject(DialerInsightStore())
 }
 
-extension View {
+private extension View {
     @ViewBuilder
     func hideNavigationBar() -> some View {
         if #available(iOS 18.0, *) {
@@ -149,4 +148,14 @@ extension View {
             self.toolbar(.hidden, for: .navigationBar)
         }
     }
+}
+
+
+enum WrappedRoute: Hashable {
+    case one(transactionsCount: Int)
+    case two(totalAmountSpent: Int)
+    case  three(categoryName: String, amountSpent: Int, percentage: Double, iconName: String, color: Color)
+    case four(activeMonth: String, count: Int)
+    case five(spendings: [SpendingSummary])
+    case six
 }

@@ -45,7 +45,7 @@ struct WrappedViewFour: View {
                         .font(.system(.largeTitle, design: .monospaced, weight: .heavy))
                         .foregroundStyle(.black)
                     
-                    Text("You made a total of \(count) transactions that month")
+                    Text("You made a total of **\(count)** transaction\(count == 1 ? "" : "s") that month")
                         .font(.footnote)
                         .foregroundStyle(.black.opacity(0.6))
                 }

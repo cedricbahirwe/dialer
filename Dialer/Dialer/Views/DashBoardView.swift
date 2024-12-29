@@ -12,7 +12,8 @@ struct DashBoardView: View {
     @Binding var navPath: [AppRoute]
     
     @EnvironmentObject private var data: MainViewModel
-    
+    @EnvironmentObject private var insightsStore: DialerInsightStore
+
     @AppStorage(UserDefaultsKeys.showWelcomeView)
     private var showWelcomeView: Bool = false
     
@@ -85,12 +86,14 @@ struct DashBoardView: View {
             
             Spacer()
 
-            WrappedPreview(onStart: {
-                showWrappedSheet = true
-                let generator = UIImpactFeedbackGenerator(style: .medium)
-                generator.impactOccurred()
-            })
-            .padding()
+            if RemoteConfigs.shared.bool(for: .show2024Wrapped) && !insightsStore.transactionInsights.isEmpty {
+                WrappedPreview(onStart: {
+                    showWrappedSheet = true
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                })
+                .padding()
+            }
         }
         .blur(radius: showPurchaseSheet ? 1 : 0)
         .fullScreenCover(

@@ -16,7 +16,7 @@ struct UserDetailsCreationView: View {
     @StateObject private var mailComposer = MailComposer()
 
     @State private var username = ""
-    @State private var enteredRecoveryCode = "qevbf_N11R5054-5646-43SO-9255-063NS11R3266"
+    @State private var enteredRecoveryCode = ""
     @State private var showRestoreAlert = false
     @State private var isValidating = false
     @State private var usernameAvailable: Bool = false

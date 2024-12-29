@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 enum InsightFilterPeriod: String, CaseIterable {
     case week
@@ -19,13 +18,17 @@ enum InsightFilterPeriod: String, CaseIterable {
     }
 }
 
-@MainActor
-class DialerInsightStore: BaseViewModel {
+@MainActor class DialerInsightStore: BaseViewModel {
 
     @Published private(set) var transactionInsights: [TransactionInsight]
 
     var generalTotal: Int {
         transactionInsights.map(\.amount).reduce(0, +)
+    }
+
+    var yearlyTotal: Int {
+        filterInsightsByPeriod(transactionInsights, period: .year)
+            .map(\.amount).reduce(0, +)
     }
 
     let periods = InsightFilterPeriod.allCases
@@ -63,7 +66,7 @@ class DialerInsightStore: BaseViewModel {
                 SpendingSummary(
                     title: insight.title,
                     amount: insight.totalAmount,
-                    percentage: Double(insight.totalAmount) / Double(generalTotal)
+                    percentage: Double(insight.totalAmount) / Double(yearlyTotal)
                 )
             }
     }
@@ -72,11 +75,8 @@ class DialerInsightStore: BaseViewModel {
         let dates = transactionInsights.map(\.createdDate)
         guard !dates.isEmpty else { return nil }
 
-        // Create a calendar instance
-        var calendar = Calendar.current
-        calendar.locale = Locale(identifier: "en_US")
+        let calendar = Calendar.current
 
-        // Dictionary to count occurrences of each month
         var monthCounts: [Int: Int] = [:]
 
         // Count dates by their month

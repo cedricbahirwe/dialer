@@ -47,7 +47,7 @@ struct WrappedViewFive: View {
                                     
                                     Text(spendings[index].amount.formatted(.currency(code: "RWF")))
                                         .font(.headline.weight(.medium))
-                                        .foregroundColor(.gray)
+                                        .foregroundStyle(.gray)
                                 }
                                 
                                 Spacer()
