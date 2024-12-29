@@ -54,11 +54,11 @@ struct WrappedNavigation: View {
                 case .four(let activeMonth, let count):
                     WrappedViewFour(activeMonth: activeMonth, count: count)
                         .hideNavigationBar()
-//                        .task { scheduleGotoNextPage() }
-                case .five:
-                    WrappedViewFive()
-                        .hideNavigationBar()
                         .task { scheduleGotoNextPage() }
+                case .five(let spendings):
+                    WrappedViewFive(spendings: spendings)
+                        .hideNavigationBar()
+//                        .task { scheduleGotoNextPage() }
                 case .six:
                     WrappedViewSix()
                         .hideNavigationBar()
@@ -68,6 +68,7 @@ struct WrappedNavigation: View {
             }
         }
         .preferredColorScheme(.light)
+        .statusBarHidden()
         .toolbar(.hidden, for: .navigationBar)
         .overlay(alignment: .topLeading) {
             HStack {
@@ -125,10 +126,12 @@ struct WrappedNavigation: View {
         case .three:
             guard let activeMonth = insightsStore.getMostActiveMonth() else { return nil }
             return .four(activeMonth: activeMonth.month, count: activeMonth.count)
-            case .four: return .five
-            case .five: return .six
-            case .six: return nil
-            }
+        case .four:
+            guard let spendings = insightsStore.makeSpendings() else { return nil }
+            return .five(spendings: spendings)
+        case .five: return .six
+        case .six: return nil
+        }
     }
 }
 

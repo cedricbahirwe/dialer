@@ -97,7 +97,8 @@ enum WrappedRoute: Hashable {
     case two(totalAmountSpent: Int)
     case  three(categoryName: String, amountSpent: Int, percentage: Double, iconName: String, color: Color)
     case four(activeMonth: String, count: Int)
-    case five, six
+    case five(spendings: [SpendingSummary])
+    case six
 }
 
 #Preview {

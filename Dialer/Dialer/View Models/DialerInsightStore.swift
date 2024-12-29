@@ -54,6 +54,20 @@ class DialerInsightStore: BaseViewModel {
         chartInsights.sorted(by: { $0.totalAmount >  $1.totalAmount }).first
     }
 
+    func makeSpendings() -> [SpendingSummary]? {
+        guard !chartInsights.isEmpty else { return nil }
+
+        return chartInsights
+            .sorted(by: { $0.totalAmount > $1.totalAmount })
+            .map { insight in
+                SpendingSummary(
+                    title: insight.title,
+                    amount: insight.totalAmount,
+                    percentage: Double(insight.totalAmount) / Double(generalTotal)
+                )
+            }
+    }
+
     func getMostActiveMonth() -> (month: String, count: Int)? {
         let dates = transactionInsights.map(\.createdDate)
         guard !dates.isEmpty else { return nil }

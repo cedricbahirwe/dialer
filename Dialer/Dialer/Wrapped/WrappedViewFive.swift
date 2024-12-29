@@ -8,17 +8,16 @@
 
 import SwiftUI
 
-let deval = false
-
 struct WrappedViewFive: View {
-    @State private var showTitle = deval
-    @State private var showSpendingList = deval
+    let spendings: [SpendingSummary]
+    @State private var showTitle = false
+    @State private var showSpendingList = false
     @State private var removeOffset = false
 
     var body: some View {
         ZStack {
             AnimatedBackground()
-
+            
             VStack(alignment: .leading) {
                 if showTitle {
                     Text("Your spendings")
@@ -30,29 +29,29 @@ struct WrappedViewFive: View {
                         .animation(.easeIn(duration: 1), value: showTitle)
                         .padding(.horizontal)
                 }
-
+                
                 if showSpendingList {
                     VStack(alignment: .leading, spacing: 25) {
                         ForEach(spendings.indices, id: \.self) { index in
                             HStack(spacing: 16) {
-
+                                
                                 Text("\(index + 1)")
                                     .font(.system(.largeTitle, design: .monospaced, weight: .black))
-
+                                
                                 Divider()
                                     .frame(maxHeight: 100)
-
+                                
                                 VStack(alignment: .leading) {
                                     Text(spendings[index].title)
                                         .font(.title2.bold())
-
+                                    
                                     Text(spendings[index].amount.formatted(.currency(code: "RWF")))
-                                        .font(.subheadline)
+                                        .font(.headline.weight(.medium))
                                         .foregroundColor(.gray)
                                 }
-
+                                
                                 Spacer()
-
+                                
                                 Text(spendings[index].percentage.formatted(.percent.precision(.fractionLength(1))))
                                     .font(.system(.title, design: .serif, weight: .heavy))
                             }
@@ -67,8 +66,10 @@ struct WrappedViewFive: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.matteBlack)
         .foregroundStyle(.white)
+        .colorScheme(.dark)
         .task {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation {
@@ -80,8 +81,8 @@ struct WrappedViewFive: View {
                     showSpendingList = true
                 }
             }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.75) {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 withAnimation(.bouncy(extraBounce: 0.2)) {
                     removeOffset = true
                 }
@@ -91,15 +92,15 @@ struct WrappedViewFive: View {
 }
 
 #Preview {
-    WrappedViewFive()
+    WrappedViewFive(spendings: spendingsExample)
 }
-struct SpendingSummary {
+struct SpendingSummary: Hashable {
     let title: String
     let amount: Int
     let percentage: Double
 }
 
-let spendings: [SpendingSummary] = [
+let spendingsExample: [SpendingSummary] = [
     .init(title: "User", amount: 15000, percentage: 0.492),
     .init(title: "Airtime", amount: 15000, percentage: 0.419),
     .init(title: "Merchant", amount: 2400, percentage: 0.089)

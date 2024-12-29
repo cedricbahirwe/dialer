@@ -62,7 +62,7 @@ struct WrappedViewSix: View {
                                     .padding(.bottom,10)
 
                             }
-                            .padding()
+                                .padding()
                         )
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -70,9 +70,6 @@ struct WrappedViewSix: View {
                 .padding(.leading,30)
 
             }
-
-            // Yellow diamond
-
         }
         .navigationBarBackButtonHidden(true)
     }
