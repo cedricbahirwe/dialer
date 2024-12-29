@@ -91,6 +91,7 @@
 		CB5A33852CDCC5EE00548A10 /* AppleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33842CDCC5EE00548A10 /* AppleInfo.swift */; };
 		CB5A33872CDCC60D00548A10 /* UserProfilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33862CDCC60D00548A10 /* UserProfilePreview.swift */; };
 		CB5A33892CDCC64300548A10 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33882CDCC64300548A10 /* SettingsStore.swift */; };
+		CB6165C52D1DC66000C142E5 /* WrappedPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */; };
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */; };
@@ -115,6 +116,15 @@
 		CBC8AE3228D87F0000FE55A0 /* DialerExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */; };
 		CBC8AE3428D89C4B00FE55A0 /* DashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */; };
 		CBCAE5CE294A88630061C273 /* DialerLocalNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */; };
+		CBD481462D2007A100223F5D /* WrappedPreviewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481452D2007A100223F5D /* WrappedPreviewBackground.swift */; };
+		CBD4814C2D20083300223F5D /* WrappedViewOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD4814B2D20083300223F5D /* WrappedViewOne.swift */; };
+		CBD481522D200CDA00223F5D /* WrappedViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481512D200CDA00223F5D /* WrappedViewTwo.swift */; };
+		CBD481542D200CDF00223F5D /* WrappedViewThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481532D200CDF00223F5D /* WrappedViewThree.swift */; };
+		CBD481562D200CE300223F5D /* WrappedViewFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481552D200CE300223F5D /* WrappedViewFour.swift */; };
+		CBD481582D200CE800223F5D /* WrappedViewFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481572D200CE800223F5D /* WrappedViewFive.swift */; };
+		CBD4815A2D2010C200223F5D /* WrappedViewSix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481592D2010C200223F5D /* WrappedViewSix.swift */; };
+		CBD4815C2D2013C100223F5D /* WrappedNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD4815B2D2013C100223F5D /* WrappedNavigation.swift */; };
+		CBD481602D20CAFA00223F5D /* DialerWrappedFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD4815F2D20CAFA00223F5D /* DialerWrappedFooter.swift */; };
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
@@ -228,6 +238,7 @@
 		CB5A33842CDCC5EE00548A10 /* AppleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleInfo.swift; sourceTree = "<group>"; };
 		CB5A33862CDCC60D00548A10 /* UserProfilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePreview.swift; sourceTree = "<group>"; };
 		CB5A33882CDCC64300548A10 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedPreview.swift; sourceTree = "<group>"; };
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAccount.swift; sourceTree = "<group>"; };
@@ -252,6 +263,15 @@
 		CBC8AE3128D87F0000FE55A0 /* DialerExternalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerExternalLinks.swift; sourceTree = "<group>"; };
 		CBC8AE3328D89C4B00FE55A0 /* DashItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashItemView.swift; sourceTree = "<group>"; };
 		CBCAE5CD294A88630061C273 /* DialerLocalNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerLocalNotificationCenter.swift; sourceTree = "<group>"; };
+		CBD481452D2007A100223F5D /* WrappedPreviewBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedPreviewBackground.swift; sourceTree = "<group>"; };
+		CBD4814B2D20083300223F5D /* WrappedViewOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewOne.swift; sourceTree = "<group>"; };
+		CBD481512D200CDA00223F5D /* WrappedViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewTwo.swift; sourceTree = "<group>"; };
+		CBD481532D200CDF00223F5D /* WrappedViewThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewThree.swift; sourceTree = "<group>"; };
+		CBD481552D200CE300223F5D /* WrappedViewFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewFour.swift; sourceTree = "<group>"; };
+		CBD481572D200CE800223F5D /* WrappedViewFive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewFive.swift; sourceTree = "<group>"; };
+		CBD481592D2010C200223F5D /* WrappedViewSix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewSix.swift; sourceTree = "<group>"; };
+		CBD4815B2D2013C100223F5D /* WrappedNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedNavigation.swift; sourceTree = "<group>"; };
+		CBD4815F2D20CAFA00223F5D /* DialerWrappedFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerWrappedFooter.swift; sourceTree = "<group>"; };
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
@@ -374,6 +394,7 @@
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
 				CB0A52902944EBA30023370C /* DialerDEV.xcconfig */,
+				CB6165C12D1DC54000C142E5 /* Wrapped */,
 				82FBCC05261BB2F400F00FAE /* Views */,
 				825F996826720B75009E4A7B /* Models */,
 				82FBCC07261BB30D00F00FAE /* View Models */,
@@ -561,6 +582,23 @@
 				CB5A33862CDCC60D00548A10 /* UserProfilePreview.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		CB6165C12D1DC54000C142E5 /* Wrapped */ = {
+			isa = PBXGroup;
+			children = (
+				CBD4815B2D2013C100223F5D /* WrappedNavigation.swift */,
+				CBD4814B2D20083300223F5D /* WrappedViewOne.swift */,
+				CBD481512D200CDA00223F5D /* WrappedViewTwo.swift */,
+				CBD481532D200CDF00223F5D /* WrappedViewThree.swift */,
+				CBD481552D200CE300223F5D /* WrappedViewFour.swift */,
+				CBD4815F2D20CAFA00223F5D /* DialerWrappedFooter.swift */,
+				CBD481572D200CE800223F5D /* WrappedViewFive.swift */,
+				CBD481592D2010C200223F5D /* WrappedViewSix.swift */,
+				CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */,
+				CBD481452D2007A100223F5D /* WrappedPreviewBackground.swift */,
+			);
+			path = Wrapped;
 			sourceTree = "<group>";
 		};
 		CBA429DE29AB85E70041D578 /* Reusable */ = {
@@ -782,16 +820,21 @@
 				CB94D3B12BCB2CD800CC60A9 /* BiometricsAccessibility.swift in Sources */,
 				CB18BD5729AE929F00A7B45C /* MerchantsListView.swift in Sources */,
 				CB8508B62C879C1300D2080F /* DialerUser.swift in Sources */,
+				CBD4814C2D20083300223F5D /* WrappedViewOne.swift in Sources */,
 				CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */,
 				CBC262C42784D233000B8E0E /* RecentDialCode.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */,
 				CBE61A422C9C1D7B003E1795 /* AirtimeToInsightMigrator.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */,
+				CBD481602D20CAFA00223F5D /* DialerWrappedFooter.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
+				CBD481542D200CDF00223F5D /* WrappedViewThree.swift in Sources */,
+				CBD481462D2007A100223F5D /* WrappedPreviewBackground.swift in Sources */,
 				CBE41E6A2D089C880074FB4B /* MerchantSelectionView.swift in Sources */,
 				CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */,
+				CBD4815C2D2013C100223F5D /* WrappedNavigation.swift in Sources */,
 				CBE61A462C9C2795003E1795 /* InsightHistoryViewModel.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,
 				CBE73C5E2A2C76BF00C7712B /* MockPreviewData.swift in Sources */,
@@ -821,6 +864,7 @@
 				CB393A2728120A59009CA95E /* String+Extension.swift in Sources */,
 				CB338CD429AF626500BEAD9A /* Tracker.swift in Sources */,
 				CBC262BF2784C7D3000B8E0E /* MailView.swift in Sources */,
+				CBD481582D200CE800223F5D /* WrappedViewFive.swift in Sources */,
 				CB1099462A61557A00E99555 /* CodeScannerView.swift in Sources */,
 				CBC262C62784D243000B8E0E /* AirtimeTransaction.swift in Sources */,
 				CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */,
@@ -844,15 +888,19 @@
 				CB1CC86C29C4524200FF2116 /* FirebaseCRUD.swift in Sources */,
 				821C0734264DD78F00DBD545 /* NewDialingView.swift in Sources */,
 				CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */,
+				CBD4815A2D2010C200223F5D /* WrappedViewSix.swift in Sources */,
 				CB1B8EC729014C8A00DFBCDB /* AlertDialog.swift in Sources */,
 				CB94D3AF2BCB1AC800CC60A9 /* DialerQuickCode.swift in Sources */,
+				CB6165C52D1DC66000C142E5 /* WrappedPreview.swift in Sources */,
 				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
 				825F996326720AE6009E4A7B /* TransferView.swift in Sources */,
 				F4EE6CE82A6531D800F7EEDA /* AppConstants.swift in Sources */,
+				CBD481522D200CDA00223F5D /* WrappedViewTwo.swift in Sources */,
 				CB45381028AB7E8B00F3F24C /* USSDCode.swift in Sources */,
 				CBA9BB03294C8F4900D95C82 /* AppNotification.swift in Sources */,
 				CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */,
 				CB2C5BB52C9B02EA00224480 /* SpendingCategoryOverview.swift in Sources */,
+				CBD481562D200CE300223F5D /* WrappedViewFour.swift in Sources */,
 				CB8508B42C879A7300D2080F /* UserStore.swift in Sources */,
 				CB338CD829AF668300BEAD9A /* FirebaseTracker+Extensions.swift in Sources */,
 				CB3B81E629ABD0D8001FAFF6 /* FirebaseManager.swift in Sources */,
@@ -1088,7 +1136,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.3.0;
+				MARKETING_VERSION = 7.4.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1123,7 +1171,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.3.0;
+				MARKETING_VERSION = 7.4.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1276,7 +1324,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.3.0;
+				MARKETING_VERSION = 7.4.0;
 				OTHER_LDFLAGS = (
 					"-Xlinker",
 					"-no_warn_duplicate_libraries",
@@ -1424,7 +1472,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.3.0;
+				MARKETING_VERSION = 7.4.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.abc.incs.cedricbahirwe.Dialit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";

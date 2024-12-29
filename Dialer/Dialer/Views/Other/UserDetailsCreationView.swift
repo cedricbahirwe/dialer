@@ -146,7 +146,7 @@ struct UserDetailsCreationView: View {
             }
         }
         .preferredColorScheme(.dark)
-        .trackAppearance(.newMerchant)
+        .trackAppearance(.newUsername)
     }
 
     private func validateUsername(_ username: String) {

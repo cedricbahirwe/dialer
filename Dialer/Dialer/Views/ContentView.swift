@@ -56,7 +56,7 @@ struct ContentView: View {
         }
         
     }
-    
+
     private func setupAppearance() {
         
         let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)

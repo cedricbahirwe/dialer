@@ -12,7 +12,8 @@ struct DashBoardView: View {
     @Binding var navPath: [AppRoute]
     
     @EnvironmentObject private var data: MainViewModel
-    
+    @EnvironmentObject private var insightsStore: DialerInsightStore
+
     @AppStorage(UserDefaultsKeys.showWelcomeView)
     private var showWelcomeView: Bool = false
     
@@ -20,6 +21,7 @@ struct DashBoardView: View {
     private var allowBiometrics = false
     
     @State private var showPurchaseSheet = false
+    @State private var showWrappedSheet = false
     @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
     @Environment(\.colorScheme) private var colorScheme
 
@@ -83,18 +85,37 @@ struct DashBoardView: View {
             .padding()
             
             Spacer()
+
+            if RemoteConfigs.shared.bool(for: .show2024Wrapped) && !insightsStore.transactionInsights.isEmpty {
+                WrappedPreview(onStart: {
+                    showWrappedSheet = true
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                })
+                .padding()
+            }
         }
         .blur(radius: showPurchaseSheet ? 1 : 0)
-        .fullScreenCover(isPresented: $showUsernameSheet,
-                         onDismiss: {
-            showWelcomeView = true
-        }) {
-            UserDetailsCreationView()
-        }
+        .fullScreenCover(
+            isPresented: $showUsernameSheet,
+            onDismiss: {
+                showWelcomeView = true
+            }, content: {
+                UserDetailsCreationView()
+            }
+        )
+        .fullScreenCover(
+            isPresented: $showWrappedSheet,
+            onDismiss: {
+                // Disable in local storage may be?
+            }, content: {
+                WrappedNavigation()
+            }
+        )
         .task {
             if #available(iOS 17.0, *) {
                 do {
-//                    try Tips.resetDatastore()
+                    //                    try Tips.resetDatastore()
                     try Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)

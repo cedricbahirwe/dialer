@@ -16,7 +16,7 @@ struct DialingsHistoryView: View {
         GridItem(.flexible())
     ]
     var total: Int {
-        insightsStore.insights.map(\.totalAmount).reduce(0, +)
+        insightsStore.chartInsights.map(\.totalAmount).reduce(0, +)
     }
 
     @State private var selectedInsight: ChartInsight?
@@ -25,7 +25,7 @@ struct DialingsHistoryView: View {
         if let selectedInsight {
             selectedInsight.transactions
         } else {
-            insightsStore.allInsights
+            insightsStore.transactionInsights
         }
     }
 
@@ -54,7 +54,7 @@ struct DialingsHistoryView: View {
 
                 } header: {
                     LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(insightsStore.insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
+                        ForEach(insightsStore.chartInsights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
                             SpendingCategoryOverview(
                                 overview: insight,
                                 isSelected: selectedInsight?.id == insight.id,
@@ -82,7 +82,7 @@ struct DialingsHistoryView: View {
         .toolbarBackground(Material.ultraThin, for: .navigationBar)
         .background(Color.primaryBackground)
         .overlay {
-            if insightsStore.allInsights.isEmpty {
+            if insightsStore.transactionInsights.isEmpty {
                 emptyHistoryView
             }
         }

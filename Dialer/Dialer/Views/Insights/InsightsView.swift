@@ -17,7 +17,7 @@ struct InsightsView: View {
         GridItem(.flexible())
     ]
     var total: Int {
-        insightsStore.insights.map(\.totalAmount).reduce(0, +)
+        insightsStore.chartInsights.map(\.totalAmount).reduce(0, +)
     }
 
     @State private var selectedInsight: ChartInsight?
@@ -27,7 +27,7 @@ struct InsightsView: View {
             VStack(alignment: .leading, spacing: 20) {
 
                 ZStack {
-                    InsightsChartsView(insights: insightsStore.insights, total: total)
+                    InsightsChartsView(insights: insightsStore.chartInsights, total: total)
                         .animation(.smooth, value: insightsStore.selectedPeriod)
                         .aspectRatio(1, contentMode: .fit)
 
@@ -59,7 +59,7 @@ struct InsightsView: View {
                             .font(.system(.title3, design: .rounded, weight: .bold))
 
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(insightsStore.insights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
+                            ForEach(insightsStore.chartInsights.sorted(by: { $0.totalAmount > $1.totalAmount })) { insight in
                                 SpendingCategoryOverview(
                                     overview: insight,
                                     isSelected: selectedInsight?.id == insight.id,
@@ -86,15 +86,15 @@ struct InsightsView: View {
                         .ignoresSafeArea()
                 )
             }
-            .opacity(insightsStore.insights.isEmpty ? 0 : 1)
+            .opacity(insightsStore.chartInsights.isEmpty ? 0 : 1)
             .overlay {
-                if insightsStore.allInsights.isEmpty {
+                if insightsStore.transactionInsights.isEmpty {
                     ContentUnavailableView {
                         Label("No insights found yet.", systemImage: "exclamationmark.circle")
                     } description: {
                         Text("Make some transactions to see insights.")
                     }
-                } else if insightsStore.insights.isEmpty {
+                } else if insightsStore.chartInsights.isEmpty {
                     ContentUnavailableView {
                         Label("No insights found for this \(insightsStore.selectedPeriod.capitalized).", systemImage: "exclamationmark.circle")
 

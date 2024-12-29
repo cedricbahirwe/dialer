@@ -76,6 +76,8 @@ class UserStore: BaseViewModel {
         let components = recoveryCode.components(separatedBy: "_")
         guard components.count == 2 else { return  false }
         let username = ROT13.string(components[0])
+
+
         guard let user  = await userProvider.getUser(username: username)
         else { return false }
 
@@ -85,6 +87,7 @@ class UserStore: BaseViewModel {
                 try DialerStorage.shared.saveDevice(user.device)
             } catch {
                 Tracker.shared.logError(error: error)
+                Log.debug(error.localizedDescription)
             }
         }
         return isRestored
