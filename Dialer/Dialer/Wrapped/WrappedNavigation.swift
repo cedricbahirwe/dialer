@@ -12,13 +12,21 @@ struct WrappedNavigation: View {
     @EnvironmentObject private var userStore: UserStore
     @EnvironmentObject private var insightsStore: DialerInsightStore
     @Environment(\.dismiss) private var dismiss
-    @State private var navPath: [WrappedRoute] = [.one(username: "cedric", transactionsCount: 10)]
+    @State private var navPath: [WrappedRoute] = []
 
     var body: some View {
         NavigationStack(path: $navPath) {
             ZStack {
                 Color.black.ignoresSafeArea()
                 Image(.dialitApplogo)
+            }
+            .task {
+                navPath.append(
+                    .one(
+                        username: userStore.localUser?.username ?? "Dialer ",
+                        transactionsCount: insightsStore.transactionInsights.count
+                    )
+                )
             }
             .navigationDestination(for: WrappedRoute.self) { route in
                 switch route {

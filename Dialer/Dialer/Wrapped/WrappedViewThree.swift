@@ -98,12 +98,21 @@ struct WrappedViewThree: View {
 
 struct CircularLayers: View {
     var color: Color = Color.yellow
+    @State var animate = false
     var body: some View {
-        ForEach(0..<12) { index in
-            Circle()
-                .strokeBorder(color.opacity(Double(index + 1) * 0.2), lineWidth: 18)
-                .frame(width: CGFloat(200 + index * 40), height: CGFloat(200 + index * 40))
-                .offset(x: -50, y: 100)
+        ZStack {
+            ForEach(0..<12) { index in
+                Circle()
+                    .strokeBorder(color.opacity(Double(index + 1) * 0.2), lineWidth: 18)
+                    .frame(width: CGFloat(200 + index * 40), height: CGFloat(200 + index * 40))
+                    .offset(x: -50, y: 100)
+                    .scaleEffect(animate ? 1.5 : 1)
+            }
+        }
+        .task {
+            withAnimation(.linear(duration: TimeInterval(6)).repeatForever(autoreverses: true)) {
+                self.animate.toggle()
+            }
         }
     }
 }

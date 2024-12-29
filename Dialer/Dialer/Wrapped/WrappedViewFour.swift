@@ -18,9 +18,9 @@ struct WrappedViewFour: View {
                     gradient: Gradient(colors: [.green, .green.opacity(0.6), .green.opacity(0.3)]),
                     center: .bottom)
                 .ignoresSafeArea()
-                .overlay(CircularLayers())
+                .overlay(CircularLayers(animate: true))
 
-                ZigZagShapeView(gradient: Gradient(colors: [.green, .green.opacity(0.8)]))
+                ZigZagShapeView(gradient: Gradient(colors: [.red, .green.opacity(0.8)]))
             }
 
             // Foreground
@@ -38,7 +38,7 @@ struct WrappedViewFour: View {
 
                 VStack(spacing: 20) {
                     Text("Most Active Month")
-                        .font(.title2.bold())
+                        .font(.title2.weight(.semibold))
                         .foregroundStyle(.black)
                     
                     Text(activeMonth)
