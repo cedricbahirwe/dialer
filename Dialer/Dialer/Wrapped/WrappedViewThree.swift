@@ -25,12 +25,6 @@ struct WrappedViewThree: View {
             VStack {
                 Spacer()
 
-//                Image(.dialitApplogo) // Replace with top cateegory icon & color
-//                    .resizable()
-//                    .frame(width: 250, height: 250)
-//                    .cornerRadius(15)
-//                    .shadow(radius: 10)
-
                 Image(systemName: imageName)
                     .resizable()
                     .scaledToFit()
@@ -52,9 +46,7 @@ struct WrappedViewThree: View {
 
                     Text(categoryName)
                         .font(.system(.largeTitle, design: .monospaced, weight: .heavy))
-                        .multilineTextAlignment(.center)
                         .foregroundStyle(.black)
-                        .padding(.horizontal, 20)
 
 //                    Text("Anirudh Ravichander")
 //                        .font(.subheadline)
@@ -76,68 +68,20 @@ struct WrappedViewThree: View {
 
                 Spacer()
 
-                Text("Dialer@WRAPPED")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                DialerWrappedFooter()
             }
         }
     }
 
     private var backgroundView: some View {
-        GeometryReader { geometry in
-            ZStack {
-                // Background: Purple gradient with circular layers
-                AngularGradient(gradient: Gradient(colors: [.yellow, .yellow.opacity(0.6), .yellow.opacity(0.3)]),
-                                center: .bottom)
-                .ignoresSafeArea()
-                .overlay(
-                    // Circular Layers
-                    ForEach(0..<12) { index in
-                        Circle()
-                            .strokeBorder(Color.yellow.opacity(Double(index + 1) * 0.2), lineWidth: 18)
-                            .frame(width: CGFloat(200 + index * 40), height: CGFloat(200 + index * 40))
-                            .offset(x: -50, y: 100)
-                    }
+        ZStack {
+            AngularGradient(
+                gradient: Gradient(colors: [.yellow, .yellow.opacity(0.6), .yellow.opacity(0.3)]),
+                center: .bottom)
+            .ignoresSafeArea()
+            .overlay(CircularLayers())
 
-                )
-
-                // Neon Green Zigzag Shape
-                // make this pulsating???ux??
-                Path { path in
-                    // Start point
-                    path.move(to: CGPoint(x: 10, y: 50))
-                    // Zigzag points
-                    path.addLine(to: CGPoint(x: 40, y: 100))
-                    path.addLine(to: CGPoint(x: 60, y: 250))
-                    path.addLine(to: CGPoint(x: 80, y: -60))
-                    path.addLine(to: CGPoint(x: 100, y: 300))
-                    path.addLine(to: CGPoint(x: 120, y: 100))
-                    path.addLine(to: CGPoint(x: 140, y: -100))
-                    path.addLine(to: CGPoint(x: 160, y: 100))
-                    path.addLine(to: CGPoint(x: 180, y: 350))
-                    path.addLine(to: CGPoint(x: 200, y: -40))
-                    path.addLine(to: CGPoint(x: 220, y: 450))
-                    path.addLine(to: CGPoint(x: 240, y: 100))
-                    path.addLine(to: CGPoint(x: 260, y: 250))
-                    path.addLine(to: CGPoint(x: 280, y: -40))
-                    path.addLine(to: CGPoint(x: 300, y: 450))
-                    path.addLine(to: CGPoint(x: 320, y: 100))
-
-                }
-                .stroke(
-                    LinearGradient(
-                        gradient: Gradient(colors: [.main, .mainRed.opacity(1)]),
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    ),
-                    style: StrokeStyle(
-                        lineWidth: 20,
-                        lineCap: .round,
-                        lineJoin: .round
-                    )
-                )
-                .offset(x: 80)
-            }
+            ZigZagShapeView()
         }
     }
 }
@@ -150,4 +94,82 @@ struct WrappedViewThree: View {
         imageName: "person",
         color: .black
     )
+}
+
+struct CircularLayers: View {
+    var color: Color = Color.yellow
+    var body: some View {
+        ForEach(0..<12) { index in
+            Circle()
+                .strokeBorder(color.opacity(Double(index + 1) * 0.2), lineWidth: 18)
+                .frame(width: CGFloat(200 + index * 40), height: CGFloat(200 + index * 40))
+                .offset(x: -50, y: 100)
+        }
+    }
+}
+
+
+// Neon Green Zigzag Shape
+// make this pulsating???ux??
+struct ZigZagShapeView: View, Shape {
+    var gradient: Gradient = Gradient(colors: [.main, .mainRed.opacity(1)])
+    var body: some View {
+        Path { path in
+            // Start point
+            path.move(to: CGPoint(x: 10, y: 50))
+            // Zigzag points
+            path.addLine(to: CGPoint(x: 40, y: 100))
+            path.addLine(to: CGPoint(x: 60, y: 250))
+            path.addLine(to: CGPoint(x: 80, y: -60))
+            path.addLine(to: CGPoint(x: 100, y: 300))
+            path.addLine(to: CGPoint(x: 120, y: 100))
+            path.addLine(to: CGPoint(x: 140, y: -100))
+            path.addLine(to: CGPoint(x: 160, y: 100))
+            path.addLine(to: CGPoint(x: 180, y: 350))
+            path.addLine(to: CGPoint(x: 200, y: -40))
+            path.addLine(to: CGPoint(x: 220, y: 450))
+            path.addLine(to: CGPoint(x: 240, y: 100))
+            path.addLine(to: CGPoint(x: 260, y: 250))
+            path.addLine(to: CGPoint(x: 280, y: -40))
+            path.addLine(to: CGPoint(x: 300, y: 450))
+            path.addLine(to: CGPoint(x: 320, y: 100))
+
+        }
+        .stroke(
+            LinearGradient(
+                gradient: gradient,
+                startPoint: .leading,
+                endPoint: .trailing
+            ),
+            style: StrokeStyle(
+                lineWidth: 20,
+                lineCap: .round,
+                lineJoin: .round
+            )
+        )
+        .offset(x: 80)
+    }
+    func path(in rect: CGRect) -> Path {
+        Path { path in
+            // Start point
+            path.move(to: CGPoint(x: 10, y: 50))
+            // Zigzag points
+            path.addLine(to: CGPoint(x: 40, y: 100))
+            path.addLine(to: CGPoint(x: 60, y: 250))
+            path.addLine(to: CGPoint(x: 80, y: -60))
+            path.addLine(to: CGPoint(x: 100, y: 300))
+            path.addLine(to: CGPoint(x: 120, y: 100))
+            path.addLine(to: CGPoint(x: 140, y: -100))
+            path.addLine(to: CGPoint(x: 160, y: 100))
+            path.addLine(to: CGPoint(x: 180, y: 350))
+            path.addLine(to: CGPoint(x: 200, y: -40))
+            path.addLine(to: CGPoint(x: 220, y: 450))
+            path.addLine(to: CGPoint(x: 240, y: 100))
+            path.addLine(to: CGPoint(x: 260, y: 250))
+            path.addLine(to: CGPoint(x: 280, y: -40))
+            path.addLine(to: CGPoint(x: 300, y: 450))
+            path.addLine(to: CGPoint(x: 320, y: 100))
+
+        }
+    }
 }

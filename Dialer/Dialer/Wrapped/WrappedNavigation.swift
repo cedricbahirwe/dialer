@@ -42,11 +42,11 @@ struct WrappedNavigation: View {
                         color: color
                     )
                     .hideNavigationBar()
-//                    .task { scheduleGotoNextPage() }
-                case .four:
-                    WrappedViewFour()
+                    .task { scheduleGotoNextPage() }
+                case .four(let activeMonth, let count):
+                    WrappedViewFour(activeMonth: activeMonth, count: count)
                         .hideNavigationBar()
-                        .task { scheduleGotoNextPage() }
+//                        .task { scheduleGotoNextPage() }
                 case .five:
                     WrappedViewFive()
                         .hideNavigationBar()
@@ -86,9 +86,9 @@ struct WrappedNavigation: View {
         }
     }
 
-    private func scheduleGotoNextPage() {
+    private func scheduleGotoNextPage(delay: TimeInterval = 5.0) {
         guard let nextRoute = getNextRoute() else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
             navPath.append(nextRoute)
@@ -114,7 +114,9 @@ struct WrappedNavigation: View {
                 color: popular.color
 //                popular.icon
             )
-            case .three: return .four
+        case .three:
+            guard let activeMonth = insightsStore.getMostActiveMonth() else { return nil }
+            return .four(activeMonth: activeMonth.month, count: activeMonth.count)
             case .four: return .five
             case .five: return .six
             case .six: return nil

@@ -54,6 +54,33 @@ class DialerInsightStore: BaseViewModel {
         chartInsights.sorted(by: { $0.totalAmount >  $1.totalAmount }).first
     }
 
+    func getMostActiveMonth() -> (month: String, count: Int)? {
+        let dates = transactionInsights.map(\.createdDate)
+        guard !dates.isEmpty else { return nil }
+
+        // Create a calendar instance
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: "en_US")
+
+        // Dictionary to count occurrences of each month
+        var monthCounts: [Int: Int] = [:]
+
+        // Count dates by their month
+        for date in dates {
+            let month = calendar.component(.month, from: date)
+            monthCounts[month, default: 0] += 1
+        }
+
+        // Find the most active month
+        if let (mostActiveMonth, count) = monthCounts.max(by: { $0.value < $1.value }) {
+            let monthName = calendar.monthSymbols[mostActiveMonth - 1]
+            return (month: monthName, count: count)
+        }
+
+        return nil
+    }
+
+
     func setFilterPeriod(_ period: InsightFilterPeriod) {
         guard selectedPeriod != period else { return }
         self.selectedPeriod = period

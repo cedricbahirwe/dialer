@@ -124,6 +124,7 @@
 		CBD481582D200CE800223F5D /* WrappedViewFive.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481572D200CE800223F5D /* WrappedViewFive.swift */; };
 		CBD4815A2D2010C200223F5D /* WrappedViewSix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD481592D2010C200223F5D /* WrappedViewSix.swift */; };
 		CBD4815C2D2013C100223F5D /* WrappedNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD4815B2D2013C100223F5D /* WrappedNavigation.swift */; };
+		CBD481602D20CAFA00223F5D /* DialerWrappedFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD4815F2D20CAFA00223F5D /* DialerWrappedFooter.swift */; };
 		CBD6BC7F27BD96D600719DB3 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */; };
 		CBE3D8A7290C147300DF5C09 /* CodePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8A6290C147300DF5C09 /* CodePin.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
@@ -270,6 +271,7 @@
 		CBD481572D200CE800223F5D /* WrappedViewFive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewFive.swift; sourceTree = "<group>"; };
 		CBD481592D2010C200223F5D /* WrappedViewSix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedViewSix.swift; sourceTree = "<group>"; };
 		CBD4815B2D2013C100223F5D /* WrappedNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedNavigation.swift; sourceTree = "<group>"; };
+		CBD4815F2D20CAFA00223F5D /* DialerWrappedFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerWrappedFooter.swift; sourceTree = "<group>"; };
 		CBD6BC7E27BD96D600719DB3 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		CBE3D8A6290C147300DF5C09 /* CodePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePin.swift; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 				CBD481512D200CDA00223F5D /* WrappedViewTwo.swift */,
 				CBD481532D200CDF00223F5D /* WrappedViewThree.swift */,
 				CBD481552D200CE300223F5D /* WrappedViewFour.swift */,
+				CBD4815F2D20CAFA00223F5D /* DialerWrappedFooter.swift */,
 				CBD481572D200CE800223F5D /* WrappedViewFive.swift */,
 				CBD481592D2010C200223F5D /* WrappedViewSix.swift */,
 				CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */,
@@ -824,6 +827,7 @@
 				CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */,
 				CBE61A422C9C1D7B003E1795 /* AirtimeToInsightMigrator.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */,
+				CBD481602D20CAFA00223F5D /* DialerWrappedFooter.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
 				820C108A2766A31400A7CADE /* NumberField.swift in Sources */,
 				CBD481542D200CDF00223F5D /* WrappedViewThree.swift in Sources */,
