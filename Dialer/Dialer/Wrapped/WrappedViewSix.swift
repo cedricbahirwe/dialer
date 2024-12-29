@@ -9,69 +9,74 @@
 import SwiftUI
 
 struct WrappedViewSix: View {
+    @State private var animateShapes = false
+    var colors: [Color] {
+        animateShapes ? [Color.black, Color.black.opacity(0.5)]  : [Color.black.opacity(0.5), Color.black]
+    }
+
     var body: some View {
         ZStack {
-            // Background color
-            RoundedRectangle(cornerRadius: 30)
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color.black, Color.black]),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
+            LinearGradient(
+                gradient: Gradient(colors: colors),
+                startPoint: .topTrailing,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
-            // Starburst spikes
             ZStack {
-
                 ForEach(0..<20) { index in
                     StarSpike()
-                        .fill(Color.purple )
+                        .fill(Color.white )
                         .frame(width: 400, height: 800)
                         .rotationEffect(.degrees(Double(index) * 35))
+                        .scaleEffect(animateShapes ? 1 : 1.2)
                 }
+
                 ForEach(0..<20) { index in
                     StarSpike()
-                        .fill( Color.orange)
+                        .fill(Color.mainRed.opacity(0.7))
                         .frame(width: 350, height: 600)
                         .rotationEffect(.degrees(Double(index) * 30))
+                        .scaleEffect(animateShapes ? 1.5 : 1)
                 }
+
                 GeometryReader { geometry in
-                    let size = geometry.size.width * 1.05// Adjust the diamond size
+                    let size = geometry.size.width
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.yellow)
-                        .frame(width: size, height: size)
-                        .rotationEffect(.degrees(30))
+                        .fill(Material.thinMaterial)
+                        .frame(maxWidth: size, maxHeight: size)
+                        .aspectRatio(contentMode: .fit)
                         .overlay(
                             VStack {
-                                Text("From sunrise to sunset, you kept it interesting.")
+                                Image(.dialitApplogo)
+                                    .resizable()
+                                    .frame(width: 60, height: 60)
+                                    .cornerRadius(10)
 
+                                Text("From sunrise to sunset,\nYou kept it interesting.")
                                     .font(.system(size: 25, weight: .bold))
-                                    .foregroundColor(.black)
                                     .multilineTextAlignment(.center)
-                                    .padding()
-                                    .padding(.trailing,30)
-                                    .padding(.bottom,10)
+                                    .padding(.vertical)
 
-
-                                Text("Thanks for coming along for the ride. Untill we meet again...")
-
+                                Text("Thanks for being with us.\nUntill we meet again...")
                                     .font(.system(size: 20, weight: .medium))
-                                    .foregroundColor(.black)
-                                    .padding(.trailing,30)
-                                    .padding(.bottom,10)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundStyle(.black)
 
                             }
                                 .padding()
                         )
+                        .padding(25)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.top,250)
-                .padding(.leading,30)
-
+                .padding(.top, 250)
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .task {
+            withAnimation(.easeInOut(duration: 4).repeatForever()) {
+                animateShapes = true
+            }
+        }
     }
 }
 

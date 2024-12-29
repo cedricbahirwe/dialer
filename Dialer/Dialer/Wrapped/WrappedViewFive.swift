@@ -57,7 +57,7 @@ struct WrappedViewFive: View {
                             }
                             .padding()
                             .background(.thinMaterial, in: .rect(cornerRadius: 20))
-                            .shadow(color: .lightShadow, radius: 10)
+                            .shadow(color: .lightShadow, radius: 2)
                             .transition(.move(edge: .leading))
                             .offset(y: removeOffset ? 0 : -CGFloat(index) * 100)
                         }

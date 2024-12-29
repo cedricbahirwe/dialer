@@ -58,11 +58,11 @@ struct WrappedNavigation: View {
                 case .five(let spendings):
                     WrappedViewFive(spendings: spendings)
                         .hideNavigationBar()
-//                        .task { scheduleGotoNextPage() }
+                        .task { scheduleGotoNextPage() }
                 case .six:
                     WrappedViewSix()
                         .hideNavigationBar()
-                        .task { scheduleGotoNextPage() }
+//                        .task { scheduleGotoNextPage() }
 
                 }
             }
@@ -88,7 +88,7 @@ struct WrappedNavigation: View {
                         .frame(width: 40, height: 40)
                         .foregroundStyle(.white)
                         .bold()
-                        .background(.quaternary, in: .circle)
+                        .background(.tertiary, in: .circle)
                 }
             }
             .padding()
@@ -96,7 +96,10 @@ struct WrappedNavigation: View {
     }
 
     private func scheduleGotoNextPage(delay: TimeInterval = 5.0) {
-        guard let nextRoute = getNextRoute() else { return }
+        guard let nextRoute = getNextRoute() else {
+            dismiss()
+            return
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
@@ -106,10 +109,7 @@ struct WrappedNavigation: View {
 
     private func getNextRoute() -> WrappedRoute? {
 
-        guard let lastRoute = navPath.last, lastRoute != .six else {
-            dismiss()
-            return nil
-        }
+        guard let lastRoute = navPath.last else { return nil }
 
         switch lastRoute {
         case .one: return .two(totalAmountSpent: insightsStore.generalTotal)
@@ -121,7 +121,6 @@ struct WrappedNavigation: View {
                 percentage: Double(popular.totalAmount) / Double(insightsStore.generalTotal),
                 iconName: popular.iconName,
                 color: popular.color
-//                popular.icon
             )
         case .three:
             guard let activeMonth = insightsStore.getMostActiveMonth() else { return nil }
