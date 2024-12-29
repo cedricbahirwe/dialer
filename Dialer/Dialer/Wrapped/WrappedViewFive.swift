@@ -11,28 +11,27 @@ import SwiftUI
 let deval = false
 
 struct WrappedViewFive: View {
-    @State private var showText = deval
-    @State private var showList = deval
-    @State private var showdelay = false
+    @State private var showTitle = deval
+    @State private var showSpendingList = deval
+    @State private var removeOffset = false
 
     var body: some View {
         ZStack {
             AnimatedBackground()
 
             VStack(alignment: .leading) {
-                if showText {
+                if showTitle {
                     Text("Your spendings")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .cornerRadius(10)
                         .transition(.scale)
-                        .animation(.easeIn(duration: 1), value: showText)
+                        .animation(.easeIn(duration: 1), value: showTitle)
                         .padding(.horizontal)
                 }
 
-                // Top Songs List
-                if showList {
+                if showSpendingList {
                     VStack(alignment: .leading, spacing: 25) {
                         ForEach(spendings.indices, id: \.self) { index in
                             HStack(spacing: 16) {
@@ -61,10 +60,7 @@ struct WrappedViewFive: View {
                             .background(.thinMaterial, in: .rect(cornerRadius: 20))
                             .shadow(color: .lightShadow, radius: 10)
                             .transition(.move(edge: .leading))
-                            .offset(y: !showdelay ? -CGFloat(index) * 100 : 0)
-//                            .transition(.asymmetric(insertion: .slide, removal: .scale))
-//                            .animation(.easeInOut(duration: 1.2), value: showList)
-//                            .opacity(showList ? 1 : 0)
+                            .offset(y: removeOffset ? 0 : -CGFloat(index) * 100)
                         }
                     }
                     .padding()
@@ -76,18 +72,18 @@ struct WrappedViewFive: View {
         .task {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation {
-                    showText = true
+                    showTitle = true
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.25) {
                 withAnimation(.spring()) {
-                    showList = true
+                    showSpendingList = true
                 }
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.75) {
                 withAnimation(.bouncy(extraBounce: 0.2)) {
-                    showdelay = true
+                    removeOffset = true
                 }
             }
         }
@@ -106,7 +102,7 @@ struct SpendingSummary {
 let spendings: [SpendingSummary] = [
     .init(title: "User", amount: 15000, percentage: 0.492),
     .init(title: "Airtime", amount: 15000, percentage: 0.419),
-    .init(title: "Merchant", amount: 2400, percentage: 0.890)
+    .init(title: "Merchant", amount: 2400, percentage: 0.089)
 ]
 
 struct AnimatedBackground: View {
@@ -123,7 +119,7 @@ struct AnimatedBackground: View {
                         )
                     )
                     .frame(width: CGFloat(100 + (i * 50)), height: CGFloat(300 + (i * 50)))
-                    .offset(x: animate ? 150 : -150, y: animate ? -150 : 150)
+                    .offset(x: animate ? 150 : -150, y: animate ? -250 : 150)
                     .opacity(0.3)
                     .blur(radius: animate ? 8 : 0)
                     .animation(
