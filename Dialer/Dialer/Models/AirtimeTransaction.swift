@@ -30,7 +30,7 @@ extension AirtimeTransaction {
     func dialCode() async throws {
         let fullCode = getFullUSSDCode()
         if let telUrl = URL(string: "tel://\(fullCode)") {
-            try await DialService.dial(telUrl)
+            try await DialService.shared.dial(telUrl)
         } else {
             throw DialingError.canNotDial
         }

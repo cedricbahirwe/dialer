@@ -51,7 +51,7 @@ final class MainViewModel: ObservableObject {
         let newUrl = purchase.getFullUSSDCode()
         
         if let telUrl = URL(string: "tel://\(newUrl)") {
-            try await DialService.dial(telUrl)
+            try await DialService.shared.dial(telUrl)
         } else {
             throw DialingError.canNotDial
         }
@@ -62,7 +62,7 @@ final class MainViewModel: ObservableObject {
     static func performQuickDial(for code: DialerQuickCode) async {
         if let telUrl = URL(string: "tel://\(code.ussd)") {
             do {
-                let isCompleted = try await DialService.dial(telUrl)
+                let isCompleted = try await DialService.shared.dial(telUrl)
                 if isCompleted {
                     Log.debug("Successfully Dialed")
                 } else {

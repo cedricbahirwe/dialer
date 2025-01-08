@@ -8,13 +8,13 @@
 import UIKit
 
 struct DialService {
-    
+    static let shared = DialService()
+
     private init() { }
-    
-    @MainActor
+
     @discardableResult
-    static func dial(_ telUrl: URL) async throws -> Bool {
-        guard UIApplication.shared.canOpenURL(telUrl) else {
+    func dial(_ telUrl: URL) async throws -> Bool {
+        guard await UIApplication.shared.canOpenURL(telUrl) else {
             throw DialingError.canNotDial
         }
         
