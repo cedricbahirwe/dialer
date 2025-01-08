@@ -47,10 +47,7 @@ final class MainViewModel: ObservableObject {
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
     private func dialCode(from purchase: AirtimeTransaction) async throws {
-        
-        let newUrl = purchase.getFullUSSDCode()
-        
-        if let telUrl = URL(string: "tel://\(newUrl)") {
+        if let telUrl = try? purchase.getUSSDURL() {
             try await DialService.shared.dial(telUrl)
         } else {
             throw DialingError.canNotDial

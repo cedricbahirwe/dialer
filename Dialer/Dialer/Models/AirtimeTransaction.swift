@@ -24,12 +24,20 @@ extension AirtimeTransaction {
         return "\(prefixCode)\(amount)#"
     }
 
+    func getUSSDURL() throws -> URL {
+        let fullCode = getFullUSSDCode()
+        if let telUrl = URL(string: "tel://\(fullCode)") {
+            return telUrl
+        } else {
+            throw DialingError.canNotDial
+        }
+    }
+
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
     func dialCode() async throws {
-        let fullCode = getFullUSSDCode()
-        if let telUrl = URL(string: "tel://\(fullCode)") {
+        if let telUrl = try? getUSSDURL() {
             try await DialService.shared.dial(telUrl)
         } else {
             throw DialingError.canNotDial
