@@ -17,7 +17,7 @@ struct TransactionHistoryRow: View {
                 switch transaction.details {
                 case .momo(let summary):
                     Group {
-                        if let ownerName = phoneManager.getContact(for: summary) {
+                        if let ownerName = phoneManager.getContactName(for: summary) {
                             Text("Sent to \(ownerName)")
                         } else {
                             Text("\(transaction.type.formatted): \(Text(summary.number))")

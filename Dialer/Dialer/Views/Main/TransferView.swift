@@ -41,9 +41,7 @@ struct TransferView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             VStack(spacing: 15) {
-                
                 VStack(spacing: 10) {
                     if transaction.type == .client && !transaction.amount.isEmpty {
                         feeHintView

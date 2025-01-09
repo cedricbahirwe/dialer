@@ -46,6 +46,7 @@
 		CB1099502A616EFA00E99555 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */; };
 		CB1099522A6201A600E99555 /* DialingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099512A6201A600E99555 /* DialingError.swift */; };
 		CB1099542A6201D300E99555 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099532A6201D300E99555 /* HistoryViewModel.swift */; };
+		CB10B8B72D2F2842003DB76C /* DialerShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10B8B62D2F2842003DB76C /* DialerShortcuts.swift */; };
 		CB18BD4329AE0C0800A7B45C /* ForceUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */; };
 		CB18BD4529AE0C3200A7B45C /* FirebaseRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */; };
 		CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */; };
@@ -199,6 +200,7 @@
 		CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		CB1099512A6201A600E99555 /* DialingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingError.swift; sourceTree = "<group>"; };
 		CB1099532A6201D300E99555 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		CB10B8B62D2F2842003DB76C /* DialerShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerShortcuts.swift; sourceTree = "<group>"; };
 		CB18BD4229AE0C0800A7B45C /* ForceUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateManager.swift; sourceTree = "<group>"; };
 		CB18BD4429AE0C3200A7B45C /* FirebaseRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfig.swift; sourceTree = "<group>"; };
 		CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewModel.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				82EEBCF426C1336000B1720A /* Utilities */,
 				CBA9BB06294C960800D95C82 /* Resources */,
 				82D7C1A1266D26D4003E0E0E /* Extensions */,
+				CB10B8B52D2F2818003DB76C /* Shortcuts */,
 				82D41FBC25D1C1FF00551D22 /* Assets.xcassets */,
 				82D41FC425D1C1FF00551D22 /* Info.plist */,
 				82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */,
@@ -508,6 +511,14 @@
 				CB1099492A6155B500E99555 /* ScanModels.swift */,
 			);
 			path = QRScanner;
+			sourceTree = "<group>";
+		};
+		CB10B8B52D2F2818003DB76C /* Shortcuts */ = {
+			isa = PBXGroup;
+			children = (
+				CB10B8B62D2F2842003DB76C /* DialerShortcuts.swift */,
+			);
+			path = Shortcuts;
 			sourceTree = "<group>";
 		};
 		CB18BD5129AE913800A7B45C /* Merchant */ = {
@@ -912,6 +923,7 @@
 				CB92F70929AFF52D004BBE32 /* DateFormatter+Extensions.swift in Sources */,
 				CBAF13192785A54100D32E1F /* TappeableText.swift in Sources */,
 				CB01FCD32ADF837600E83BBB /* DialService.swift in Sources */,
+				CB10B8B72D2F2842003DB76C /* DialerShortcuts.swift in Sources */,
 				CBA9BB05294C8F7000D95C82 /* DialerLocalNotification.swift in Sources */,
 				CB45381628AB9C6500F3F24C /* MySpaceView.swift in Sources */,
 				8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */,

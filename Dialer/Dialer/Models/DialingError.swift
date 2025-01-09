@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Error Models
 enum DialingError: Error {
-    case canNotDial, emptyPin, unknownFormat(String)
+    case canNotDial, emptyPin, unknownFormat(String), invalidUSSD
     var message: String {
         switch self {
         case .canNotDial:
@@ -18,6 +18,8 @@ enum DialingError: Error {
             return "Can not decode this format: \(format)"
         case .emptyPin:
             return "Pin Code not found, configure pin and try again"
+        case .invalidUSSD:
+            return "USSD code is invalid"
         }
     }
 }
