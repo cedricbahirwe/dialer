@@ -87,18 +87,19 @@ struct TranferMoneyIntent: AppIntent {
             }
 
         case .merchant:
-            guard (AppConstants.merchantDigitsRange).contains(number.count) else {
+            guard number.allSatisfy(\.isWholeNumber),
+                (AppConstants.merchantDigitsRange).contains(number.count) else {
                 throw ValidationError("Merchant code is invalid. Please enter a valid merchant code.")
             }
         }
     }
 
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & OpensIntent {
         try await validate()
 
         try await requestConfirmation(
             actionName: .send,
-            dialog: "Do you want to send \(transaction.amount) to \(Self.contactName ?? transaction.number)?"
+            dialog: "Do you want to send \(transaction.amount) RWF to \(Self.contactName ?? transaction.number)?"
         )
         if let ussdUrl = URL(string: "tel://\(transaction.fullCode)") {
             let openURLIntent = OpenURLIntent(ussdUrl)
@@ -130,9 +131,10 @@ struct DialerShortcuts: AppShortcutsProvider {
             intent: TranferMoneyIntent(),
             phrases: [
                 "Send money with \(.applicationName)",
+                "Pay with \(.applicationName)",
                 "Transfer money with \(.applicationName)",
                 "Send payment using \(.applicationName)",
-                "Pay someone via \(.applicationName)",
+                "Pay someone with \(.applicationName)",
                 "Make a transfer in \(.applicationName)",
             ],
             shortTitle: "Send Money",
