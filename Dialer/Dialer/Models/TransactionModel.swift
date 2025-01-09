@@ -18,12 +18,6 @@ struct Transaction: Identifiable, Codable {
         var number: String
         var type: TransactionType
 
-        private var trailingCode: String {
-            // Need strategy to deal with country code
-            number.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
-        }
-
-
         var doubleAmount: Double {
             Double(amount) ?? 0.0
         }
@@ -39,6 +33,11 @@ struct Transaction: Identifiable, Codable {
             } else {
                 return 0
             }
+        }
+
+        private var trailingCode: String {
+            // Need strategy to deal with country code
+            number.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
         }
 
         var fullCode: String {
@@ -70,15 +69,17 @@ struct Transaction: Identifiable, Codable {
         }
 
         static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
+
+        func toParent() -> Transaction {
+            Transaction(amount: Int(doubleAmount), number: number, type: type)
+        }
     }
 
-    enum TransactionType: String, Codable {
+    enum TransactionType: String, CaseIterable, Codable, Sendable {
         case client, merchant
 
         mutating func toggle() {
             self = self == .client ? .merchant : .client
         }
     }
-
-
 }

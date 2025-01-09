@@ -22,11 +22,18 @@ final class PhoneContacts: ObservableObject {
         }
     }
 
-    func getContact(for transaction: Transaction) -> String? {
+    func getContactName(for transaction: Transaction) -> String? {
         guard transaction.type == .client else { return nil }
         return contacts.first {
             $0.phoneNumbers.contains(transaction.number)
         }?.names
+    }
+
+    func getContactByName(_ name: String) -> Contact? {
+        contacts.filter { contact in
+            contact.names.range(of: name, options: [.caseInsensitive, .diacriticInsensitive]) != nil ||
+            contact.phoneNumbers.reduce("", +).contains(name)
+        }.first
     }
 
     class private func getContacts(requestIfNeeded: Bool) async throws -> [CNContact] {
@@ -75,6 +82,7 @@ final class PhoneContacts: ObservableObject {
     }
 
     @MainActor
+    @discardableResult
     class func getMtnContacts(requestIfNeeded: Bool = true) async throws -> [Contact] {
         if !PhoneContacts.shared.contacts.isEmpty {
             return PhoneContacts.shared.contacts
