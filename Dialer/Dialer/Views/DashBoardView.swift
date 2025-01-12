@@ -115,7 +115,7 @@ struct DashBoardView: View {
         .task {
             if #available(iOS 17.0, *) {
                 do {
-                    //                    try Tips.resetDatastore()
+                    // try Tips.resetDatastore()
                     try Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)
