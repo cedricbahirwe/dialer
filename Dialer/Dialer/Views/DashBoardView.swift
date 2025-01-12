@@ -113,11 +113,6 @@ struct DashBoardView: View {
             }
         )
         .task {
-            var num = "141 2517"
-            print(num)
-            num = num.trimmingCharacters(in: .whitespacesAndNewlines)
-            print(num)
-
             if #available(iOS 17.0, *) {
                 do {
                     //                    try Tips.resetDatastore()
