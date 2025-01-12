@@ -37,7 +37,7 @@ struct Transaction: Identifiable, Codable {
 
         private var trailingCode: String {
             // Need strategy to deal with country code
-            number.replacingOccurrences(of: " ", with: "") + "*" + String(amount)
+            number.removingEmptySpaces + "*" + String(amount)
         }
 
         var fullCode: String {
