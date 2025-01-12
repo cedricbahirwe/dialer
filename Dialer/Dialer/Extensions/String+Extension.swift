@@ -9,11 +9,14 @@ import Foundation
 import SwiftUI
 
 extension String {
+    var removingEmptySpaces: String {
+        replacingOccurrences(of: " ", with: "")
+    }
     /// Check for the validity of the `MTN` number (078 && 079)
     /// This is a agnostic approach, since it does not handle all the edge cases
     var isMtnNumber: Bool {
         var number = trimmingCharacters(in: .whitespacesAndNewlines)
-        number = number.replacingOccurrences(of: " ", with: "")
+        number = number.removingEmptySpaces
         return number.hasPrefix("+25078") || number.hasPrefix("25078") || number.hasPrefix("078") ||
         number.hasPrefix("+25079") || number.hasPrefix("25079") || number.hasPrefix("079")
     }

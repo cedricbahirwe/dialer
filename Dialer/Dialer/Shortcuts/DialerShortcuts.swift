@@ -87,6 +87,7 @@ struct TranferMoneyIntent: AppIntent {
             }
 
         case .merchant:
+            number = number.removingEmptySpaces
             guard number.allSatisfy(\.isWholeNumber),
                 (AppConstants.merchantDigitsRange).contains(number.count) else {
                 throw ValidationError("Merchant code is invalid. Please enter a valid merchant code.")
