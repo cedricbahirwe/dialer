@@ -23,7 +23,7 @@ struct DashItemView: View {
                     .accessibilityHidden(true)
 
             Text(title)
-                .font(.system(.headline, design: .rounded, weight: .medium))
+                .font(.system(.headline, design: .rounded, weight: .semibold))
                 .foregroundStyle(.primary.opacity(0.8))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
