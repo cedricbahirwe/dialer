@@ -21,11 +21,9 @@ struct DashItemView: View {
                         LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
                     )
                     .accessibilityHidden(true)
-//
+
             Text(title)
-                .font(.system(.subheadline, design: .rounded, weight: .medium))
-//                .font(.system(size: 14, weight: .semibold, design: .rounded))
-//                .foregroundStyle(.secondary)
+                .font(.system(.headline, design: .rounded, weight: .medium))
                 .foregroundStyle(.primary.opacity(0.8))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
