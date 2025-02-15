@@ -20,19 +20,22 @@ struct DashItemView: View {
                     .foregroundStyle(
                         LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
                     )
-
+                    .accessibilityHidden(true)
+//
             Text(title)
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundStyle(.secondary)
+                .font(.system(.subheadline, design: .rounded, weight: .medium))
+//                .font(.system(size: 14, weight: .semibold, design: .rounded))
+//                .foregroundStyle(.secondary)
+                .foregroundStyle(.primary.opacity(0.8))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         }
-        .padding(8)
+        .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 80)
-        .background(Color.primaryBackground)
-        .cornerRadius(15)
-        .contentShape(Rectangle())
+        .frame(height: 85)
+        .background(.background, in: .rect(cornerRadius: 15))
+        .clipShape(.rect(cornerRadius: 15))
+        .contentShape(.rect(cornerRadius: 15))
         .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
         .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)
 

@@ -153,7 +153,9 @@ struct DashBoardView: View {
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
             }
         }
-        .background(Color.primaryBackground)
+        .background(Color(.secondarySystemBackground))
+//        .background(.ultraThickMaterial)
+//        .background(Color.primaryBackground)
         .task {
             data.retrieveUSSDCodes()
             await AirtimeToInsightMigrator.shared.migrate()
