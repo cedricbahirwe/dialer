@@ -91,7 +91,8 @@ class DialerUITests: XCTestCase {
     func testHomeMenuItemsDisplay() throws {
         XCTAssertTrue(app.staticTexts["Buy airtime"].exists)
         XCTAssertTrue(app.staticTexts["Transfer/Pay"].exists)
-        XCTAssertTrue(app.staticTexts["History"].exists)
+        XCTAssertTrue(app.staticTexts["Insights"].exists)
+        XCTAssertTrue(app.staticTexts["My Space"].exists)
     }
 
     private func debugMe(_ element: XCUIElementQuery) {
