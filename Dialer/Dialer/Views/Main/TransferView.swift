@@ -10,7 +10,7 @@ import SwiftUI
 struct TransferView: View {
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
-    
+
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
