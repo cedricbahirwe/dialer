@@ -22,9 +22,9 @@ struct TransferView: View {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
     
-    private var feeHintView: Text {
+    private var feeHintView: Text? {
         if transaction.amount.isEmpty {
-            return Text("")
+            return nil
         } else if let fee = transaction.estimatedFee {
             return Text("Estimated fee: \(fee) RWF")
         } else {
