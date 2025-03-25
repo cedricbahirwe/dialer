@@ -2,8 +2,11 @@
 
 ### An intuitive USSD client to simplify most of your daily operations.
 ### Access Rwanda Network providers USSD codes, and simplify packages activation nightmare.
-Download it on [AppStore](https://apps.apple.com/ke/app/dial-it/id1591756747).
 
+
+📲 **Download it on the App Store:**
+
+[![Download on the App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/app/dial-it/id1591756747)  
 
 ## ✅ Features:
 * MTN Momo Support (Client and Merchants support)
