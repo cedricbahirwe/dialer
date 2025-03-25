@@ -14,14 +14,15 @@ struct MerchantSelectionView: View {
     var selectedCode: String
     var onSelectMerchant: (Merchant) -> Void
     @FocusState private var isSearching: Bool
-    @State private var searchQuery = ""
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dismiss) private var dismiss
+    @State private var searchQuery = ""
+    @State private var isExpanded = false
+    @State private var showMerchantCreation = false
+
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
     }
-
-    @State private var isExpanded = false
-    @State private var showMerchantCreation = false
 
     var searchedMerchants: [Merchant] {
         if searchQuery.isEmpty {
@@ -33,7 +34,6 @@ struct MerchantSelectionView: View {
         }
     }
 
-    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack {
@@ -149,22 +149,31 @@ private extension MerchantSelectionView {
     var merchantSelectionList: some View {
         Section {
             if merchantStore.merchants.isEmpty {
-                Text("No Merchants Saved Yet.")
-                    .opacity(0.5)
+                Text("No Merchants saved yet.")
+                    .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: 50)
-
             } else {
                 savedMerchantsContent
             }
         } header: {
             HStack {
-                Text("My Merchants")
-                    .font(.system(.body, design: .rounded))
-                    .fontWeight(.semibold)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .textCase(nil)
+                Button {
+                    isExpanded = true
+                } label: {
+                    HStack(spacing: 2) {
+                        Text("My Merchants")
+                            .font(.system(.title3, design: .rounded, weight: .bold))
+                            .textCase(nil)
+
+                        Label("View more merchants", systemImage: "chevron.right")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .labelStyle(.iconOnly)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .foregroundStyle(.foreground)
+                .disabled(merchantStore.merchants.isEmpty)
 
                 Spacer(minLength: 1)
 
@@ -191,7 +200,7 @@ private extension MerchantSelectionView {
             }
         } footer: {
             if !merchantStore.merchants.isEmpty {
-                Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings -> Contact Us***")
+                Text("Please make sure the merchant code is correct before dialing.  Need Help? Go to ***Settings -> Contact Us***")
             }
         }
         .listRowBackground(rowBackground)
