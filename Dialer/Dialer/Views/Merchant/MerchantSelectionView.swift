@@ -200,7 +200,7 @@ private extension MerchantSelectionView {
             }
         } footer: {
             if !merchantStore.merchants.isEmpty {
-                Text("Please make sure the merchant code is correct before dialing.\nNeed Help? Go to ***Settings -> Contact Us***")
+                Text("Please make sure the merchant code is correct before dialing.  Need Help? Go to ***Settings -> Contact Us***")
             }
         }
         .listRowBackground(rowBackground)

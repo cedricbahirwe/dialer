@@ -23,48 +23,51 @@ struct TransferView: View {
     }
     
     private var feeHintView: Text {
-        let fee = transaction.estimatedFee
-        if fee == -1 {
-            return Text("We can not estimate the fee for this amount.")
-        } else {
+        if transaction.amount.isEmpty {
+            return Text("")
+        } else if let fee = transaction.estimatedFee {
             return Text("Estimated fee: \(fee) RWF")
+        } else {
+            return Text("We can not estimate the fee for this amount.")
         }
     }
     
     private var isMerchant: Bool {
         transaction.type == .merchant
     }
-    
+
+    private var isClient: Bool { !isMerchant }
+
     private var navigationTitle: String {
-        transaction.type == .merchant ? "Pay Merchant" : "Transfer momo"
+        isMerchant ? "Pay Merchant" : "Transfer momo"
     }
     
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 15) {
                 VStack(spacing: 10) {
-                    if transaction.type == .client && !transaction.amount.isEmpty {
+                    if isClient {
                         feeHintView
                             .font(.caption).foregroundStyle(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .animation(.default, value: transaction.estimatedFee)
                     }
-                    
+
                     NumberField("Enter Amount", text: $transaction.amount)
                         .onChange(of: transaction.amount, perform: handleAmountChange)
                         .focused($focusedState, equals: .amount)
                         .accessibilityIdentifier("transferAmountField")
                 }
-                
+                .animation(.default, value: isClient && !transaction.amount.isEmpty)
+
                 VStack(spacing: 10) {
-                    if transaction.type == .client {
+                    if isClient && !selectedContact.names.isEmpty {
                         Text(selectedContact.names).font(.caption).foregroundStyle(.blue)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .animation(.default, value: transaction.type)
                     }
+
                     HStack {
                         NumberField(
-                            transaction.type == .client
+                            isClient
                             ? "Enter Receiver's number"
                             : "Enter Merchant Code",
                             text: $transaction.number.animation())
@@ -73,7 +76,7 @@ struct TransferView: View {
                         .accessibilityIdentifier("transferNumberField")
 
                         Button(action: {
-                            if transaction.type == .client {
+                            if isClient {
                                 hideKeyboard()
                                 presentedSheet = .contacts
                                 Tracker.shared.logEvent(.contactsOpened)
@@ -90,7 +93,8 @@ struct TransferView: View {
                         }
                     }
                 }
-                
+                .animation(.default, value: isClient && !selectedContact.names.isEmpty)
+
                 VStack(spacing: 18) {
                     Button(action: {
                         hideKeyboard()
@@ -110,7 +114,7 @@ struct TransferView: View {
             }
             .padding()
             
-            if transaction.type == .merchant {
+            if isMerchant {
                 MerchantSelectionView(
                     merchantStore: merchantStore,
                     selectedCode: transaction.number,
@@ -136,7 +140,7 @@ struct TransferView: View {
                 Button(action: switchPaymentType) {
                     HStack {
                         Image(systemName:  "arrow.left.arrow.right.circle")
-                        Text(transaction.type == .client ? "Pay Merchant" : "Send Money")
+                        Text(isClient ? "Pay Merchant" : "Send Money")
                     }
                     .font(.system(size: 18, design: .rounded))
                     .foregroundStyle(.blue)

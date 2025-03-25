@@ -22,14 +22,14 @@ struct Transaction: Identifiable, Codable {
             Double(amount) ?? 0.0
         }
 
-        var estimatedFee: Int {
+        var estimatedFee: Int? {
             if type == .client {
                 for range in Self.transactionFees {
                     if range.key.contains(Int(doubleAmount)) {
                         return range.value
                     }
                 }
-                return -1
+                return nil
             } else {
                 return 0
             }
