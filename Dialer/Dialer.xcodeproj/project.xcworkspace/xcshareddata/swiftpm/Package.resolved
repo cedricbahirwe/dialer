@@ -1,5 +1,5 @@
 {
-  "originHash" : "a1569f9895aa2be8e24832f98525d5da4eb90b5d158a82691c15b47eb72a13d7",
+  "originHash" : "626aca300dd733eb77765b3394c26434036c01fdfc89386d55243afdf3ce556b",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "21fe1af9be463a359aaf8d96789ef73fc3760d09",
         "version" : "11.0.1"
+      }
+    },
+    {
+      "identity" : "dialerto",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:cedricbahirwe/DialerTO.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "f314e0e5779ec09225ceb25b5453200dec7a8d18"
       }
     },
     {

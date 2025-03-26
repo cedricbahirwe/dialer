@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-//import DialerTO
+import DialerTO
 
 struct TransferView: View {
     @EnvironmentObject private var merchantStore: UserMerchantStore
@@ -77,53 +77,53 @@ struct TransferView: View {
 
                         if canSplitTransaction {
                             Button(action: {
-                                // Demonstration and performance testing
-//                                func demonstrateOptimization(amount: Int) {
-//                                    let startTime = CFAbsoluteTimeGetCurrent()
-//
-//                                    let optimizedTransactions = TransactionOptimizer.optimizeTransactions(totalAmount: amount)
-//
-//                                    let endTime = CFAbsoluteTimeGetCurrent()
-//                                    let executionTime = (endTime - startTime) * 1000 // Convert to milliseconds
-//
-//                                    print("Total amount: \(amount)")
-//                                    print("Optimized transactions: \(optimizedTransactions)")
-//
-//                                    if
-//                                        let defaultFee = TransactionOptimizer.calculateFee(for: amount),
-//                                        let totalFee = TransactionOptimizer.calculateTotalFee(for: optimizedTransactions) {
-//                                        print("Total fee: \(totalFee) vs Default fee: \(defaultFee)")
-//                                        print("Transactions sum: \(optimizedTransactions.reduce(0, +))")
-//                                        print("Execution time: \(String(format: "%.4f", executionTime)) ms")
-//
-//                                        // Print individual transaction fees
-//                                        for transaction in optimizedTransactions {
-//                                            if let fee = TransactionOptimizer.calculateFee(for: transaction) {
-//                                                print("Transaction \(transaction): Fee = \(fee)")
-//                                            }
-//                                        }
-//                                    } else {
-//                                        print("Invalid transaction split")
-//                                    }
-//                                }
+//                                 Demonstration and performance testing
+                                func demonstrateOptimization(amount: Int) {
+                                    let startTime = CFAbsoluteTimeGetCurrent()
 
-                                // Performance test function
-//                                func runPerformanceTest() {
-//                                    let testAmounts = [1_000, 10_000, 100_000, 1_000_000, 5_000_000, 10_000_000]
-//
-//                                    print("Performance Test:")
-//                                    for amount in testAmounts {
-//                                        demonstrateOptimization(amount: amount)
-//                                        print("---")
-//                                    }
-//                                }
+                                    let optimizedTransactions = TransactionOptimizer.optimizeTransactions(totalAmount: amount)
 
-                                // Uncomment to run performance test
+                                    let endTime = CFAbsoluteTimeGetCurrent()
+                                    let executionTime = (endTime - startTime) * 1000 // Convert to milliseconds
+
+                                    print("Total amount: \(amount)")
+                                    print("Optimized transactions: \(optimizedTransactions)")
+
+                                    if
+                                        let defaultFee = TransactionOptimizer.calculateFee(for: amount),
+                                        let totalFee = TransactionOptimizer.calculateTotalFee(for: optimizedTransactions) {
+                                        print("Total fee: \(totalFee) vs Default fee: \(defaultFee)")
+                                        print("Transactions sum: \(optimizedTransactions.reduce(0, +))")
+                                        print("Execution time: \(String(format: "%.4f", executionTime)) ms")
+
+                                        // Print individual transaction fees
+                                        for transaction in optimizedTransactions {
+                                            if let fee = TransactionOptimizer.calculateFee(for: transaction) {
+                                                print("Transaction \(transaction): Fee = \(fee)")
+                                            }
+                                        }
+                                    } else {
+                                        print("Invalid transaction split")
+                                    }
+                                }
+
+//                                 Performance test function
+                                func runPerformanceTest() {
+                                    let testAmounts = [1_000, 10_000, 100_000, 1_000_000, 5_000_000, 10_000_000]
+
+                                    print("Performance Test:")
+                                    for amount in testAmounts {
+                                        demonstrateOptimization(amount: amount)
+                                        print("---")
+                                    }
+                                }
+
+//                                 Uncomment to run performance test
 //                                 runPerformanceTest()
 
 
-                                // Example usage
-//                                demonstrateOptimization(amount: 1001)
+//                                 Example usage
+                                demonstrateOptimization(amount: 1001)
 
 
 //                                DispatchQueue.global(qos: .background).async {

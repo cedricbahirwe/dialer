@@ -39,6 +39,7 @@
 		CB01FCD32ADF837600E83BBB /* DialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB01FCD22ADF837600E83BBB /* DialService.swift */; };
 		CB0A52912946159A0023370C /* USSDCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45380F28AB7E8B00F3F24C /* USSDCode.swift */; };
 		CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */; };
+		CB0F34F12D94412C00916865 /* DialerTO in Frameworks */ = {isa = PBXBuildFile; productRef = CB0F34F02D94412C00916865 /* DialerTO */; };
 		CB1099462A61557A00E99555 /* CodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099452A61557A00E99555 /* CodeScannerView.swift */; };
 		CB1099482A61559500E99555 /* CodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099472A61559500E99555 /* CodeScannerViewController.swift */; };
 		CB10994A2A6155B500E99555 /* ScanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1099492A6155B500E99555 /* ScanModels.swift */; };
@@ -96,8 +97,6 @@
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB6D4B3B2D94151C0065A76D /* TransactionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */; };
-		CB6D4B9D2D941FF60065A76D /* DialerTO.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */; };
-		CB6D4B9E2D941FF60065A76D /* DialerTO.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */; };
 		CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B32CB3F0E800415777 /* ChartInsight.swift */; };
 		CB7F33B62CB3F47600415777 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */; };
@@ -157,20 +156,6 @@
 			remoteInfo = Dialer;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		CB6D4B9F2D941FF60065A76D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CB6D4B9E2D941FF60065A76D /* DialerTO.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
@@ -261,7 +246,6 @@
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModelTests.swift; sourceTree = "<group>"; };
-		CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DialerTO.xcframework; path = ../../../../Desktop/DialerOptimizer/output/DialerTO.xcframework; sourceTree = "<group>"; };
 		CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAccount.swift; sourceTree = "<group>"; };
 		CB7F33B32CB3F0E800415777 /* ChartInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInsight.swift; sourceTree = "<group>"; };
 		CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
@@ -314,10 +298,10 @@
 				CB582AFA29ABEB3100FAD610 /* FirebaseMessaging in Frameworks */,
 				CB582AF229ABEB3100FAD610 /* FirebaseFirestore in Frameworks */,
 				CB582AF629ABEB3100FAD610 /* FirebaseFunctions in Frameworks */,
+				CB0F34F12D94412C00916865 /* DialerTO in Frameworks */,
 				CB582B0029ABEB3100FAD610 /* FirebaseStorage in Frameworks */,
 				CB582AEE29ABEB3100FAD610 /* FirebaseDatabase in Frameworks */,
 				CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				CB6D4B9D2D941FF60065A76D /* DialerTO.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,7 +621,6 @@
 		CB6D4B9B2D941FF60065A76D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -716,7 +699,6 @@
 				82D41FAF25D1C1FE00551D22 /* Sources */,
 				82D41FB025D1C1FE00551D22 /* Frameworks */,
 				82D41FB125D1C1FE00551D22 /* Resources */,
-				CB6D4B9F2D941FF60065A76D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -731,6 +713,7 @@
 				CB582AF929ABEB3100FAD610 /* FirebaseMessaging */,
 				CB582AFB29ABEB3100FAD610 /* FirebaseRemoteConfig */,
 				CB582AFF29ABEB3100FAD610 /* FirebaseStorage */,
+				CB0F34F02D94412C00916865 /* DialerTO */,
 			);
 			productName = Dialer;
 			productReference = 82D41FB325D1C1FE00551D22 /* Dialer.app */;
@@ -808,6 +791,7 @@
 			mainGroup = 82D41FAA25D1C1FE00551D22;
 			packageReferences = (
 				CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CB0F34EF2D94412C00916865 /* XCRemoteSwiftPackageReference "DialerTO" */,
 			);
 			productRefGroup = 82D41FB425D1C1FE00551D22 /* Products */;
 			projectDirPath = "";
@@ -1674,6 +1658,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CB0F34EF2D94412C00916865 /* XCRemoteSwiftPackageReference "DialerTO" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:cedricbahirwe/DialerTO.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1685,6 +1677,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CB0F34F02D94412C00916865 /* DialerTO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB0F34EF2D94412C00916865 /* XCRemoteSwiftPackageReference "DialerTO" */;
+			productName = DialerTO;
+		};
 		CB582AEB29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
