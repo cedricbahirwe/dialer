@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DialerTO
 
 struct Transaction: Identifiable, Codable {
     var id: String { Date().description }
@@ -24,12 +25,7 @@ struct Transaction: Identifiable, Codable {
 
         var estimatedFee: Int? {
             if type == .client {
-                for range in Self.transactionFees {
-                    if range.key.contains(Int(doubleAmount)) {
-                        return range.value
-                    }
-                }
-                return nil
+                return TransactionOptimizer.calculateFee(for: Int(doubleAmount))
             } else {
                 return 0
             }
@@ -68,7 +64,7 @@ struct Transaction: Identifiable, Codable {
             )
         }
 
-        static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
+//        static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
 
         func toParent() -> Transaction {
             Transaction(amount: Int(doubleAmount), number: number, type: type)

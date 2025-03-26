@@ -95,6 +95,9 @@
 		CB6165C52D1DC66000C142E5 /* WrappedPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */; };
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
+		CB6D4B3B2D94151C0065A76D /* TransactionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */; };
+		CB6D4B9D2D941FF60065A76D /* DialerTO.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */; };
+		CB6D4B9E2D941FF60065A76D /* DialerTO.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB7426BF2A05C05D00BE76DF /* DeviceAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */; };
 		CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B32CB3F0E800415777 /* ChartInsight.swift */; };
 		CB7F33B62CB3F47600415777 /* DialingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */; };
@@ -154,6 +157,20 @@
 			remoteInfo = Dialer;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB6D4B9F2D941FF60065A76D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CB6D4B9E2D941FF60065A76D /* DialerTO.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8201D9B3261A3C94007D6892 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
@@ -243,6 +260,8 @@
 		CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedPreview.swift; sourceTree = "<group>"; };
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
+		CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModelTests.swift; sourceTree = "<group>"; };
+		CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DialerTO.xcframework; path = ../../../../Desktop/DialerOptimizer/output/DialerTO.xcframework; sourceTree = "<group>"; };
 		CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAccount.swift; sourceTree = "<group>"; };
 		CB7F33B32CB3F0E800415777 /* ChartInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInsight.swift; sourceTree = "<group>"; };
 		CB7F33B52CB3F47600415777 /* DialingsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialingsHistoryView.swift; sourceTree = "<group>"; };
@@ -298,6 +317,7 @@
 				CB582B0029ABEB3100FAD610 /* FirebaseStorage in Frameworks */,
 				CB582AEE29ABEB3100FAD610 /* FirebaseDatabase in Frameworks */,
 				CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				CB6D4B9D2D941FF60065A76D /* DialerTO.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +395,7 @@
 				82D41FB525D1C1FE00551D22 /* Dialer */,
 				82EEBCEB26C12E2500B1720A /* DialerTests */,
 				CB544631289C5763009F3457 /* DialerUITests */,
+				CB6D4B9B2D941FF60065A76D /* Frameworks */,
 				82D41FB425D1C1FE00551D22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -537,6 +558,7 @@
 				CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */,
 				CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */,
 				CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */,
+				CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */,
 				CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */,
 			);
 			path = ModelTests;
@@ -610,6 +632,14 @@
 				CBD481452D2007A100223F5D /* WrappedPreviewBackground.swift */,
 			);
 			path = Wrapped;
+			sourceTree = "<group>";
+		};
+		CB6D4B9B2D941FF60065A76D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB6D4B9C2D941FF60065A76D /* DialerTO.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CBA429DE29AB85E70041D578 /* Reusable */ = {
@@ -686,6 +716,7 @@
 				82D41FAF25D1C1FE00551D22 /* Sources */,
 				82D41FB025D1C1FE00551D22 /* Frameworks */,
 				82D41FB125D1C1FE00551D22 /* Resources */,
+				CB6D4B9F2D941FF60065A76D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -938,6 +969,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6D4B3B2D94151C0065A76D /* TransactionModelTests.swift in Sources */,
 				CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */,
 				82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */,
 				CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */,
