@@ -16,7 +16,7 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction.Model = .init(amount: "100000", number: "", type: .client)
+    @State private var transaction: Transaction.Model = .init(amount: "150500", number: "", type: .client)
 
     @State private var presentedSheet: Sheet?
     private var rowBackground: Color {
@@ -51,13 +51,29 @@ struct TransferView: View {
         isMerchant ? "Pay Merchant" : "Transfer momo"
     }
 
-    private var canSplitTransaction: Bool {
-        guard isClient,
-                let estimatedFee = transaction.estimatedFee else { return false }
-        return estimatedFee >= 100
+    private var transactionSavings: Int? {
+        // Will need more more
+        guard isClient else { return nil }
+        guard let fees = TransactionOptimizer.calculateFeesSavings(
+            for: Int(transaction.doubleAmount)
+        ), fees.savings > 0 else {
+            return nil
+        }
+
+        return fees.savings
     }
 
+
     @State private var showSplitInfoSheet: Bool = false
+    @State private var otWrapper: OptimizedTransactionsWrapper?
+    struct OptimizedTransactionsWrapper: Identifiable {
+        var id: UUID
+        var transactions: [Transaction.Model]
+        init(_ transactions: [Transaction.Model]) {
+            self.id = UUID()
+            self.transactions = transactions
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -69,87 +85,91 @@ struct TransferView: View {
                             .foregroundStyle(Color.accentColor)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    HStack {
-                        NumberField("Enter Amount", text: $transaction.amount)
-                            .onChange(of: transaction.amount, perform: handleAmountChange)
-                            .focused($focusedState, equals: .amount)
-                            .accessibilityIdentifier("transferAmountField")
+                    VStack(spacing: 2) {
+                        HStack {
+                            NumberField("Enter Amount", text: $transaction.amount)
+                                .onChange(of: transaction.amount, perform: handleAmountChange)
+                                .focused($focusedState, equals: .amount)
+                                .accessibilityIdentifier("transferAmountField")
 
-                        if canSplitTransaction {
-                            Button(action: {
-//                                 Demonstration and performance testing
-                                func demonstrateOptimization(amount: Int) {
-                                    let startTime = CFAbsoluteTimeGetCurrent()
+                            if transactionSavings != nil {
+                                Button(action: {
+                                    // Demonstration and performance testing
+                                    func demonstrateOptimization(amount: Int) {
+                                        let startTime = CFAbsoluteTimeGetCurrent()
 
-                                    let optimizedTransactions = TransactionOptimizer.optimizeTransactions(totalAmount: amount)
+                                        let optimizedTransactions = TransactionOptimizer.optimizeTransactions(totalAmount: amount)
 
-                                    let endTime = CFAbsoluteTimeGetCurrent()
-                                    let executionTime = (endTime - startTime) * 1000 // Convert to milliseconds
+                                        let endTime = CFAbsoluteTimeGetCurrent()
+                                        let executionTime = (endTime - startTime) * 1000 // Convert to milliseconds
 
-                                    print("Total amount: \(amount)")
-                                    print("Optimized transactions: \(optimizedTransactions)")
+                                        print("Total amount: \(amount)")
+                                        print("Optimized transactions: \(optimizedTransactions)")
 
-                                    if
-                                        let defaultFee = TransactionOptimizer.calculateFee(for: amount),
-                                        let totalFee = TransactionOptimizer.calculateTotalFee(for: optimizedTransactions) {
-                                        print("Total fee: \(totalFee) vs Default fee: \(defaultFee)")
-                                        print("Transactions sum: \(optimizedTransactions.reduce(0, +))")
-                                        print("Execution time: \(String(format: "%.4f", executionTime)) ms")
+                                        if let defaultFee = TransactionOptimizer.calculateFee(for: amount),
+                                           let totalFee = TransactionOptimizer.calculateTotalFee(for: optimizedTransactions) {
+                                            print("Total fee: \(totalFee) vs Default fee: \(defaultFee)")
+                                            print("Transactions sum: \(optimizedTransactions.reduce(0, +))")
+                                            print("Execution time: \(String(format: "%.4f", executionTime)) ms")
 
-                                        // Print individual transaction fees
-                                        for transaction in optimizedTransactions {
-                                            if let fee = TransactionOptimizer.calculateFee(for: transaction) {
-                                                print("Transaction \(transaction): Fee = \(fee)")
+                                            // Print individual transaction fees
+                                            for transaction in optimizedTransactions {
+                                                if let fee = TransactionOptimizer.calculateFee(for: transaction) {
+                                                    print("Transaction \(transaction): Fee = \(fee)")
+                                                }
                                             }
+                                        } else {
+                                            print("Invalid transaction split")
                                         }
-                                    } else {
-                                        print("Invalid transaction split")
                                     }
-                                }
 
-//                                 Performance test function
-                                func runPerformanceTest() {
-                                    let testAmounts = [1_000, 10_000, 100_000, 1_000_000, 5_000_000, 10_000_000]
+                                    // Performance test function
+                                    func runPerformanceTest() {
+                                        let testAmounts = [1_000, 10_000, 100_000, 1_000_000, 5_000_000, 10_000_000]
 
-                                    print("Performance Test:")
-                                    for amount in testAmounts {
-                                        demonstrateOptimization(amount: amount)
-                                        print("---")
+                                        print("Performance Test:")
+                                        for amount in testAmounts {
+                                            demonstrateOptimization(amount: amount)
+                                            print("---")
+                                        }
                                     }
+
+                                    // Uncomment to run performance test
+                                    //                                    runPerformanceTest()
+
+                                    // Example usage
+                                    demonstrateOptimization(amount: Int(transaction.doubleAmount))
+
+                                    showSplitInfoSheet.toggle()
+                                }) {
+                                    Image(systemName: "bubbles.and.sparkles.fill")
+                                        .imageScale(.large)
+                                        .foregroundStyle(
+                                            smartGradient
+                                        )
+                                        .frame(width: 48, height: 48)
+                                        .background(.regularMaterial)
+                                        .cornerRadius(8)
                                 }
-
-//                                 Uncomment to run performance test
-//                                 runPerformanceTest()
-
-
-//                                 Example usage
-                                demonstrateOptimization(amount: 1001)
-
-
-//                                DispatchQueue.global(qos: .background).async {
-//                                }
-
-                                showSplitInfoSheet.toggle()
-                            }) {
-                                Image(systemName: "bubbles.and.sparkles.fill")
-                                    .imageScale(.large)
-                                    .foregroundStyle(
-                                        smartGradient
-                                    )
-                                    .frame(width: 48, height: 48)
-                                    .background(.regularMaterial)
-                                    .cornerRadius(8)
                             }
                         }
-                    }
 
-                    Text("You can save 60 RWF using Dialer Splits")
-                        .foregroundStyle(smartGradient)
-                        .font(.callout)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        if let transactionSavings {
+                            Text("You can save \(transactionSavings) RWF using Dialer Splits")
+                                .foregroundStyle(smartGradient)
+                                .font(.callout)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        } else {
+
+                            //                            Text("Can not dialer split \(transaction.doubleAmount.formatted()).")
+                            //                                .foregroundStyle(smartGradient)
+                            //                                .font(.callout)
+                            //                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
                 }
                 .animation(.default, value: isClient && !transaction.amount.isEmpty)
-                .animation(.default, value: canSplitTransaction)
+                .animation(.default, value: transactionSavings)
 
                 VStack(spacing: 10) {
                     if isClient && !selectedContact.names.isEmpty {
@@ -242,17 +262,51 @@ struct TransferView: View {
                 .fixedSize()
             }
         }
+        .sheet(item: $otWrapper) { wrapper in
+            DialerTransactionsViewer(
+                fees: TransactionOptimizer.calculateFeesSavings(
+                    for: Int(transaction.doubleAmount))!,
+                transactions: wrapper.transactions
+            )
+            .presentationDetents([.height(CGFloat(290 + (20 * wrapper.transactions.count)))])
+        }
         .sheet(isPresented: $showSplitInfoSheet) {
             if #available(iOS 16.4, *) {
-                DialerSplitInfoView()
-//                    .presentationDetents([.medium])
-                    .presentationDetents([.height(350)])
-//                    .presentationBackground(.thinMaterial)
-                    .presentationBackground(.ultraThickMaterial.shadow(.inner(color: .primary, radius: 10)))
-                    .presentationCornerRadius(30)
-                    .presentationContentInteraction(.resizes)
+                DialerSplitInfoView(
+                    isPresented: $showSplitInfoSheet,
+                    onTurnOn: {
+                        let currentTransaction = transaction
+
+                        let otsAmounts = TransactionOptimizer.optimizeTransactions(
+                            totalAmount: Int(
+                                currentTransaction.doubleAmount
+                            )
+                        )
+
+                        let ots = otsAmounts.map(
+                            { amount in
+                                Transaction.Model(
+                                    amount: String(amount),
+                                    number: currentTransaction.number,
+                                    type: currentTransaction.type
+                                )
+                            })
+
+                        otWrapper = .init(ots)
+                    }
+                )
+                .presentationDetents([.height(370)])
+                .presentationBackground(.ultraThickMaterial.shadow(.inner(color: .primary, radius: 10)))
+                .presentationCornerRadius(30)
+                .presentationContentInteraction(.resizes)
             } else {
-                // Fallback on earlier versions
+                DialerSplitInfoView(
+                    isPresented: $showSplitInfoSheet,
+                    onTurnOn: {
+
+                    }
+                )
+                .presentationDetents([.height(370)])
             }
         }
         .sheet(item: $presentedSheet) { sheet in
@@ -283,6 +337,7 @@ struct TransferView: View {
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
         .task {
+
             performInitialization()
             await merchantStore.getMerchants()
         }
@@ -326,10 +381,29 @@ private extension TransferView {
 
     func performInitialization() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-//            focusedState = .amount
+            //            focusedState = .amount
         }
 
         requestContacts()
+
+        let currentTransaction = transaction
+
+        let otsAmounts = TransactionOptimizer.optimizeTransactions(
+            totalAmount: Int(
+                currentTransaction.doubleAmount
+            )
+        )
+
+        let ots = otsAmounts.map(
+            { amount in
+                Transaction.Model(
+                    amount: String(amount),
+                    number: currentTransaction.number,
+                    type: currentTransaction.type
+                )
+            })
+
+        otWrapper = .init(ots)
     }
 
     func switchPaymentType() {
@@ -425,14 +499,103 @@ private extension TransferView {
     .preferredColorScheme(.dark)
 }
 
+struct DialerTransactionsViewer: View {
+    var fees: (savings: Int, originalFee: Int, optimizedFee: Int)
+    var transactions: [Transaction.Model]
+    @State private var currentOP = 0
+    @State private var showDetails: Bool = true
+    var isCompleted: Bool {
+        currentOP == transactions.count
+    }
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Text("\(fees.savings) RWF Saved")
+            //                .foregroundStyle(TransferView().smartGradient)
+                .font(.system(.title, design: .rounded, weight: .bold))
+                .font(.title.bold())
+
+            HStack(alignment: .lastTextBaseline) {
+                Text("\(fees.originalFee) RWF")
+                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .foregroundStyle(.secondary)
+                    .strikethrough()
+
+                Text("\(fees.optimizedFee) RWF")
+                    .font(.system(.title, design: .rounded, weight: .bold))
+                    .foregroundStyle(.mainRed)
+            }
+
+            HStack {
+                DisclosureGroup(isExpanded: $showDetails) {
+                    VStack(alignment: .leading) {
+                        ForEach(0..<transactions.count, id: \.self) { i in
+                            let transaction = transactions[i]
+                            HStack {
+                                Text("\(transaction.doubleAmount.formatted(.currency(code: "RWF")))")
+                                    .font(.headline.weight(.medium))
+                                Spacer()
+                                Text("Fee: \(transaction.estimatedFee!.formatted(.currency(code: "RWF")))")
+                                    .foregroundStyle(.secondary)
+                                Image(systemName: (currentOP > i)  ? "checkmark.circle.fill" : "checkmark.circle")
+                                    .foregroundStyle(TransferView().smartGradient)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                } label: {
+                    Text("\(transactions.count) total transactions")
+                        .font(.title2)
+
+                        .foregroundStyle(TransferView().smartGradient)
+                }
+            }
+
+            Button {
+                if isCompleted {
+                    dismiss()
+                } else {
+                    currentOP += 1
+                }
+            } label: {
+                HStack {
+                    Text(isCompleted ? "Complete" : "Confirm \(currentOP+1) out of \(transactions.count)")
+
+                    if isCompleted {
+                        Image(systemName: "checkmark.circle.fill")
+                            .imageScale(.large)
+                    }
+                }
+                .font(.subheadline.bold())
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+                .background(Color.accentColor, in: .rect(cornerRadius: 12))
+                .foregroundStyle(Color.white)
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(alignment: .top) {
+            Text("Dialer Splits")
+                .bold()
+                .foregroundStyle(TransferView().smartGradient)
+                .padding()
+        }
+    }
+}
+
 struct DialerSplitInfoView: View {
-    @State private var showAlert = true
+    @Binding var isPresented: Bool
+    var onTurnOn: () -> Void
     var body: some View {
         VStack(spacing: 10) {
             Image(systemName: "bubbles.and.sparkles.fill")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 60, height: 60)
+                .frame(width: 50, height: 50)
                 .foregroundStyle(
                     LinearGradient(
                         colors: [.orange, .red, .purple, .blue],
@@ -440,21 +603,27 @@ struct DialerSplitInfoView: View {
                         endPoint: .bottomTrailing
                     )
                 )
+                .padding(.top, 10)
 
             Text("Dialer Splits")
                 .font(.system(.title, design: .rounded, weight: .bold))
                 .bold()
 
-            Text("Get suggestions on how to save money on transaction fees when sending money.")
-                .font(.headline)
-                .fontWeight(.regular)
-                .multilineTextAlignment(.center)
+            Text(Bool.random()
+                 ? "Save on transaction fees with smart split suggestions when sending money."
+                 : "Get smart suggestions to reduce transaction fees when sending money.")
+            .font(.headline)
+            .fontWeight(.regular)
+            .multilineTextAlignment(.center)
 
-
+            Text("You can change this in your settings.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
 
             VStack(spacing: 10) {
                 Button {
-                    showAlert.toggle()
+                    isPresented.toggle()
+                    onTurnOn()
                 } label: {
                     Text("Turn on Split Suggestions")
                         .bold()
@@ -476,10 +645,10 @@ struct DialerSplitInfoView: View {
                 } label: {
                     Text("Remind Me Later")
                         .frame(maxWidth: .infinity)
-                        .frame(height: 50)
+                        .frame(height: 45)
                 }
             }
-            .padding(.top, 25)
+            .padding(.top, 12)
         }
         .padding(.vertical)
         .padding(.horizontal, 20)

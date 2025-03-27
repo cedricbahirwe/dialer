@@ -14,7 +14,7 @@ struct Transaction: Identifiable, Codable {
     var number: String
     var type: TransactionType
 
-    struct Model {
+    struct Model: Hashable {
         var amount: String
         var number: String
         var type: TransactionType
