@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum SettingsOption {
+    case dialerSplits
     case biometrics
     case getStarted
     case contactUs
@@ -18,6 +19,13 @@ enum SettingsOption {
     
     func getSettingsItem() -> SettingsItem {
         switch self {
+        case .dialerSplits:
+            return .init(
+                sysIcon: "bubbles.and.sparkles.fill",
+                color: .mainRed,
+                title: "Dialer Splits",
+                subtitle: "Save on fees with smart payment splits."
+            )
         case .biometrics:
             return .init(sysIcon: "lock.fill", color: .green, title: "Biometric Authentication", subtitle: "For securing your activities on the app.")
         case .deleteUSSDs:

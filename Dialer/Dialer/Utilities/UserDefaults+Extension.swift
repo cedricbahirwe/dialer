@@ -41,4 +41,7 @@ enum UserDefaultsKeys {
 
     // Apple Sign In Info
     static let appleSignInInfo = "appleSignInInfo"
+
+    // Dialer Splits
+    static let isDialerSplitsEnabled = "isDialerSplitsEnabled"
 }
