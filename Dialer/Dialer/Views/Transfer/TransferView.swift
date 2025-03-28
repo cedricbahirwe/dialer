@@ -19,7 +19,8 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .client)
+    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant)
+    @State private var isShakingNumberField = false
 
     @State private var presentedSheet: Sheet?
 
@@ -111,6 +112,7 @@ struct TransferView: View {
                             text: $transaction.number.animation())
                         .onChange(of: transaction.number, perform: handleNumberField)
                         .focused($focusedState, equals: .number)
+                        .modifier(ShakeEffect(animatableData: CGFloat(isShakingNumberField ? 1 : 0)))
                         .accessibilityIdentifier("transferNumberField")
 
                         Button(action: {
@@ -146,10 +148,15 @@ struct TransferView: View {
                             .cornerRadius(10)
                             .foregroundStyle(Color.white)
                     }
-                    .disabled(transaction.isValid == false)
+                    .disabled(!transaction.isValid)
 
                     if transactionSavings != nil {
                         Button(action: {
+                            guard transaction.isValid else {
+                                shakeNumberField()
+                                return
+                            }
+
                             if isDialerSplitsEnabled {
                                 showOptimizedTransactions()
                                 return
@@ -159,16 +166,16 @@ struct TransferView: View {
                         }) {
                             Image(systemName: "lasso.badge.sparkles")
                                 .imageScale(.large)
-                                .foregroundStyle(smartGradient)
                                 .frame(width: 48, height: 48)
                                 .background(.regularMaterial)
                                 .cornerRadius(8)
+                                .foregroundStyle(smartGradient)
                         }
+                        .disabled(isShakingNumberField)
                     }
                 }
                 .padding(.top)
                 .animation(.default, value: transactionSavings)
-
             }
             .padding()
 
@@ -304,6 +311,16 @@ private extension TransferView {
     func turnOnDialerSplits() {
         isDialerSplitsEnabled = true
         showOptimizedTransactions()
+    }
+
+    func shakeNumberField() {
+        withAnimation(.default) {
+            isShakingNumberField = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            isShakingNumberField = false
+        }
     }
 
     func showOptimizedTransactions() {
@@ -452,7 +469,7 @@ struct DialerTransactionsViewer: View {
         VStack(spacing: 10) {
             Text("Save \(fees.savings.formatted(.currency(code: "RWF")))")
                 .foregroundStyle(smartGradient)
-                .font(.system(.title, design: .rounded, weight: .bold))
+                .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 .padding(.bottom, -12)
 
             HStack(alignment: .lastTextBaseline) {
@@ -642,3 +659,14 @@ struct DialerSplitInfoView: View {
 //
 //// Example usage
 //demonstrateOptimization(amount: Int(transaction.doubleAmount))
+
+struct ShakeEffect: GeometryEffect {
+    var amount: CGFloat = 10
+    var shakesPerUnit = 3
+    var animatableData: CGFloat
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        let translation = amount * sin(animatableData * .pi * CGFloat(shakesPerUnit))
+        return ProjectionTransform(CGAffineTransform(translationX: translation, y: 0))
+    }
+}

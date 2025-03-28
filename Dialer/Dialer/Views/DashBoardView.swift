@@ -15,8 +15,8 @@ struct DashBoardView: View {
     @EnvironmentObject private var insightsStore: DialerInsightStore
 
     @AppStorage(UserDefaultsKeys.showWelcomeView)
-    private var showWelcomeView: Bool = false
-    
+    private var showWelcomeView: Bool = true
+
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     

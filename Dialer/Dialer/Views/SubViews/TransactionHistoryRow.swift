@@ -24,7 +24,8 @@ struct TransactionHistoryRow: View {
                         }
                     }
                     .fontWeight(.medium)
-                    .minimumScaleFactor(0.9)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 default:
                     Text(transaction.type.formatted)
                         .fontWeight(.medium)
