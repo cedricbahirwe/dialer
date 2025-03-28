@@ -42,7 +42,20 @@ final class MainViewModel: ObservableObject {
             Log.debug(error.localizedDescription)
         }
     }
+
     
+    /// Perform a transaction
+    /// - Parameter transaction: the user transaction
+    func transferMoney(_ transaction: Transaction.Model) async {
+        guard transaction.isValid else {
+            Log.debug("Transaction is invalid: \(transaction.fullCode)")
+            return
+        }
+
+        await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
+        Tracker.shared.logTransaction(transaction: transaction.cleaned)
+    }
+
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.
     /// - Parameters:
     ///   - purchase: the purchase to take the fullCode from.
@@ -63,17 +76,16 @@ final class MainViewModel: ObservableObject {
                 if isCompleted {
                     Log.debug("Successfully Dialed")
                 } else {
-                    Log.debug("Failed Dialed")
+                    Log.debug("Failed Dialing")
                 }
             } catch {
-                Log.debug("Failed Dialed \(error.localizedDescription)")
+                Log.debug("Failed Dialing \(error.localizedDescription)")
             }
             
         } else {
             Log.debug("Can not dial this code")
         }
     }
-    
 }
 
 // MARK: - Sheets presentation

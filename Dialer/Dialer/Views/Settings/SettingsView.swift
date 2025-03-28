@@ -16,6 +16,9 @@ struct SettingsView: View {
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
 
+    @AppStorage(UserDefaultsKeys.isDialerSplitsEnabled)
+    private var allowDialerSplits = false
+
     @AppStorage(UserDefaultsKeys.appTheme)
     private var appTheme: DialerTheme = .system
 
@@ -48,6 +51,17 @@ struct SettingsView: View {
                     if settingsStore.isLoggedIn {
                         sectionHeader("Account")
                     }
+                }
+
+                Section {
+                    HStack(spacing: 3) {
+                        SettingsRow(.dialerSplits)
+                        Toggle("Biometrics", isOn: $allowDialerSplits)
+                            .toggleStyle(SwitchToggleStyle())
+                            .labelsHidden()
+                    }
+                } header: {
+                    sectionHeader("Preferences")
                 }
 
                 Section {
