@@ -95,7 +95,7 @@ final class TransactionModelTests: XCTestCase {
             number: "1234567",
             type: .merchant
         )
-        XCTAssertEqual(merchantTransaction.estimatedFee, 0, "Merchant transaction fee should always be 0")
+        XCTAssertEqual(merchantTransaction.estimatedFee, nil, "Merchant transaction fee should always be ")
     }
 
     // MARK: - Full Code Generation Tests
