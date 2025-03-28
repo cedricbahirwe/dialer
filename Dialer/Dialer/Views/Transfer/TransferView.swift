@@ -19,20 +19,12 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction.Model = .init(amount: "150500", number: "", type: .client)
+    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .client)
 
     @State private var presentedSheet: Sheet?
 
     private var rowBackground: Color {
         Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
-    }
-
-    var smartGradient: LinearGradient {
-        LinearGradient(
-            colors: [.orange, .red, .purple, .blue],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
     }
 
     private var feeHintView: Text? {
@@ -165,11 +157,9 @@ struct TransferView: View {
                                 showSplitInfoSheet.toggle()
                             }
                         }) {
-                            Image(systemName: "bubbles.and.sparkles.fill")
+                            Image(systemName: "lasso.badge.sparkles")
                                 .imageScale(.large)
-                                .foregroundStyle(
-                                    smartGradient
-                                )
+                                .foregroundStyle(smartGradient)
                                 .frame(width: 48, height: 48)
                                 .background(.regularMaterial)
                                 .cornerRadius(8)
@@ -461,7 +451,7 @@ struct DialerTransactionsViewer: View {
     var body: some View {
         VStack(spacing: 10) {
             Text("Save \(fees.savings.formatted(.currency(code: "RWF")))")
-                .foregroundStyle(TransferView().smartGradient)
+                .foregroundStyle(smartGradient)
                 .font(.system(.title, design: .rounded, weight: .bold))
                 .padding(.bottom, -12)
 
@@ -488,7 +478,7 @@ struct DialerTransactionsViewer: View {
                                 Text("Fee: \(transaction.estimatedFee!.formatted(.currency(code: "RWF")))")
                                     .foregroundStyle(.secondary)
                                 Image(systemName: (currentOP > i)  ? "checkmark.circle.fill" : "checkmark.circle")
-                                    .foregroundStyle(TransferView().smartGradient)
+                                    .foregroundStyle(smartGradient)
                             }
                         }
                     }
@@ -531,7 +521,7 @@ struct DialerTransactionsViewer: View {
         .overlay(alignment: .top) {
             Text("Dialer Splits")
                 .bold()
-                .foregroundStyle(TransferView().smartGradient)
+                .foregroundStyle(smartGradient)
                 .padding()
         }
     }
@@ -542,7 +532,7 @@ struct DialerSplitInfoView: View {
     var onTurnOn: () -> Void
     var body: some View {
         VStack(spacing: 10) {
-            Image(systemName: "bubbles.and.sparkles.fill")
+            Image(systemName: "lasso.badge.sparkles")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)

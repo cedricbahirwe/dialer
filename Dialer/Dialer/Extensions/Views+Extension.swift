@@ -8,7 +8,14 @@
 import SwiftUI
 
 extension View {
-    
+    var smartGradient: LinearGradient {
+        LinearGradient(
+            colors: [.orange, .red, .purple, .blue],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
     /// Tracking screen appearance and disappearance
     func trackAppearance(_ screen: ScreenName) -> some View {
         self

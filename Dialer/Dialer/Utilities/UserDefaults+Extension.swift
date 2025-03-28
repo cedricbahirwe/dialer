@@ -13,7 +13,7 @@ enum UserDefaultsKeys {
     static let pinCode = "pinCode"
     
     // Onboarding
-    static let showWelcomeView = "showWelcomeView"
+    static let showWelcomeView = "showWelcomeView2"
     
     // Biometrics
     static let allowBiometrics = "allowBiometrics"

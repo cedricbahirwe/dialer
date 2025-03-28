@@ -21,7 +21,7 @@ enum SettingsOption {
         switch self {
         case .dialerSplits:
             return .init(
-                sysIcon: "bubbles.and.sparkles.fill",
+                sysIcon: "lasso.badge.sparkles",
                 color: .mainRed,
                 title: "Dialer Splits",
                 subtitle: "Save on fees with smart payment splits."

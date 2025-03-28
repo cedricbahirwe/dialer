@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct WhatsNewView: View {
-    @Binding var isPresented: Bool
-
-    private let changeLogs: [ChangeLog] = ChangeLog.latestLogs
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack(spacing: 0) {
@@ -35,39 +33,48 @@ struct WhatsNewView: View {
                     }
                     .padding(.top, 16)
 
-                    VStack(spacing: 16) {
-                        Text("Cool Stuff You Can Do!")
-                            .font(.system(.title2, design: .rounded).weight(.heavy))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.6)
-
+                    Section {
                         VStack(spacing: 15) {
-                            ForEach(changeLogs, content: ChangeLogView.init)
+                            ForEach(whatsNewLogs, content: ChangeLogView.init)
                         }
                         .padding(.horizontal, 2)
+
+                        Capsule()
+                            .fill(smartGradient)
+                            .frame(height: 1.5)
+                            .padding(.leading, 40)
+                            .padding(.trailing)
+
+                        VStack(spacing: 15) {
+                            ForEach(latestLogs, content: ChangeLogView.init)
+                        }
+                        .padding(.horizontal, 2)
+                    } header: {
+                        Text("What's New")
+                            .font(.system(.largeTitle, design: .rounded).weight(.heavy))
                     }
                 }
                 .padding(.horizontal)
             }
 
             Button {
-                isPresented = false
+                dismiss()
             } label: {
                 Text("Continue")
                     .font(.body.weight(.semibold))
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
+                    .background(
+                        Color.accentColor
+                            .shadow(.drop(color: .lightShadow, radius: 3, x: -3, y: -3))
+                            .shadow(.drop(color: .darkShadow, radius: 13, x: 3, y: 3))
+                        ,
+                        in: .rect(
+                            cornerRadius: 15
+                        )
+                    )
             }
-            .background(
-                Color.accentColor
-                    .shadow(.drop(color: .lightShadow, radius: 3, x: -3, y: -3))
-                    .shadow(.drop(color: .darkShadow, radius: 13, x: 3, y: 3))
-                ,
-                in: .rect(
-                    cornerRadius: 15
-                )
-            )
-            .padding([.horizontal,.bottom])
+            .padding()
             .tint(.white)
         }
         .background(Color.primaryBackground)
@@ -92,7 +99,7 @@ private extension WhatsNewView {
                         .opacity(0.9)
 
                     Text(log.subtitle)
-                        .opacity(0.8)
+                        .foregroundStyle(.secondary)
                         .font(.system(.callout, design: .rounded))
                         .multilineTextAlignment(.leading)
                         .lineLimit(3)
@@ -105,7 +112,25 @@ private extension WhatsNewView {
 }
 
 #Preview {
-    WhatsNewView(isPresented: .constant(true))
+    WhatsNewView()
+//        .preferredColorScheme(.dark)
+}
+
+private extension WhatsNewView {
+    var whatsNewLogs: [ChangeLog] {
+        [
+            ChangeLog("lasso.badge.sparkles", "Dialer Splits", "Save on transaction fees with smart split suggestions when sending money."),
+            ChangeLog("lightbulb.max.fill", "Insights", "Gain valuable insights into your transactions history and USSD usage.")
+        ]
+    }
+
+    var latestLogs: [ChangeLog] {
+        [
+            ChangeLog("paperplane.circle", "Transfer & Pay", "Easily find the USSD code for sending money or making store payments."),
+            ChangeLog("phone.circle", "Buy Airtime", "Quickly generate the right USSD code to top up airtime in seconds."),
+            ChangeLog("folder", "My Space", "Personalize and manage your own USSD codes for quick access whenever needed.")
+        ]
+    }
 }
 
 private struct ChangeLog: Identifiable {
@@ -117,16 +142,5 @@ private struct ChangeLog: Identifiable {
         self.icon = icon
         self.title = title
         self.subtitle = subtitle
-    }
-}
-
-private extension ChangeLog {
-    static var latestLogs: [ChangeLog] {
-        [
-            ChangeLog("paperplane.circle", "Transfer & Pay", "Easily find the USSD code for sending money or making store payments."),
-            ChangeLog("phone.circle", "Buy Airtime", "Quickly generate the right USSD code to top up airtime in seconds."),
-            ChangeLog("bubbles.and.sparkles.fill", "Insights", "Gain valuable insights into your transaction history and USSD code usage."),
-            ChangeLog("folder", "My Space", "Personalize and manage your own USSD codes for quick access whenever needed."),
-        ]
     }
 }
