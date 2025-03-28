@@ -27,7 +27,7 @@ struct Transaction: Identifiable, Codable {
             if type == .client {
                 return TransactionOptimizer.calculateFee(for: Int(doubleAmount))
             } else {
-                return 0
+                return nil
             }
         }
 
@@ -63,8 +63,6 @@ struct Transaction: Identifiable, Codable {
                 type: type
             )
         }
-
-//        static let transactionFees = [0...1_000 : 20, 1_001...10_000 : 100, 10_001...150_000 : 250, 150_001...2_000_000 : 15_00]
 
         func toParent() -> Transaction {
             Transaction(amount: Int(doubleAmount), number: number, type: type)

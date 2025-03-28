@@ -58,6 +58,7 @@
 		CB230D112C5D8397006B795D /* UserDetailsCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */; };
 		CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2478232C9784B20093EAAC /* InsightsView.swift */; };
 		CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A55112ADD369A0088008F /* MailComposer.swift */; };
+		CB2BB55B2D96DD9200C9B38D /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2BB55A2D96DD9200C9B38D /* ShakeEffect.swift */; };
 		CB2C5BB52C9B02EA00224480 /* SpendingCategoryOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */; };
 		CB2C5BB72C9B0B3A00224480 /* InsightsChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB62C9B0B3A00224480 /* InsightsChartsView.swift */; };
 		CB2C5BB92C9B0BE800224480 /* InsightsTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB82C9B0BE800224480 /* InsightsTotalView.swift */; };
@@ -213,6 +214,7 @@
 		CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCreationView.swift; sourceTree = "<group>"; };
 		CB2478232C9784B20093EAAC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		CB2A55112ADD369A0088008F /* MailComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
+		CB2BB55A2D96DD9200C9B38D /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoryOverview.swift; sourceTree = "<group>"; };
 		CB2C5BB62C9B0B3A00224480 /* InsightsChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsChartsView.swift; sourceTree = "<group>"; };
 		CB2C5BB82C9B0BE800224480 /* InsightsTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTotalView.swift; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 		CBA429DE29AB85E70041D578 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				CB2BB55A2D96DD9200C9B38D /* ShakeEffect.swift */,
 				CB1099442A61556F00E99555 /* QRScanner */,
 				821C0737264DDFFB00DBD545 /* PinView.swift */,
 				820C10892766A31400A7CADE /* NumberField.swift */,
@@ -951,6 +954,7 @@
 				CB45381628AB9C6500F3F24C /* MySpaceView.swift in Sources */,
 				8248440B26FDBB2300DB0643 /* SettingsItem.swift in Sources */,
 				CB45381428AB911600F3F24C /* UserDefaults+Extension.swift in Sources */,
+				CB2BB55B2D96DD9200C9B38D /* ShakeEffect.swift in Sources */,
 				CB338CD629AF62D700BEAD9A /* FirebaseTracker.swift in Sources */,
 				8248440D26FDBB3200DB0643 /* SettingsOption.swift in Sources */,
 				CB1099482A61559500E99555 /* CodeScannerViewController.swift in Sources */,
