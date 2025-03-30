@@ -40,9 +40,12 @@ struct UserDetailsCreationView: View {
         VStack {
             Spacer()
             Group {
-                userStore.recoveryCode == nil
-                ? Text("I am **Dialer**")
-                : Text(username).fontWeight(.bold)
+                if  userStore.recoveryCode == nil {
+                    Text("I am **Dialer**")
+                } else  {
+                    Text(username).fontWeight(.bold)
+                        .foregroundStyle(smartGradient)
+                }
             }
             .font(.system(.title, design: .rounded))
             .padding(.bottom, 24)
@@ -70,9 +73,8 @@ struct UserDetailsCreationView: View {
             maxHeight: .infinity
         )
         .font(.system(.body, design: .rounded))
-//        .fontDesign(.rounded)
         .safeAreaInset(edge: .top) {
-            Text(userStore.recoveryCode == nil ? "Hello 👋🏽" : "Glad to have you")
+            Text(userStore.recoveryCode == nil ? "Hello 👋🏽" : "Welcome on Dialer")
                 .font(.system(.title2, design: .rounded, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .center)
                 .overlay(alignment: .trailing) {
