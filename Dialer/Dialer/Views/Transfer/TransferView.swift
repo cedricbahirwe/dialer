@@ -19,7 +19,7 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant)
+    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant, isOptimized: false)
     @State private var isShakingNumberField = false
 
     @State private var presentedSheet: Sheet?
@@ -156,6 +156,8 @@ struct TransferView: View {
                                 shakeNumberField()
                                 return
                             }
+
+                            Tracker.shared.logEvent(.openDialerSplits)
 
                             if isDialerSplitsEnabled {
                                 showOptimizedTransactions()
@@ -337,7 +339,8 @@ private extension TransferView {
                 Transaction.Model(
                     amount: String(amount),
                     number: currentTransaction.number,
-                    type: currentTransaction.type
+                    type: currentTransaction.type,
+                    isOptimized: true
                 )
             })
 

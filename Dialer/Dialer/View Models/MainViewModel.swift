@@ -53,7 +53,7 @@ final class MainViewModel: ObservableObject {
         }
 
         await MainViewModel.performQuickDial(for: .other(transaction.fullCode))
-        Tracker.shared.logTransaction(transaction: transaction.cleaned)
+        Tracker.shared.logTransaction(transaction: transaction.toParent())
     }
 
     /// Used on the `PuchaseDetailView` to dial, save code, save pin.

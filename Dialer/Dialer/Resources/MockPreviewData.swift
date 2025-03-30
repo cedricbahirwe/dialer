@@ -23,12 +23,12 @@ enum MockPreviewData {
     )
 
     static let merchantInsight = TransactionInsight(
-        details: .momo(.init(amount: 121200, number: "004050", type: .merchant)),
+        details: .momo(.init(amount: 121200, number: "004050", type: .merchant, isOptimized: false)),
         ownerID: .init()
     )
 
     static let clientInsight = TransactionInsight(
-        details: .momo(.init(amount: 15020, number: "0782628511", type: .client)),
+        details: .momo(.init(amount: 15020, number: "0782628511", type: .client, isOptimized: false)),
         ownerID: .init()
     )
 

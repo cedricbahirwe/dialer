@@ -14,10 +14,14 @@ struct Transaction: Identifiable, Codable {
     var number: String
     var type: TransactionType
 
+    /// This flag indicates whether the transaction has been optimized using `DialerTO`
+    var isOptimized: Bool
+
     struct Model: Hashable {
         var amount: String
         var number: String
         var type: TransactionType
+        var isOptimized: Bool
 
         var doubleAmount: Double {
             Double(amount) ?? 0.0
@@ -56,16 +60,13 @@ struct Transaction: Identifiable, Codable {
             }
         }
 
-        var cleaned: Transaction {
+        func toParent() -> Transaction {
             Transaction(
                 amount: Int(amount) ?? 0,
                 number: number,
-                type: type
+                type: type,
+                isOptimized: isOptimized
             )
-        }
-
-        func toParent() -> Transaction {
-            Transaction(amount: Int(doubleAmount), number: number, type: type)
         }
     }
 
