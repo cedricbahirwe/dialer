@@ -40,16 +40,12 @@ struct UserDetailsCreationView: View {
         VStack {
             Spacer()
             Group {
-                if let recoveryCode = userStore.recoveryCode {
-                    Text(username).fontWeight(.bold)
+                if  userStore.recoveryCode == nil {
                     Text("I am **Dialer**")
                 } else  {
                     Text(username).fontWeight(.bold)
                         .foregroundStyle(smartGradient)
                 }
-//                userStore.recoveryCode == nil
-//                ? Text("I am **Dialer**")
-//                : Text(username).fontWeight(.bold)
             }
             .font(.system(.title, design: .rounded))
             .padding(.bottom, 24)
