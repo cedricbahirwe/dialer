@@ -119,10 +119,11 @@ private extension WhatsNewView {
 private extension WhatsNewView {
     var whatsNewLogs: [ChangeLog] {
         [
-            ChangeLog("lasso.badge.sparkles", "Dialer Splits", "Save on transaction fees with smart split suggestions when sending money."),
+            ChangeLog(AppConstants.dialerSplitsIconName, "Dialer Splits", "Save on transaction fees with smart split suggestions when sending money."),
             ChangeLog("lightbulb.max.fill", "Insights", "Gain valuable insights into your transactions history and USSD usage.")
         ]
     }
+    
 
     var latestLogs: [ChangeLog] {
         [

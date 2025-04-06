@@ -166,7 +166,7 @@ struct TransferView: View {
                                 showSplitInfoSheet.toggle()
                             }
                         }) {
-                            Image(systemName: "lasso.badge.sparkles")
+                            Image(systemName: AppConstants.dialerSplitsIconName)
                                 .imageScale(.large)
                                 .frame(width: 48, height: 48)
                                 .background(.regularMaterial)
@@ -552,7 +552,7 @@ struct DialerSplitInfoView: View {
     var onTurnOn: () -> Void
     var body: some View {
         VStack(spacing: 10) {
-            Image(systemName: "lasso.badge.sparkles")
+            Image(systemName: AppConstants.dialerSplitsIconName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
