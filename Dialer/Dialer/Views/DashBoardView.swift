@@ -15,8 +15,8 @@ struct DashBoardView: View {
     @EnvironmentObject private var insightsStore: DialerInsightStore
 
     @AppStorage(UserDefaultsKeys.showWelcomeView)
-    private var showWelcomeView: Bool = false
-    
+    private var showWelcomeView: Bool = true
+
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
     
@@ -58,7 +58,7 @@ struct DashBoardView: View {
                         if #available(iOS 17.0, *) {
                             DashItemView(
                                 title: "Insights",
-                                icon: "bubbles.and.sparkles.fill")
+                                icon: "lightbulb.max.fill")
                         } else {
                             DashItemView(
                                 title: "History",
@@ -142,8 +142,8 @@ struct DashBoardView: View {
                 .presentationDetents([.height(400)])
             }
         }
-        .sheet(isPresented: $showWelcomeView) {
-            WhatsNewView(isPresented: $showWelcomeView)
+        .fullScreenCover(isPresented: $showWelcomeView) {
+            WhatsNewView()
         }
         .sheet(item: $data.presentedSheet) { sheet in
             switch sheet {

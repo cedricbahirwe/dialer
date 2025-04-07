@@ -59,7 +59,8 @@ struct TranferMoneyIntent: AppIntent {
         Transaction.Model(
             amount: "\(amount)",
             number: number,
-            type: type
+            type: type,
+            isOptimized: false
         )
     }
     static private var contactName: String?

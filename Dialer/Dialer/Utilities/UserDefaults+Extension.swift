@@ -13,7 +13,7 @@ enum UserDefaultsKeys {
     static let pinCode = "pinCode"
     
     // Onboarding
-    static let showWelcomeView = "showWelcomeView"
+    static let showWelcomeView = "showWelcomeView2"
     
     // Biometrics
     static let allowBiometrics = "allowBiometrics"
@@ -41,4 +41,7 @@ enum UserDefaultsKeys {
 
     // Apple Sign In Info
     static let appleSignInInfo = "appleSignInInfo"
+
+    // Dialer Splits
+    static let isDialerSplitsEnabled = "isDialerSplitsEnabled"
 }

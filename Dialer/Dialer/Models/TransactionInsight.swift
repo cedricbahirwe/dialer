@@ -116,7 +116,7 @@ enum  RecordType: String, Codable {
 
     var formatted: String {
         switch self {
-        case .user: "P2P"
+        case .user: "Sent to"
         default: rawValue.capitalized
         }
     }

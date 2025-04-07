@@ -54,6 +54,8 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
     case contactsOpened = "contact_opened"
     case logIn = "app_login"
     case merchantCodeScanned
+    case openDialerSplits = "open_dialer_splits"
+
     var stringValue: String {
         rawValue.camelToSnake()
     }
@@ -70,6 +72,7 @@ enum EventParameterKey: String {
     case transType = "tran_type"
     case transCode = "tran_code"
     case transTime = "tran_timestamp"
+    case transSplit  = "tran_split"
 
     // Device
     case devHash = "device_hash"

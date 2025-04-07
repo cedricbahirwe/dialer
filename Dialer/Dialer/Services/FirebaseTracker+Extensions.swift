@@ -21,7 +21,8 @@ extension FirebaseTracker: TrackerProtocol {
             .transId : transaction.id,
             .transAmount : transaction.amount,
             .transType : transaction.type.rawValue,
-            .transTime : Date.now.formatted()
+            .transTime : Date.now.formatted(),
+            .transSplit : transaction.isOptimized
         ]
 
         if let device = DialerStorage.shared.getSavedDevice() {
