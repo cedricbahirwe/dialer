@@ -98,9 +98,7 @@ struct DashBoardView: View {
         .blur(radius: showPurchaseSheet ? 1 : 0)
         .fullScreenCover(
             isPresented: $showUsernameSheet,
-            onDismiss: {
-                showWelcomeView = true
-            }, content: {
+            content: {
                 UserDetailsCreationView()
             }
         )

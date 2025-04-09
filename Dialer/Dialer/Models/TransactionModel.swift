@@ -15,7 +15,7 @@ struct Transaction: Identifiable, Codable {
     var type: TransactionType
 
     /// This flag indicates whether the transaction has been optimized using `DialerTO`
-    var isOptimized: Bool
+    var isOptimized: Bool = false
 
     struct Model: Hashable {
         var amount: String
