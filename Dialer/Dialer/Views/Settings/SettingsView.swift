@@ -24,6 +24,7 @@ struct SettingsView: View {
 
     @State private var alertItem: AlertDialog?
     @State private var showUssdDeletionDialog = false
+    @State private var showDonateSheet: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -47,6 +48,9 @@ struct SettingsView: View {
                             .foregroundStyle(.secondary)
                             .font(.footnote)
                     }
+
+                    SettingsRow(.supportUs, action: presentDonationSheet)
+
                 } header: {
                     if settingsStore.isLoggedIn {
                         sectionHeader("Account")
@@ -78,12 +82,19 @@ struct SettingsView: View {
                                 setAppTheme(theme)
                             }
                         }
+
                     } label: {
                         SettingsRow(item: .init(
-                            sysIcon: "circle.lefthalf.filled.inverse",
+                            sysIcon: {
+                                if #available(iOS 17, *) {
+                                    "circle.lefthalf.filled.inverse"
+                                } else {
+                                    "moon.circle.fill"
+                                }
+                            }(),
                             color: .green,
-                            title: "Change Mode",
-                            subtitle: "Current Mode: **\((appTheme).rawCapitalized)**"))
+                            title: "Appearance",
+                            subtitle: "Current: **\((appTheme).rawCapitalized)**"))
                     }
 
                     if !dataStore.ussdCodes.isEmpty {
@@ -129,7 +140,7 @@ struct SettingsView: View {
                         SettingsRow(.tweetUs)
                     }
                 } header: {
-                    sectionHeader("Reach Out")
+                    sectionHeader("Reach out")
                 }
 
                 Section {
@@ -148,6 +159,10 @@ struct SettingsView: View {
             .navigationTitle("Help & More")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
+            .sheet(isPresented: $showDonateSheet) {
+                DonationView()
+                    .preferredColorScheme(.dark)
+            }
             .sheet(isPresented: $mailComposer.showMailView) {
                 mailComposer.makeMailView()
             }
@@ -171,6 +186,13 @@ struct SettingsView: View {
             }
             .trackAppearance(.settings)
         }
+    }
+
+}
+
+private extension SettingsView {
+    func presentDonationSheet() {
+        showDonateSheet.toggle()
     }
 
     private func presentUSSDsRemovalSheet() {
