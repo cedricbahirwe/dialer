@@ -28,6 +28,15 @@ struct DashBoardView: View {
     @AppStorage(UserDefaultsKeys.showUsernameSheet)
     private var showUsernameSheet = true
 
+    @available(iOS 17.0, *)
+    var donationTipView: DonationTipView {
+        DonationTipView(donateAction: {
+            Task { @MainActor in
+                data.showDonationView()
+            }
+        })
+    }
+
     var body: some View {
         VStack {
             VStack(spacing: 29) {
@@ -113,7 +122,7 @@ struct DashBoardView: View {
         .task {
             if #available(iOS 17.0, *) {
                 do {
-                    // try Tips.resetDatastore()
+                     try Tips.resetDatastore()
                     try Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)
@@ -149,6 +158,8 @@ struct DashBoardView: View {
                 SettingsView()
                     .environmentObject(data)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
+            case .donation:
+                DonationView()
             }
         }
         .background(Color(.secondarySystemBackground))
@@ -160,19 +171,28 @@ struct DashBoardView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 if allowBiometrics {
-                    settingsImage
-                        .onTapForBiometrics {
-                            if $0 {
-                                data.showSettingsView()
-                            }
+                    Group {
+                        if #available(iOS 17.0, *) {
+                            settingsImage
+                                .popoverTip(donationTipView)
+                        } else {
+                            settingsImage
                         }
+                    }
+                    .onTapForBiometrics {
+                        if $0 {
+                            data.showSettingsView()
+                        }
+                    }
+
                 } else {
-                    Button(action: data.showSettingsView) { settingsImage }
+                    if #available(iOS 17.0, *) {
+                        settingsButton
+                        .popoverTip(donationTipView)
+                    } else {
+                        settingsButton
+                    }
                 }
-            }
-            
-            ToolbarItem(placement: .bottomBar) {
-                
             }
         }
         .trackAppearance(.dashboard)
@@ -189,6 +209,13 @@ private extension DashBoardView {
                 LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
             )
     }
+
+    var settingsButton: some View {
+        Button(action: data.showSettingsView) {
+            settingsImage
+        }
+    }
+
     @ViewBuilder
     var settingsImage: some View {
         if #available(iOS 17.0, *) {
@@ -197,17 +224,6 @@ private extension DashBoardView {
         } else {
             settingsGradientIcon
         }
-    }
-}
-
-@available(iOS 17.0, *)
-struct QRCodeScannerTip: Tip {
-    var title: Text {
-        Text("Scan MoMo QR code to pay.")
-    }
-
-    var image: Image? {
-        Image(systemName: "qrcode").resizable()
     }
 }
 

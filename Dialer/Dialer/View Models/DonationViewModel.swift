@@ -36,12 +36,12 @@ class DonationViewModel: ObservableObject {
     ]
 
     // Custom donation product IDs (create multiple tiers in App Store Connect)
-    let customDonationProducts: [String] = [
-        "com.dialit.donation.custom.tier1",  // e.g., $1-15
-        "com.dialit.donation.custom.tier2",  // e.g., $16-30
-        "com.dialit.donation.custom.tier3",  // e.g., $31-50
-        "com.dialit.donation.custom.tier4"   // e.g., $51+
-    ]
+//    let customDonationProducts: [String] = [
+//        "com.dialit.donation.custom.tier1",  // e.g., $1-15
+//        "com.dialit.donation.custom.tier2",  // e.g., $16-30
+//        "com.dialit.donation.custom.tier3",  // e.g., $31-50
+//        "com.dialit.donation.custom.tier4"   // e.g., $51+
+//    ]
 
     var finalDonationAmount: Double {
         if let selected = selectedProduct?.price {
@@ -78,20 +78,21 @@ class DonationViewModel: ObservableObject {
         if let productID = donationOptions.first(where: { $0.amount == amount })?.productId {
             return products.first { $0.id == productID }
         }
+        return nil
 
         // For custom amounts, select appropriate tier
-        let tier: String
-        if amount <= 15 {
-            tier = customDonationProducts[0]
-        } else if amount <= 30 {
-            tier = customDonationProducts[1]
-        } else if amount <= 50 {
-            tier = customDonationProducts[2]
-        } else {
-            tier = customDonationProducts[3]
-        }
+//        let tier: String
+//        if amount <= 15 {
+//            tier = customDonationProducts[0]
+//        } else if amount <= 30 {
+//            tier = customDonationProducts[1]
+//        } else if amount <= 50 {
+//            tier = customDonationProducts[2]
+//        } else {
+//            tier = customDonationProducts[3]
+//        }
 
-        return products.first { $0.id == tier }
+//        return products.first { $0.id == tier }
     }
 
     /// Load products from App Store

@@ -7,8 +7,12 @@
 
 import SwiftUI
 import DialerTO
+import TipKit
 
 struct TransferView: View {
+    @available(iOS 17.0, *)
+    static let didTransferMoney = Tips.Event(id: "didTransferMoney")
+
     @EnvironmentObject private var mainStore: MainViewModel
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
@@ -275,7 +279,7 @@ struct TransferView: View {
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
         .task {
-//            isDialerSplitsEnabled = false
+            //            isDialerSplitsEnabled = false
             performInitialization()
             await merchantStore.getMerchants()
         }
@@ -387,6 +391,10 @@ private extension TransferView {
     func transferMoney() {
         Task {
             await mainStore.transferMoney(transaction)
+            if #available(iOS 17.0, *) {
+                print("checks", Self.didTransferMoney.donations.count)
+                Self.didTransferMoney.sendDonation()
+            }
         }
     }
 
@@ -450,7 +458,7 @@ private extension TransferView {
             .environmentObject(UserMerchantStore())
             .environmentObject(MainViewModel())
     }
-//    .preferredColorScheme(.dark)
+    //    .preferredColorScheme(.dark)
 }
 
 struct DialerTransactionsViewer: View {
@@ -613,5 +621,46 @@ struct DialerSplitInfoView: View {
         }
         .padding(.vertical)
         .padding(.horizontal, 20)
+    }
+}
+
+@available(iOS 17.0, *)
+struct QRCodeScannerTip: Tip {
+    var title: Text {
+        Text("Scan MoMo QR code to pay.")
+    }
+
+    var image: Image? {
+        Image(systemName: "qrcode").resizable()
+    }
+}
+
+@available(iOS 17.0, *)
+struct DonationTipView: Tip {
+    var donateAction: @Sendable () -> Void
+    static let didTransferMoney: Event = Event(id: "didTransferMoney")
+
+    var title: Text {
+        Text("Now, you can done to support Dialer.")
+    }
+
+    var message: Text? {
+        Text("Go to Settings > Support Us.")
+    }
+    var image: Image? {
+        Image(systemName: "gift.fill").resizable()
+    }
+
+//    var rules: [Rule] {
+//        #Rule(Self.didTransferMoney) {
+//            // Three transactions
+//            $0.donations.count > 3
+//        }
+//    }
+
+    var actions: [Action] {
+        .init(id: "donate", title: "Donate Now") {
+            donateAction()
+        }
     }
 }

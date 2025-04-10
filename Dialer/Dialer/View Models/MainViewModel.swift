@@ -26,7 +26,7 @@ final class MainViewModel: ObservableObject {
     @Published private(set) var ussdCodes: [USSDCode] = []
     
     @Published var presentedSheet: DialerSheet?
-    
+
     /// Confirm and Purchase an entered Code.
     @MainActor
     func confirmPurchase() async {
@@ -93,11 +93,17 @@ extension MainViewModel {
     enum DialerSheet: Int, Identifiable {
         var id: Int { rawValue }
         case settings
+        case donation
     }
 
     func showSettingsView() {
         Tracker.shared.logEvent(.settingsOpened)
         presentedSheet = .settings
+    }
+
+    @MainActor
+    func showDonationView() {
+        presentedSheet = .donation
     }
 
     func dismissSettingsView() {
