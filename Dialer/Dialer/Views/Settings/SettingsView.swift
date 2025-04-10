@@ -161,7 +161,6 @@ struct SettingsView: View {
             .onAppear(perform: ReviewHandler.requestReview)
             .sheet(isPresented: $showDonateSheet) {
                 DonationView()
-                    .preferredColorScheme(.dark)
             }
             .sheet(isPresented: $mailComposer.showMailView) {
                 mailComposer.makeMailView()

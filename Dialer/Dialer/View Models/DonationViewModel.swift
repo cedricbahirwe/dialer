@@ -21,7 +21,7 @@ struct DonationOption: Identifiable {
 @MainActor
 class DonationViewModel: ObservableObject {
     @Published var selectedProduct: Product?
-    @Published var customAmount: String = ""
+//    @Published var customAmount: String = ""
     @Published var isProcessing: Bool = false
     @Published var showThankYou: Bool = false
     @Published var errorMessage: String?
@@ -46,9 +46,10 @@ class DonationViewModel: ObservableObject {
     var finalDonationAmount: Double {
         if let selected = selectedProduct?.price {
             return NSDecimalNumber(decimal: selected).doubleValue
-        } else if let custom = Double(customAmount), custom > 0 {
-            return custom
         }
+//            else if let custom = Double(customAmount), custom > 0 {
+//            return custom
+//        }
         return 0.0
     }
 
@@ -207,7 +208,7 @@ class DonationViewModel: ObservableObject {
 
     func reset() {
         selectedProduct = nil
-        customAmount = ""
+//        customAmount = ""
         showThankYou = false
         errorMessage = nil
     }

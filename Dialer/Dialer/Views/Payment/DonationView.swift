@@ -63,7 +63,7 @@ struct DonationFormView: View {
 
                 DonationOptionsView(viewModel: viewModel)
 
-                CustomAmountView(viewModel: viewModel)
+//                CustomAmountView(viewModel: viewModel)
 
                 DonateButton(viewModel: viewModel)
             }
@@ -96,7 +96,7 @@ struct DonationOptionsView: View {
                             action: {
                                 withAnimation {
                                     viewModel.selectedProduct = product
-                                    viewModel.customAmount = ""
+//                                    viewModel.customAmount = ""
                                 }
                             }
                         )
@@ -143,31 +143,31 @@ struct DonationOptionCard: View {
     }
 }
 
-struct CustomAmountView: View {
-    @ObservedObject var viewModel: DonationViewModel
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("Or enter custom amount")
-                .font(.headline)
-
-            HStack {
-                Text("$")
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-
-                TextField("Amount", text: $viewModel.customAmount)
-                    .keyboardType(.decimalPad)
-                    .onChange(of: viewModel.customAmount) { _ in
-                        viewModel.selectedProduct = nil
-                    }
-            }
-            .padding()
-            .background(Color.gray.opacity(0.1))
-            .clipShape(.rect(cornerRadius: 8))
-        }
-    }
-}
+//struct CustomAmountView: View {
+//    @ObservedObject var viewModel: DonationViewModel
+//
+//    var body: some View {
+//        VStack(alignment: .leading) {
+//            Text("Or enter custom amount")
+//                .font(.headline)
+//
+//            HStack {
+//                Text("$")
+//                    .font(.headline)
+//                    .foregroundColor(.secondary)
+//
+//                TextField("Amount", text: $viewModel.customAmount)
+//                    .keyboardType(.decimalPad)
+//                    .onChange(of: viewModel.customAmount) { _ in
+//                        viewModel.selectedProduct = nil
+//                    }
+//            }
+//            .padding()
+//            .background(Color.gray.opacity(0.1))
+//            .clipShape(.rect(cornerRadius: 8))
+//        }
+//    }
+//}
 
 struct DonateButton: View {
     @ObservedObject var viewModel: DonationViewModel
@@ -191,7 +191,6 @@ struct DonateButton: View {
                 }
                 .padding(8)
                 .frame(maxWidth: .infinity)
-                .foregroundStyle(.white)
             }
             .tint(.mainRed)
             .buttonStyle(.borderedProminent)
