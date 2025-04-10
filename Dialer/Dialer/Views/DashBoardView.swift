@@ -29,13 +29,7 @@ struct DashBoardView: View {
     private var showUsernameSheet = true
 
     @available(iOS 17.0, *)
-    var donationTipView: DonationTipView {
-        DonationTipView(donateAction: {
-            Task { @MainActor in
-                data.showDonationView()
-            }
-        })
-    }
+    var donationTip: DonationTip { DonationTip() }
 
     var body: some View {
         VStack {
@@ -122,7 +116,7 @@ struct DashBoardView: View {
         .task {
             if #available(iOS 17.0, *) {
                 do {
-                     try Tips.resetDatastore()
+//                     try Tips.resetDatastore()
                     try Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)
@@ -170,28 +164,15 @@ struct DashBoardView: View {
         .navigationTitle("Dialer")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                if allowBiometrics {
-                    Group {
-                        if #available(iOS 17.0, *) {
-                            settingsImage
-                                .popoverTip(donationTipView)
-                        } else {
-                            settingsImage
+                if #available(iOS 17.0, *) {
+                    settingsToolbarButton
+                        .popoverTip(donationTip) { action in
+                            if action.id == "donate" {
+                                data.showDonationView()
+                            }
                         }
-                    }
-                    .onTapForBiometrics {
-                        if $0 {
-                            data.showSettingsView()
-                        }
-                    }
-
                 } else {
-                    if #available(iOS 17.0, *) {
-                        settingsButton
-                        .popoverTip(donationTipView)
-                    } else {
-                        settingsButton
-                    }
+                    settingsToolbarButton
                 }
             }
         }
@@ -200,19 +181,21 @@ struct DashBoardView: View {
 }
 
 private extension DashBoardView {
-    private var settingsGradientIcon: some View {
-        Image(systemName: "gear")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 30, height: 30)
-            .foregroundStyle(
-                LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
-    }
+    var settingsToolbarButton: some View {
+        Group {
+            if allowBiometrics {
+                settingsImage
+                .onTapForBiometrics {
+                    if $0 {
+                        data.showSettingsView()
+                    }
+                }
 
-    var settingsButton: some View {
-        Button(action: data.showSettingsView) {
-            settingsImage
+            } else {
+                Button(action: data.showSettingsView) {
+                    settingsImage
+                }
+            }
         }
     }
 
@@ -225,6 +208,16 @@ private extension DashBoardView {
             settingsGradientIcon
         }
     }
+
+    var settingsGradientIcon: some View {
+        Image(systemName: "gear")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 30, height: 30)
+            .foregroundStyle(
+                LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
+    }
 }
 
 #Preview {
@@ -232,5 +225,32 @@ private extension DashBoardView {
         DashBoardView(navPath: .constant([]))
             .environmentObject(MainViewModel())
             .environmentObject(UserStore())
+    }
+}
+
+@available(iOS 17.0, *)
+struct DonationTip: Tip {
+    static let didTransferMoney: Event = Event(id: "didTransferMoney")
+
+    var title: Text {
+        Text("Now, you can donate to support Dialer.")
+    }
+
+    var message: Text? {
+        Text("Go to Settings > Support Us.")
+    }
+    var image: Image? {
+        Image(systemName: "gift.fill").resizable()
+    }
+
+    var rules: [Rule] {
+        #Rule(Self.didTransferMoney) {
+            // Three transactions
+            $0.donations.count >= 3
+        }
+    }
+
+    var actions: [Action] {
+        Action(id: "donate", title: "Donate Now")
     }
 }

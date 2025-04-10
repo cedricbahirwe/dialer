@@ -14,8 +14,23 @@ struct Transaction: Identifiable, Codable {
     var number: String
     var type: TransactionType
 
-    /// This flag indicates whether the transaction has been optimized using `DialerTO`
-    var isOptimized: Bool = false
+    /// This flag indicates whether the transaction was optimized using `DialerTO`
+    var isOptimized: Bool
+
+    init(amount: Int, number: String, type: TransactionType, isOptimized: Bool) {
+        self.amount = amount
+        self.number = number
+        self.type = type
+        self.isOptimized = isOptimized
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        amount = try container.decode(Int.self, forKey: .amount)
+        number = try container.decode(String.self, forKey: .number)
+        type = try container.decode(TransactionType.self, forKey: .type)
+        isOptimized = try container.decodeIfPresent(Bool.self, forKey: .isOptimized) ?? false
+    }
 
     struct Model: Hashable {
         var amount: String
