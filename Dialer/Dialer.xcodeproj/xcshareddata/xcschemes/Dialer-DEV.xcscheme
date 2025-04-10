@@ -50,6 +50,9 @@
             ReferencedContainer = "container:Dialer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "../../Dialer/Services/StoreKit/DialerIAPs.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

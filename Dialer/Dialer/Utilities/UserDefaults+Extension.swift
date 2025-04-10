@@ -44,4 +44,7 @@ enum UserDefaultsKeys {
 
     // Dialer Splits
     static let isDialerSplitsEnabled = "isDialerSplitsEnabled"
+
+    // Donation Tip Display tracker
+    static let didTransferMoneyCount = "didTransferMoneyCount"
 }

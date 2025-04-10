@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DialerTO
+import TipKit
 
 struct TransferView: View {
     @EnvironmentObject private var mainStore: MainViewModel
@@ -14,6 +15,9 @@ struct TransferView: View {
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage(UserDefaultsKeys.isDialerSplitsEnabled)
     private var isDialerSplitsEnabled: Bool = false
+
+    @AppStorage(UserDefaultsKeys.didTransferMoneyCount)
+    private var didTransferMoneyCount = 0
 
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
@@ -275,7 +279,7 @@ struct TransferView: View {
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
         .task {
-//            isDialerSplitsEnabled = false
+            //            isDialerSplitsEnabled = false
             performInitialization()
             await merchantStore.getMerchants()
         }
@@ -387,6 +391,9 @@ private extension TransferView {
     func transferMoney() {
         Task {
             await mainStore.transferMoney(transaction)
+            if #available(iOS 17.0, *) {
+                didTransferMoneyCount += 1
+            }
         }
     }
 
@@ -450,7 +457,7 @@ private extension TransferView {
             .environmentObject(UserMerchantStore())
             .environmentObject(MainViewModel())
     }
-//    .preferredColorScheme(.dark)
+    //    .preferredColorScheme(.dark)
 }
 
 struct DialerTransactionsViewer: View {
@@ -613,5 +620,16 @@ struct DialerSplitInfoView: View {
         }
         .padding(.vertical)
         .padding(.horizontal, 20)
+    }
+}
+
+@available(iOS 17.0, *)
+struct QRCodeScannerTip: Tip {
+    var title: Text {
+        Text("Scan MoMo QR code to pay.")
+    }
+
+    var image: Image? {
+        Image(systemName: "qrcode").resizable()
     }
 }

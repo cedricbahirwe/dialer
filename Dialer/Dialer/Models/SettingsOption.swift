@@ -16,9 +16,17 @@ enum SettingsOption {
     case about
     case review
     case deleteUSSDs
-    
+    case supportUs
+
     func getSettingsItem() -> SettingsItem {
         switch self {
+        case .supportUs:
+            return .init(
+                sysIcon: "gift.fill",
+                color: .pink,
+                title: "Support Us",
+                subtitle: "Support continued updates and new features."
+            )
         case .dialerSplits:
             return .init(
                 sysIcon: AppConstants.dialerSplitsIconName,

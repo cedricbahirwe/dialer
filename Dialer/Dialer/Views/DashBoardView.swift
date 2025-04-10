@@ -19,7 +19,10 @@ struct DashBoardView: View {
 
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
-    
+
+    @AppStorage(UserDefaultsKeys.didTransferMoneyCount)
+    private var didTransferMoneyCount = 0
+
     @State private var showPurchaseSheet = false
     @State private var showWrappedSheet = false
     @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
@@ -27,6 +30,9 @@ struct DashBoardView: View {
 
     @AppStorage(UserDefaultsKeys.showUsernameSheet)
     private var showUsernameSheet = true
+
+    @available(iOS 17.0, *)
+    var donationTip: DonationTip { DonationTip() }
 
     var body: some View {
         VStack {
@@ -98,9 +104,7 @@ struct DashBoardView: View {
         .blur(radius: showPurchaseSheet ? 1 : 0)
         .fullScreenCover(
             isPresented: $showUsernameSheet,
-            onDismiss: {
-                showWelcomeView = true
-            }, content: {
+            content: {
                 UserDetailsCreationView()
             }
         )
@@ -115,11 +119,16 @@ struct DashBoardView: View {
         .task {
             if #available(iOS 17.0, *) {
                 do {
-                    // try Tips.resetDatastore()
+//                     try Tips.resetDatastore()
                     try Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)
                     ])
+
+                    if didTransferMoneyCount >= 3 {
+                        DonationTip.isShown = true
+                        didTransferMoneyCount = 0
+                    }
                 }
                 catch {
                     Log.debug("Error initializing TipKit \(error.localizedDescription)")
@@ -151,6 +160,8 @@ struct DashBoardView: View {
                 SettingsView()
                     .environmentObject(data)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
+            case .donation:
+                DonationView()
             }
         }
         .background(Color(.secondarySystemBackground))
@@ -161,20 +172,16 @@ struct DashBoardView: View {
         .navigationTitle("Dialer")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                if allowBiometrics {
-                    settingsImage
-                        .onTapForBiometrics {
-                            if $0 {
-                                data.showSettingsView()
+                if #available(iOS 17.0, *) {
+                    settingsToolbarButton
+                        .popoverTip(donationTip) { action in
+                            if action.id == "donate" {
+                                data.showDonationView()
                             }
                         }
                 } else {
-                    Button(action: data.showSettingsView) { settingsImage }
+                    settingsToolbarButton
                 }
-            }
-            
-            ToolbarItem(placement: .bottomBar) {
-                
             }
         }
         .trackAppearance(.dashboard)
@@ -182,15 +189,24 @@ struct DashBoardView: View {
 }
 
 private extension DashBoardView {
-    private var settingsGradientIcon: some View {
-        Image(systemName: "gear")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 30, height: 30)
-            .foregroundStyle(
-                LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
+    var settingsToolbarButton: some View {
+        Group {
+            if allowBiometrics {
+                settingsImage
+                .onTapForBiometrics {
+                    if $0 {
+                        data.showSettingsView()
+                    }
+                }
+
+            } else {
+                Button(action: data.showSettingsView) {
+                    settingsImage
+                }
+            }
+        }
     }
+
     @ViewBuilder
     var settingsImage: some View {
         if #available(iOS 17.0, *) {
@@ -200,16 +216,15 @@ private extension DashBoardView {
             settingsGradientIcon
         }
     }
-}
 
-@available(iOS 17.0, *)
-struct QRCodeScannerTip: Tip {
-    var title: Text {
-        Text("Scan MoMo QR code to pay.")
-    }
-
-    var image: Image? {
-        Image(systemName: "qrcode").resizable()
+    var settingsGradientIcon: some View {
+        Image(systemName: "gear")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 30, height: 30)
+            .foregroundStyle(
+                LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
     }
 }
 
@@ -218,5 +233,32 @@ struct QRCodeScannerTip: Tip {
         DashBoardView(navPath: .constant([]))
             .environmentObject(MainViewModel())
             .environmentObject(UserStore())
+    }
+}
+
+@available(iOS 17.0, *)
+struct DonationTip: Tip {
+    @Parameter
+    static var isShown: Bool = false
+
+    var title: Text {
+        Text("Now, you can donate to support Dialer.")
+    }
+
+    var message: Text? {
+        Text("Go to Settings > Support Us.")
+    }
+    var image: Image? {
+        Image(systemName: "gift.fill").resizable()
+    }
+
+    var rules: [Rule] {
+        #Rule(Self.$isShown) {
+            $0 == true
+        }
+    }
+
+    var actions: [Action] {
+        Action(id: "donate", title: "Donate Now")
     }
 }
