@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import SwiftUI
 
 struct DonationOption: Identifiable {
     var id: String { productId }
@@ -175,9 +176,10 @@ class DonationViewModel: ObservableObject {
     private func handleSuccessfulTransaction() async {
         // Update firebase records if needed
         // sendDonationReceipt(amount: finalDonationAmount)
-
-        showThankYou = true
-        isProcessing = false
+        SwiftUI.withAnimation {
+            showThankYou = true
+            isProcessing = false
+        }
     }
 
     // Handle transaction error

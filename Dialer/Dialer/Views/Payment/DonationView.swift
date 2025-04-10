@@ -15,7 +15,7 @@ struct DonationView: View {
 
     var body: some View {
         NavigationStack {
-            if !viewModel.showThankYou {
+            if viewModel.showThankYou {
                 DonationThankYouView(viewModel: viewModel)
             } else {
                 DonationFormView(viewModel: viewModel)
@@ -41,16 +41,12 @@ struct DonationView: View {
     }
 }
 
-#Preview {
-    DonationView()
-}
-
 struct DonationFormView: View {
     @ObservedObject var viewModel: DonationViewModel
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 20) {
                 Image(.dialitApplogo)
                     .resizable()
                     .scaledToFit()
@@ -60,7 +56,7 @@ struct DonationFormView: View {
 
                 VStack(spacing: 12) {
                     Text("Privacy over profit")
-                        .bold()
+                        .font(.title3.bold())
 
                     Text("Your donation helps us continue to provide and improve our services for free for everyone. Private, open-source, funded by you. No ads, no tracking, no compromise.")
                 }
@@ -90,6 +86,7 @@ struct DonationOptionsView: View {
             if viewModel.products.isEmpty {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.products) { product in
@@ -97,26 +94,17 @@ struct DonationOptionsView: View {
                             product: product,
                             isSelected: viewModel.selectedProduct == product,
                             action: {
-                                viewModel.selectedProduct = product
-                                viewModel.customAmount = ""
+                                withAnimation {
+                                    viewModel.selectedProduct = product
+                                    viewModel.customAmount = ""
+                                }
                             }
                         )
                     }
-
-                    //                ForEach(viewModel.donationOptions) { option in
-                    //                    DonationOptionCard(
-                    //                        option: option,
-                    //                        isSelected: viewModel.selectedAmount == option.amount,
-                    //                        action: {
-                    //                            viewModel.selectedAmount = option.amount
-                    //                            viewModel.customAmount = ""
-                    //                        }
-                    //                    )
-                    //                }
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -132,8 +120,11 @@ struct DonationOptionCard: View {
                     .font(.headline)
 
                 Text(product.displayPrice)
-                    .font(.title3)
+                    .font(.title)
                     .fontWeight(.bold)
+                    .foregroundStyle(
+                        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
 
                 Text(product.description)
                     .font(.caption)
@@ -145,7 +136,7 @@ struct DonationOptionCard: View {
             .clipShape(.rect(cornerRadius: 12))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color.mainRed : Color.clear, lineWidth: 2)
+                    .strokeBorder(LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: isSelected ? 2 : 0.03)
             )
         }
         .buttonStyle(PlainButtonStyle())
@@ -173,7 +164,7 @@ struct CustomAmountView: View {
             }
             .padding()
             .background(Color.gray.opacity(0.1))
-            .cornerRadius(8)
+            .clipShape(.rect(cornerRadius: 8))
         }
     }
 }
@@ -230,7 +221,6 @@ struct DonationThankYouView: View {
             Image(systemName: "heart.circle.fill")
                 .font(.system(size: 150))
                 .foregroundColor(.pink)
-//                .padding()
 
             Text("Thank You!")
                 .font(.largeTitle)
@@ -242,14 +232,16 @@ struct DonationThankYouView: View {
                 .padding()
 
             Button(action: {
-                viewModel.reset()
+                withAnimation {
+                    viewModel.reset()
+                }
             }) {
                 Text("Make Another Donation")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.mainRed)
                     .foregroundColor(.white)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
             }
 
             Button(action: {
@@ -260,9 +252,15 @@ struct DonationThankYouView: View {
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .foregroundColor(.primary)
-                    .cornerRadius(12)
+                    .clipShape(.rect(cornerRadius: 12))
             }
         }
         .padding()
     }
+}
+
+
+#Preview {
+    DonationView()
+//        .preferredColorScheme(.dark)
 }
