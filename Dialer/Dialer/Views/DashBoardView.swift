@@ -19,7 +19,10 @@ struct DashBoardView: View {
 
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
-    
+
+    @AppStorage(UserDefaultsKeys.didTransferMoneyCount)
+    private var didTransferMoneyCount = 0
+
     @State private var showPurchaseSheet = false
     @State private var showWrappedSheet = false
     @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
@@ -121,6 +124,11 @@ struct DashBoardView: View {
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)
                     ])
+
+                    if didTransferMoneyCount >= 3 {
+                        DonationTip.isShown = true
+                        didTransferMoneyCount = 0
+                    }
                 }
                 catch {
                     Log.debug("Error initializing TipKit \(error.localizedDescription)")
@@ -230,7 +238,8 @@ private extension DashBoardView {
 
 @available(iOS 17.0, *)
 struct DonationTip: Tip {
-    static let didTransferMoney: Event = Event(id: "didTransferMoney")
+    @Parameter
+    static var isShown: Bool = false
 
     var title: Text {
         Text("Now, you can donate to support Dialer.")
@@ -244,9 +253,8 @@ struct DonationTip: Tip {
     }
 
     var rules: [Rule] {
-        #Rule(Self.didTransferMoney) {
-            // Three transactions
-            $0.donations.count >= 3
+        #Rule(Self.$isShown) {
+            $0 == true
         }
     }
 

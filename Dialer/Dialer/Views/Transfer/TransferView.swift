@@ -10,12 +10,14 @@ import DialerTO
 import TipKit
 
 struct TransferView: View {
-
     @EnvironmentObject private var mainStore: MainViewModel
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage(UserDefaultsKeys.isDialerSplitsEnabled)
     private var isDialerSplitsEnabled: Bool = false
+
+    @AppStorage(UserDefaultsKeys.didTransferMoneyCount)
+    private var didTransferMoneyCount = 0
 
     @FocusState private var focusedState: FocusField?
     @State private var showReportSheet = false
@@ -390,7 +392,7 @@ private extension TransferView {
         Task {
             await mainStore.transferMoney(transaction)
             if #available(iOS 17.0, *) {
-                await DonationTip.didTransferMoney.donate()
+                didTransferMoneyCount += 1
             }
         }
     }
