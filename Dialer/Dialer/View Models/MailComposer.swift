@@ -20,14 +20,14 @@ class MailComposer: ObservableObject {
         }
     }
 
-    func openTwitter() {
-        guard let url = URL(string: DialerlLinks.dialerTwitter) else { return }
+    func openX() {
+        guard let url = URL(string: DialerlLinks.dialerX) else { return }
         UIApplication.shared.open(url)
     }
 
     func copySupportEmail() {
         let pasteBoard = UIPasteboard.general
-        pasteBoard.string = DialerlLinks.dialerTwitter
+        pasteBoard.string = DialerlLinks.dialerX
     }
 
     @MainActor func makeMailView() -> MailView {

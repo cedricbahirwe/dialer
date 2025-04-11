@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct AlertDialog: Identifiable {
-    init(id: UUID = UUID(), _ title: LocalizedStringKey? = nil, message: LocalizedStringKey, action: @escaping () -> Void) {
+    init(id: UUID = UUID(), _ title: String? = nil, message: String, action: @escaping () -> Void) {
         self.id = id
         self.title = title
         self.message = message
         self.action = action
     }
 
-    var id = UUID()
-    var title: LocalizedStringKey?
-    var message: LocalizedStringKey
-    var action: () -> Void
+    let id: UUID
+    let title: String?
+    let message: String
+    let action: () -> Void
 }

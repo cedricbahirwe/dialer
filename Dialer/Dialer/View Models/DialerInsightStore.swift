@@ -19,8 +19,9 @@ enum InsightFilterPeriod: String, CaseIterable {
 }
 
 @MainActor class DialerInsightStore: BaseViewModel {
-
     @Published private(set) var transactionInsights: [TransactionInsight]
+    @Published private(set) var selectedPeriod = InsightFilterPeriod.year
+    let periods = InsightFilterPeriod.allCases
 
     var generalTotal: Int {
         transactionInsights.map(\.amount).reduce(0, +)
@@ -31,18 +32,15 @@ enum InsightFilterPeriod: String, CaseIterable {
             .map(\.amount).reduce(0, +)
     }
 
-    let periods = InsightFilterPeriod.allCases
-    @Published private(set) var selectedPeriod = InsightFilterPeriod.year
-
-    private var filteredInsightsByPeriod: [TransactionInsight] {
-        filterInsightsByPeriod(transactionInsights, period: selectedPeriod)
-    }
-
     var chartInsights: [ChartInsight] {
         ChartInsight.makeInsights(filteredInsightsByPeriod)
     }
 
     private let insightsProvider: InsightProtocol
+
+    private var filteredInsightsByPeriod: [TransactionInsight] {
+        filterInsightsByPeriod(transactionInsights, period: selectedPeriod)
+    }
 
     init(_ insightsProvider: InsightProtocol = FirebaseManager()) {
         self.transactionInsights = []
@@ -154,6 +152,20 @@ enum InsightFilterPeriod: String, CaseIterable {
                 return []
             }
             return insights.filter { $0.createdDate >= startOfYear }
+        }
+    }
+}
+
+
+extension DialerInsightStore {
+    func deleteAllUserInsights() async {
+
+        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash, !userId.uuidString.isEmpty else { return }
+        do {
+            _ = try await insightsProvider.deleteAllUserInsights(userId)
+            transactionInsights = []
+        } catch {
+            Log.debug("Failed to delete user insights: \(error.localizedDescription)")
         }
     }
 }

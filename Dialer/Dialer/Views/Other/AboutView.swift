@@ -33,7 +33,7 @@ struct AboutView: View {
             VStack(spacing: 2) {
                 Text("Designed and developed by")
                     .foregroundStyle(.secondary)
-                Link("Cédric Bahirwe.", destination: DialerlLinks.authorLinkedIn)
+                Link("Cédric Bahirwe.", destination: DialerlLinks.cedricLinkedIn)
             }
             .font(.body.weight(.semibold))
             

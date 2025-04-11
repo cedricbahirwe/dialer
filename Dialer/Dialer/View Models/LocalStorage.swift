@@ -9,20 +9,13 @@ import Foundation
 import FirebaseFirestore
 
 final class DialerStorage {
-    typealias RecentCodes = [RecentDialCode]
     typealias USSDCodes = [USSDCode]
-
-    private let LocalKeys = UserDefaultsKeys.self
 
     private let userDefaults = UserDefaults.standard
 
     static let shared = DialerStorage()
 
-    private init() {
-        // Delete PinCode if it exists for all devices
-        // Note: Remove this in next version + 1
-        removePinCode()
-    }
+    private init() {}
 
     func saveOneTimeUniqueAppID() {
         guard getOneTimeUniqueAppID() == nil else { return }
@@ -35,24 +28,6 @@ final class DialerStorage {
             return nil
         }
         return uniqueID
-    }
-
-    func removePinCode() {
-        userDefaults.removeObject(forKey: LocalKeys.pinCode)
-    }
-
-    //    func saveRecentCodes(_ codes: RecentCodes) throws {
-    //        let data = try encodeData(codes)
-    //        userDefaults.setValue(data, forKey: LocalKeys.recentCodes)
-    //    }
-    //
-    func getSortedRecentCodes() -> RecentCodes {
-        decodeDatasArray(key: LocalKeys.recentCodes, type: RecentCodes.self)
-            .sorted { $0.detail.purchaseDate > $1.detail.purchaseDate }
-    }
-
-    func clearRecentCodes() {
-        userDefaults.removeObject(forKey: LocalKeys.recentCodes)
     }
 
     func saveUSSDCodes(_ ussds: USSDCodes) throws {
@@ -83,6 +58,10 @@ final class DialerStorage {
         return userDevice
     }
 
+    func clearDevice() {
+        userDefaults.removeObject(forKey: LocalKeys.deviceAccount)
+    }
+
     func removeAllUSSDCodes() {
         userDefaults.removeObject(forKey: LocalKeys.customUSSDCodes)
     }
@@ -93,19 +72,6 @@ final class DialerStorage {
 
     func isDailyNotificationEnabled() -> Bool {
         userDefaults.bool(forKey: LocalKeys.dailyNotificationEnabled)
-    }
-
-    func saveAppleInfo(_ info: AppleInfo) throws {
-        let data = try encodeData(info)
-        userDefaults.set(data, forKey: LocalKeys.appleSignInInfo)
-    }
-
-    func getAppleInfo() -> AppleInfo? {
-        decodeData(key: LocalKeys.appleSignInInfo, as: AppleInfo.self)
-    }
-
-    func removeAppleSignInInfo() {
-        userDefaults.removeObject(forKey: LocalKeys.appleSignInInfo)
     }
 }
 

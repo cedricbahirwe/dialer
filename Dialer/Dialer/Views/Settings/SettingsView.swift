@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
-import AuthenticationServices
 
 struct SettingsView: View {
     @StateObject private var settingsStore = SettingsStore()
     @StateObject private var mailComposer = MailComposer()
-    @EnvironmentObject var dataStore: MainViewModel
+    @EnvironmentObject private var dataStore: MainViewModel
+    @EnvironmentObject private var userStore: UserStore
+    @EnvironmentObject private var merchantStore: UserMerchantStore
+    @EnvironmentObject private var insightsStore: DialerInsightStore
 
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
@@ -23,52 +25,24 @@ struct SettingsView: View {
     private var appTheme: DialerTheme = .system
 
     @State private var alertItem: AlertDialog?
-    @State private var showUssdDeletionDialog = false
-    @State private var showDonateSheet: Bool = false
+    @State private var showConfirmationAlert = false
+    @State private var showDonateSheet = false
+
+    @State private var alert: Alert?
+
+    @State private var isDeleting = false
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    if settingsStore.isLoggedIn, let userInfo = settingsStore.userInfo {
-                        UserProfilePreview(
-                            info: userInfo,
-                            onSignOut: settingsStore.signoutFromApple
-                        )
-                    } else {
-                        SignInWithAppleButton(
-                            onRequest: { request in
-                                request.requestedScopes = [.fullName, .email]
-                            },
-                            onCompletion: settingsStore.handleAppleSignInCompletion
-                        )
-                        .frame(height: 45)
-
-                        Text("Sign in with your Apple ID to sync your Dialer data (Merchants, Insights, and Preferences) across your Apple devices.")
-                            .foregroundStyle(.secondary)
-                            .font(.footnote)
-                    }
-
-                    SettingsRow(.supportUs, action: presentDonationSheet)
-
-                } header: {
-                    if settingsStore.isLoggedIn {
-                        sectionHeader("Account")
-                    }
-                }
-
-                Section {
                     HStack(spacing: 3) {
                         SettingsRow(.dialerSplits)
-                        Toggle("Biometrics", isOn: $allowDialerSplits)
+                        Toggle("Dialer Splits", isOn: $allowDialerSplits)
                             .toggleStyle(SwitchToggleStyle())
                             .labelsHidden()
                     }
-                } header: {
-                    sectionHeader("Preferences")
-                }
 
-                Section {
                     HStack(spacing: 3) {
                         SettingsRow(.biometrics)
                         Toggle("Biometrics", isOn: $allowBiometrics)
@@ -82,62 +56,28 @@ struct SettingsView: View {
                                 setAppTheme(theme)
                             }
                         }
-
                     } label: {
-                        SettingsRow(item: .init(
-                            sysIcon: {
-                                if #available(iOS 17, *) {
-                                    "circle.lefthalf.filled.inverse"
-                                } else {
-                                    "moon.circle.fill"
-                                }
-                            }(),
-                            color: .green,
-                            title: "Appearance",
-                            subtitle: "Current: **\((appTheme).rawCapitalized)**"))
-                    }
-
-                    if !dataStore.ussdCodes.isEmpty {
-                        SettingsRow(.deleteUSSDs,
-                                    action: presentUSSDsRemovalSheet)
+                        SettingsRow(.appearance(currentTheme: appTheme))
                     }
                 } header: {
-                    sectionHeader("General settings")
-                }
-                .confirmationDialog("Confirmation",
-                                    isPresented: $showUssdDeletionDialog,
-                                    titleVisibility: .visible,
-                                    presenting: alertItem)
-                { item in
-
-                    Button("Delete",
-                           role: .destructive,
-                           action: item.action)
-
-                    Button("Cancel",
-                           role: .cancel) {
-                        alertItem = nil
-                    }
-                } message: { item in
-                    VStack {
-                        Text(item.message)
-                        Text(item.title ?? "")
-                    }
+                    sectionHeader("Preferences")
                 }
 
                 Section {
+                    SettingsRow(.supportUs, action: presentDonationSheet)
+
                     SettingsRow(.contactUs, action: mailComposer.openMail)
                         .alert("No Email Client Found",
                                isPresented: $mailComposer.showMailErrorAlert) {
                             Button("OK", role: .cancel) { }
                             Button("Copy Support Email", action: mailComposer.copySupportEmail)
-                            Button("Open Twitter", action: mailComposer.openTwitter)
+                            Button("Open X", action: mailComposer.openX)
                         } message: {
-                            Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to \(DialerlLinks.supportEmail) as well."
+                            Text("We could not detect a default mail service on your device.\n\n You can reach us on X, or send us an email to \(DialerlLinks.supportEmail) as well."
                             )
                         }
-                    Link(destination: URL(string: DialerlLinks.dialerTwitter)!) {
-                        SettingsRow(.tweetUs)
+                    Link(destination: URL(string: DialerlLinks.dialerX)!) {
+                        SettingsRow(.socialX)
                     }
                 } header: {
                     sectionHeader("Reach out")
@@ -154,9 +94,53 @@ struct SettingsView: View {
                     sectionHeader("Colophon")
                 }
 
+                Section {
+                    if !dataStore.ussdCodes.isEmpty {
+                        SettingsRow(
+                            .deleteUSSDs,
+                            action: presentUSSDsRemovalSheet
+                        )
+                    }
+
+                    HStack {
+                        SettingsRow(
+                            .deleteAccount,
+                            action: presentAccountDeletion
+                        )
+                        if isDeleting {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        }
+                    }
+                } header: {
+                    sectionHeader("Danger Zone")
+                }
+                .confirmationDialog(
+                    "Confirmation",
+                    isPresented: $showConfirmationAlert,
+                    titleVisibility: .visible,
+                    presenting: alertItem
+                ) { item in
+                    Button(
+                        "Delete",
+                        role: .destructive,
+                        action: item.action
+                    )
+                    Button(
+                        "Cancel",
+                        role: .cancel
+                    ) {
+                        alertItem = nil
+                    }
+                } message: { item in
+                    VStack {
+                        Text(item.message)
+                        Text(item.title ?? "")
+                    }
+                }
             }
             .foregroundStyle(.primary.opacity(0.8))
-            .navigationTitle("Help & More")
+            .navigationTitle("Settings           ")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
             .sheet(isPresented: $showDonateSheet) {
@@ -180,13 +164,9 @@ struct SettingsView: View {
                     }.font(.body.bold())
                 }
             }
-            .task {
-                await settingsStore.checkAuthenticationState()
-            }
             .trackAppearance(.settings)
         }
     }
-
 }
 
 private extension SettingsView {
@@ -200,7 +180,16 @@ private extension SettingsView {
             message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
             action: dataStore.removeAllUSSDs
         )
-        showUssdDeletionDialog.toggle()
+        showConfirmationAlert.toggle()
+    }
+
+    private func presentAccountDeletion() {
+        alertItem = .init(
+            "Confirmation",
+            message: "All your information will be permenantly deleted (Merchant Codes, USSD codes, etc.).\nThis action can not be undone.",
+            action: deleteAccount
+        )
+        showConfirmationAlert.toggle()
     }
 
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
@@ -212,9 +201,37 @@ private extension SettingsView {
     private func setAppTheme(_ newTheme: DialerTheme) {
         self.appTheme = newTheme
     }
+
+    private func deleteAccount() {
+        Task {
+            isDeleting = true
+            // Clear USSDs
+            dataStore.removeAllUSSDs()
+            // Clear Merchant codes
+            await merchantStore.deleteAllUserMerchants()
+            // Clear Transactions
+            await insightsStore.deleteAllUserInsights()
+
+            // Remove user
+            await userStore.deleteUser()
+
+            // Clear Userdefaults Device Data
+            DialerStorage.shared.clearDevice()
+
+            // Clear Local Preferences
+            allowDialerSplits = false
+            allowBiometrics = false
+
+            isDeleting = false
+        }
+    }
 }
 
 #Preview {
     SettingsView()
         .environmentObject(MainViewModel())
+        .environmentObject(UserStore())
+        .environmentObject(UserMerchantStore())
+        .environmentObject(DialerInsightStore())
+//        .preferredColorScheme(.dark)
 }

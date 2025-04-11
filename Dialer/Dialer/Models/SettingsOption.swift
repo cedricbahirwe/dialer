@@ -12,19 +12,33 @@ enum SettingsOption {
     case biometrics
     case getStarted
     case contactUs
-    case tweetUs
+    case socialX
     case about
     case review
     case deleteUSSDs
     case supportUs
+    case appearance(currentTheme: DialerTheme)
+    case deleteAccount
 
     func getSettingsItem() -> SettingsItem {
         switch self {
+        case .appearance(let currentTheme):
+               return .init(
+                    sysIcon: {
+                        if #available(iOS 17, *) {
+                            "circle.lefthalf.filled.inverse"
+                        } else {
+                            "moon.circle.fill"
+                        }
+                    }(),
+                    color: .green,
+                    title: "Appearance",
+                    subtitle: "Current: **\((currentTheme).rawCapitalized)**")
         case .supportUs:
             return .init(
                 sysIcon: "gift.fill",
-                color: .pink,
-                title: "Support Us",
+                color: .yellow,
+                title: "Support us",
                 subtitle: "Support continued updates and new features."
             )
         case .dialerSplits:
@@ -35,15 +49,17 @@ enum SettingsOption {
                 subtitle: "Save on fees with smart payment splits."
             )
         case .biometrics:
-            return .init(sysIcon: "lock.fill", color: .green, title: "Biometric Authentication", subtitle: "For securing your activities on the app.")
+            return .init(sysIcon: "lock.fill", color: .blue, title: "Biometric Authentication", subtitle: "For securing your activities on the app.")
         case .deleteUSSDs:
-            return .init(sysIcon: "xmark.bin.fill", color: .red.opacity(0.9), title: "Delete All USSD codes", subtitle: "This action can not be undone.")
+            return .init(sysIcon: "trash", color: .red, title: "Delete all USSD codes", subtitle: "This action can not be undone.")
+        case .deleteAccount:
+            return .init(sysIcon: "trash", color: .red, title: "Delete all my information", subtitle: "This action cannot be undone")
         case .getStarted:
             return .init(sysIcon: "lightbulb.fill", color: .blue, title: "Just getting started?", subtitle: "Read our quick start blog post.")
         case .contactUs:
-            return .init(sysIcon: "bubble.left.and.bubble.right.fill", color: .pink, title: "Contact Us", subtitle: "Get help or ask a question.")
-        case .tweetUs:
-            return .init(icon: "twitter", color: Color("twitter"), title: "Tweet Us", subtitle: "Stay up to date.")
+            return .init(sysIcon: "bubble.left.and.bubble.right.fill", color: .pink, title: "Contact us", subtitle: "Get help or ask a question.")
+        case .socialX:
+            return .init(icon: "xsocial", color: .black, title: "Find us on X", subtitle: "Stay up to date.")
         case .about:
             return .init(sysIcon: "info", color: .orange, title: "About", subtitle: "Version information.")
         case .review:

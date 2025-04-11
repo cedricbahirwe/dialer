@@ -12,9 +12,7 @@ enum MockPreviewData {
                                  phoneNumbers: ["(555) 564-8583", "(415) 555-3695"])
     static let contact2 = Contact(names: "John Smith",
                                  phoneNumbers: ["(415) 555-3695"])
-    
-    static let recentDial = RecentDialCode(detail: emptyPurchase)
-    
+        
     static let emptyPurchase = AirtimeTransaction()
 
     static let airtimeInsight = TransactionInsight(
