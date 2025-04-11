@@ -80,7 +80,7 @@ struct UserDetailsCreationView: View {
             .foregroundStyle(Color.accentColor)
             .bold()
             .disabled(userStore.recoveryCode != nil)
-
+            .padding()
         }
         .padding(.horizontal)
         .frame(
