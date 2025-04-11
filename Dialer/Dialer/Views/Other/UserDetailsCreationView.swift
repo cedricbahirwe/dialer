@@ -66,6 +66,21 @@ struct UserDetailsCreationView: View {
             }
             Spacer()
             Spacer()
+
+            Button("Help", action: mailComposer.openMail)
+            .alert("No Email Client Found",
+                   isPresented: $mailComposer.showMailErrorAlert) {
+                Button("OK", role: .cancel) { }
+                Button("Copy Support Email", action: mailComposer.copySupportEmail)
+                Button("Open X", action: mailComposer.openX)
+            } message: {
+                Text("We could not detect a default mail service on your device.\n\n You can reach us on X, or send us an email to \(DialerlLinks.supportEmail) as well."
+                )
+            }
+            .foregroundStyle(Color.accentColor)
+            .bold()
+            .disabled(userStore.recoveryCode != nil)
+
         }
         .padding(.horizontal)
         .frame(
@@ -80,20 +95,11 @@ struct UserDetailsCreationView: View {
                 .overlay(alignment: .trailing) {
                     if userStore.recoveryCode == nil {
                         HStack {
-                            Button("Help", action: mailComposer.openMail)
-                            .alert("No Email Client Found",
-                                   isPresented: $mailComposer.showMailErrorAlert) {
-                                Button("OK", role: .cancel) { }
-                                Button("Copy Support Email", action: mailComposer.copySupportEmail)
-                                Button("Open Twitter", action: mailComposer.openX)
-                            } message: {
-                                Text("We could not detect a default mail service on your device.\n\n You can reach us on Twitter, or send us an email to \(DialerlLinks.supportEmail) as well."
-                                )
+                            Button("Close") {
+                                showUsernameSheet = false
                             }
-                            .foregroundStyle(Color.accentColor)
                             .bold()
-                            .disabled(userStore.recoveryCode != nil)
-
+                            .foregroundStyle(Color.red)
 
                             Spacer()
                             Button("Restore") {
