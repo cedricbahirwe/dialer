@@ -15,11 +15,6 @@ struct AirtimeTransaction: Hashable, Codable {
 }
 
 extension AirtimeTransaction {
-
-    func getRedactedFullCode() -> String {
-        return "\(prefixCode)\(amount)*PIN#"
-    }
-
     func getFullUSSDCode() -> String {
         return "\(prefixCode)\(amount)#"
     }
@@ -28,17 +23,6 @@ extension AirtimeTransaction {
         let fullCode = getFullUSSDCode()
         if let telUrl = URL(string: "tel://\(fullCode)") {
             return telUrl
-        } else {
-            throw DialingError.canNotDial
-        }
-    }
-
-    /// Used on the `PuchaseDetailView` to dial, save code, save pin.
-    /// - Parameters:
-    ///   - purchase: the purchase to take the fullCode from.
-    func dialCode() async throws {
-        if let telUrl = try? getUSSDURL() {
-            try await DialService.shared.dial(telUrl)
         } else {
             throw DialingError.canNotDial
         }

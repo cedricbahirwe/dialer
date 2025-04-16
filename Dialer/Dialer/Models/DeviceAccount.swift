@@ -19,7 +19,6 @@ struct DeviceAccount: Codable {
     var deviceHash: UUID
     var appVersion: String?
     var bundleVersion: String?
-    var bundleId: String?
     var lastVisitedDate: String?
 
     func toAnalytics() -> [String: Any] {
@@ -34,7 +33,7 @@ struct DeviceAccount: Codable {
         return dictionary
     }
     
-    init(id: String? = nil, name: String, model: String, systemVersion: String, systemName: String, deviceHash: UUID, appVersion: String?, bundleVersion: String?, bundleId: String?, lastVisitedDate: String?) {
+    init(id: String? = nil, name: String, model: String, systemVersion: String, systemName: String, deviceHash: UUID, appVersion: String?, bundleVersion: String?, lastVisitedDate: String?) {
         self.id = id
         self.name = name
         self.model = model
@@ -43,7 +42,6 @@ struct DeviceAccount: Codable {
         self.deviceHash = deviceHash
         self.appVersion = appVersion
         self.bundleVersion = bundleVersion
-        self.bundleId = bundleId
         self.lastVisitedDate = lastVisitedDate
     }
     
@@ -57,7 +55,6 @@ struct DeviceAccount: Codable {
         self.systemName = try container.decode(String.self, forKey: .systemName)
         self.appVersion = try container.decodeIfPresent(String.self, forKey: .appVersion)
         self.bundleVersion = try container.decodeIfPresent(String.self, forKey: .bundleVersion)
-        self.bundleId = try container.decodeIfPresent(String.self, forKey: .bundleId)
         self.lastVisitedDate = try container.decodeIfPresent(String.self, forKey: .lastVisitedDate)
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject private var settingsStore = SettingsStore()
+//    @StateObject private var settingsStore = SettingsStore()
     @StateObject private var mailComposer = MailComposer()
     @EnvironmentObject private var dataStore: MainViewModel
     @EnvironmentObject private var userStore: UserStore
@@ -27,9 +27,6 @@ struct SettingsView: View {
     @State private var alertItem: AlertDialog?
     @State private var showConfirmationAlert = false
     @State private var showDonateSheet = false
-
-    @State private var alert: Alert?
-
     @State private var isDeleting = false
 
     var body: some View {

@@ -12,7 +12,6 @@ import TipKit
 struct TransferView: View {
     @EnvironmentObject private var mainStore: MainViewModel
     @EnvironmentObject private var merchantStore: UserMerchantStore
-    @Environment(\.colorScheme) private var colorScheme
     @AppStorage(UserDefaultsKeys.isDialerSplitsEnabled)
     private var isDialerSplitsEnabled: Bool = false
 
@@ -27,10 +26,6 @@ struct TransferView: View {
     @State private var isShakingNumberField = false
 
     @State private var presentedSheet: Sheet?
-
-    private var rowBackground: Color {
-        Color(.systemBackground).opacity(colorScheme == .dark ? 0.6 : 1)
-    }
 
     private var feeHintView: Text? {
         if transaction.amount.isEmpty {
@@ -457,12 +452,9 @@ private extension TransferView {
             .environmentObject(UserMerchantStore())
             .environmentObject(MainViewModel())
     }
-    //    .preferredColorScheme(.dark)
 }
 
 struct DialerTransactionsViewer: View {
-    @EnvironmentObject private var mainStore: MainViewModel
-
     var fees: (savings: Int, originalFee: Int, optimizedFee: Int)
     var transactions: [Transaction.Model]
     var onDial: ((Transaction.Model) async -> Void)
