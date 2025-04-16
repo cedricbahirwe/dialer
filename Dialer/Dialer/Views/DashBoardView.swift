@@ -14,8 +14,16 @@ struct DashBoardView: View {
     @EnvironmentObject private var data: MainViewModel
     @EnvironmentObject private var insightsStore: DialerInsightStore
 
-    @AppStorage(UserDefaultsKeys.showWelcomeView)
-    private var showWelcomeView: Bool = true
+    @AppStorage(UserDefaultsKeys.shouldShowWelcome)
+    private var shouldShowWelcome: Bool = true
+
+    @State private var showWelcomeView: Bool = false
+
+    @AppStorage(UserDefaultsKeys.appTheme)
+    private var appTheme: DialerTheme = .system
+
+    @AppStorage(UserDefaultsKeys.showUsernameSheet)
+    private var showUsernameSheet = true
 
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false
@@ -25,11 +33,8 @@ struct DashBoardView: View {
 
     @State private var showPurchaseSheet = false
     @State private var showWrappedSheet = false
-    @AppStorage(UserDefaultsKeys.appTheme) private var appTheme: DialerTheme = .system
-    @Environment(\.colorScheme) private var colorScheme
 
-    @AppStorage(UserDefaultsKeys.showUsernameSheet)
-    private var showUsernameSheet = true
+    @Environment(\.colorScheme) private var colorScheme
 
     @available(iOS 17.0, *)
     var donationTip: DonationTip { DonationTip() }
@@ -104,6 +109,11 @@ struct DashBoardView: View {
         .blur(radius: showPurchaseSheet ? 1 : 0)
         .fullScreenCover(
             isPresented: $showUsernameSheet,
+            onDismiss: {
+                if shouldShowWelcome {
+                    showWelcomeView = true
+                }
+            },
             content: {
                 UserDetailsCreationView()
             }
@@ -117,17 +127,20 @@ struct DashBoardView: View {
             }
         )
         .task {
+            data.retrieveUSSDCodes()
             if #available(iOS 17.0, *) {
                 do {
 //                     try Tips.resetDatastore()
                     try Tips.configure([
-                        .displayFrequency(.immediate),
+                        .displayFrequency(.weekly),
                         .datastoreLocation(.applicationDefault)
                     ])
 
                     if didTransferMoneyCount >= 3 {
                         DonationTip.isShown = true
                         didTransferMoneyCount = 0
+                    } else {
+                        DonationTip.isShown = false
                     }
                 }
                 catch {
@@ -165,10 +178,6 @@ struct DashBoardView: View {
             }
         }
         .background(Color(.secondarySystemBackground))
-        .task {
-            data.retrieveUSSDCodes()
-            await AirtimeToInsightMigrator.shared.migrate()
-        }
         .navigationTitle("Dialer")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

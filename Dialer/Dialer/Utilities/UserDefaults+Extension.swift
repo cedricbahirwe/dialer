@@ -7,14 +7,13 @@
 
 import Foundation
 
+typealias LocalKeys = UserDefaultsKeys
 enum UserDefaultsKeys {
     static let appUniqueID = "appUniqueIdentifier"
-    static let recentCodes = "recentCodes"
-    static let pinCode = "pinCode"
     
     // Onboarding
-    static let showWelcomeView = "showWelcomeView2"
-    
+    static let shouldShowWelcome = "showWelcomeView2"
+
     // Biometrics
     static let allowBiometrics = "allowBiometrics"
     

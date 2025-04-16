@@ -21,7 +21,6 @@ struct InsightsView: View {
     }
 
     @State private var selectedInsight: ChartInsight?
-
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 20) {

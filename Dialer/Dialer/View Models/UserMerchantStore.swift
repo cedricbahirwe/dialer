@@ -13,4 +13,14 @@ final class UserMerchantStore: MerchantStore {
         let sortedMerchants = await merchantProvider.getMerchantsFor(userId)
         setMerchants(to: sortedMerchants)
     }
+
+    func deleteAllUserMerchants() async {
+        guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash, !userId.uuidString.isEmpty else { return }
+        do {
+            _ = try await merchantProvider.deleteAllUsersMerchants(userId)
+            setMerchants(to: [])
+        } catch {
+            Log.debug("Failed to delete user merchants: \(error.localizedDescription)")
+        }
+    }
 }

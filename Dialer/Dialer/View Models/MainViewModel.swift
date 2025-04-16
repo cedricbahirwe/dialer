@@ -165,20 +165,8 @@ extension MainViewModel {
     }
 }
 
-// MARK: - Extension used for Home Quick Actions
-extension RecentDialCode {
-    static let codeIdentifierInfoKey = "CodeIdentifier"
-    
-    /// - Tag: QuickActionUserInfo
-    var quickActionUserInfo: [String: NSSecureCoding] {
-        /** Encode the id of the recent code into the userInfo dictionary so it can be passed
-         back when a quick action is triggered.
-         */
-        return [ RecentDialCode.codeIdentifierInfoKey: self.id.uuidString as NSSecureCoding ]
-    }
-}
-
 // MARK: - Extension for `PurchaseDetailView` methods
+
 extension MainViewModel {
     var hasValidAmount: Bool {
         purchaseDetail.amount >= AppConstants.minAmount

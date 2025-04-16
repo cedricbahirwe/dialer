@@ -34,21 +34,21 @@ extension Firestore {
 }
 
 extension FirebaseCRUD {
-    func createBatches<T: Encodable>(_ elements: [T], in collection: FBCollection) async throws {
-        do {
-            let batch = db.batch()
-
-            try elements.forEach { element throws in
-                let docRef = db.collection(collection).document()
-                try batch.setData(from: element, forDocument: docRef)
-            }
-            try await batch.commit()
-
-        } catch {
-            Log.debug("Could not save \(type(of: elements)): \(error.localizedDescription).")
-            throw error
-        }
-    }
+//    func createBatches<T: Encodable>(_ elements: [T], in collection: FBCollection) async throws {
+//        do {
+//            let batch = db.batch()
+//
+//            try elements.forEach { element throws in
+//                let docRef = db.collection(collection).document()
+//                try batch.setData(from: element, forDocument: docRef)
+//            }
+//            try await batch.commit()
+//
+//        } catch {
+//            Log.debug("Could not save \(type(of: elements)): \(error.localizedDescription).")
+//            throw error
+//        }
+//    }
 
     func create<T: Encodable>(_ element: T, in collection: FBCollection) async throws -> Bool {
         return try await withUnsafeThrowingContinuation { continuation in

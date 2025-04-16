@@ -35,6 +35,24 @@ extension FirebaseManager: MerchantProtocol {
         try await deleteItemWithID(merchantID, in: .merchants)
     }
 
+    func deleteAllUsersMerchants(_ userID: UUID) async throws -> Bool {
+        do {
+            let querySnapshot = try await db.collection(.merchants)
+                .whereField("ownerId", isEqualTo: userID.uuidString)
+                .getDocuments()
+
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+            }
+
+            return true
+        } catch {
+            Log.debug("Can not delete \(type(of: Merchant.self)), Error: \(error).")
+            Tracker.shared.logError(error: error)
+            return false
+        }
+    }
+
     func getAllMerchants() async -> [Merchant] {
         await getAll(in: .merchants)
     }
@@ -123,6 +141,24 @@ extension FirebaseManager: InsightProtocol {
             return []
         }
     }
+
+    func deleteAllUserInsights(_ userID: UUID) async throws -> Bool {
+        do {
+            let querySnapshot = try await db.collection(.transactions)
+                .whereField("ownerId", isEqualTo: userID.uuidString)
+                .getDocuments()
+
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+            }
+
+            return true
+        } catch {
+            Log.debug("Can not delete \(type(of: TransactionInsight.self)), Error: \(error).")
+            Tracker.shared.logError(error: error)
+            return false
+        }
+    }
 }
 
 extension FirebaseManager: UserProtocol {
@@ -169,29 +205,26 @@ extension FirebaseManager: UserProtocol {
         }
     }
 
-    func updateUser(_ user: DialerUser) async throws -> Bool {
-        false
-    }
+    func deleteUser(_ deviceHash: UUID) async throws -> Bool {
+        do {
+            let querySnapshot = try await db.collection(.users)
+                .whereField("device.deviceHash", isEqualTo: deviceHash.uuidString)
+                .getDocuments()
 
-    func deleteUser(_ userID: String) async throws {
-        fatalError()
+            for document in querySnapshot.documents {
+                try await document.reference.delete()
+            }
+
+            return true
+        } catch {
+            Log.debug("Can not delete \(type(of: DialerUser.self)), Error: \(error).")
+            Tracker.shared.logError(error: error)
+            return false
+        }
     }
 
     func getAllUsers() async -> [DialerUser] {
         await getAll(in: .users)
-    }
-
-    func saveUserAppleInfo(_ userID: UUID, info: AppleInfo) async throws -> Bool {
-        guard let docID = try? await db.collection(.users)
-            .whereField("device.deviceHash", isEqualTo: userID.uuidString)
-            .getDocuments()
-            .documents.first?.documentID else { return false }
-        let deviceDictionary = try Firestore.Encoder().encode(info)
-
-        try await db.collection(.users)
-            .document(docID)
-            .updateData(["apple": deviceDictionary])
-        return true
     }
 }
 
@@ -200,6 +233,7 @@ protocol MerchantProtocol {
     func getMerchant(by id: String) async -> Merchant?
     func updateMerchant(_ merchant: Merchant) async throws-> Bool
     func deleteMerchant(_ merchantID: String) async throws
+    func deleteAllUsersMerchants(_ userID: UUID) async throws -> Bool
     func getAllMerchants() async -> [Merchant]
     func getMerchantsFor(_ userID: UUID) async -> [Merchant]
 }
@@ -209,10 +243,8 @@ protocol UserProtocol {
     func getUser(by id: String) async -> DialerUser?
     func getUser(username: String) async -> DialerUser?
     func getUser(deviceHash: UUID) async -> DialerUser?
-    func updateUser(_ user: DialerUser) async throws-> Bool
-    func deleteUser(_ userID: String) async throws
+    func deleteUser(_ deviceHash: UUID) async throws -> Bool
     func getAllUsers() async -> [DialerUser]
-    func saveUserAppleInfo(_ userID: UUID, info: AppleInfo) async throws -> Bool
 }
 
 protocol DeviceManagerProtocol {
@@ -227,4 +259,5 @@ protocol InsightProtocol {
     func saveInsight(_ insight: TransactionInsight) async throws -> Bool
     func getAllInsights() async -> [TransactionInsight]
     func getInsights(for userID: UUID) async -> [TransactionInsight]
+    func deleteAllUserInsights(_ userID: UUID) async throws -> Bool
 }

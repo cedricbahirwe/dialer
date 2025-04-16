@@ -118,10 +118,8 @@ struct DialerShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: BuyAirtimeIntent(),
             phrases: [
-                "Airtime",
-                "Get quick airtime",
                 "Buy \(.applicationName) airtime",
-                "Get airtime",
+                "Get airtime on \(.applicationName)",
                 "Buy airtime on \(.applicationName)",
                 "Buy airtime with \(.applicationName)",
                 "\(.applicationName) airtime"

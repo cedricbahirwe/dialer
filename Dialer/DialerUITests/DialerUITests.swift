@@ -96,7 +96,6 @@ class DialerUITests: XCTestCase {
     }
 
     private func debugMe(_ element: XCUIElementQuery) {
-        print("Here is:", element.debugDescription, "***")
     }
 
 //    func testLaunchPerformance() throws {

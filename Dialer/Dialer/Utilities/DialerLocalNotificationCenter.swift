@@ -94,7 +94,6 @@ extension DialerNotificationCenter {
         DialerStorage.shared.setDailyNotificationStatus(to: false)
     }
     
-    ///Prints to console schduled notifications
     func printNotifications() {
         Task {
             let pendingNotifs = await notificationCenter.pendingNotificationRequests()
