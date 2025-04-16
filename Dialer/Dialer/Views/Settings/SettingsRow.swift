@@ -14,11 +14,6 @@ struct SettingsRow: View {
         self.action = action
     }
 
-    init(item: SettingsItem) {
-        self.item = item
-        self.action = nil
-    }
-
     init(_ option: SettingsOption, action: @escaping () -> Void) {
         self.init(item: option.getSettingsItem(), action: action)
     }

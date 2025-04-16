@@ -109,26 +109,26 @@ enum InsightFilterPeriod: String, CaseIterable {
         self.transactionInsights = sortedInsights
     }
 
-    func createInsight(_ insight: TransactionInsight) async -> Bool {
-        let savedDevice = DialerStorage.shared.getSavedDevice()
-        let device = savedDevice ?? FirebaseTracker.getDevice()
-        var insightToUpdate = insight
-        insightToUpdate.ownerId = device.deviceHash
-
-        startFetch()
-        do {
-            let isSaved = try await insightsProvider.saveInsight(insightToUpdate)
-            stopFetch()
-
-            await getInsights()
-            return isSaved
-        } catch {
-            Tracker.shared.logError(error: error)
-            Log.debug("Could not save insight: ", error)
-            stopFetch()
-            return false
-        }
-    }
+//    func createInsight(_ insight: TransactionInsight) async -> Bool {
+//        let savedDevice = DialerStorage.shared.getSavedDevice()
+//        let device = savedDevice ?? FirebaseTracker.getDevice()
+//        var insightToUpdate = insight
+//        insightToUpdate.ownerId = device.deviceHash
+//
+//        startFetch()
+//        do {
+//            let isSaved = try await insightsProvider.saveInsight(insightToUpdate)
+//            stopFetch()
+//
+//            await getInsights()
+//            return isSaved
+//        } catch {
+//            Tracker.shared.logError(error: error)
+//            Log.debug("Could not save insight: ", error)
+//            stopFetch()
+//            return false
+//        }
+//    }
 
     private func filterInsightsByPeriod(_ insights: [TransactionInsight], period: InsightFilterPeriod) -> [TransactionInsight] {
         let calendar = Calendar.current

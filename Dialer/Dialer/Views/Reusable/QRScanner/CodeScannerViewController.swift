@@ -13,9 +13,6 @@ extension CodeScannerView {
     class CodeScannerViewController: UIViewController,
                                      AVCaptureMetadataOutputObjectsDelegate {
         
-        private let photoOutput = AVCapturePhotoOutput()
-        private var isCapturing = false
-        private var handler: ((UIImage) -> Void)?
         var parentView: CodeScannerView!
         var codesFound = Set<String>()
         var didFinishScanning = false
@@ -180,7 +177,6 @@ extension CodeScannerView {
             
             if (captureSession!.canAddOutput(metadataOutput)) {
                 captureSession!.addOutput(metadataOutput)
-                captureSession?.addOutput(photoOutput)
                 metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
                 metadataOutput.metadataObjectTypes = parentView.codeTypes
             } else {
@@ -260,21 +256,13 @@ extension CodeScannerView {
             if let metadataObject = metadataObjects.first {
                 guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
                 guard let stringValue = readableObject.stringValue else { return }
-                
+
                 guard didFinishScanning == false else { return }
-                
-                let photoSettings = AVCapturePhotoSettings()
-                guard !isCapturing else { return }
-                isCapturing = true
-                
-                handler = { [self] image in
-                    let result = ScanResult(string: stringValue, type: readableObject.type, image: image, corners: readableObject.corners)
-                    
-                    found(result)
-                    // make sure we only trigger scan once per use
-                    didFinishScanning = true
-                }
-                photoOutput.capturePhoto(with: photoSettings, delegate: self)
+
+                let result = ScanResult(string: stringValue)
+                found(result)
+                didFinishScanning = true
+
             }
         }
         
@@ -290,39 +278,5 @@ extension CodeScannerView {
         func didFail(reason: ScanError) {
             parentView.completion(.failure(reason))
         }
-    }
-}
-
-extension CodeScannerView.CodeScannerViewController: AVCapturePhotoCaptureDelegate {
-    
-    public func photoOutput(
-        _ output: AVCapturePhotoOutput,
-        didFinishProcessingPhoto photo: AVCapturePhoto,
-        error: Error?
-    ) {
-        isCapturing = false
-        guard let imageData = photo.fileDataRepresentation() else {
-            Log.debug("Error while generating image from photo capture data.");
-            return
-        }
-        guard let qrImage = UIImage(data: imageData) else {
-            Log.debug("Unable to generate UIImage from image data.");
-            return
-        }
-        handler?(qrImage)
-    }
-    
-    public func photoOutput(
-        _ output: AVCapturePhotoOutput,
-        willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings
-    ) {
-        AudioServicesDisposeSystemSoundID(1108)
-    }
-    
-    public func photoOutput(
-        _ output: AVCapturePhotoOutput,
-        didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings
-    ) {
-        AudioServicesDisposeSystemSoundID(1108)
     }
 }

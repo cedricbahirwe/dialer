@@ -29,17 +29,11 @@ enum UserDefaultsKeys {
     
     static let deviceAccount = "deviceAccount"
 
-    // Daily local notification scheduled
-    static let dailyNotificationEnabled = "dailyNotificationEnabled"
-    
     // Manually switch Dialer Theme
     static let appTheme = "appTheme"
 
     // Should show Username onboarding UI
     static let showUsernameSheet = "showUsernameSheet"
-
-    // Apple Sign In Info
-    static let appleSignInInfo = "appleSignInInfo"
 
     // Dialer Splits
     static let isDialerSplitsEnabled = "isDialerSplitsEnabled"

@@ -111,15 +111,6 @@ extension MainViewModel {
     }
 }
 
-// MARK: - Quick USSD actions.
-extension MainViewModel {
-    private func performQuickDial(for quickCode: DialerQuickCode) {
-        Task {
-            await Self.performQuickDial(for: quickCode)
-        }
-    }
-}
-
 // MARK: Custom USSD Storage
 extension MainViewModel {
     /// Store a given  `USSDCode`  locally.

@@ -11,7 +11,6 @@ struct AppConstants {
     // Airtime USSD Dial constants
     private init() { }
     static let minAmount = 1
-    static let allowedAmountRangeForPin = 10..<100
 
     static let merchantDigitsRange = 5...7
     static let merchantMaxDigits = merchantDigitsRange.upperBound

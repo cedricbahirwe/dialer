@@ -31,11 +31,11 @@ struct ScanResult {
     let string: String
 
     /// The type of code that was matched.
-    let type: AVMetadataObject.ObjectType
+//    let type: AVMetadataObject.ObjectType
     
     /// The image of the code that was matched
-    let image: UIImage?
+//    let image: UIImage?
   
     /// The corner coordinates of the scanned code.
-    let corners: [CGPoint]
+//    let corners: [CGPoint]
 }

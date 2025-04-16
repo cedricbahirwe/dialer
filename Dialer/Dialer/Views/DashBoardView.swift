@@ -115,7 +115,7 @@ struct DashBoardView: View {
                 }
             },
             content: {
-                UserDetailsCreationView()
+                UserDetailsCreationView(showUsernameSheet: $showUsernameSheet)
             }
         )
         .fullScreenCover(
@@ -262,7 +262,7 @@ struct DonationTip: Tip {
     }
 
     var rules: [Rule] {
-        #Rule(Self.$isShown) {
+        #Rule(DonationTip.$isShown) {
             $0 == true
         }
     }

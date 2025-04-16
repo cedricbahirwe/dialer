@@ -201,12 +201,6 @@ class DonationViewModel: ObservableObject {
         isProcessing = false
     }
 
-    func initiateProcessDonation() {
-        Task {
-            await processDonation()
-        }
-    }
-
     func reset() {
         selectedProduct = nil
 //        customAmount = ""

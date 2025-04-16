@@ -124,7 +124,6 @@ class FirebaseTracker {
             deviceHash: metadata.deviceIdentifier,
             appVersion: metadata.appVersion,
             bundleVersion: metadata.bundleVersion,
-            bundleId: metadata.bundleID,
             lastVisitedDate: formattedCurrentDateTime()
         )
     }
@@ -139,7 +138,6 @@ class FirebaseTracker {
         updatedDevice.systemName = metadata.deviceSystemName
         updatedDevice.appVersion = metadata.appVersion
         updatedDevice.bundleVersion = metadata.bundleVersion
-        updatedDevice.bundleId = metadata.bundleID
         updatedDevice.lastVisitedDate = formattedCurrentDateTime()
 
         return updatedDevice

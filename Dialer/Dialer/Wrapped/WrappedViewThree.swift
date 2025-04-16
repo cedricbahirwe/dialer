@@ -14,7 +14,6 @@ struct WrappedViewThree: View {
     let percentage: Double
     let imageName: String
     let color: Color
-    @State private var animateShapes = false
 
     var body: some View {
         ZStack {

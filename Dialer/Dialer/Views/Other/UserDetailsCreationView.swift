@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct UserDetailsCreationView: View {
-    @AppStorage(UserDefaultsKeys.showUsernameSheet)
-    private var showUsernameSheet = true
+    @Binding var showUsernameSheet: Bool
 
     @EnvironmentObject private var userStore: UserStore
     @StateObject private var mailComposer = MailComposer()
@@ -23,7 +22,6 @@ struct UserDetailsCreationView: View {
     @State private var recoveryFileURL: URL?
 
     @State private var isRestoringUser = false
-    @Environment(\.colorScheme) private var colorScheme
 
     private var isUsernameValid: Bool {
         return username.count >= 3 &&
@@ -303,7 +301,10 @@ struct UserDetailsCreationView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
-    UserDetailsCreationView()
+    @Previewable @State var showUsernameSheet: Bool = false
+
+    return UserDetailsCreationView(showUsernameSheet: $showUsernameSheet)
         .environmentObject(UserStore())
 }

@@ -8,10 +8,10 @@
 
 import Foundation
 
-@MainActor final class SettingsStore: ObservableObject {
-    private let userProvider : UserProtocol
-    
-    init(_ userProvider: UserProtocol = FirebaseManager()) {
-        self.userProvider = userProvider
-    }
-}
+//@MainActor final class SettingsStore: ObservableObject {
+//    private let userProvider : UserProtocol
+//    
+//    init(_ userProvider: UserProtocol = FirebaseManager()) {
+//        self.userProvider = userProvider
+//    }
+//}

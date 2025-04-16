@@ -15,7 +15,6 @@ enum AppRoute {
 struct ContentView: View {
     @EnvironmentObject private var data: MainViewModel
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
-    @State private var showPurchaseSheet = true
     @State private var navPath: [AppRoute] = []
     @AppStorage(UserDefaultsKeys.appTheme)
     private var appTheme: DialerTheme = .system

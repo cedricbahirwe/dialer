@@ -14,10 +14,6 @@ struct ChartInsight: Identifiable {
     private let name: RecordType
     var transactions: [TransactionInsight]
 
-    var count: Int {
-        transactions.count
-    }
-
     var totalAmount: Int {
         transactions.map(\.amount).reduce(0, +)
     }
