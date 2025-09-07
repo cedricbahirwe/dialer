@@ -251,14 +251,14 @@ struct DonationTip: Tip {
     static var isShown: Bool = false
 
     var title: Text {
-        Text("Now, you can donate to support Dialer.")
+        Text("Support Dialer with a Tip")
     }
 
     var message: Text? {
         Text("Go to Settings > Support Us.")
     }
     var image: Image? {
-        Image(systemName: "gift.fill").resizable()
+        Image(systemName: "hands.sparkles.fill").resizable()
     }
 
     var rules: [Rule] {
@@ -268,6 +268,6 @@ struct DonationTip: Tip {
     }
 
     var actions: [Action] {
-        Action(id: "donate", title: "Donate Now")
+        Action(id: "donate", title: "Leave a Tip")
     }
 }

@@ -58,7 +58,8 @@ struct DonationFormView: View {
                     Text("Privacy over profit")
                         .font(.title3.bold())
 
-                    Text("Your donation helps us continue to provide and improve our services for free for everyone. Private, open-source, funded by you. No ads, no tracking, no compromise.")
+//                    Text("Your donation helps us continue to provide and improve our services for free for everyone. Private, open-source, funded by you. No ads, no tracking, no compromise.")
+                    Text("Enjoying the app? Leave a tip to show your support. Your contribution helps us keep it free, private, and open-source—without ads, tracking, or compromises.")
                 }
 
                 DonationOptionsView(viewModel: viewModel)
@@ -225,7 +226,7 @@ struct DonationThankYouView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
 
-            Text("Your donation of \(String(format: "$%.2f", viewModel.finalDonationAmount)) has been processed. We appreciate your support!")
+            Text("Your tip of \(String(format: "$%.2f", viewModel.finalDonationAmount)) has been processed. We appreciate your support!")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .padding()
