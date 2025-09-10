@@ -28,12 +28,13 @@ class DonationViewModel: ObservableObject {
     @Published var products: [Product] = []
     private var transactionListener: Task<Void, Error>?
 
-    let donationOptions: [DonationOption] = [
+
+    let productIDs: [String] = [
         DonationOption(productId: "com.dialit.donation.small", amount: 5.0, title: "Small", description: "Buy me a coffee"),
         DonationOption(productId: "com.dialit.donation.medium", amount: 10.0, title: "Medium", description: "Help with hosting"),
         DonationOption(productId: "com.dialit.donation.large", amount: 25.0, title: "Large", description: "Support development"),
         DonationOption(productId: "com.dialit.donation.generous", amount: 50.0, title: "Generous", description: "Become a patron")
-    ]
+    ].map(\.productId)
 
     // Custom donation product IDs (create multiple tiers in App Store Connect)
 //    let customDonationProducts: [String] = [
@@ -71,33 +72,32 @@ class DonationViewModel: ObservableObject {
     }
 
     /// Get appropriate product for the selected amount
-    func productForSelectedAmount() -> Product? {
-        let amount = finalDonationAmount
-
-        // For predefined options
-        if let productID = donationOptions.first(where: { $0.amount == amount })?.productId {
-            return products.first { $0.id == productID }
-        }
-        return nil
-
-        // For custom amounts, select appropriate tier
-//        let tier: String
-//        if amount <= 15 {
-//            tier = customDonationProducts[0]
-//        } else if amount <= 30 {
-//            tier = customDonationProducts[1]
-//        } else if amount <= 50 {
-//            tier = customDonationProducts[2]
-//        } else {
-//            tier = customDonationProducts[3]
+//    func productForSelectedAmount() -> Product? {
+//        let amount = finalDonationAmount
+//
+//        // For predefined options
+//        if let productID = donationOptions.first(where: { $0.amount == amount })?.productId {
+//            return products.first { $0.id == productID }
 //        }
-
-//        return products.first { $0.id == tier }
-    }
+//        return nil
+//
+//        // For custom amounts, select appropriate tier
+////        let tier: String
+////        if amount <= 15 {
+////            tier = customDonationProducts[0]
+////        } else if amount <= 30 {
+////            tier = customDonationProducts[1]
+////        } else if amount <= 50 {
+////            tier = customDonationProducts[2]
+////        } else {
+////            tier = customDonationProducts[3]
+////        }
+//
+////        return products.first { $0.id == tier }
+//    }
 
     /// Load products from App Store
     func loadProducts() async {
-        let productIDs = donationOptions.map(\.productId)
         do {
             products = try await Product.products(for: productIDs).sorted {
                 $0.price < $1.price
@@ -136,7 +136,7 @@ class DonationViewModel: ObservableObject {
         }
 
         do {
-            guard let product = productForSelectedAmount() else {
+            guard let product = selectedProduct else {
                 throw NSError(domain: "DonationError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Product not available"])
             }
 
