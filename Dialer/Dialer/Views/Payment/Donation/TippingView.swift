@@ -1,5 +1,5 @@
 //
-//  DonationView.swift
+//  TippingView.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 09/04/2025.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct DonationView: View {
+struct TippingView: View {
     @StateObject private var viewModel = TipViewModel()
     @Environment(\.dismiss) private var dismiss
 
@@ -99,6 +99,6 @@ struct TipThankYouView: View {
 
 
 #Preview {
-    DonationView()
+    TippingView()
 //        .preferredColorScheme(.dark)
 }

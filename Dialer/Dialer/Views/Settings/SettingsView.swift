@@ -141,7 +141,7 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
             .sheet(isPresented: $showTipSheet) {
-                DonationView()
+                TippingView()
             }
             .sheet(isPresented: $mailComposer.showMailView) {
                 mailComposer.makeMailView()

@@ -174,7 +174,7 @@ struct DashBoardView: View {
                     .environmentObject(data)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
             case .tipping:
-                DonationView()
+                TippingView()
             }
         }
         .background(Color(.secondarySystemBackground))
