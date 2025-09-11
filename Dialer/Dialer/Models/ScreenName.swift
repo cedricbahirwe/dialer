@@ -25,4 +25,6 @@ enum ScreenName: String, Codable {
 
     case about
     case insightTransaction
+
+    case tipping
 }

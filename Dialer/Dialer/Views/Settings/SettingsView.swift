@@ -26,7 +26,7 @@ struct SettingsView: View {
 
     @State private var alertItem: AlertDialog?
     @State private var showConfirmationAlert = false
-    @State private var showDonateSheet = false
+    @State private var showTipSheet = false
     @State private var isDeleting = false
 
     var body: some View {
@@ -61,7 +61,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    SettingsRow(.supportUs, action: presentDonationSheet)
+                    SettingsRow(.supportUs, action: goToTipping)
 
                     SettingsRow(.contactUs, action: mailComposer.openMail)
                         .alert("No Email Client Found",
@@ -140,8 +140,8 @@ struct SettingsView: View {
             .navigationTitle("Settings           ")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: ReviewHandler.requestReview)
-            .sheet(isPresented: $showDonateSheet) {
-                DonationView()
+            .sheet(isPresented: $showTipSheet) {
+                TippingView()
             }
             .sheet(isPresented: $mailComposer.showMailView) {
                 mailComposer.makeMailView()
@@ -167,8 +167,8 @@ struct SettingsView: View {
 }
 
 private extension SettingsView {
-    func presentDonationSheet() {
-        showDonateSheet.toggle()
+    func goToTipping() {
+        showTipSheet.toggle()
     }
 
     private func presentUSSDsRemovalSheet() {
