@@ -56,6 +56,7 @@
 		CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */; };
 		CB230D112C5D8397006B795D /* UserDetailsCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */; };
 		CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2478232C9784B20093EAAC /* InsightsView.swift */; };
+		CB28D2832E737828007AB990 /* TipOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28D2822E737828007AB990 /* TipOption.swift */; };
 		CB2A55122ADD369A0088008F /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A55112ADD369A0088008F /* MailComposer.swift */; };
 		CB2BB55B2D96DD9200C9B38D /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2BB55A2D96DD9200C9B38D /* ShakeEffect.swift */; };
 		CB2C5BB52C9B02EA00224480 /* SpendingCategoryOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */; };
@@ -93,7 +94,7 @@
 		CB6165C52D1DC66000C142E5 /* WrappedPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */; };
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB667FFA2DA68A90006F3470 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB667FF92DA68A90006F3470 /* DonationView.swift */; };
-		CB667FFC2DA69C6F006F3470 /* DonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB667FFB2DA69C6F006F3470 /* DonationViewModel.swift */; };
+		CB667FFC2DA69C6F006F3470 /* TipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB667FFB2DA69C6F006F3470 /* TipViewModel.swift */; };
 		CB667FFE2DA6AF67006F3470 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB667FFD2DA6AF67006F3470 /* StoreKit.framework */; };
 		CB676C69279149B30050B3B9 /* AppReviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB676C68279149B30050B3B9 /* AppReviewing.swift */; };
 		CB6D4B3B2D94151C0065A76D /* TransactionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */; };
@@ -205,6 +206,7 @@
 		CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModelTests.swift; sourceTree = "<group>"; };
 		CB230D102C5D8397006B795D /* UserDetailsCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsCreationView.swift; sourceTree = "<group>"; };
 		CB2478232C9784B20093EAAC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		CB28D2822E737828007AB990 /* TipOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipOption.swift; sourceTree = "<group>"; };
 		CB2A55112ADD369A0088008F /* MailComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
 		CB2BB55A2D96DD9200C9B38D /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		CB2C5BB42C9B02EA00224480 /* SpendingCategoryOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoryOverview.swift; sourceTree = "<group>"; };
@@ -236,7 +238,7 @@
 		CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedPreview.swift; sourceTree = "<group>"; };
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB667FF92DA68A90006F3470 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
-		CB667FFB2DA69C6F006F3470 /* DonationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationViewModel.swift; sourceTree = "<group>"; };
+		CB667FFB2DA69C6F006F3470 /* TipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipViewModel.swift; sourceTree = "<group>"; };
 		CB667FFD2DA6AF67006F3470 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CB676C68279149B30050B3B9 /* AppReviewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReviewing.swift; sourceTree = "<group>"; };
 		CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModelTests.swift; sourceTree = "<group>"; };
@@ -335,22 +337,20 @@
 		825F996826720B75009E4A7B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CBC262C52784D243000B8E0E /* AirtimeTransaction.swift */,
-				CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */,
-				CB7F33B32CB3F0E800415777 /* ChartInsight.swift */,
-				825F996926720B7E009E4A7B /* ContactModel.swift */,
-				CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */,
-				CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */,
-				CB8508B52C879C1300D2080F /* DialerUser.swift */,
-				CB1099512A6201A600E99555 /* DialingError.swift */,
-				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
+				CB10A4C02E7381F1006F3454 /* Airtime */,
+				CB10A4C12E7381F6006F3454 /* Payment */,
+				CB10A4C22E738200006F3454 /* Shared */,
+				CB10A4C32E73820D006F3454 /* Analytics */,
+				CB10A4C42E738213006F3454 /* Errors */,
+				CB10A4C52E738238006F3454 /* User */,
 				CB3B81EF29ABD3A2001FAFF6 /* ScreenName.swift */,
 				8248440A26FDBB2300DB0643 /* SettingsItem.swift */,
 				8248440C26FDBB3200DB0643 /* SettingsOption.swift */,
-				CB9515E82C998CF300D8F35C /* TransactionInsight.swift */,
-				8207FA9426776AB600412AE1 /* TransactionModel.swift */,
-				CB45380F28AB7E8B00F3F24C /* USSDCode.swift */,
+				825F996926720B7E009E4A7B /* ContactModel.swift */,
+				CB7426BE2A05C05D00BE76DF /* DeviceAccount.swift */,
+				CB1B8EC629014C8A00DFBCDB /* AlertDialog.swift */,
 				CB5A337F2CDCB32300548A10 /* DialerTheme.swift */,
+				CB28D2822E737828007AB990 /* TipOption.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -477,7 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				827F2CF125D9648900C7C40A /* MainViewModel.swift */,
-				CB667FFB2DA69C6F006F3470 /* DonationViewModel.swift */,
+				CB667FFB2DA69C6F006F3470 /* TipViewModel.swift */,
 				CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */,
 				CBE61A452C9C2795003E1795 /* InsightHistoryViewModel.swift */,
 				82EEBCF726C1391D00B1720A /* LocalStorage.swift */,
@@ -498,6 +498,57 @@
 				CB1099492A6155B500E99555 /* ScanModels.swift */,
 			);
 			path = QRScanner;
+			sourceTree = "<group>";
+		};
+		CB10A4C02E7381F1006F3454 /* Airtime */ = {
+			isa = PBXGroup;
+			children = (
+				CBC262C52784D243000B8E0E /* AirtimeTransaction.swift */,
+				CB94D3AE2BCB1AC800CC60A9 /* DialerQuickCode.swift */,
+			);
+			path = Airtime;
+			sourceTree = "<group>";
+		};
+		CB10A4C12E7381F6006F3454 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				CB3B81E129ABC742001FAFF6 /* Merchant.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		CB10A4C22E738200006F3454 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CB9515E82C998CF300D8F35C /* TransactionInsight.swift */,
+				8207FA9426776AB600412AE1 /* TransactionModel.swift */,
+				CB45380F28AB7E8B00F3F24C /* USSDCode.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		CB10A4C32E73820D006F3454 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				CB7F33B32CB3F0E800415777 /* ChartInsight.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		CB10A4C42E738213006F3454 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				CB1099512A6201A600E99555 /* DialingError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		CB10A4C52E738238006F3454 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				CB8508B52C879C1300D2080F /* DialerUser.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		CB10B8B52D2F2818003DB76C /* Shortcuts */ = {
@@ -849,7 +900,7 @@
 				CBD4814C2D20083300223F5D /* WrappedViewOne.swift in Sources */,
 				CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
-				CB667FFC2DA69C6F006F3470 /* DonationViewModel.swift in Sources */,
+				CB667FFC2DA69C6F006F3470 /* TipViewModel.swift in Sources */,
 				CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */,
 				82E8E63B2676A7B300AB1723 /* ContactsListView.swift in Sources */,
 				CBD481602D20CAFA00223F5D /* DialerWrappedFooter.swift in Sources */,
@@ -859,6 +910,7 @@
 				CBD481462D2007A100223F5D /* WrappedPreviewBackground.swift in Sources */,
 				CBE41E6A2D089C880074FB4B /* MerchantSelectionView.swift in Sources */,
 				CB2478242C9784B20093EAAC /* InsightsView.swift in Sources */,
+				CB28D2832E737828007AB990 /* TipOption.swift in Sources */,
 				CBD4815C2D2013C100223F5D /* WrappedNavigation.swift in Sources */,
 				CBE61A462C9C2795003E1795 /* InsightHistoryViewModel.swift in Sources */,
 				821BE13526FB28CB00A3CA02 /* AppVersioning.swift in Sources */,

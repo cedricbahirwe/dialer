@@ -1,5 +1,5 @@
 //
-//  DonationViewModel.swift
+//  TipViewModel.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 09/04/2025.
@@ -10,58 +10,50 @@ import Foundation
 import StoreKit
 import SwiftUI
 
-struct DonationOption: Identifiable {
-    var id: String { productId }
-    let productId: String
-    let amount: Double
-    let title: String
-    let description: String
+enum TipProcess: Equatable {
+    case idle
+    case processing
+    case completed
+    case failed(_ errorMessage: String)
 }
 
-@MainActor
-class DonationViewModel: ObservableObject {
+@MainActor class TipViewModel: ObservableObject {
+    @Published var tipProcess: TipProcess = .idle
     @Published var selectedProduct: Product?
-//    @Published var customAmount: String = ""
-    @Published var isProcessing: Bool = false
-    @Published var showThankYou: Bool = false
-    @Published var errorMessage: String?
     @Published var products: [Product] = []
+
     private var transactionListener: Task<Void, Error>?
 
+    private let productIDs: [String] = [
+        TipOption("com.dialit.donation.small"),
+        TipOption("com.dialit.donation.medium"),
+        TipOption("com.dialit.donation.large"),
+        TipOption("com.dialit.donation.generous"),
+    ].map(\.productID)
 
-    let productIDs: [String] = [
-        DonationOption(productId: "com.dialit.donation.small", amount: 5.0, title: "Small", description: "Buy me a coffee"),
-        DonationOption(productId: "com.dialit.donation.medium", amount: 10.0, title: "Medium", description: "Help with hosting"),
-        DonationOption(productId: "com.dialit.donation.large", amount: 25.0, title: "Large", description: "Support development"),
-        DonationOption(productId: "com.dialit.donation.generous", amount: 50.0, title: "Generous", description: "Become a patron")
-    ].map(\.productId)
-
-    // Custom donation product IDs (create multiple tiers in App Store Connect)
-//    let customDonationProducts: [String] = [
-//        "com.dialit.donation.custom.tier1",  // e.g., $1-15
-//        "com.dialit.donation.custom.tier2",  // e.g., $16-30
-//        "com.dialit.donation.custom.tier3",  // e.g., $31-50
-//        "com.dialit.donation.custom.tier4"   // e.g., $51+
-//    ]
-
-    var finalDonationAmount: Double {
-        if let selected = selectedProduct?.price {
-            return NSDecimalNumber(decimal: selected).doubleValue
+    var isProcessing: Bool { tipProcess == .processing }
+    var showThankYou: Bool { tipProcess == .completed }
+    var errorMessage: String? {
+        if case .failed(let message) = tipProcess {
+            return message
         }
-//            else if let custom = Double(customAmount), custom > 0 {
-//            return custom
-//        }
-        return 0.0
+        return nil
     }
 
-    var canDonate: Bool {
-        finalDonationAmount > 0
+    private var tipAmount: Double {
+        guard let selectedProduct else { return 0.0 }
+        return NSDecimalNumber(decimal: selectedProduct.price).doubleValue
+    }
+
+    var canTip: Bool { tipAmount > 0 }
+
+    var tipDisplayAmount: String {
+       selectedProduct?.displayPrice ?? ""
     }
 
     init() {
-        // Set up transaction listener
         transactionListener = listenForTransactions()
-        // Load products when initialized
+
         Task {
             await loadProducts()
         }
@@ -71,31 +63,6 @@ class DonationViewModel: ObservableObject {
         transactionListener?.cancel()
     }
 
-    /// Get appropriate product for the selected amount
-//    func productForSelectedAmount() -> Product? {
-//        let amount = finalDonationAmount
-//
-//        // For predefined options
-//        if let productID = donationOptions.first(where: { $0.amount == amount })?.productId {
-//            return products.first { $0.id == productID }
-//        }
-//        return nil
-//
-//        // For custom amounts, select appropriate tier
-////        let tier: String
-////        if amount <= 15 {
-////            tier = customDonationProducts[0]
-////        } else if amount <= 30 {
-////            tier = customDonationProducts[1]
-////        } else if amount <= 50 {
-////            tier = customDonationProducts[2]
-////        } else {
-////            tier = customDonationProducts[3]
-////        }
-//
-////        return products.first { $0.id == tier }
-//    }
-
     /// Load products from App Store
     func loadProducts() async {
         do {
@@ -103,7 +70,7 @@ class DonationViewModel: ObservableObject {
                 $0.price < $1.price
             }
         } catch {
-            self.errorMessage = "Failed to load products: \(error.localizedDescription)"
+            self.tipProcess = .failed("Failed to load products: \(error.localizedDescription)")
         }
     }
 
@@ -129,15 +96,15 @@ class DonationViewModel: ObservableObject {
     }
 
     func processDonation() async {
-        guard canDonate else { return }
-
-        DispatchQueue.main.async {
-            self.isProcessing = true
-        }
+        guard canTip else { return }
 
         do {
             guard let product = selectedProduct else {
                 throw NSError(domain: "DonationError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Product not available"])
+            }
+
+            DispatchQueue.main.async {
+                self.tipProcess = .processing
             }
 
             // Begin a purchase
@@ -179,32 +146,27 @@ class DonationViewModel: ObservableObject {
         // Update firebase records if needed
         // sendDonationReceipt(amount: finalDonationAmount)
         SwiftUI.withAnimation {
-            showThankYou = true
-            isProcessing = false
+            tipProcess = .completed
         }
     }
 
-    // Handle transaction error
+    /// Handle transaction error
     private func handleTransactionError(_ error: Error) async {
-        errorMessage = "Transaction failed: \(error.localizedDescription)"
-        isProcessing = false
+        self.tipProcess = .failed("Transaction failed: \(error.localizedDescription)")
     }
 
-    // Handle user cancellation
+    /// Handle user cancellation
     private func handleUserCancellation() async {
-        isProcessing = false
+        self.tipProcess = .idle
     }
 
-    // Handle pending transaction
+    /// Handle pending transaction
     private func handlePendingTransaction() async {
-        errorMessage = "Transaction is pending approval."
-        isProcessing = false
+        self.tipProcess = .failed("Transaction is pending approval.")
     }
 
     func reset() {
         selectedProduct = nil
-//        customAmount = ""
-        showThankYou = false
-        errorMessage = nil
+        tipProcess = .idle
     }
 }

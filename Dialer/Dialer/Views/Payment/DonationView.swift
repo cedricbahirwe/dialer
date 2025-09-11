@@ -10,15 +10,19 @@ import SwiftUI
 import StoreKit
 
 struct DonationView: View {
-    @StateObject private var viewModel = DonationViewModel()
+    @StateObject private var viewModel = TipViewModel()
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
             if viewModel.showThankYou {
-                DonationThankYouView(viewModel: viewModel)
+                TipThankYouView(tipAmount: viewModel.tipDisplayAmount) {
+                    withAnimation {
+                        viewModel.reset()
+                    }
+                }
             } else {
-                DonationFormView(viewModel: viewModel)
+                TipFormView(viewModel: viewModel)
                     .navigationTitle("Support Us")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
@@ -30,7 +34,7 @@ struct DonationView: View {
                     }
                     .alert("Error", isPresented: Binding<Bool>(
                         get: { viewModel.errorMessage != nil },
-                        set: { if !$0 { viewModel.errorMessage = nil } }
+                        set: { if !$0 { viewModel.tipProcess = .idle } }
                     )) {
                         Button("OK", role: .cancel) {}
                     } message: {
@@ -41,8 +45,8 @@ struct DonationView: View {
     }
 }
 
-struct DonationFormView: View {
-    @ObservedObject var viewModel: DonationViewModel
+struct TipFormView: View {
+    @ObservedObject var viewModel: TipViewModel
 
     var body: some View {
         ScrollView {
@@ -58,15 +62,12 @@ struct DonationFormView: View {
                     Text("Privacy over profit")
                         .font(.title3.bold())
 
-//                    Text("Your donation helps us continue to provide and improve our services for free for everyone. Private, open-source, funded by you. No ads, no tracking, no compromise.")
                     Text("Enjoying the app? Leave a tip to show your support. Your contribution helps us keep it free, private, and open-source—without ads, tracking, or compromises.")
                 }
 
-                DonationOptionsView(viewModel: viewModel)
+                TipPickerView(viewModel: viewModel)
 
-//                CustomAmountView(viewModel: viewModel)
-
-                DonateButton(viewModel: viewModel)
+                TipButton(viewModel: viewModel)
             }
             .padding()
         }
@@ -74,8 +75,8 @@ struct DonationFormView: View {
     }
 }
 
-struct DonationOptionsView: View {
-    @ObservedObject var viewModel: DonationViewModel
+struct TipPickerView: View {
+    @ObservedObject var viewModel: TipViewModel
     let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 2)
 
     var body: some View {
@@ -91,13 +92,12 @@ struct DonationOptionsView: View {
             } else {
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.products) { product in
-                        DonationOptionCard(
+                        TipItemView(
                             product: product,
                             isSelected: viewModel.selectedProduct == product,
                             action: {
                                 withAnimation {
                                     viewModel.selectedProduct = product
-//                                    viewModel.customAmount = ""
                                 }
                             }
                         )
@@ -109,7 +109,7 @@ struct DonationOptionsView: View {
     }
 }
 
-struct DonationOptionCard: View {
+struct TipItemView: View {
     let product: Product
     let isSelected: Bool
     let action: () -> Void
@@ -144,34 +144,8 @@ struct DonationOptionCard: View {
     }
 }
 
-//struct CustomAmountView: View {
-//    @ObservedObject var viewModel: DonationViewModel
-//
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            Text("Or enter custom amount")
-//                .font(.headline)
-//
-//            HStack {
-//                Text("$")
-//                    .font(.headline)
-//                    .foregroundColor(.secondary)
-//
-//                TextField("Amount", text: $viewModel.customAmount)
-//                    .keyboardType(.decimalPad)
-//                    .onChange(of: viewModel.customAmount) { _ in
-//                        viewModel.selectedProduct = nil
-//                    }
-//            }
-//            .padding()
-//            .background(Color.gray.opacity(0.1))
-//            .clipShape(.rect(cornerRadius: 8))
-//        }
-//    }
-//}
-
-struct DonateButton: View {
-    @ObservedObject var viewModel: DonationViewModel
+struct TipButton: View {
+    @ObservedObject var viewModel: TipViewModel
 
     var body: some View {
         VStack(spacing: 8) {
@@ -187,7 +161,7 @@ struct DonateButton: View {
                             .padding(.trailing, 8)
                     }
 
-                    Text(viewModel.isProcessing ? "Processing..." : "Donate \(formattedAmount)")
+                    Text(viewModel.isProcessing ? "Processing..." : "Tip \(viewModel.tipDisplayAmount)")
                         .fontWeight(.semibold)
                 }
                 .padding(8)
@@ -195,52 +169,48 @@ struct DonateButton: View {
             }
             .tint(.mainRed)
             .buttonStyle(.borderedProminent)
-            .disabled(!viewModel.canDonate || viewModel.isProcessing)
+            .disabled(!viewModel.canTip || viewModel.isProcessing)
 
-            if viewModel.canDonate {
-                Text("You'll be charged \(formattedAmount)")
+            if viewModel.canTip {
+                Text("You'll be charged \(viewModel.tipDisplayAmount)")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
             }
         }
     }
-
-    var formattedAmount: String {
-        let amount = viewModel.finalDonationAmount
-        if amount == 0 { return "" }
-        return "$\(String(format: "%.2f", amount))"
-    }
 }
 
-struct DonationThankYouView: View {
-    @ObservedObject var viewModel: DonationViewModel
+struct TipThankYouView: View {
+    var tipAmount: String
+    var onTipAgain: () -> Void
+
     @Environment(\.dismiss) private var dismiss
+    @State private var animateHeart = false
 
     var body: some View {
         VStack(spacing: 24) {
             Image(systemName: "heart.circle.fill")
                 .font(.system(size: 150))
-                .foregroundColor(.pink)
+                .foregroundStyle(.pink)
+                .scaleEffect(animateHeart ? 1.2 : 1)
+                .animation(.bouncy.delay(0.25), value: animateHeart)
+                .padding(.bottom)
 
             Text("Thank You!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
 
-            Text("Your tip of \(String(format: "$%.2f", viewModel.finalDonationAmount)) has been processed. We appreciate your support!")
+            Text("Your tip of \(tipAmount) has been processed. We appreciate your support!")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .padding()
 
-            Button(action: {
-                withAnimation {
-                    viewModel.reset()
-                }
-            }) {
-                Text("Make Another Donation")
+            Button(action: onTipAgain) {
+                Text("Send Another Tip")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.mainRed)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .clipShape(.rect(cornerRadius: 12))
             }
 
@@ -251,11 +221,14 @@ struct DonationThankYouView: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.gray.opacity(0.2))
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                     .clipShape(.rect(cornerRadius: 12))
             }
         }
         .padding()
+        .onAppear {
+            animateHeart = true
+        }
     }
 }
 

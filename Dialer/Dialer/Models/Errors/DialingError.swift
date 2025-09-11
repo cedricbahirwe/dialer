@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: - Error Models
 enum DialingError: Error {
     case canNotDial, emptyPin, unknownFormat(String), invalidUSSD
+
     var message: String {
         switch self {
         case .canNotDial:
