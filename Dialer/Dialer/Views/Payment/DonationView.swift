@@ -151,7 +151,7 @@ struct TipButton: View {
         VStack(spacing: 8) {
             Button(action: {
                 Task {
-                    await viewModel.processDonation()
+                    await viewModel.processTipping()
                 }
             }) {
                 HStack {

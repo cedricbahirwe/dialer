@@ -95,12 +95,12 @@ enum TipProcess: Equatable {
         }
     }
 
-    func processDonation() async {
+    func processTipping() async {
         guard canTip else { return }
 
         do {
             guard let product = selectedProduct else {
-                throw NSError(domain: "DonationError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Product not available"])
+                throw NSError(domain: "TippingError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Product not available"])
             }
 
             DispatchQueue.main.async {
@@ -115,7 +115,7 @@ enum TipProcess: Equatable {
                 // Check if the transaction is verified
                 let transaction = try checkVerified(verification)
 
-                // Handle successful donation
+                // Handle successful tip
                 await handleSuccessfulTransaction()
 
                 // Finish the transaction
@@ -125,7 +125,7 @@ enum TipProcess: Equatable {
             case .pending:
                 await handlePendingTransaction()
             @unknown default:
-                throw NSError(domain: "DonationError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown purchase result"])
+                throw NSError(domain: "TippingError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown purchase result"])
             }
         } catch {
             await handleTransactionError(error)
@@ -136,7 +136,7 @@ enum TipProcess: Equatable {
     private func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {
         case .unverified:
-            throw NSError(domain: "DonationError", code: 3, userInfo: [NSLocalizedDescriptionKey: "Transaction verification failed"])
+            throw NSError(domain: "TippingError", code: 3, userInfo: [NSLocalizedDescriptionKey: "Transaction verification failed"])
         case .verified(let transaction):
             return transaction
         }
@@ -144,7 +144,7 @@ enum TipProcess: Equatable {
 
     private func handleSuccessfulTransaction() async {
         // Update firebase records if needed
-        // sendDonationReceipt(amount: finalDonationAmount)
+//         sendTipReceipt(amount: tipAmount)
         SwiftUI.withAnimation {
             tipProcess = .completed
         }

@@ -6,12 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
 
 final class MainViewModel: ObservableObject {
-    
-//    private(set) var history = HistoryViewModel()
-        
     /// Used to show Congratulations Screen
 //    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
 //        didSet(newValue) {
@@ -93,7 +89,7 @@ extension MainViewModel {
     enum DialerSheet: Int, Identifiable {
         var id: Int { rawValue }
         case settings
-        case donation
+        case tipping
     }
 
     func showSettingsView() {
@@ -101,9 +97,8 @@ extension MainViewModel {
         presentedSheet = .settings
     }
 
-    @MainActor
-    func showDonationView() {
-        presentedSheet = .donation
+    @MainActor func goToTipping() {
+        presentedSheet = .tipping
     }
 
     func dismissSettingsView() {
