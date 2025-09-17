@@ -8,7 +8,7 @@
 import Foundation
 
 enum DialerlLinks {
-    static let supportEmail = "abc.incs.001@gmail.com"
+    static let supportEmail = "dialit@abctechouse.com"
     static let dialerX = "https://x.com/TheDialerApp"
     static let cedricLinkedIn = URL(string:  "https://www.linkedin.com/in/cedricbahirwe")!
     static let dialerAppStoreURL = "https://apps.apple.com/ke/app/dial-it/id1591756747"
