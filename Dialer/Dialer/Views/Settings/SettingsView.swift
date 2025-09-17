@@ -147,7 +147,7 @@ struct SettingsView: View {
                 mailComposer.makeMailView()
             }
             .safeAreaInset(edge: .bottom) {
-                Text("By using Dialer, you accept our\n[Terms & Conditions](https://cedricbahirwe.github.io/html/privacy.html) and [Privacy Policy](https://cedricbahirwe.github.io/html/privacy.html).")
+                Text("By using Dialer, you accept our\n[Terms & Conditions](https://www.abctechouse.com/dialit/privacy) and [Privacy Policy](https://www.abctechouse.com/dialit/privacy).")
                     .font(.subheadline.bold())
                     .multilineTextAlignment(.center)
                     .padding()
