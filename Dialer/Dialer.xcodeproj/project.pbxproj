@@ -87,12 +87,9 @@
 		CB544635289C5763009F3457 /* DialerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */; };
 		CB56DDC62A4DB1F20007AF55 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB56DDC52A4DB1F10007AF55 /* CircleView.swift */; };
 		CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AEB29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		CB582AEE29ABEB3100FAD610 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AED29ABEB3100FAD610 /* FirebaseDatabase */; };
 		CB582AF229ABEB3100FAD610 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF129ABEB3100FAD610 /* FirebaseFirestore */; };
-		CB582AF629ABEB3100FAD610 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF529ABEB3100FAD610 /* FirebaseFunctions */; };
 		CB582AFA29ABEB3100FAD610 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF929ABEB3100FAD610 /* FirebaseMessaging */; };
 		CB582AFC29ABEB3100FAD610 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AFB29ABEB3100FAD610 /* FirebaseRemoteConfig */; };
-		CB582B0029ABEB3100FAD610 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AFF29ABEB3100FAD610 /* FirebaseStorage */; };
 		CB5A33802CDCB32300548A10 /* DialerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A337F2CDCB32300548A10 /* DialerTheme.swift */; };
 		CB5A33832CDCC5CC00548A10 /* SettingsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33822CDCC5CC00548A10 /* SettingsRow.swift */; };
 		CB5A33892CDCC64300548A10 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33882CDCC64300548A10 /* SettingsStore.swift */; };
@@ -298,10 +295,7 @@
 				CB582AFC29ABEB3100FAD610 /* FirebaseRemoteConfig in Frameworks */,
 				CB582AFA29ABEB3100FAD610 /* FirebaseMessaging in Frameworks */,
 				CB582AF229ABEB3100FAD610 /* FirebaseFirestore in Frameworks */,
-				CB582AF629ABEB3100FAD610 /* FirebaseFunctions in Frameworks */,
 				CB0F34F12D94412C00916865 /* DialerTO in Frameworks */,
-				CB582B0029ABEB3100FAD610 /* FirebaseStorage in Frameworks */,
-				CB582AEE29ABEB3100FAD610 /* FirebaseDatabase in Frameworks */,
 				CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -780,12 +774,9 @@
 			name = Dialer;
 			packageProductDependencies = (
 				CB582AEB29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport */,
-				CB582AED29ABEB3100FAD610 /* FirebaseDatabase */,
 				CB582AF129ABEB3100FAD610 /* FirebaseFirestore */,
-				CB582AF529ABEB3100FAD610 /* FirebaseFunctions */,
 				CB582AF929ABEB3100FAD610 /* FirebaseMessaging */,
 				CB582AFB29ABEB3100FAD610 /* FirebaseRemoteConfig */,
-				CB582AFF29ABEB3100FAD610 /* FirebaseStorage */,
 				CB0F34F02D94412C00916865 /* DialerTO */,
 			);
 			productName = Dialer;
@@ -1751,20 +1742,10 @@
 			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
-		CB582AED29ABEB3100FAD610 /* FirebaseDatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
-		};
 		CB582AF129ABEB3100FAD610 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
-		};
-		CB582AF529ABEB3100FAD610 /* FirebaseFunctions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFunctions;
 		};
 		CB582AF929ABEB3100FAD610 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1775,11 +1756,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
-		};
-		CB582AFF29ABEB3100FAD610 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

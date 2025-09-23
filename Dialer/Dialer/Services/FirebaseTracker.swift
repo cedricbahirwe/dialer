@@ -18,9 +18,9 @@ class FirebaseTracker {
         setAnalyticUserInfo()
     }
 
-    func setAnalyticUserInfo() {
+    private func setAnalyticUserInfo() {
         var device = FirebaseTracker.getDevice()
-        device.lastVisitedDate = Date.now.formatted()
+        device.lastVisitedDate = FirebaseTracker.formattedCurrentDateTime()
 
         Analytics.setUserID(device.deviceHash.uuidString)
         Analytics.setUserProperty(device.appVersion, forName: "app_version")

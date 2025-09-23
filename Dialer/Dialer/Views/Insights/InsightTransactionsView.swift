@@ -77,7 +77,7 @@ struct TotalEstimationView: View {
                 }
             }
 
-            Text("The estimations are based on the recent USSD codes used.")
+            Text("This is an estimate, and might differ from the actual amount.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

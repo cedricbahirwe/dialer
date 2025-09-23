@@ -38,7 +38,7 @@ struct UserDetailsCreationView: View {
         VStack {
             Spacer()
             Group {
-                if  userStore.recoveryCode == nil {
+                if userStore.recoveryCode == nil {
                     Text("I am **Dialer**")
                 } else  {
                     Text(username).fontWeight(.bold)

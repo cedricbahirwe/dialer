@@ -8,15 +8,6 @@
 import Foundation
 
 final class MainViewModel: ObservableObject {
-    /// Used to show Congratulations Screen
-//    @Published var hasReachSync = DialerStorage.shared.isSyncDateReached() {
-//        didSet(newValue) {
-//            if newValue == false {
-//                DialerStorage.shared.clearSyncDate()
-//            }
-//        }
-//    }
-    
     @Published var purchaseDetail = AirtimeTransaction()
     
     @Published private(set) var ussdCodes: [USSDCode] = []
@@ -131,7 +122,11 @@ extension MainViewModel {
             try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
             Tracker.shared.logError(error: error)
-            Log.debug("Could not save ussd codes locally: ", error.localizedDescription)
+            Log
+                .debug(
+                    "Could not save ussd codes locally: ",
+                    error.localizedDescription
+                )
         }
     }
 
