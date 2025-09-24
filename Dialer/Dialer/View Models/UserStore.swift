@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor
 class UserStore: BaseViewModel {
     @Published private(set) var users: [DialerUser]
-    @Published var recoveryCode: String?
+    @Published private(set) var recoveryCode: String?
 
     private let userProvider: UserProtocol
 

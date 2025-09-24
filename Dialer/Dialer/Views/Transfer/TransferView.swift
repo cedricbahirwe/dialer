@@ -22,7 +22,7 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction.Model = .init(amount: "1500", number: "0782628511", type: .merchant, isOptimized: false)
+    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant, isOptimized: false)
     @State private var isShakingNumberField = false
 
     @State private var presentedSheet: Sheet?
