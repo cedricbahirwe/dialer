@@ -167,10 +167,6 @@ extension FirebaseManager: UserProtocol {
         try await create(user, in: .users)
     }
 
-    func getUser(by id: String) async -> DialerUser? {
-        nil
-    }
-
     func getUser(deviceHash: UUID) async -> DialerUser? {
         do {
             let snapshot = try await db.collection(.users)
@@ -240,7 +236,6 @@ protocol MerchantProtocol {
 
 protocol UserProtocol {
     func createUser(_ user: DialerUser) async throws-> Bool
-    func getUser(by id: String) async -> DialerUser?
     func getUser(username: String) async -> DialerUser?
     func getUser(deviceHash: UUID) async -> DialerUser?
     func deleteUser(_ deviceHash: UUID) async throws -> Bool

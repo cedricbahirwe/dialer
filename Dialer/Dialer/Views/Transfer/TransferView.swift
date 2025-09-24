@@ -22,7 +22,7 @@ struct TransferView: View {
     @State private var showReportSheet = false
     @State private var allContacts: [Contact] = []
     @State private var selectedContact: Contact = .empty
-    @State private var transaction: Transaction.Model = .init(amount: "", number: "", type: .merchant, isOptimized: false)
+    @State private var transaction: Transaction.Model = .init(amount: "1500", number: "0782628511", type: .merchant, isOptimized: false)
     @State private var isShakingNumberField = false
 
     @State private var presentedSheet: Sheet?
@@ -86,7 +86,7 @@ struct TransferView: View {
                             .accessibilityIdentifier("transferAmountField")
 
                         if isClient {
-                            Text(transactionSavings != nil ? "You can save RWF \(transactionSavings!) using Dialer Splits" : "")
+                            Text(transactionSavings != nil ? "Save RWF \(transactionSavings!) using Dialer Splits" : "")
                                 .foregroundStyle(smartGradient)
                                 .font(.callout)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -139,9 +139,9 @@ struct TransferView: View {
                         hideKeyboard()
                         transferMoney()
                     }) {
-                        Text("Dial USSD")
+                        Text("Dial\(transactionSavings == nil ? " USSD" : "")")
                             .font(.subheadline.bold())
-                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: transactionSavings == nil ? .infinity : 100)
                             .frame(height: 48)
                             .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
                             .cornerRadius(10)
@@ -165,12 +165,24 @@ struct TransferView: View {
                                 showSplitInfoSheet.toggle()
                             }
                         }) {
-                            Image(systemName: AppConstants.dialerSplitsIconName)
-                                .imageScale(.large)
-                                .frame(width: 48, height: 48)
-                                .background(.regularMaterial)
-                                .cornerRadius(8)
-                                .foregroundStyle(smartGradient)
+                            HStack {
+                                    Image(systemName: AppConstants.dialerSplitsIconName)
+                                        .imageScale(.large)
+
+                                Text("Use Dialer Splits")
+                            }
+                            .padding(.horizontal)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 44)
+                            .background(.black)
+                            .cornerRadius(8, antialiased: false)
+                            .padding(3)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .strokeBorder(smartGradient, lineWidth: 1)
+                            }
+                            .foregroundStyle(smartGradient)
+
                         }
                         .disabled(isShakingNumberField)
                     }
@@ -232,7 +244,7 @@ struct TransferView: View {
                     isPresented: $showSplitInfoSheet,
                     onTurnOn: turnOnDialerSplits
                 )
-                .presentationDetents([.height(370)])
+                .presentationDetents([.height(380)])
                 .interactiveDismissDisabled()
                 .presentationBackground(.ultraThickMaterial.shadow(.inner(color: .primary, radius: 10)))
                 .presentationCornerRadius(30)
@@ -242,7 +254,7 @@ struct TransferView: View {
                     isPresented: $showSplitInfoSheet,
                     onTurnOn: turnOnDialerSplits
                 )
-                .presentationDetents([.height(370)])
+                .presentationDetents([.height(380)])
                 .interactiveDismissDisabled()
             }
         }
@@ -311,7 +323,10 @@ private extension TransferView {
 private extension TransferView {
     func turnOnDialerSplits() {
         isDialerSplitsEnabled = true
-        showOptimizedTransactions()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            showOptimizedTransactions()
+        }
+
     }
 
     func shakeNumberField() {
@@ -491,14 +506,16 @@ struct DialerTransactionsViewer: View {
                         ForEach(0..<transactions.count, id: \.self) { i in
                             let transaction = transactions[i]
                             HStack {
+                                Image(systemName: (currentOP > i)  ? "checkmark.circle.fill" : "checkmark.circle")
+                                    .foregroundStyle(smartGradient)
+
                                 Text("\(transaction.doubleAmount.formatted(.currency(code: "RWF")))")
                                     .font(.headline.weight(.medium))
                                 Spacer()
                                 Text("Fee: \(transaction.estimatedFee!.formatted(.currency(code: "RWF")))")
                                     .foregroundStyle(.secondary)
-                                Image(systemName: (currentOP > i)  ? "checkmark.circle.fill" : "checkmark.circle")
-                                    .foregroundStyle(smartGradient)
                             }
+                            .strikethrough(currentOP > i)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -543,6 +560,7 @@ struct DialerTransactionsViewer: View {
                 .foregroundStyle(smartGradient)
                 .padding()
         }
+        .background(ignoresSafeAreaEdges: .all)
     }
 }
 
@@ -575,7 +593,7 @@ struct DialerSplitInfoView: View {
             .fontWeight(.regular)
             .multilineTextAlignment(.center)
 
-            Text("You can change this in your settings.")
+            Label("You can change this in the app settings.", systemImage: "info.circle")
                 .font(.callout)
                 .foregroundStyle(.secondary)
 

@@ -132,4 +132,5 @@ struct DialingsHistoryView: View {
 
 #Preview {
     DialingsHistoryView()
+        .environmentObject(DialerInsightStore())
 }

@@ -33,7 +33,7 @@ struct MySpaceView: View {
                 Section("Custom USSDs") {
                     ForEach(store.ussdCodes) { code in
                         HStack {
-                            Text(LocalizedStringKey(code.title))
+                            Text(code.title)
                             
                             Spacer()
                             if editMode?.wrappedValue.isEditing == true {

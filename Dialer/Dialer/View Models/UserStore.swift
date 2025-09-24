@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor
 class UserStore: BaseViewModel {
     @Published private(set) var users: [DialerUser]
-    @Published private(set) var recoveryCode: String?
+    @Published var recoveryCode: String?
 
     private let userProvider: UserProtocol
 
@@ -76,7 +76,6 @@ class UserStore: BaseViewModel {
         do {
             guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash, !userId.uuidString.isEmpty else { return }
             _ = try await userProvider.deleteUser(userId)
-            DialerStorage.shared.clearDevice()
         } catch {
             Log.debug("Could not delete user: ", error)
         }

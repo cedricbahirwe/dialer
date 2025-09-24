@@ -46,9 +46,6 @@ enum InsightFilterPeriod: String, CaseIterable {
         self.transactionInsights = []
         self.insightsProvider = insightsProvider
         super.init()
-        Task {
-            await getInsights()
-        }
     }
 
     func getPopularInsight() -> ChartInsight? {

@@ -70,7 +70,7 @@ enum EventParameterKey: String {
     case transId = "tran_id"
     case transAmount = "tran_amount"
     case transType = "tran_type"
-    case transCode = "tran_code"
+//    case transCode = "tran_code"
     case transTime = "tran_timestamp"
     case transSplit  = "tran_split"
 

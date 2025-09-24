@@ -1,5 +1,5 @@
 //
-//  PurchaseDetailModel.swift
+//  AirtimeTransaction.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 04/01/2022.
