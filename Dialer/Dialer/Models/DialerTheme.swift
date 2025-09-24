@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
 
 enum DialerTheme: String, Codable, CaseIterable {
     case system, light, dark

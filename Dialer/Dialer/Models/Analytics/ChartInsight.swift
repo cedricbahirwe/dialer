@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
 
 struct ChartInsight: Identifiable {
     let id: String?
