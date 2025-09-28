@@ -15,21 +15,12 @@ struct UserDetailsCreationView: View {
     @StateObject private var mailComposer = MailComposer()
 
     @State private var username = ""
-    @State private var enteredRecoveryCode = ""
-    @State private var showRestoreAlert = false
     @State private var isValidating = false
     @State private var usernameAvailable: Bool = false
-    @State private var recoveryFileURL: URL?
-
-    @State private var isRestoringUser = false
 
     private var isUsernameValid: Bool {
         return username.count >= 3 &&
         username.count <= 30
-    }
-
-    private var isValidRecoveryCode: Bool {
-        !enteredRecoveryCode.withoutSpacing().isEmpty
     }
 
     @FocusState private var isFocused: Bool
@@ -37,30 +28,21 @@ struct UserDetailsCreationView: View {
     var body: some View {
         VStack {
             Spacer()
-            Group {
-                if userStore.recoveryCode == nil {
-                    Text("I am **Dialer**")
-                } else  {
-                    Text(username).fontWeight(.bold)
-                        .foregroundStyle(smartGradient)
-                }
+            HStack(spacing: 5) {
+                Text(" I am")
+                Text("Dialer")
+                    .foregroundStyle(Color.mainRed)
+                    .bold()
             }
             .font(.system(.title, design: .rounded))
             .padding(.bottom, 24)
 
-            if userStore.recoveryCode == nil {
-                Text("How should I call you?")
-                    .fontWeight(.heavy)
-            }
+            Text("How should I call you?")
+                .fontWeight(.heavy)
 
             VStack(spacing: 20) {
-
-                if let recoveryCode = userStore.recoveryCode {
-                    recoveryCodeView(recoveryCode)
-                } else {
-                    usernameFieldView
-                    usernameActionsView
-                }
+                usernameFieldView
+                usernameActionsView
             }
             Spacer()
             Spacer()
@@ -77,7 +59,6 @@ struct UserDetailsCreationView: View {
             }
             .foregroundStyle(Color.accentColor)
             .bold()
-            .disabled(userStore.recoveryCode != nil)
             .padding()
         }
         .padding(.horizontal)
@@ -87,62 +68,30 @@ struct UserDetailsCreationView: View {
         )
         .font(.system(.body, design: .rounded))
         .safeAreaInset(edge: .top) {
-            Text(userStore.recoveryCode == nil ? "Hello 👋🏽" : "Welcome on Dialer")
+            Text("Welcome on Dialer")
                 .font(.system(.title2, design: .rounded, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .center)
                 .overlay(alignment: .trailing) {
-                    if userStore.recoveryCode == nil {
-                        HStack {
-                            Button("Close") {
-                                showUsernameSheet = false
-                            }
-                            .bold()
-                            .foregroundStyle(Color.red)
-
-                            Spacer()
-                            Button("Restore") {
-                                showRestoreAlert.toggle()
-                            }
-                            .foregroundStyle(Color.accentColor)
-                            .disabled(userStore.recoveryCode != nil)
-                            .bold()
-                            .alert(
-                                "Enter your recovery code",
-                                isPresented: $showRestoreAlert
-                            ) {
-                                TextField(
-                                    "Recovery code...",
-                                    text: $enteredRecoveryCode)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled()
-                                .foregroundStyle(Color.accentColor)
-
-                                Button("Cancel") {
-                                    enteredRecoveryCode = ""
-                                }
-                                Button("Continue", action: restoreUser)
-                                    .disabled(!isValidRecoveryCode)
-                            } message: {
-                                Text("This code will restore your information on the app.")
-                            }
+                    HStack {
+                        Button("Close") {
+                            showUsernameSheet = false
                         }
+                        .bold()
+                        .foregroundStyle(Color.red)
 
+                        Spacer()
+                        //                            Button("Restore") {
+                        //                                showRestoreAlert.toggle()
+                        //                            }
+                        //                            .foregroundStyle(Color.accentColor)
+                        //                            .disabled(userStore.recoveryCode != nil)
+                        //                            .bold()
                     }
                 }
                 .padding()
         }
         .sheet(isPresented: $mailComposer.showMailView) {
             mailComposer.makeMailView()
-        }
-        .overlay {
-            if isRestoringUser {
-                ZStack {
-                    Color.black.ignoresSafeArea()
-                    ProgressView("Wait a moment...")
-                        .font(.system(.title2, design: .rounded, weight: .semibold))
-                        .tint(.white)
-                }
-            }
         }
         .foregroundStyle(.white)
         .background(.matteBlack, ignoresSafeAreaEdges: .all)
@@ -171,55 +120,10 @@ struct UserDetailsCreationView: View {
         hideKeyboard()
         Task {
             isValidating = true
-            let success = await userStore.saveUser(username)
+            _ = await userStore.saveUser(username)
             isValidating = false
-            if success {
-                makeRecoveryCodeFile()
-            } else {
-                showUsernameSheet = false
-            }
+            showUsernameSheet = false
         }
-    }
-
-    private func restoreUser() {
-        hideKeyboard()
-        Task {
-            withAnimation {
-                isRestoringUser = true
-            }
-            let success = await userStore.restoreUser(enteredRecoveryCode)
-
-            enteredRecoveryCode = ""
-            if success {
-                showUsernameSheet = false
-            }
-            withAnimation {
-                isRestoringUser = false
-            }
-        }
-    }
-
-    func makeRecoveryCodeFile() {
-        guard let recoveryCode = userStore.recoveryCode else { return }
-        let tempDirectoryURL = FileManager.default.temporaryDirectory
-        let fileURL = tempDirectoryURL.appendingPathComponent("DialerRecovery.txt")
-
-        do {
-            try recoveryCode.write(to: fileURL, atomically: true, encoding: .utf8)
-            self.recoveryFileURL = fileURL
-        } catch {
-            Tracker.shared.logError(error: error)
-        }
-    }
-
-    @ViewBuilder
-    func makeRecoveryCodeLabel(_ recoveryCode: String) -> some View {
-        Label(recoveryCode, systemImage: "square.and.arrow.up")
-            .font(.system(.body, design: .monospaced, weight: .medium))
-            .lineLimit(1)
-            .truncationMode(.middle)
-            .padding(6)
-            .background(.white.opacity(0.95), in: .rect(cornerRadius: 8))
     }
 
     private var usernameFieldView: some View {
@@ -262,41 +166,6 @@ struct UserDetailsCreationView: View {
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
             .disabled(isValidating || !isUsernameValid || !usernameAvailable)
-        }
-    }
-
-    @ViewBuilder
-    private func recoveryCodeView(_ recoveryCode: String) -> some View {
-        VStack(spacing: 24.0) {
-            Text("Below is your recovery code:")
-                .fontWeight(.heavy)
-
-            HStack(spacing: 12) {
-
-                if let recoveryFileURL {
-                    ShareLink(item: recoveryFileURL) {
-                        makeRecoveryCodeLabel(recoveryCode)
-                    }
-                } else {
-                    makeRecoveryCodeLabel(recoveryCode)
-                }
-
-                Button("Copy") {
-                    UIPasteboard.general.string = recoveryCode
-                }
-            }
-            .frame(maxWidth: 300)
-            .foregroundStyle(Color.accentColor)
-
-            Button(action: {
-                showUsernameSheet = false
-            }) {
-                Text("Finish")
-                    .fontWeight(.semibold)
-                    .padding(6)
-            }
-            .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.capsule)
         }
     }
 }

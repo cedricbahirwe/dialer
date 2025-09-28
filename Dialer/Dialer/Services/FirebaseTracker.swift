@@ -45,7 +45,6 @@ class FirebaseTracker {
 
     func logAnalyticsEvent(_ eventName: String, parameters: [String: Any]?) {
         var completeParameters: [String : Any] = parameters ?? [:]
-        completeParameters[AnalyticsParameterExtendSession] = true
         Analytics.logEvent(
             eventName,
             parameters: completeParameters

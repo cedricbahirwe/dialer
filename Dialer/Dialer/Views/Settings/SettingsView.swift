@@ -104,7 +104,7 @@ struct SettingsView: View {
                             .deleteAccount,
                             action: presentAccountDeletion
                         )
-                        if isDeleting {
+                        if !isDeleting {
                             ProgressView()
                                 .progressViewStyle(.circular)
                         }
@@ -183,7 +183,7 @@ private extension SettingsView {
     private func presentAccountDeletion() {
         alertItem = .init(
             "Confirmation",
-            message: "All your information will be permenantly deleted (Merchant Codes, USSD codes, etc.).\nThis action can not be undone.",
+            message: "All your information will be permanently deleted (Merchant Codes, USSD codes, etc.).\nThis action can not be undone.",
             action: deleteAccount
         )
         showConfirmationAlert.toggle()
