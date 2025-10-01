@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     /// Environment Objects
-    let dialingStore = MainViewModel()
+    let dialingStore = DialerService()
     let forceUpdateManager = ForceUpdateManager()
     let merchantStore = MerchantStore()
     let userMerchantStore = UserMerchantStore()

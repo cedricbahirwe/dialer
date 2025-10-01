@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
-//    @StateObject private var settingsStore = SettingsStore()
-    @StateObject private var mailComposer = MailComposer()
-    @EnvironmentObject private var dataStore: MainViewModel
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var mailService = MailService()
+    @EnvironmentObject private var dataStore: DialerService
     @EnvironmentObject private var userStore: UserStore
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @EnvironmentObject private var insightsStore: DialerInsightStore
@@ -63,12 +63,12 @@ struct SettingsView: View {
                 Section {
                     SettingsRow(.supportUs, action: goToTipping)
 
-                    SettingsRow(.contactUs, action: mailComposer.openMail)
+                    SettingsRow(.contactUs, action: mailService.openMail)
                         .alert("No Email Client Found",
-                               isPresented: $mailComposer.showMailErrorAlert) {
+                               isPresented: $mailService.showMailErrorAlert) {
                             Button("OK", role: .cancel) { }
-                            Button("Copy Support Email", action: mailComposer.copySupportEmail)
-                            Button("Open X", action: mailComposer.openX)
+                            Button("Copy Support Email", action: mailService.copySupportEmail)
+                            Button("Open X", action: mailService.openX)
                         } message: {
                             Text("We could not detect a default mail service on your device.\n\n You can reach us on X, or send us an email to \(DialerlLinks.supportEmail) as well."
                             )
@@ -81,7 +81,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    NavigationLink(destination: AboutView()) {
+                    NavigationLink(destination: AboutView(onDone: { dismiss() })) {
                         SettingsRow(.about)
                     }
 
@@ -143,8 +143,8 @@ struct SettingsView: View {
             .sheet(isPresented: $showTipSheet) {
                 TippingView()
             }
-            .sheet(isPresented: $mailComposer.showMailView) {
-                mailComposer.makeMailView()
+            .sheet(isPresented: $mailService.showMailView) {
+                mailService.makeMailView()
             }
             .safeAreaInset(edge: .bottom) {
                 Text("By using Dialer, you accept our\n[Terms & Conditions](https://www.abctechouse.com/dialit/privacy) and [Privacy Policy](https://www.abctechouse.com/dialit/privacy).")
@@ -157,7 +157,7 @@ struct SettingsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
-                        dataStore.dismissSettingsView()
+                        dismiss()
                     }.font(.body.bold())
                 }
             }
@@ -226,7 +226,7 @@ private extension SettingsView {
 
 #Preview {
     SettingsView()
-        .environmentObject(MainViewModel())
+        .environmentObject(DialerService())
         .environmentObject(UserStore())
         .environmentObject(UserMerchantStore())
         .environmentObject(DialerInsightStore())

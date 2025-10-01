@@ -11,7 +11,7 @@ import SwiftUI
 struct MySpaceView: View {
     // MARK: - Environment Properties
     
-    @EnvironmentObject private var store: MainViewModel
+    @EnvironmentObject private var store: DialerService
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.editMode) private var editMode
 
@@ -31,10 +31,10 @@ struct MySpaceView: View {
         List {
             if !store.ussdCodes.isEmpty {
                 Section("Custom USSDs") {
-                    ForEach(store.ussdCodes) { code in
+                    ForEach(store.ussdCodes) { ussd in
                         HStack {
-                            Text(code.title)
-                            
+                            Text(ussd.title)
+
                             Spacer()
                             if editMode?.wrappedValue.isEditing == true {
                                 Text("Edit")
@@ -50,10 +50,10 @@ struct MySpaceView: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if isEditing {
-                                editedUSSDModel = .init(code)
+                                editedUSSDModel = .init(ussd)
                             } else {
                                 Task {
-                                    await MainViewModel.performQuickDial(for: .other(code.ussd))
+                                    await store.dialCode(for: ussd)
                                 }
                                 
                             }
@@ -123,6 +123,6 @@ struct MySpaceView: View {
 #Preview {
     NavigationStack {
         MySpaceView()
-            .environmentObject(MainViewModel())
+            .environmentObject(DialerService())
     }
 }

@@ -11,13 +11,14 @@ import TipKit
 struct DashBoardView: View {
     @Binding var navPath: [AppRoute]
     
-    @EnvironmentObject private var data: MainViewModel
+    @EnvironmentObject private var dialerService: DialerService
     @EnvironmentObject private var insightsStore: DialerInsightStore
 
     @AppStorage(UserDefaultsKeys.shouldShowWelcome)
     private var shouldShowWelcome: Bool = true
 
     @State private var showWelcomeView: Bool = false
+    @State private var airtimeTransaction = AirtimeTransaction()
 
     @AppStorage(UserDefaultsKeys.appTheme)
     private var appTheme: DialerTheme = .system
@@ -38,6 +39,8 @@ struct DashBoardView: View {
 
     @available(iOS 17.0, *)
     var donationTip: DonationTip { DonationTip() }
+
+    @State private var presentedSheet: DialerSheet?
 
     var body: some View {
         VStack {
@@ -127,7 +130,7 @@ struct DashBoardView: View {
             }
         )
         .task {
-            data.retrieveUSSDCodes()
+            dialerService.retrieveUSSDCodes()
             if #available(iOS 17.0, *) {
                 do {
 //                     try Tips.resetDatastore()
@@ -150,28 +153,20 @@ struct DashBoardView: View {
         }
         .sheet(isPresented: $showPurchaseSheet) {
             if #available(iOS 16.4, *) {
-                PurchaseDetailView(
-                    isPresented: $showPurchaseSheet,
-                    data: data
-                )
-                .presentationDetents([.height(400)])
-                .presentationCornerRadius(20)
+                airtimePurchaseView
+                    .presentationCornerRadius(20)
             } else {
-                PurchaseDetailView(
-                    isPresented: $showPurchaseSheet,
-                    data: data
-                )
-                .presentationDetents([.height(400)])
+                airtimePurchaseView
             }
         }
         .fullScreenCover(isPresented: $showWelcomeView) {
             WhatsNewView()
         }
-        .sheet(item: $data.presentedSheet) { sheet in
+        .sheet(item: $presentedSheet) { sheet in
             switch sheet {
             case .settings:
                 SettingsView()
-                    .environmentObject(data)
+                    .environmentObject(dialerService)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
             case .tipping:
                 TippingView()
@@ -185,7 +180,7 @@ struct DashBoardView: View {
                     settingsToolbarButton
                         .popoverTip(donationTip) { action in
                             if action.id == "donate" {
-                                data.goToTipping()
+                                goToTipping()
                             }
                         }
                 } else {
@@ -198,18 +193,31 @@ struct DashBoardView: View {
 }
 
 private extension DashBoardView {
+    var airtimePurchaseView: some View {
+        AirtimePurchaseSheet(
+            isPresented: $showPurchaseSheet,
+            transaction: $airtimeTransaction,
+            onConfirm: {
+                Task {
+                    await dialerService.buyAirtime(airtimeTransaction)
+                }
+            }
+        )
+        .presentationDetents([.height(400)])
+    }
+
     var settingsToolbarButton: some View {
         Group {
             if allowBiometrics {
                 settingsImage
                 .onTapForBiometrics {
                     if $0 {
-                        data.showSettingsView()
+                        showSettingsView()
                     }
                 }
 
             } else {
-                Button(action: data.showSettingsView) {
+                Button(action: showSettingsView) {
                     settingsImage
                 }
             }
@@ -220,7 +228,7 @@ private extension DashBoardView {
     var settingsImage: some View {
         if #available(iOS 17.0, *) {
             settingsGradientIcon
-                .symbolEffect(.scale.down, isActive: data.presentedSheet == .settings)
+                .symbolEffect(.scale.down, isActive: presentedSheet == .settings)
         } else {
             settingsGradientIcon
         }
@@ -237,10 +245,32 @@ private extension DashBoardView {
     }
 }
 
+extension DashBoardView {
+    enum DialerSheet: Int, Identifiable {
+        var id: Int { rawValue }
+        case settings
+        case tipping
+    }
+
+    @MainActor func showSettingsView() {
+        Tracker.shared.logEvent(.settingsOpened)
+        presentedSheet = .settings
+    }
+
+    @MainActor func goToTipping() {
+        Tracker.shared.logEvent(.tippingOpened)
+        presentedSheet = .tipping
+    }
+
+    @MainActor func dismissSettingsView() {
+        presentedSheet = nil
+    }
+}
+
 #Preview {
     NavigationStack {
         DashBoardView(navPath: .constant([]))
-            .environmentObject(MainViewModel())
+            .environmentObject(DialerService())
             .environmentObject(UserStore())
     }
 }

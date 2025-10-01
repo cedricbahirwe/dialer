@@ -9,7 +9,6 @@ import Foundation
 import OSLog
 
 enum Log {
-    
     static func add(_ message: StaticString, file: String = #file, log: OSLog = .default, type: OSLogType = .default, _ args: CVarArg...) {
         if AppConfiguration.isDebug {
             // 1. log the message using OSLog

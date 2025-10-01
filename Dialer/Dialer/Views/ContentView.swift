@@ -13,7 +13,6 @@ enum AppRoute {
 }
 
 struct ContentView: View {
-    @EnvironmentObject private var data: MainViewModel
     @EnvironmentObject private var forceUpdate: ForceUpdateManager
     @State private var navPath: [AppRoute] = []
     @AppStorage(UserDefaultsKeys.appTheme)
@@ -75,7 +74,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(MainViewModel())
+        .environmentObject(DialerService())
         .environmentObject(ForceUpdateManager())
         .environmentObject(DialerInsightStore())
         .environmentObject(UserMerchantStore())

@@ -1,5 +1,5 @@
 //
-//  MailComposer.swift
+//  MailService.swift
 //  Dialer
 //
 //  Created by Cédric Bahirwe on 16/10/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import MessageUI
 
-class MailComposer: ObservableObject {
+class MailService: ObservableObject {
     @Published var showMailView = false
     @Published var showMailErrorAlert = false
     

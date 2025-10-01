@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 import FirebaseAnalytics
 
 class FirebaseTracker {

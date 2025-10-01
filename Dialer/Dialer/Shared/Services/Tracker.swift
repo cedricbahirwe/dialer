@@ -6,7 +6,11 @@
 //
 
 import Foundation
-import FirebaseFirestore
+
+final class Tracker {
+    private init() { }
+    static let shared: TrackerProtocol = FirebaseTracker()
+}
 
 protocol AnalyticsEventType {
     var stringValue: String { get }
@@ -32,11 +36,6 @@ extension TrackerProtocol {
     }
 }
 
-final class Tracker {
-    private init() { }
-    static let shared: TrackerProtocol = FirebaseTracker()
-}
-
 enum AppAnalyticsEventType: String, AnalyticsEventType {
     
     // Screens
@@ -44,7 +43,8 @@ enum AppAnalyticsEventType: String, AnalyticsEventType {
     case transferOpened
     case airtimeOpened
     case mySpaceOpened
-    
+    case tippingOpened
+
     // Activities
     case screenSessionLength
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct USSDCode: Identifiable, Equatable, Codable {
+struct USSDCode: Identifiable, Equatable, Codable, Dialable {
     private static let starSymbol: Character = "*"
     private static let hashSymbol: Character = "#"
 
@@ -32,6 +32,9 @@ struct USSDCode: Identifiable, Equatable, Codable {
     let id: UUID
     let title: String
     let ussd: String
+
+    var fullUSSDCode: String { ussd }
+    var isValid: Bool { true }
 }
 
 // MARK: Validation

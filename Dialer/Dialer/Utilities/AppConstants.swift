@@ -8,12 +8,13 @@
 import Foundation
 
 struct AppConstants {
-    // Airtime USSD Dial constants
-    private init() { }
-    static let minAmount = 1
 
+    private init() { }
+
+    static let minAmount = 1
     static let merchantDigitsRange = 5...7
     static let merchantMaxDigits = merchantDigitsRange.upperBound
+    static let airtimeUSSDPrefix: String = "*182*2*1*1*1*"
 
 
     static let dialerSplitsIconName: String = {

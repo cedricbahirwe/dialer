@@ -23,7 +23,7 @@ struct BuyAirtimeIntent: AppIntent {
     func perform() async throws -> some IntentResult & OpensIntent {
         let airtimTransaction = AirtimeTransaction(amount: amount)
 
-        if let ussdUrl = try? airtimTransaction.getUSSDURL() {
+        if let ussdUrl = try? PhoneService.shared.getDialURL(from: airtimTransaction.fullUSSDCode) {
             let openURLIntent = OpenURLIntent(ussdUrl)
             return .result(opensIntent: openURLIntent)
         } else {
@@ -103,7 +103,7 @@ struct TranferMoneyIntent: AppIntent {
             actionName: .send,
             dialog: "Do you want to send \(transaction.amount) RWF to \(Self.contactName ?? transaction.number)?"
         )
-        if let ussdUrl = URL(string: "tel://\(transaction.fullCode)") {
+        if let ussdUrl = URL(string: "tel://\(transaction.fullUSSDCode)") {
             let openURLIntent = OpenURLIntent(ussdUrl)
             return .result(opensIntent: openURLIntent)
         } else {

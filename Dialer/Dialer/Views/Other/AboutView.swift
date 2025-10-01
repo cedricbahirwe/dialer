@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AboutView: View {
-    @EnvironmentObject
-    private var dataStore: MainViewModel
+    var onDone: () -> Void
+
     private let appVersion = UIApplication.appVersion ?? "1.0"
     private let buildVersion = UIApplication.buildVersion ?? "1"
-    
+
     var body: some View {
         VStack(spacing: 30) {
             VStack {
@@ -44,9 +44,8 @@ struct AboutView: View {
         .navigationBarTitle("About")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Done") {
-                    dataStore.dismissSettingsView()
-                }.font(.body.bold())
+                Button("Done", action: onDone)
+                    .font(.body.bold())
             }
         }
         .trackAppearance(.about)
@@ -55,7 +54,7 @@ struct AboutView: View {
 
 #Preview {
     NavigationStack {
-        AboutView()
+        AboutView(onDone: {})
             .navigationBarTitleDisplayMode(.inline)
     }
 }

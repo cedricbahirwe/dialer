@@ -10,7 +10,7 @@ import DialerTO
 import TipKit
 
 struct TransferView: View {
-    @EnvironmentObject private var mainStore: MainViewModel
+    @EnvironmentObject private var mainStore: DialerService
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @AppStorage(UserDefaultsKeys.isDialerSplitsEnabled)
     private var isDialerSplitsEnabled: Bool = false
@@ -464,7 +464,7 @@ private extension TransferView {
     NavigationStack {
         TransferView()
             .environmentObject(UserMerchantStore())
-            .environmentObject(MainViewModel())
+            .environmentObject(DialerService())
     }
 }
 

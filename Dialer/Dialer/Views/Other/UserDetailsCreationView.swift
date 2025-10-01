@@ -12,7 +12,7 @@ struct UserDetailsCreationView: View {
     @Binding var showUsernameSheet: Bool
 
     @EnvironmentObject private var userStore: UserStore
-    @StateObject private var mailComposer = MailComposer()
+    @StateObject private var mailComposer = MailService()
 
     @State private var username = ""
     @State private var isValidating = false

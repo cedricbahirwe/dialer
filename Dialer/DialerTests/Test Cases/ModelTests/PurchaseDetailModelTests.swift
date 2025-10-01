@@ -14,6 +14,6 @@ final class PurchaseDetailModelTests: XCTestCase {
         let purchase = AirtimeTransaction(amount: 1000)
         let expectedUnpinCode = "*182*2*1*1*1*1000#"
         
-        XCTAssertEqual(expectedUnpinCode, purchase.getFullUSSDCode())
+        XCTAssertEqual(expectedUnpinCode, purchase.fullUSSDCode)
     }
 }

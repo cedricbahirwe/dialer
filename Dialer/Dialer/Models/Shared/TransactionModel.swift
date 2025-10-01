@@ -32,7 +32,7 @@ struct Transaction: Identifiable, Codable {
         isOptimized = try container.decodeIfPresent(Bool.self, forKey: .isOptimized) ?? false
     }
 
-    struct Model: Hashable {
+    struct Model: Hashable, Dialable {
         var amount: String
         var number: String
         var type: TransactionType
@@ -55,12 +55,8 @@ struct Transaction: Identifiable, Codable {
             number.removingEmptySpaces + "*" + String(amount)
         }
 
-        var fullCode: String {
-            if type == .client {
-                return "*182*1*1*\(trailingCode)#"
-            } else {
-                return "*182*8*1*\(trailingCode)#"
-            }
+        var fullUSSDCode: String {
+            type == .client ? "*182*1*1*\(trailingCode)#" : "*182*8*1*\(trailingCode)#"
         }
 
         /// Determines whether a transaction is valid
