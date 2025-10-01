@@ -7,23 +7,6 @@
 
 import Foundation
 
-@MainActor
-class BaseViewModel: ObservableObject {
-    @Published private(set) var isFetching = false
-
-    func startFetch() {
-        DispatchQueue.main.async {
-            self.isFetching = true
-        }
-    }
-
-    func stopFetch() {
-        DispatchQueue.main.async {
-            self.isFetching = false
-        }
-    }
-}
-
 class MerchantStore: BaseViewModel {
     @Published private(set) var merchants: [Merchant]
     let merchantProvider: MerchantProtocol

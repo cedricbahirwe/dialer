@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		823B2F8D2704686400E686BE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 823B2F8F2704686400E686BE /* Localizable.strings */; };
 		823B2F9327047A3500E686BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 823B2F9527047A3500E686BE /* InfoPlist.strings */; };
-		827F2CF225D9648900C7C40A /* DialerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F2CF125D9648900C7C40A /* DialerService.swift */; };
 		82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB625D1C1FE00551D22 /* AppDelegate.swift */; };
 		82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */; };
 		82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D41FBA25D1C1FE00551D22 /* ContentView.swift */; };
@@ -17,14 +16,10 @@
 		82D41FC025D1C1FF00551D22 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FBF25D1C1FF00551D22 /* Preview Assets.xcassets */; };
 		82D41FC325D1C1FF00551D22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D41FC125D1C1FF00551D22 /* LaunchScreen.storyboard */; };
 		82EEBCED26C12E2500B1720A /* DialerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCEC26C12E2500B1720A /* DialerTests.swift */; };
-		82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EEBCF726C1391D00B1720A /* LocalStorage.swift */; };
 		CB0A5293294616DE0023370C /* DialerUSSDCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */; };
 		CB0F34F12D94412C00916865 /* DialerTO in Frameworks */ = {isa = PBXBuildFile; productRef = CB0F34F02D94412C00916865 /* DialerTO */; };
 		CB10994E2A6165E000E99555 /* MerchantCodeExtractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */; };
-		CB1099502A616EFA00E99555 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */; };
-		CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */; };
 		CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */; };
-		CB2A55122ADD369A0088008F /* MailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A55112ADD369A0088008F /* MailService.swift */; };
 		CB338CDE29AF6E8B00BEAD9A /* GoogleService-Info-DEV.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB338CDD29AF6E8B00BEAD9A /* GoogleService-Info-DEV.plist */; };
 		CB3B81E029ABC591001FAFF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */; };
 		CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */; };
@@ -34,14 +29,9 @@
 		CB582AF229ABEB3100FAD610 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF129ABEB3100FAD610 /* FirebaseFirestore */; };
 		CB582AFA29ABEB3100FAD610 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF929ABEB3100FAD610 /* FirebaseMessaging */; };
 		CB582AFC29ABEB3100FAD610 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AFB29ABEB3100FAD610 /* FirebaseRemoteConfig */; };
-		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
-		CB667FFC2DA69C6F006F3470 /* TipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB667FFB2DA69C6F006F3470 /* TipViewModel.swift */; };
 		CB667FFE2DA6AF67006F3470 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB667FFD2DA6AF67006F3470 /* StoreKit.framework */; };
 		CB6D4B3B2D94151C0065A76D /* TransactionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */; };
-		CB8508B42C879A7300D2080F /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8508B32C879A7300D2080F /* UserStore.swift */; };
-		CB9515EB2C998DCA00D8F35C /* DialerInsightStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9515EA2C998DCA00D8F35C /* DialerInsightStore.swift */; };
 		CBE3D8AC290C168400DF5C09 /* DialerQuickCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */; };
-		CBE61A462C9C2795003E1795 /* InsightHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE61A452C9C2795003E1795 /* InsightHistoryViewModel.swift */; };
 		CBE73C5E2A2C76BF00C7712B /* MockPreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE73C5D2A2C76BF00C7712B /* MockPreviewData.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +56,6 @@
 		823B2F8E2704686400E686BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		823B2F9427047A3500E686BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		82550129263B3BDF00CB1BC2 /* Dialer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dialer.entitlements; sourceTree = "<group>"; };
-		827F2CF125D9648900C7C40A /* DialerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerService.swift; sourceTree = "<group>"; };
 		82D41FB325D1C1FE00551D22 /* Dialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D41FB625D1C1FE00551D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,29 +67,19 @@
 		82EEBCEA26C12E2500B1720A /* DialerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82EEBCEC26C12E2500B1720A /* DialerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTests.swift; sourceTree = "<group>"; };
 		82EEBCEE26C12E2500B1720A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82EEBCF726C1391D00B1720A /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		CB0A52902944EBA30023370C /* DialerDEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DialerDEV.xcconfig; sourceTree = "<group>"; };
 		CB0A5292294616DE0023370C /* DialerUSSDCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUSSDCodeTests.swift; sourceTree = "<group>"; };
 		CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCodeExtractionTests.swift; sourceTree = "<group>"; };
-		CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
-		CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewModel.swift; sourceTree = "<group>"; };
 		CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDetailModelTests.swift; sourceTree = "<group>"; };
-		CB2A55112ADD369A0088008F /* MailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailService.swift; sourceTree = "<group>"; };
 		CB338CDD29AF6E8B00BEAD9A /* GoogleService-Info-DEV.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-DEV.plist"; sourceTree = "<group>"; };
 		CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamelToSnakeTests.swift; sourceTree = "<group>"; };
 		CB544630289C5763009F3457 /* DialerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DialerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB544632289C5763009F3457 /* DialerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITests.swift; sourceTree = "<group>"; };
 		CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
-		CB667FFB2DA69C6F006F3470 /* TipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipViewModel.swift; sourceTree = "<group>"; };
 		CB667FFD2DA6AF67006F3470 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CB6D4B3A2D94151C0065A76D /* TransactionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModelTests.swift; sourceTree = "<group>"; };
-		CB8508B32C879A7300D2080F /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
-		CB9515EA2C998DCA00D8F35C /* DialerInsightStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerInsightStore.swift; sourceTree = "<group>"; };
-		CBA498902E8D7EFC0002E2D1 /* DialerIAPs.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = DialerIAPs.storekit; path = Dialer/Shared/Service/StoreKit/DialerIAPs.storekit; sourceTree = "<group>"; };
 		CBE3D8AB290C168400DF5C09 /* DialerQuickCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerQuickCodeTests.swift; sourceTree = "<group>"; };
-		CBE61A452C9C2795003E1795 /* InsightHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightHistoryViewModel.swift; sourceTree = "<group>"; };
 		CBE73C5D2A2C76BF00C7712B /* MockPreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreviewData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,9 +95,9 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CBA497EC2E8D6B6D0002E2D1 /* Features */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (CBA498962E8D7FDF0002E2D1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Features; sourceTree = "<group>"; };
-		CBA497FD2E8D7A730002E2D1 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
 		CBA498852E8D7E830002E2D1 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
 		CBA4988D2E8D7E910002E2D1 /* Shortcuts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shortcuts; sourceTree = "<group>"; };
+		CBA4996B2E8D848F0002E2D1 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +134,6 @@
 		82D41FAA25D1C1FE00551D22 = {
 			isa = PBXGroup;
 			children = (
-				CBA498902E8D7EFC0002E2D1 /* DialerIAPs.storekit */,
 				82D41FB525D1C1FE00551D22 /* Dialer */,
 				82EEBCEB26C12E2500B1720A /* DialerTests */,
 				CB544631289C5763009F3457 /* DialerUITests */,
@@ -180,11 +158,10 @@
 				82550129263B3BDF00CB1BC2 /* Dialer.entitlements */,
 				82D41FB625D1C1FE00551D22 /* AppDelegate.swift */,
 				82D41FBA25D1C1FE00551D22 /* ContentView.swift */,
-				CBA497FD2E8D7A730002E2D1 /* Shared */,
-				CBA497EC2E8D6B6D0002E2D1 /* Features */,
 				82D41FB825D1C1FE00551D22 /* SceneDelegate.swift */,
+				CBA4996B2E8D848F0002E2D1 /* Shared */,
+				CBA497EC2E8D6B6D0002E2D1 /* Features */,
 				CB0A52902944EBA30023370C /* DialerDEV.xcconfig */,
-				82FBCC07261BB30D00F00FAE /* View Models */,
 				CBA9BB06294C960800D95C82 /* Resources */,
 				CBA498852E8D7E830002E2D1 /* Extensions */,
 				CBA4988D2E8D7E910002E2D1 /* Shortcuts */,
@@ -214,23 +191,6 @@
 				82EEBCEE26C12E2500B1720A /* Info.plist */,
 			);
 			path = DialerTests;
-			sourceTree = "<group>";
-		};
-		82FBCC07261BB30D00F00FAE /* View Models */ = {
-			isa = PBXGroup;
-			children = (
-				827F2CF125D9648900C7C40A /* DialerService.swift */,
-				CB667FFB2DA69C6F006F3470 /* TipViewModel.swift */,
-				CB10994F2A616EFA00E99555 /* ContactsViewModel.swift */,
-				CBE61A452C9C2795003E1795 /* InsightHistoryViewModel.swift */,
-				82EEBCF726C1391D00B1720A /* LocalStorage.swift */,
-				CB18BD5229AE915000A7B45C /* MerchantViewModel.swift */,
-				CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */,
-				CB8508B32C879A7300D2080F /* UserStore.swift */,
-				CB9515EA2C998DCA00D8F35C /* DialerInsightStore.swift */,
-				CB2A55112ADD369A0088008F /* MailService.swift */,
-			);
-			path = "View Models";
 			sourceTree = "<group>";
 		};
 		CB1FE61E29B7C4ED000F8444 /* ModelTests */ = {
@@ -298,9 +258,9 @@
 			);
 			fileSystemSynchronizedGroups = (
 				CBA497EC2E8D6B6D0002E2D1 /* Features */,
-				CBA497FD2E8D7A730002E2D1 /* Shared */,
 				CBA498852E8D7E830002E2D1 /* Extensions */,
 				CBA4988D2E8D7E910002E2D1 /* Shortcuts */,
+				CBA4996B2E8D848F0002E2D1 /* Shared */,
 			);
 			name = Dialer;
 			packageProductDependencies = (
@@ -435,20 +395,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB667FFC2DA69C6F006F3470 /* TipViewModel.swift in Sources */,
 				82D41FB725D1C1FE00551D22 /* AppDelegate.swift in Sources */,
-				CBE61A462C9C2795003E1795 /* InsightHistoryViewModel.swift in Sources */,
 				CBE73C5E2A2C76BF00C7712B /* MockPreviewData.swift in Sources */,
 				82D41FB925D1C1FE00551D22 /* SceneDelegate.swift in Sources */,
-				CB9515EB2C998DCA00D8F35C /* DialerInsightStore.swift in Sources */,
-				82EEBCF826C1391D00B1720A /* LocalStorage.swift in Sources */,
 				82D41FBB25D1C1FE00551D22 /* ContentView.swift in Sources */,
-				CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */,
-				827F2CF225D9648900C7C40A /* DialerService.swift in Sources */,
-				CB1099502A616EFA00E99555 /* ContactsViewModel.swift in Sources */,
-				CB18BD5329AE915000A7B45C /* MerchantViewModel.swift in Sources */,
-				CB2A55122ADD369A0088008F /* MailService.swift in Sources */,
-				CB8508B42C879A7300D2080F /* UserStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

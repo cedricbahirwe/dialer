@@ -10,13 +10,6 @@ import Foundation
 import StoreKit
 import SwiftUI
 
-enum TipProcess: Equatable {
-    case idle
-    case processing
-    case completed
-    case failed(_ errorMessage: String)
-}
-
 @MainActor class TipViewModel: ObservableObject {
     @Published var tipProcess: TipProcess = .idle
     @Published var selectedProduct: Product?

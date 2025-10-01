@@ -10,7 +10,6 @@ import Foundation
 
 struct TipOption {
     let productID: String
-    
     init(_ productID: String) {
         self.productID = productID
     }
