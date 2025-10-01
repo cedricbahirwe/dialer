@@ -9,14 +9,11 @@ import Foundation
 
 final class MainViewModel: ObservableObject {
     @Published var purchaseDetail = AirtimeTransaction()
-    
     @Published private(set) var ussdCodes: [USSDCode] = []
-    
     @Published var presentedSheet: DialerSheet?
 
     /// Confirm and Purchase an entered Code.
-    @MainActor
-    func confirmPurchase() async {
+    @MainActor func confirmPurchase() async {
         let purchase = purchaseDetail
         
         do {
