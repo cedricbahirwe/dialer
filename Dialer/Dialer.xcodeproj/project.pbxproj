@@ -93,6 +93,8 @@
 		CB5A33802CDCB32300548A10 /* DialerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A337F2CDCB32300548A10 /* DialerTheme.swift */; };
 		CB5A33832CDCC5CC00548A10 /* SettingsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33822CDCC5CC00548A10 /* SettingsRow.swift */; };
 		CB5A33892CDCC64300548A10 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A33882CDCC64300548A10 /* SettingsStore.swift */; };
+		CB5D4F572E897E61002BAB22 /* DialerSplitInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5D4F562E897E61002BAB22 /* DialerSplitInfoView.swift */; };
+		CB5D4F592E899C0E002BAB22 /* DialerTransactionsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5D4F582E899C0E002BAB22 /* DialerTransactionsViewer.swift */; };
 		CB6165C52D1DC66000C142E5 /* WrappedPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */; };
 		CB63E0E129E5838E00E1BF77 /* UserMerchantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */; };
 		CB667FFA2DA68A90006F3470 /* TippingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB667FF92DA68A90006F3470 /* TippingView.swift */; };
@@ -242,6 +244,8 @@
 		CB5A337F2CDCB32300548A10 /* DialerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTheme.swift; sourceTree = "<group>"; };
 		CB5A33822CDCC5CC00548A10 /* SettingsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRow.swift; sourceTree = "<group>"; };
 		CB5A33882CDCC64300548A10 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		CB5D4F562E897E61002BAB22 /* DialerSplitInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerSplitInfoView.swift; sourceTree = "<group>"; };
+		CB5D4F582E899C0E002BAB22 /* DialerTransactionsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerTransactionsViewer.swift; sourceTree = "<group>"; };
 		CB6165C42D1DC66000C142E5 /* WrappedPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedPreview.swift; sourceTree = "<group>"; };
 		CB63E0E029E5838E00E1BF77 /* UserMerchantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMerchantStore.swift; sourceTree = "<group>"; };
 		CB667FF92DA68A90006F3470 /* TippingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TippingView.swift; sourceTree = "<group>"; };
@@ -621,6 +625,8 @@
 			isa = PBXGroup;
 			children = (
 				825F996226720AE6009E4A7B /* TransferView.swift */,
+				CB5D4F562E897E61002BAB22 /* DialerSplitInfoView.swift */,
+				CB5D4F582E899C0E002BAB22 /* DialerTransactionsViewer.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -915,6 +921,7 @@
 				CB8508B62C879C1300D2080F /* DialerUser.swift in Sources */,
 				CBD4814C2D20083300223F5D /* WrappedViewOne.swift in Sources */,
 				CB7F33B42CB3F0E800415777 /* ChartInsight.swift in Sources */,
+				CB5D4F572E897E61002BAB22 /* DialerSplitInfoView.swift in Sources */,
 				823FA769261A556200ABE045 /* PurchaseDetailView.swift in Sources */,
 				CB667FFC2DA69C6F006F3470 /* TipViewModel.swift in Sources */,
 				CB92F70729AFF4F3004BBE32 /* Logger.swift in Sources */,
@@ -939,6 +946,7 @@
 				825F996626720B46009E4A7B /* ContactsFetcher.swift in Sources */,
 				82D7C1A7266D26E7003E0E0E /* Views+Extension.swift in Sources */,
 				CB9515EB2C998DCA00D8F35C /* DialerInsightStore.swift in Sources */,
+				CB5D4F592E899C0E002BAB22 /* DialerTransactionsViewer.swift in Sources */,
 				CB667FFA2DA68A90006F3470 /* TippingView.swift in Sources */,
 				CB393A2928120A73009CA95E /* Binding+Extension.swift in Sources */,
 				CB10A4CA2E738557006F3454 /* TipPickerView.swift in Sources */,
