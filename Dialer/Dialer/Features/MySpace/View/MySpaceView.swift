@@ -17,7 +17,7 @@ struct MySpaceView: View {
 
     // MARK: - Private Properties
     
-    @State private var editedUSSDModel: NewDialingView.UIModel?
+    @State private var editedUSSDModel: NewDialingView.CustomDialingModel?
 
     private var rowBackground: Color {
         Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
@@ -113,7 +113,7 @@ struct MySpaceView: View {
         .trackAppearance(.mySpace)
     }
 
-    private func observeUSSDChange(_ editedUSSD: NewDialingView.UIModel?) {
+    private func observeUSSDChange(_ editedUSSD: NewDialingView.CustomDialingModel?) {
         if editedUSSD == nil {
             editMode?.wrappedValue = .inactive
         }

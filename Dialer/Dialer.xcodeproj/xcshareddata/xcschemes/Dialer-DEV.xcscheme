@@ -51,7 +51,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <StoreKitConfigurationFileReference
-         identifier = "../../Dialer/Shared/Services/StoreKit/DialerIAPs.storekit">
+         identifier = "../../Dialer/Shared/Service/StoreKit/DialerIAPs.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction

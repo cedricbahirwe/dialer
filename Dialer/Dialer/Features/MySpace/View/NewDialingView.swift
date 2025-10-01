@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewDialingView: View {
     @ObservedObject var store: DialerService
-    @State var model: UIModel = UIModel()
+    @State var model: CustomDialingModel = CustomDialingModel()
     var isEditing = false
      
     @Environment(\.dismiss) private var dismiss
@@ -28,7 +28,7 @@ struct NewDialingView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: model.editedCode)
                     }
-                    TextField("What's your USSD code name?", text: $model.label.animation())
+                    TextField("What's your USSD code name?", text: $model.title.animation())
                         .keyboardType(.default)
                         .disableAutocorrection(true)
                         .focused($focusedField, equals: .title)
@@ -119,11 +119,11 @@ extension NewDialingView {
         if isEditing {
             return store.ussdCodes.contains {
                 $0.id != model.id &&
-                cleanedTitle($0.title.lowercased()) == cleanedTitle(model.label.lowercased())
+                cleanedTitle($0.title.lowercased()) == cleanedTitle(model.title.lowercased())
             }
         } else {
            return store.ussdCodes.contains {
-               cleanedTitle($0.title.lowercased()) == cleanedTitle(model.label.lowercased())
+               cleanedTitle($0.title.lowercased()) == cleanedTitle(model.title.lowercased())
            }
         }
     }
@@ -145,7 +145,7 @@ extension NewDialingView {
 
     private func saveUSSD() {
         do {
-            let newCode = try USSDCode(title: model.label,
+            let newCode = try CustomUSSDCode(title: model.title,
                                        ussd: model.editedCode)
             if isEditing {
                 store.updateUSSD(newCode)
@@ -153,7 +153,7 @@ extension NewDialingView {
                 store.storeUSSD(newCode)
             }
             dismiss()
-        } catch let error as USSDCode.USSDCodeValidationError  {
+        } catch let error as CustomUSSDCode.USSDCodeValidationError  {
             alertItem = (true, error.description)
         } catch {
             alertItem = (true, error.localizedDescription)
@@ -162,23 +162,7 @@ extension NewDialingView {
 }
 
 extension NewDialingView {
-    struct UIModel: Identifiable {
-        var id: UUID
-        var editedCode: String
-        var label: String
 
-        init(editedCode: String = "", label: String = "") {
-            self.id = UUID()
-            self.editedCode = editedCode
-            self.label = label
-        }
-
-        init(_ ussdCode: USSDCode) {
-            self.id = ussdCode.id
-            self.editedCode = ussdCode.ussd
-            self.label = ussdCode.title
-        }
-    }
 }
 
 #Preview {

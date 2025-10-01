@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 final class DialerStorage {
-    typealias USSDCodes = [USSDCode]
+    typealias USSDCodes = [CustomUSSDCode]
     
     private let userDefaults = UserDefaults.standard
     

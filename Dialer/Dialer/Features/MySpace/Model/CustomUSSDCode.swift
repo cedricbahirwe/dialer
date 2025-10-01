@@ -7,11 +7,20 @@
 
 import Foundation
 
-struct USSDCode: Identifiable, Equatable, Codable, Dialable {
+struct CustomUSSDCode: Identifiable, Equatable, Codable, Dialable {
     private static let starSymbol: Character = "*"
     private static let hashSymbol: Character = "#"
 
-    static func == (lhs: USSDCode, rhs: USSDCode) -> Bool {
+
+    let id: UUID
+    let title: String
+    let ussd: String
+
+    var fullUSSDCode: String { ussd }
+    var isValid: Bool { true }
+
+
+    static func == (lhs: CustomUSSDCode, rhs: CustomUSSDCode) -> Bool {
         lhs.ussd == rhs.ussd || lhs.title == rhs.title
     }
 
@@ -28,17 +37,10 @@ struct USSDCode: Identifiable, Equatable, Codable, Dialable {
         self.title = title
         self.ussd = try Self.validateUSSD(from: ussd)
     }
-
-    let id: UUID
-    let title: String
-    let ussd: String
-
-    var fullUSSDCode: String { ussd }
-    var isValid: Bool { true }
 }
 
 // MARK: Validation
-extension USSDCode {
+extension CustomUSSDCode {
     enum USSDCodeValidationError: Error {
         case emptyTitle
         case shortTitle

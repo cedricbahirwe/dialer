@@ -8,7 +8,7 @@
 import Foundation
 
 final class DialerService: ObservableObject {
-    @Published private(set) var ussdCodes: [USSDCode] = []
+    @Published private(set) var ussdCodes: [CustomUSSDCode] = []
 
     /// Perform an airtime purchase transaction
     @MainActor func buyAirtime(_ transaction: AirtimeTransaction) async {
@@ -51,7 +51,7 @@ final class DialerService: ObservableObject {
 extension DialerService {
     /// Store a given  `USSDCode`  locally.
     /// - Parameter code: the code to be added.
-    func storeUSSD(_ code: USSDCode) {
+    func storeUSSD(_ code: CustomUSSDCode) {
         guard ussdCodes.contains(where: { $0 == code }) == false else { return }
         ussdCodes.append(code)
         saveUSSDCodesLocally(ussdCodes)
@@ -59,7 +59,7 @@ extension DialerService {
 
     /// Update an existing `USSDCode` locally.
     /// - Parameter code: the code to be updated
-    func updateUSSD(_ code: USSDCode) {
+    func updateUSSD(_ code: CustomUSSDCode) {
         if let index = ussdCodes.firstIndex(of: code) {
             ussdCodes[index] = code
         }
@@ -67,7 +67,7 @@ extension DialerService {
     }
 
     /// Save USSDCode(s) locally.
-    private func saveUSSDCodesLocally(_ codes: [USSDCode]) {
+    private func saveUSSDCodesLocally(_ codes: [CustomUSSDCode]) {
         do {
             try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
