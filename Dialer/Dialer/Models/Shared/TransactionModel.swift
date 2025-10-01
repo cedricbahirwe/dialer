@@ -36,7 +36,7 @@ struct Transaction: Identifiable, Codable {
         var amount: String
         var number: String
         var type: TransactionType
-        var isOptimized: Bool
+        var isOptimized: Bool = false
 
         var doubleAmount: Double {
             Double(amount) ?? 0.0

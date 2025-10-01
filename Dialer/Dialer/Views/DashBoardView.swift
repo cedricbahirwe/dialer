@@ -23,7 +23,7 @@ struct DashBoardView: View {
     private var appTheme: DialerTheme = .system
 
     @AppStorage(UserDefaultsKeys.showUsernameSheet)
-    private var showUsernameSheet = true
+    private var showUsernameSheet = false
 
     @AppStorage(UserDefaultsKeys.allowBiometrics)
     private var allowBiometrics = false

@@ -104,7 +104,7 @@ struct SettingsView: View {
                             .deleteAccount,
                             action: presentAccountDeletion
                         )
-                        if !isDeleting {
+                        if isDeleting {
                             ProgressView()
                                 .progressViewStyle(.circular)
                         }
