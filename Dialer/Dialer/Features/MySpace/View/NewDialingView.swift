@@ -9,9 +9,8 @@ import SwiftUI
 
 struct NewDialingView: View {
     @ObservedObject var store: MySpaceViewModel
-    @State var model: CustomDialingModel = CustomDialingModel()
+    @State var model = CustomDialingModel()
     var isEditing = false
-     
     @Environment(\.dismiss) private var dismiss
 
     @State private var alertItem: (status: Bool, message: String) = (false, "")    
