@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewDialingView: View {
-    @ObservedObject var store: DialerService
+    @ObservedObject var store: MySpaceViewModel
     @State var model: CustomDialingModel = CustomDialingModel()
     var isEditing = false
      
@@ -166,5 +166,5 @@ extension NewDialingView {
 }
 
 #Preview {
-    NewDialingView(store: DialerService())
+    NewDialingView(store: MySpaceViewModel())
 }

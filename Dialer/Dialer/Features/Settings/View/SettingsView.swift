@@ -10,7 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var mailService = MailService()
-    @EnvironmentObject private var dataStore: DialerService
+    @Environment(\.dialerService) private var dialer
+    @EnvironmentObject private var mySpaceStore: MySpaceViewModel
     @EnvironmentObject private var userStore: UserStore
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @EnvironmentObject private var insightsStore: DialerInsightStore
@@ -92,7 +93,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    if !dataStore.ussdCodes.isEmpty {
+                    if !mySpaceStore.ussdCodes.isEmpty {
                         SettingsRow(
                             .deleteUSSDs,
                             action: presentUSSDsRemovalSheet
@@ -175,7 +176,7 @@ private extension SettingsView {
         alertItem = .init(
             "Confirmation",
             message: "Do you really want to remove your saved USSD codes?\nThis action can not be undone.",
-            action: dataStore.removeAllUSSDs
+            action: mySpaceStore.removeAllUSSDs
         )
         showConfirmationAlert.toggle()
     }
@@ -203,7 +204,7 @@ private extension SettingsView {
         Task {
             isDeleting = true
             // Clear USSDs
-            dataStore.removeAllUSSDs()
+            mySpaceStore.removeAllUSSDs()
             // Clear Merchant codes
             await merchantStore.deleteAllUserMerchants()
             // Clear Transactions
@@ -226,7 +227,6 @@ private extension SettingsView {
 
 #Preview {
     SettingsView()
-        .environmentObject(DialerService())
         .environmentObject(UserStore())
         .environmentObject(UserMerchantStore())
         .environmentObject(DialerInsightStore())

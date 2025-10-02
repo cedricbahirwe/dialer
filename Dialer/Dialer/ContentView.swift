@@ -74,7 +74,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(DialerService())
         .environmentObject(ForceUpdateManager())
         .environmentObject(DialerInsightStore())
         .environmentObject(UserMerchantStore())

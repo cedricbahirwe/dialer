@@ -10,9 +10,9 @@ import TipKit
 
 struct DashBoardView: View {
     @Binding var navPath: [AppRoute]
-    
-    @EnvironmentObject private var dialerService: DialerService
+    @Environment(\.dialerService) private var dialer
     @EnvironmentObject private var insightsStore: DialerInsightStore
+    @EnvironmentObject private var mySpaceStore: MySpaceViewModel
 
     @AppStorage(UserDefaultsKeys.shouldShowWelcome)
     private var shouldShowWelcome: Bool = true
@@ -130,7 +130,7 @@ struct DashBoardView: View {
             }
         )
         .task {
-            dialerService.retrieveUSSDCodes()
+            mySpaceStore.retrieveUSSDCodes()
             if #available(iOS 17.0, *) {
                 do {
 //                     try Tips.resetDatastore()
@@ -166,7 +166,6 @@ struct DashBoardView: View {
             switch sheet {
             case .settings:
                 SettingsView()
-                    .environmentObject(dialerService)
                     .preferredColorScheme(appTheme.asColorScheme ?? colorScheme)
             case .tipping:
                 TippingView()
@@ -199,7 +198,7 @@ private extension DashBoardView {
             transaction: $airtimeTransaction,
             onConfirm: {
                 Task {
-                    await dialerService.buyAirtime(airtimeTransaction)
+                    await dialer.buyAirtime(airtimeTransaction)
                 }
             }
         )
@@ -270,7 +269,6 @@ extension DashBoardView {
 #Preview {
     NavigationStack {
         DashBoardView(navPath: .constant([]))
-            .environmentObject(DialerService())
             .environmentObject(UserStore())
     }
 }

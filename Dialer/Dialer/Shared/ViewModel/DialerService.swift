@@ -6,10 +6,20 @@
 //
 
 import Foundation
+import SwiftUI
 
-final class DialerService: ObservableObject {
-    @Published private(set) var ussdCodes: [CustomUSSDCode] = []
+private struct DialerServiceKey: EnvironmentKey {
+    static let defaultValue = DialerService()
+}
 
+extension EnvironmentValues {
+    var dialerService: DialerService {
+        get { self[DialerServiceKey.self] }
+        set { self[DialerServiceKey.self] = newValue }
+    }
+}
+
+final class DialerService {
     /// Perform an airtime purchase transaction
     @MainActor func buyAirtime(_ transaction: AirtimeTransaction) async {
         await dialCode(for: transaction)
@@ -44,54 +54,5 @@ final class DialerService: ObservableObject {
         } catch {
             Log.debug("DialerService Unknow Error: \(error.localizedDescription)")
         }
-    }
-}
-
-// MARK: Custom USSD Storage
-extension DialerService {
-    /// Store a given  `USSDCode`  locally.
-    /// - Parameter code: the code to be added.
-    func storeUSSD(_ code: CustomUSSDCode) {
-        guard ussdCodes.contains(where: { $0 == code }) == false else { return }
-        ussdCodes.append(code)
-        saveUSSDCodesLocally(ussdCodes)
-    }
-
-    /// Update an existing `USSDCode` locally.
-    /// - Parameter code: the code to be updated
-    func updateUSSD(_ code: CustomUSSDCode) {
-        if let index = ussdCodes.firstIndex(of: code) {
-            ussdCodes[index] = code
-        }
-        saveUSSDCodesLocally(ussdCodes)
-    }
-
-    /// Save USSDCode(s) locally.
-    private func saveUSSDCodesLocally(_ codes: [CustomUSSDCode]) {
-        do {
-            try DialerStorage.shared.saveUSSDCodes(codes)
-        } catch {
-            Tracker.shared.logError(error: error)
-            Log
-                .debug(
-                    "Could not save ussd codes locally: ",
-                    error.localizedDescription
-                )
-        }
-    }
-
-    /// Retrieve all locally stored Meter Numbers codes
-    func retrieveUSSDCodes() {
-        ussdCodes = DialerStorage.shared.getUSSDCodes()
-    }
-
-    func deleteUSSD(at offSets: IndexSet) {
-        ussdCodes.remove(atOffsets: offSets)
-        saveUSSDCodesLocally(ussdCodes)
-    }
-
-    func removeAllUSSDs() {
-        DialerStorage.shared.removeAllUSSDCodes()
-        ussdCodes = []
     }
 }

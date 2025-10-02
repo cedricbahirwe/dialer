@@ -13,12 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     /// Environment Objects
-    let dialingStore = DialerService()
     let forceUpdateManager = ForceUpdateManager()
     let merchantStore = MerchantStore()
     let userMerchantStore = UserMerchantStore()
     let userStore = UserStore()
     let insightsStore = DialerInsightStore()
+    let mySpaceVM = MySpaceViewModel()
 
     
     /// - Tag: willConnectTo
@@ -29,10 +29,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
-            .environmentObject(dialingStore)
             .environmentObject(merchantStore)
             .environmentObject(userStore)
             .environmentObject(userMerchantStore)
+            .environmentObject(mySpaceVM)
             .environmentObject(insightsStore)
             .environmentObject(forceUpdateManager)
         

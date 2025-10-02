@@ -10,7 +10,7 @@ import DialerTO
 import TipKit
 
 struct TransferView: View {
-    @EnvironmentObject private var mainStore: DialerService
+    @Environment(\.dialerService) private var dialer
     @EnvironmentObject private var merchantStore: UserMerchantStore
     @AppStorage(UserDefaultsKeys.isDialerSplitsEnabled)
     private var isDialerSplitsEnabled: Bool = false
@@ -234,7 +234,7 @@ struct TransferView: View {
                 fees: TransactionOptimizer.calculateFeesSavings(
                     for: Int(transaction.doubleAmount))!,
                 transactions: wrapper.transactions,
-                onDial: mainStore.transferMoney
+                onDial: dialer.transferMoney
             )
             .presentationDetents([.height(CGFloat(290 + extraHeight))])
         }
@@ -399,7 +399,7 @@ private extension TransferView {
 
     func transferMoney() {
         Task {
-            await mainStore.transferMoney(transaction)
+            await dialer.transferMoney(transaction)
             if #available(iOS 17.0, *) {
                 didTransferMoneyCount += 1
             }
@@ -464,7 +464,6 @@ private extension TransferView {
     NavigationStack {
         TransferView()
             .environmentObject(UserMerchantStore())
-            .environmentObject(DialerService())
     }
 }
 
