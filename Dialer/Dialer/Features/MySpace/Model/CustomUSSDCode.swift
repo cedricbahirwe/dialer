@@ -8,10 +8,6 @@
 import Foundation
 
 struct CustomUSSDCode: Identifiable, Equatable, Codable, Dialable {
-    private static let starSymbol: Character = "*"
-    private static let hashSymbol: Character = "#"
-
-
     let id: UUID
     let title: String
     let ussd: String
@@ -19,29 +15,33 @@ struct CustomUSSDCode: Identifiable, Equatable, Codable, Dialable {
     var fullUSSDCode: String { ussd }
     var isValid: Bool { true }
 
-
-    static func == (lhs: CustomUSSDCode, rhs: CustomUSSDCode) -> Bool {
-        lhs.ussd == rhs.ussd || lhs.title == rhs.title
-    }
-
-    init(id: UUID = UUID(), title: String, ussd: String) throws {
+    init(id: UUID = UUID(), title: String, ussd: String) throws(ValidationError) {
         self.id = id
         guard !title.isEmpty else {
-            throw USSDCodeValidationError.emptyTitle
+            throw ValidationError.emptyTitle
         }
 
         guard title.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3 else {
-            throw USSDCodeValidationError.shortTitle
+            throw ValidationError.shortTitle
         }
 
         self.title = title
-        self.ussd = try Self.validateUSSD(from: ussd)
+        self.ussd = try ValidationError.validateUSSDCode(ussd)
+    }
+}
+
+extension CustomUSSDCode: Hashable {
+    static func == (lhs: CustomUSSDCode, rhs: CustomUSSDCode) -> Bool {
+        lhs.ussd == rhs.ussd || lhs.title == rhs.title
     }
 }
 
 // MARK: Validation
 extension CustomUSSDCode {
-    enum USSDCodeValidationError: Error {
+    enum ValidationError: Error {
+        private static let starSymbol: Character = "*"
+        private static let hashSymbol: Character = "#"
+
         case emptyTitle
         case shortTitle
         case emptyUSSD
@@ -65,24 +65,24 @@ extension CustomUSSDCode {
                 return "Invalid USSD code, please check again your code."
             }
         }
-    }
 
-    private static func validateUSSD(from code: String) throws -> String {
-        guard code.isEmpty == false else { throw USSDCodeValidationError.emptyUSSD }
+        static func validateUSSDCode(_ code: String) throws(ValidationError) -> String {
+            guard code.isEmpty == false else { throw ValidationError.emptyUSSD }
 
-        guard code.hasPrefix(String(starSymbol)) else { throw USSDCodeValidationError.invalidFirstCharacter }
+            guard code.hasPrefix(String(starSymbol)) else { throw ValidationError.invalidFirstCharacter }
 
-        guard !code.dropFirst(1).hasPrefix(String(starSymbol))
-        else { throw USSDCodeValidationError.invalidUSSD }
+            guard !code.dropFirst(1).hasPrefix(String(starSymbol))
+            else { throw ValidationError.invalidUSSD }
 
-        guard code.hasSuffix(String(hashSymbol)) else { throw USSDCodeValidationError.invalidLastCharacter }
+            guard code.hasSuffix(String(hashSymbol)) else { throw ValidationError.invalidLastCharacter }
 
-        guard code.filter({ $0 == hashSymbol }).count == 1 else { throw USSDCodeValidationError.invalidUSSD }
+            guard code.filter({ $0 == hashSymbol }).count == 1 else { throw ValidationError.invalidUSSD }
 
-        guard code.allSatisfy ({
-            $0.isNumber || $0 == starSymbol || $0 == hashSymbol
-        }) else { throw USSDCodeValidationError.invalidUSSD }
+            guard code.allSatisfy ({
+                $0.isNumber || $0 == starSymbol || $0 == hashSymbol
+            }) else { throw ValidationError.invalidUSSD }
 
-        return code
+            return code
+        }
     }
 }

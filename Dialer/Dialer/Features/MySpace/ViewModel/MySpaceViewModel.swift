@@ -39,21 +39,21 @@ final class MySpaceViewModel: BaseViewModel {
             try DialerStorage.shared.saveUSSDCodes(codes)
         } catch {
             Tracker.shared.logError(error: error)
-            Log
-                .debug(
-                    "Could not save ussd codes locally: ",
-                    error.localizedDescription
-                )
+            Log.debug("Could not save ussd codes locally: ", error.localizedDescription)
         }
     }
 
-    /// Retrieve all locally stored Meter Numbers codes
     func retrieveUSSDCodes() {
         ussdCodes = DialerStorage.shared.getUSSDCodes()
     }
 
     func deleteUSSD(at offSets: IndexSet) {
         ussdCodes.remove(atOffsets: offSets)
+        saveUSSDCodesLocally(ussdCodes)
+    }
+
+    func deleteUSSD(_ code: CustomUSSDCode) {
+        ussdCodes.removeAll(where: { $0 == code })
         saveUSSDCodesLocally(ussdCodes)
     }
 

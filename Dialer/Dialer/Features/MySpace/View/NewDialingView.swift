@@ -103,7 +103,8 @@ extension NewDialingView {
     }
 }
 
-// MARK: Validation
+// MARK: Validations
+// TODO: Move to proper place
 extension NewDialingView {
     private func cleanedTitle(_ value: String) -> String {
         value.trimmingCharacters(in: .whitespaces)
@@ -145,26 +146,20 @@ extension NewDialingView {
 
     private func saveUSSD() {
         do {
-            let newCode = try CustomUSSDCode(title: model.title,
-                                       ussd: model.editedCode)
+            let newCode = try CustomUSSDCode(title: model.title, ussd: model.editedCode)
             if isEditing {
                 store.updateUSSD(newCode)
             } else {
                 store.storeUSSD(newCode)
             }
             dismiss()
-        } catch let error as CustomUSSDCode.USSDCodeValidationError  {
-            alertItem = (true, error.description)
         } catch {
-            alertItem = (true, error.localizedDescription)
+           alertItem = (true, error.description)
         }
     }
-}
-
-extension NewDialingView {
-
 }
 
 #Preview {
     NewDialingView(store: MySpaceViewModel())
 }
+

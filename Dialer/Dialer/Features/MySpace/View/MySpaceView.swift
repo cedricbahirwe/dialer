@@ -36,20 +36,21 @@ struct MySpaceView: View {
                             Text(ussd.title)
 
                             Spacer()
-                            if editMode?.wrappedValue.isEditing == true {
-                                Text("Edit")
-                                    .font(.caption)
-                                    .foregroundStyle(.white)
-                                    .frame(maxHeight: .infinity)
-                                    .frame(width: 60)
-                                    .background(Color.blue)
-                                    .clipShape(Capsule())
-                            }
+//                            if editMode?.wrappedValue.isEditing == true {
+//                                Text("Edit")
+//                                    .font(.caption)
+//                                    .foregroundStyle(.white)
+//                                    .frame(maxHeight: .infinity)
+//                                    .frame(width: 60)
+//                                    .background(Color.blue)
+//                                    .clipShape(Capsule())
+//                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if isEditing {
+                                editMode?.wrappedValue = .active
                                 editedUSSDModel = .init(ussd)
                             } else {
                                 Task {
@@ -57,6 +58,18 @@ struct MySpaceView: View {
                                 }
                                 
                             }
+                        }
+                        
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) { mySpaceStore.deleteUSSD(ussd) } label: {
+//                                Label("Delete", systemImage: "trash")
+                                Image(systemName: "trash")
+                            }
+                            Button { editedUSSDModel = .init(ussd) } label: {
+//                                Label("Edit", systemImage: "pencil")
+                                Image(systemName: "pencil")
+                            }
+                            .tint(.blue)
                         }
                     }
                     .onDelete(perform: mySpaceStore.deleteUSSD)
@@ -98,7 +111,7 @@ struct MySpaceView: View {
             )
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     editedUSSDModel = .init()
                 } label: {
