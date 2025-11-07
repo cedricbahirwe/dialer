@@ -28,7 +28,9 @@ struct ContactsListView: View {
         NavigationStack {
             VStack {
                 searchBarView
-                
+                    .padding(.horizontal)
+                    .padding(.top, 8)
+
                 if contactsVM.searchedContacts.isEmpty {
                     emptyResultsView
                 } else {
@@ -45,6 +47,7 @@ struct ContactsListView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                 }
             }
             .padding(.top, 10)
@@ -68,7 +71,8 @@ struct ContactsListView: View {
                             message: Text("Select a phone number to send to"),
                             buttons: alertButtons)
             }
-            .onAppear() {
+            .task {
+                guard !contactsVM.searchedContacts.isEmpty else { return }
                 DispatchQueue.main.asyncAfter(deadline: .now() ) {
                     withAnimation {
                         isSearching = true
@@ -131,9 +135,12 @@ private extension ContactsListView {
                     }
                 }
             }
-            .background(Color.offBackground)
-            .cornerRadius(6)
-            
+            .padding(8)
+            .background(
+                Color.offBackground,
+                in: .capsule
+            )
+
             if isSearching {
                 Button(action: endEditing) {
                     Text("Cancel")
@@ -142,7 +149,6 @@ private extension ContactsListView {
             }
         }
         .animation(.default, value: isSearching)
-        .padding(.horizontal)
     }
     
     private func clearSearch() {

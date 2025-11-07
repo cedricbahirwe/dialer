@@ -21,11 +21,13 @@ struct TipFormView: View {
                     .clipShape(.rect(cornerRadius: 15))
                     .padding()
 
-                VStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text("Privacy over profit")
                         .font(.title3.bold())
+                        .frame(maxWidth: .infinity)
 
                     Text("Enjoying the app? Leave a tip to show your support. Your contribution helps us keep it free, private, and open-source—without ads, tracking, or compromises.")
+                        .multilineTextAlignment(.leading)
                 }
 
                 TipPickerView(viewModel: viewModel)
