@@ -44,8 +44,8 @@ struct DashBoardView: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 29) {
-                HStack(spacing: 20) {
+            VStack(spacing: 16) {
+                HStack(spacing: 16) {
                     DashItemView(
                         title: "Buy airtime",
                         icon: "wallet.pass")
@@ -57,7 +57,7 @@ struct DashBoardView: View {
                     }
                     
                     DashItemView(
-                        title: "Transfer/Pay",
+                        title: "Transfer",
                         icon: "paperplane.circle")
                     .onTapForBiometrics { success in
                         if success {
@@ -67,7 +67,7 @@ struct DashBoardView: View {
                     }
                 }
                 
-                HStack(spacing: 15) {
+                HStack(spacing: 16) {
                     Group {
                         if #available(iOS 17.0, *) {
                             DashItemView(

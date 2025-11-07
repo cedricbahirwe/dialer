@@ -33,7 +33,7 @@ class DialerUITests: XCTestCase {
     
     func testTransferViewMerchantState() throws {
         
-        app.staticTexts["Transfer/Pay"].tap()
+        app.staticTexts["Transfer"].tap()
         
         let dialButton = app.buttons["Dial USSD"]
         
@@ -52,7 +52,7 @@ class DialerUITests: XCTestCase {
     
     func testTransferViewClientState() throws {
         
-        app.staticTexts["Transfer/Pay"].tap()
+        app.staticTexts["Transfer"].tap()
         
         let dialButton = app.buttons["Dial USSD"]
         
@@ -80,7 +80,7 @@ class DialerUITests: XCTestCase {
 
     func testHomeMenuItemsDisplay() throws {
         XCTAssertTrue(app.staticTexts["Buy airtime"].exists)
-        XCTAssertTrue(app.staticTexts["Transfer/Pay"].exists)
+        XCTAssertTrue(app.staticTexts["Transfer"].exists)
         XCTAssertTrue(app.staticTexts["Insights"].exists)
         XCTAssertTrue(app.staticTexts["My Space"].exists)
     }

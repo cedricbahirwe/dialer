@@ -104,6 +104,7 @@ struct MySpaceView: View {
                 model: $0,
                 isEditing: isEditing
             )
+            .presentationDetents([.medium, .large])
         }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {

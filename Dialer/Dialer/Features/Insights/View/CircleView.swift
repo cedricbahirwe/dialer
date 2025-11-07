@@ -70,7 +70,7 @@ struct CircleView: View {
                     Circle()
                         .trim(from: 0.52, to: 0.98)
                         .stroke(
-                            LinearGradient(colors: [Color.blue.opacity(0.5), Color.blue], startPoint: .trailing, endPoint: .leading)
+                            LinearGradient(colors: [Color.accent.opacity(0.5), Color.accentColor], startPoint: .trailing, endPoint: .leading)
                             ,
                             style: StrokeStyle(
                                 lineWidth: lineWidth,

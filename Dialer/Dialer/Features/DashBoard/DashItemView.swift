@@ -12,6 +12,18 @@ struct DashItemView: View {
     let icon: String
 
     var body: some View {
+        if #available(iOS 26.0, *) { 
+            contentView
+                .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 15))
+        } else {
+            contentView
+            .background(.background, in: .rect(cornerRadius: 15))
+            .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
+            .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)
+        }
+    }
+
+    private var contentView: some View {
         VStack(alignment: .leading, spacing: 10) {
                 Image(systemName: icon)
                     .resizable()
@@ -31,12 +43,7 @@ struct DashItemView: View {
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 85)
-        .background(.background, in: .rect(cornerRadius: 15))
-        .clipShape(.rect(cornerRadius: 15))
         .contentShape(.rect(cornerRadius: 15))
-        .shadow(color: .lightShadow, radius: 4, x: -4, y: -4)
-        .shadow(color: .darkShadow, radius: 4, x: 4, y: 4)
-
     }
 }
 
