@@ -20,12 +20,12 @@
 		CB0F34F12D94412C00916865 /* DialerTO in Frameworks */ = {isa = PBXBuildFile; productRef = CB0F34F02D94412C00916865 /* DialerTO */; };
 		CB10994E2A6165E000E99555 /* MerchantCodeExtractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB10994D2A6165E000E99555 /* MerchantCodeExtractionTests.swift */; };
 		CB1FE62229B7C515000F8444 /* PurchaseDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FE62129B7C515000F8444 /* PurchaseDetailModelTests.swift */; };
+		CB26D6772EBE2E9A00188EC4 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CB26D6762EBE2E9A00188EC4 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		CB338CDE29AF6E8B00BEAD9A /* GoogleService-Info-DEV.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB338CDD29AF6E8B00BEAD9A /* GoogleService-Info-DEV.plist */; };
 		CB3B81E029ABC591001FAFF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3B81DF29ABC591001FAFF6 /* GoogleService-Info.plist */; };
 		CB3CC9822A05B3A20097B65F /* CamelToSnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3CC9812A05B3A20097B65F /* CamelToSnakeTests.swift */; };
 		CB544633289C5763009F3457 /* DialerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544632289C5763009F3457 /* DialerUITests.swift */; };
 		CB544635289C5763009F3457 /* DialerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB544634289C5763009F3457 /* DialerUITestsLaunchTests.swift */; };
-		CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AEB29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		CB582AF229ABEB3100FAD610 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF129ABEB3100FAD610 /* FirebaseFirestore */; };
 		CB582AFA29ABEB3100FAD610 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AF929ABEB3100FAD610 /* FirebaseMessaging */; };
 		CB582AFC29ABEB3100FAD610 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = CB582AFB29ABEB3100FAD610 /* FirebaseRemoteConfig */; };
@@ -106,11 +106,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB667FFE2DA6AF67006F3470 /* StoreKit.framework in Frameworks */,
+				CB26D6772EBE2E9A00188EC4 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				CB582AFC29ABEB3100FAD610 /* FirebaseRemoteConfig in Frameworks */,
 				CB582AFA29ABEB3100FAD610 /* FirebaseMessaging in Frameworks */,
 				CB582AF229ABEB3100FAD610 /* FirebaseFirestore in Frameworks */,
 				CB0F34F12D94412C00916865 /* DialerTO in Frameworks */,
-				CB582AEC29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,11 +264,11 @@
 			);
 			name = Dialer;
 			packageProductDependencies = (
-				CB582AEB29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				CB582AF129ABEB3100FAD610 /* FirebaseFirestore */,
 				CB582AF929ABEB3100FAD610 /* FirebaseMessaging */,
 				CB582AFB29ABEB3100FAD610 /* FirebaseRemoteConfig */,
 				CB0F34F02D94412C00916865 /* DialerTO */,
+				CB26D6762EBE2E9A00188EC4 /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = Dialer;
 			productReference = 82D41FB325D1C1FE00551D22 /* Dialer.app */;
@@ -1119,7 +1119,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = exactVersion;
-				version = 12.5.0;
+				version = 11.10.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1130,7 +1130,7 @@
 			package = CB0F34EF2D94412C00916865 /* XCRemoteSwiftPackageReference "DialerTO" */;
 			productName = DialerTO;
 		};
-		CB582AEB29ABEB3100FAD610 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+		CB26D6762EBE2E9A00188EC4 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB582AEA29ABEB3100FAD610 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsWithoutAdIdSupport;
