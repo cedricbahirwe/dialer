@@ -99,7 +99,7 @@ struct TransferView: View {
 
                 VStack(spacing: 10) {
                     if isClient && !selectedContact.names.isEmpty {
-                        Text(selectedContact.names).font(.caption).foregroundStyle(.blue)
+                        Text(selectedContact.names).font(.caption).foregroundStyle(.accent)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
 
@@ -107,7 +107,7 @@ struct TransferView: View {
                         NumberField(
                             isClient
                             ? "Enter Receiver's number"
-                            : "Enter Merchant Code",
+                            : "Enter Merchant/Momo Code",
                             text: $transaction.number.animation())
                         .onChange(of: transaction.number, perform: handleNumberField)
                         .focused($focusedState, equals: .number)
@@ -143,9 +143,9 @@ struct TransferView: View {
                             .font(.subheadline.bold())
                             .frame(maxWidth: transactionSavings == nil ? .infinity : 100)
                             .frame(height: 48)
-                            .background(Color.blue.opacity(transaction.isValid ? 1 : 0.3))
+                            .background(Color.accentColor.opacity(transaction.isValid ? 1 : 0.1))
                             .cornerRadius(10)
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(transaction.isValid ? .white : .gray)
                     }
                     .disabled(!transaction.isValid)
 
@@ -210,7 +210,7 @@ struct TransferView: View {
                     Button(action: goToNextFocus) {
                         Text(focusedState == .number ? " Finish" : "Next")
                             .font(.system(size: 18, design: .rounded))
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.accent)
                             .padding(5)
                     }
                 }
@@ -222,7 +222,6 @@ struct TransferView: View {
                         Text(isClient ? "Pay Merchant" : "Send Money")
                     }
                     .font(.system(size: 18, design: .rounded))
-                    .foregroundStyle(.blue)
                     .padding(5)
                 }
                 .fixedSize()

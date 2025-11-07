@@ -18,7 +18,7 @@ struct DashItemView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                     .foregroundStyle(
-                        LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .trailing)
+                        LinearGradient(gradient: Gradient(colors: [Color.red, Color.accent]), startPoint: .topLeading, endPoint: .trailing)
                     )
                     .accessibilityHidden(true)
 

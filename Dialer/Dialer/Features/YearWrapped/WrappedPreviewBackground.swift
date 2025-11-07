@@ -59,7 +59,7 @@ struct WrappedPreviewBackground: View {
                         RoundedRectangle(cornerRadius: 30)
                             .fill(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [.mainRed, Color.primaryBackground, Color.blue]),
+                                    gradient: Gradient(colors: [.mainRed, Color.primaryBackground, Color.accentColor]),
                                     startPoint: .topTrailing,
                                     endPoint: .bottom
                                 )

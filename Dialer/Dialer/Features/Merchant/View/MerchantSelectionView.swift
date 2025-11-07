@@ -120,7 +120,7 @@ struct MerchantSelectionView: View {
                         }) {
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 18, design: .rounded))
-                                .foregroundStyle(.blue)
+                                .foregroundStyle(.accent)
                                 .padding(5)
                         }
                     }
@@ -179,7 +179,7 @@ private extension MerchantSelectionView {
 
                 if merchantStore.isFetching {
                     ProgressView()
-                        .tint(.blue)
+                        .tint(.accent)
                 } else {
                     Button {
                         showMerchantCreation = true
@@ -219,7 +219,7 @@ private extension MerchantSelectionView {
                     HStack(spacing: 4) {
                         if merchant.code == selectedCode {
                             Image(systemName: "checkmark")
-                                .foregroundStyle(.blue)
+                                .foregroundStyle(.accent)
                                 .font(.body.weight(.semibold))
                         }
 
@@ -229,7 +229,7 @@ private extension MerchantSelectionView {
                     Spacer()
                     Text("#\(merchant.code)")
                         .font(.callout.weight(.medium))
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(.accent)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())

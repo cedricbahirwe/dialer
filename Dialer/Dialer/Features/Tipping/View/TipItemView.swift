@@ -24,7 +24,7 @@ struct TipItemView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundStyle(
-                        LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        LinearGradient(gradient: Gradient(colors: [.red, .accentColor]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
 
                 Text(product.description)
@@ -33,11 +33,11 @@ struct TipItemView: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
-            .background(isSelected ? Color.blue.opacity(0.1) : Color.gray.opacity(0.1))
+            .background(isSelected ? Color.accentColor.opacity(0.1) : Color.gray.opacity(0.1))
             .clipShape(.rect(cornerRadius: 12))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: isSelected ? 2 : 0.03)
+                    .strokeBorder(LinearGradient(gradient: Gradient(colors: [.red, .accent]), startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: isSelected ? 2 : 0.03)
             )
         }
         .buttonStyle(PlainButtonStyle())

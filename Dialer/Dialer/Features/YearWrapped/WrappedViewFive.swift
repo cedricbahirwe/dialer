@@ -114,7 +114,7 @@ struct AnimatedBackground: View {
                 Circle()
                     .fill(
                         LinearGradient(
-                            gradient: Gradient(colors: [.red, .yellow, .blue]),
+                            gradient: Gradient(colors: [.red, .yellow, .accentColor]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )

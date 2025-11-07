@@ -31,7 +31,7 @@ struct AirtimePurchaseSheet: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color.green, Color.blue]),
+                                    gradient: Gradient(colors: [Color.green, Color.accentColor]),
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing),
                                 lineWidth: 1)
@@ -41,9 +41,9 @@ struct AirtimePurchaseSheet: View {
                     Text("Confirm")
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
-                        .background(Color.blue.opacity(!transaction.isValid ? 0.5 : 1))
+                        .background(Color.accentColor.opacity(transaction.isValid ? 1.0 : 0.1))
                         .cornerRadius(8)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(transaction.isValid ? .white : .gray)
                 }
                 .disabled(!transaction.isValid)
             }
@@ -91,7 +91,7 @@ private extension AirtimePurchaseSheet {
         .sheet(isPresented: .constant(true)) {
             AirtimePurchaseSheet(
                 isPresented: .constant(true),
-                transaction: .constant(.init()),
+                transaction: .constant(.init(amount: 100)),
                 onConfirm: {})
             .presentationDetents([.height(500)])
         }

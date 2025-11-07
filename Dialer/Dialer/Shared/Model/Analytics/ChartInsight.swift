@@ -37,10 +37,10 @@ struct ChartInsight: Identifiable {
 
     var color: Color {
         switch name {
-        case .merchant: .orange
-        case .user: .indigo
-        case .airtime: .blue
-        case .other: .red
+        case .merchant: .yellow
+        case .user: .purple
+        case .airtime: .teal
+        case .other: .gray
         }
     }
 

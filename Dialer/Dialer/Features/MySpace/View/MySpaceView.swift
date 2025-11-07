@@ -36,15 +36,6 @@ struct MySpaceView: View {
                             Text(ussd.title)
 
                             Spacer()
-//                            if editMode?.wrappedValue.isEditing == true {
-//                                Text("Edit")
-//                                    .font(.caption)
-//                                    .foregroundStyle(.white)
-//                                    .frame(maxHeight: .infinity)
-//                                    .frame(width: 60)
-//                                    .background(Color.blue)
-//                                    .clipShape(Capsule())
-//                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
@@ -59,24 +50,28 @@ struct MySpaceView: View {
                                 
                             }
                         }
-                        
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) { mySpaceStore.deleteUSSD(ussd) } label: {
-//                                Label("Delete", systemImage: "trash")
-                                Image(systemName: "trash")
+                                Label("Delete", systemImage: "trash")
+                                    .labelStyle(.iconOnly)
                             }
+                            .tint(.red)
+
                             Button { editedUSSDModel = .init(ussd) } label: {
-//                                Label("Edit", systemImage: "pencil")
-                                Image(systemName: "pencil")
+                                Label("Edit", systemImage: "pencil")
+                                    .labelStyle(.iconOnly)
                             }
-                            .tint(.blue)
                         }
                     }
                     .onDelete(perform: mySpaceStore.deleteUSSD)
+                    .listRowBackground(
+                        Capsule()
+                            .fill(rowBackground)
+                    )
                 }
-//                .listRowBackground(rowBackground)
             }
         }
+        .listRowSpacing(8)
         .scrollContentBackground(.hidden)
         .background(Color.primaryBackground)
         .overlay {
@@ -117,11 +112,14 @@ struct MySpaceView: View {
                 } label: {
                     Label("Add USSD Code", systemImage: "plus")
                 }
+                .tint(.accent)
 
                 if !mySpaceStore.ussdCodes.isEmpty {
                     EditButton()
+                        .tint(.accent)
                 }
             }
+            
         }
         .trackAppearance(.mySpace)
     }
@@ -136,5 +134,6 @@ struct MySpaceView: View {
 #Preview {
     NavigationStack {
         MySpaceView()
+            .environmentObject(MySpaceViewModel())
     }
 }

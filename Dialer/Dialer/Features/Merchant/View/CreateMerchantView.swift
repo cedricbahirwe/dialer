@@ -11,7 +11,7 @@ struct CreateMerchantView: View {
     @ObservedObject var merchantStore: MerchantStore
     
     @Environment(\.dismiss) private var dismiss
-    @State private var model = Model()
+    @State private var model = MerchantCreationModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
@@ -42,8 +42,8 @@ struct CreateMerchantView: View {
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
-                        .background(Color.blue)
-                        .cornerRadius(8)
+                        .background(Color.accentColor)
+                        .cornerRadius(15)
                         .foregroundStyle(Color.white)
                 }
             }
@@ -72,37 +72,8 @@ struct CreateMerchantView: View {
                 dismiss()
             }
         } catch {
-            let validationError = error as? Model.Error
+            let validationError = error as? MerchantCreationModel.Error
             Log.debug("Error: \(validationError?.message ?? "")")
-        }
-    }
-}
-
-private extension CreateMerchantView {
-    struct Model {
-        var name = ""
-        var code = ""
-        var address = ""
-        
-        enum Error: Swift.Error {
-            case invalidInput(String)
-            var message: String {
-                switch self {
-                case .invalidInput(let msg): return msg
-                }
-            }
-        }
-        
-        func getMerchant() throws -> Merchant {
-            guard name.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
-            else { throw Error.invalidInput("Name should be more or equal to 3 characters") }
-            guard (AppConstants.merchantDigitsRange).contains(code.count)
-            else { throw Error.invalidInput("Code should be 5 to 7 digits")  }
-            guard code.allSatisfy(\.isNumber)
-            else { throw Error.invalidInput("Code contains only digits")  }
-            
-            let userId = DialerStorage.shared.getSavedDevice()?.deviceHash
-            return Merchant(name: name, address: address.isEmpty ? nil : address, code: code, ownerId: userId)
         }
     }
 }

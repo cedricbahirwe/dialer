@@ -58,7 +58,7 @@ struct ContactsListView: View {
                     }) {
                         Image(systemName: "chevron.down")
                             .font(.system(size: 18, design: .rounded))
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.accent)
                             .padding(5)
                     }
                 }

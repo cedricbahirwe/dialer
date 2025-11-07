@@ -164,6 +164,7 @@ struct SettingsView: View {
             }
             .trackAppearance(.settings)
         }
+        .tint(.accent)
     }
 }
 

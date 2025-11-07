@@ -34,6 +34,7 @@ struct ContentView: View {
                     }
                 }
         }
+        .tint(.accent)
         .onAppear(perform: setupAppearance)
         .preferredColorScheme(appTheme.asColorScheme)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
@@ -42,7 +43,7 @@ struct ContentView: View {
             }
         }
         .alert(
-            Text("App Update"),
+            "App Update",
             isPresented: forceUpdate.isPresented,
             presenting: forceUpdate.updateAlert)
         { alert in
@@ -52,11 +53,9 @@ struct ContentView: View {
         } message: {
             Text($0.message)
         }
-        
     }
 
     private func setupAppearance() {
-        
         let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
         let descriptor2 = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withSymbolicTraits(.traitBold)?.withDesign(UIFontDescriptor.SystemDesign.rounded)
         

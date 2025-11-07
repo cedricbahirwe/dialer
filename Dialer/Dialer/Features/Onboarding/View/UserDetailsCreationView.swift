@@ -80,12 +80,6 @@ struct UserDetailsCreationView: View {
                         .foregroundStyle(Color.red)
 
                         Spacer()
-                        //                            Button("Restore") {
-                        //                                showRestoreAlert.toggle()
-                        //                            }
-                        //                            .foregroundStyle(Color.accentColor)
-                        //                            .disabled(userStore.recoveryCode != nil)
-                        //                            .bold()
                     }
                 }
                 .padding()

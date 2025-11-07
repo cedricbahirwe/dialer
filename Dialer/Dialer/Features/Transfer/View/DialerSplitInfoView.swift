@@ -19,7 +19,7 @@ struct DialerSplitInfoView: View {
                 .frame(width: 50, height: 50)
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [.orange, .red, .purple, .blue],
+                        colors: [.orange, .red, .purple, .accent],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -52,7 +52,7 @@ struct DialerSplitInfoView: View {
                         .frame(height: 50)
                         .background(
                             LinearGradient(
-                                colors: [.orange, .red, .purple, .blue],
+                                colors: [.orange, .red, .purple, .accentColor],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),

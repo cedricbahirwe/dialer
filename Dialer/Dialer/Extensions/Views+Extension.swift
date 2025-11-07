@@ -10,7 +10,7 @@ import SwiftUI
 extension View {
     var smartGradient: LinearGradient {
         LinearGradient(
-            colors: [.orange, .red, .purple, .blue],
+            colors: [.orange, .red, .purple, .accentColor],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )

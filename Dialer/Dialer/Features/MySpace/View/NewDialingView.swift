@@ -23,7 +23,7 @@ struct NewDialingView: View {
                     if titleAlreadyExists() {
                         Text("This name is already used by another USSD code.")
                             .font(.caption)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.accent)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: model.editedCode)
                     }
@@ -47,7 +47,7 @@ struct NewDialingView: View {
                     if ussdAlreadyExists() {
                         Text("This USSD code is already saved under another name")
                             .font(.caption)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.accent)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .animation(.default, value: model.editedCode)
                     }
@@ -58,12 +58,12 @@ struct NewDialingView: View {
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
-                        .background(Color.blue.opacity(isUSSDValid() ? 1 : 0.3))
+                        .background(Color.accentColor.opacity(isUSSDValid() ? 1 : 0.1))
                         .cornerRadius(8)
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(isUSSDValid() ? .white : .gray)
                 }
-                .disabled(isUSSDValid() == false)
-                
+                .disabled(!isUSSDValid())
+
                 Spacer()
             }
             .alert("USSD Validation", isPresented: $alertItem.status, actions: {

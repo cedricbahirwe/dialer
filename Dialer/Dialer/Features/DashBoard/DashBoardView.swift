@@ -239,7 +239,7 @@ private extension DashBoardView {
             .aspectRatio(contentMode: .fit)
             .frame(width: 30, height: 30)
             .foregroundStyle(
-                LinearGradient(gradient: Gradient(colors: [.red, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                LinearGradient(gradient: Gradient(colors: [.red, .accent]), startPoint: .topLeading, endPoint: .bottomTrailing)
             )
     }
 }
