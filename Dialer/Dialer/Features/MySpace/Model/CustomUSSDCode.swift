@@ -21,7 +21,7 @@ struct CustomUSSDCode: Identifiable, Equatable, Codable, Dialable {
             throw ValidationError.emptyTitle
         }
 
-        guard title.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3 else {
+        guard title.trimmingCharacters(in: .whitespacesAndNewlines).count > 3 else {
             throw ValidationError.shortTitle
         }
 
