@@ -38,7 +38,7 @@ struct AirtimePurchaseSheet: View {
                     )
 
                 Button(action: onConfirm) {
-                    Text("Confirm")
+                    Text("Continue")
                         .frame(maxWidth: .infinity)
                         .frame(height: 45)
                         .background(Color.accentColor.opacity(transaction.isValid ? 1.0 : 0.1))

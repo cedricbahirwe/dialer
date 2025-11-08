@@ -141,7 +141,7 @@ struct TransferView: View {
                     }) {
                         Text("Dial\(transactionSavings == nil ? " USSD" : "")")
                             .font(.subheadline.bold())
-                            .frame(maxWidth: transactionSavings == nil ? .infinity : 100)
+                            .frame(maxWidth: transactionSavings == nil ? .infinity : 140)
                             .frame(height: 48)
                             .background(Color.accentColor.opacity(transaction.isValid ? 1 : 0.1))
                             .cornerRadius(10)
@@ -208,13 +208,14 @@ struct TransferView: View {
                 HStack {
                     Spacer()
                     Button(action: goToNextFocus) {
-                        Text(focusedState == .number ? " Finish" : "Next")
-                            .font(.system(size: 18, design: .rounded))
+                        Text(focusedState == .number ? "Finish" : "Next")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
                             .foregroundStyle(.accent)
                             .padding(5)
                     }
                 }
             }
+
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: switchPaymentType) {
                     HStack {

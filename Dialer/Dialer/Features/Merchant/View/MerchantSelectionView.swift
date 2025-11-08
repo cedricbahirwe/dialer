@@ -188,14 +188,15 @@ private extension MerchantSelectionView {
                             .imageScale(.large)
                     }
 
-                    Button {
-                        hideKeyboard()
-                        isExpanded = true
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                            .imageScale(.large)
+                    if !merchantStore.merchants.isEmpty {
+                        Button {
+                            hideKeyboard()
+                            isExpanded = true
+                        } label: {
+                            Image(systemName: "magnifyingglass")
+                                .imageScale(.large)
+                        }
                     }
-                    .disabled(merchantStore.merchants.isEmpty)
                 }
             }
         } footer: {
