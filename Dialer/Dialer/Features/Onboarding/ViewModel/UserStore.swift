@@ -67,7 +67,10 @@ class UserStore: BaseViewModel {
     func deleteUser() async {
         do {
             guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash, !userId.uuidString.isEmpty else { return }
-            _ = try await userProvider.deleteUser(userId)
+            let didDelete = try await userProvider.deleteUser(userId)
+            if didDelete {
+                await getUsers()
+            }
         } catch {
             Log.debug("Could not delete user: ", error)
         }

@@ -60,7 +60,6 @@ struct AirtimePurchaseSheet: View {
                 .ignoresSafeArea()
                 .shadow(radius: 5)
         )
-        .font(.system(size: 18, weight: .semibold, design: .rounded))
         .onChange(of: isPresented) { newValue in
             if newValue {
                 Tracker.shared.startSession(for: .buyAirtime)

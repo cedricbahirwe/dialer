@@ -27,7 +27,7 @@ class MailService: ObservableObject {
 
     func copySupportEmail() {
         let pasteBoard = UIPasteboard.general
-        pasteBoard.string = DialerlLinks.dialerX
+        pasteBoard.string = DialerlLinks.supportEmail
     }
 
     @MainActor func makeMailView() -> MailView {
