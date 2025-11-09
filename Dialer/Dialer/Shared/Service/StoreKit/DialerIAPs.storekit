@@ -1,0 +1,137 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "0F5F46D7",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "5.0",
+      "familyShareable" : false,
+      "internalID" : "6744408785",
+      "localizations" : [
+        {
+          "description" : "Buy me a coffee",
+          "displayName" : "Coffee",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.dialit.donation.small",
+      "referenceName" : "Coffee Donation",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "25.0",
+      "familyShareable" : false,
+      "internalID" : "6744409146",
+      "localizations" : [
+        {
+          "description" : "Support development",
+          "displayName" : "Developer",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.dialit.donation.large",
+      "referenceName" : "Development Donation",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "10.0",
+      "familyShareable" : false,
+      "internalID" : "6744409238",
+      "localizations" : [
+        {
+          "description" : "Help with hosting",
+          "displayName" : "Hosting",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.dialit.donation.medium",
+      "referenceName" : "Hosting Donation",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "50.0",
+      "familyShareable" : false,
+      "internalID" : "6744411175",
+      "localizations" : [
+        {
+          "description" : "Become a patron",
+          "displayName" : "Patron",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.dialit.donation.generous",
+      "referenceName" : "Patron Donation",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1591756747",
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_developerTeamID" : "6V9B6LUW22",
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 781024382.86354995,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

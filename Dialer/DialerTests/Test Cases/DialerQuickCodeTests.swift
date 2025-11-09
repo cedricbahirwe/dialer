@@ -22,12 +22,4 @@ final class DialerQuickCodeTests: XCTestCase {
         XCTAssertEqual(code2.ussd, "*151*121#")
         XCTAssertEqual(code3.ussd, "*151*1*1#")
     }
-
-    func makeCodePin(_ value: Int) -> CodePin {
-        try! CodePin(value)
-    }
-
-    func makeCodePin(_ value: String) -> CodePin {
-        try! CodePin(value)
-    }
 }

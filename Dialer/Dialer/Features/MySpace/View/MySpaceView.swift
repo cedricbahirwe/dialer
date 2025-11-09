@@ -1,0 +1,140 @@
+//
+//  MySpaceView.swift
+//  Dialer
+//
+//  Created by Cédric Bahirwe on 19/11/2021.
+//  Update by Cédric Bahirwe on 16/08/2022.
+//
+
+import SwiftUI
+
+struct MySpaceView: View {
+    // MARK: - Environment Properties
+    @EnvironmentObject private var mySpaceStore: MySpaceViewModel
+    @Environment(\.dialerService) private var dialer
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.editMode) private var editMode
+
+    // MARK: - Private Properties
+    
+    @State private var editedUSSDModel: CustomDialingModel?
+
+    private var rowBackground: Color {
+        Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
+    }
+
+    private var isEditing: Bool {
+        editMode?.wrappedValue == .active
+    }
+
+    var body: some View {
+        List {
+            if !mySpaceStore.ussdCodes.isEmpty {
+                Section("Custom USSDs") {
+                    ForEach(mySpaceStore.ussdCodes) { ussd in
+                        HStack {
+                            Text(ussd.title)
+
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if isEditing {
+                                editMode?.wrappedValue = .active
+                                editedUSSDModel = .init(ussd)
+                            } else {
+                                Task {
+                                    await dialer.dialCode(for: ussd)
+                                }
+                                
+                            }
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) { mySpaceStore.deleteUSSD(ussd) } label: {
+                                Label("Delete", systemImage: "trash")
+                                    .labelStyle(.iconOnly)
+                            }
+                            .tint(.red)
+
+                            Button { editedUSSDModel = .init(ussd) } label: {
+                                Label("Edit", systemImage: "pencil")
+                                    .labelStyle(.iconOnly)
+                            }
+                        }
+                    }
+                    .onDelete(perform: mySpaceStore.deleteUSSD)
+                    .listRowBackground(
+                        Capsule()
+                            .fill(rowBackground)
+                    )
+                }
+            }
+        }
+        .listRowSpacing(8)
+        .scrollContentBackground(.hidden)
+        .background(Color.primaryBackground)
+        .overlay {
+            if mySpaceStore.ussdCodes.isEmpty {
+                VStack {
+                   Text("👋🏽")
+                        .font(.system(size: 60))
+                    
+                    Text("Welcome to your safe spot.")
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                    
+                    Text("Let's start by adding a new custom USSD")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    
+                    Button("Add custom USSD Code") {
+                        editedUSSDModel = .init()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
+                    .padding()
+                }
+                .padding()
+            }
+        }
+        .navigationTitle("My Space")
+        .sheet(item: $editedUSSDModel.onChange(observeUSSDChange)) {
+            NewDialingView(
+                store: mySpaceStore,
+                model: $0,
+                isEditing: isEditing
+            )
+            .presentationDetents([.medium, .large])
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button {
+                    editedUSSDModel = .init()
+                } label: {
+                    Label("Add USSD Code", systemImage: "plus")
+                }
+                .tint(.accent)
+
+                if !mySpaceStore.ussdCodes.isEmpty {
+                    EditButton()
+                        .tint(.accent)
+                }
+            }
+            
+        }
+        .trackAppearance(.mySpace)
+    }
+
+    private func observeUSSDChange(_ editedUSSD: CustomDialingModel?) {
+        if editedUSSD == nil {
+            editMode?.wrappedValue = .inactive
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        MySpaceView()
+            .environmentObject(MySpaceViewModel())
+    }
+}

@@ -106,7 +106,7 @@ final class TransactionModelTests: XCTestCase {
             type: .client
         )
         XCTAssertEqual(
-            clientTransaction.fullCode,
+            clientTransaction.fullUSSDCode,
             "*182*1*1*0781234567*1000#",
             "Client transaction full code should be correctly formatted"
         )
@@ -117,7 +117,7 @@ final class TransactionModelTests: XCTestCase {
             type: .merchant
         )
         XCTAssertEqual(
-            merchantTransaction.fullCode,
+            merchantTransaction.fullUSSDCode,
             "*182*8*1*1234567*5000#",
             "Merchant transaction full code should be correctly formatted"
         )
