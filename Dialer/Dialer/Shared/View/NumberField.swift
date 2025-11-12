@@ -24,7 +24,7 @@ struct NumberField: View {
         TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
             .textInputAutocapitalization(.never)
-            .disableAutocorrection(true)
+            .autocorrectionDisabled()
             .foregroundStyle(.primary)
             .padding()
             .frame(height: 48)

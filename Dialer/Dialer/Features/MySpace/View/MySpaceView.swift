@@ -19,10 +19,6 @@ struct MySpaceView: View {
     
     @State private var editedUSSDModel: CustomDialingModel?
 
-    private var rowBackground: Color {
-        Color.secondary.opacity(colorScheme == .dark ? 0.1 : 0.15)
-    }
-
     private var isEditing: Bool {
         editMode?.wrappedValue == .active
     }
@@ -30,12 +26,15 @@ struct MySpaceView: View {
     var body: some View {
         List {
             if !mySpaceStore.ussdCodes.isEmpty {
-                Section("Custom USSDs") {
+                Section {
                     ForEach(mySpaceStore.ussdCodes) { ussd in
                         HStack {
                             Text(ussd.title)
+                                .fontWeight(.medium)
 
                             Spacer()
+
+                            Text(ussd.ussd)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
@@ -47,7 +46,6 @@ struct MySpaceView: View {
                                 Task {
                                     await dialer.dialCode(for: ussd)
                                 }
-                                
                             }
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -57,17 +55,26 @@ struct MySpaceView: View {
                             }
                             .tint(.red)
 
-                            Button { editedUSSDModel = .init(ussd) } label: {
-                                Label("Edit", systemImage: "pencil")
+                            Button {
+                                editMode?.wrappedValue = .active
+                                editedUSSDModel = .init(ussd)
+                            } label: {
+                                Label("Edit", systemImage: "info")
                                     .labelStyle(.iconOnly)
                             }
                         }
                     }
                     .onDelete(perform: mySpaceStore.deleteUSSD)
                     .listRowBackground(
-                        Capsule()
-                            .fill(rowBackground)
+                        Color(.systemBackground)
+                            .clipShape(.capsule)
                     )
+                } header: {
+                    Text("Custom USSDs")
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.primary)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
                 }
             }
         }
@@ -104,23 +111,21 @@ struct MySpaceView: View {
                 model: $0,
                 isEditing: isEditing
             )
-            .presentationDetents([.medium, .large])
         }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
+                if !mySpaceStore.ussdCodes.isEmpty {
+                    EditButton()
+                        .tint(.accent)
+                }
+
                 Button {
                     editedUSSDModel = .init()
                 } label: {
                     Label("Add USSD Code", systemImage: "plus")
                 }
                 .tint(.accent)
-
-                if !mySpaceStore.ussdCodes.isEmpty {
-                    EditButton()
-                        .tint(.accent)
-                }
             }
-            
         }
         .trackAppearance(.mySpace)
     }
@@ -133,8 +138,14 @@ struct MySpaceView: View {
 }
 
 #Preview {
+    let vm: MySpaceViewModel = .init()
     NavigationStack {
         MySpaceView()
-            .environmentObject(MySpaceViewModel())
+            .task {
+                vm.storeUSSD(try! .init(title: "Testing USSD", ussd: "*182#"))
+            }
+            .environmentObject(vm)
+
     }
+    .preferredColorScheme(.dark)
 }

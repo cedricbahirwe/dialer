@@ -15,7 +15,7 @@ struct NewDialingView: View {
 
     @State private var alertItem: (status: Bool, message: String) = (false, "")    
     @FocusState  private var focusedField: Field?
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -29,7 +29,7 @@ struct NewDialingView: View {
                     }
                     TextField("What's your USSD code name?", text: $model.title.animation())
                         .keyboardType(.default)
-                        .disableAutocorrection(true)
+                        .autocorrectionDisabled()
                         .focused($focusedField, equals: .title)
                         .submitLabel(.next)
                         .foregroundStyle(.primary)
@@ -43,7 +43,7 @@ struct NewDialingView: View {
                         .focused($focusedField, equals: .code)
                         .submitLabel(.done)
                         .onChange(of: model.editedCode, perform: cleanCode)
-                    
+
                     if ussdAlreadyExists() {
                         Text("This USSD code is already saved under another name")
                             .font(.caption)
@@ -52,17 +52,6 @@ struct NewDialingView: View {
                             .animation(.default, value: model.editedCode)
                     }
                 }
-                
-                Button(action: saveUSSD) {
-                    Text("\(isEditing ? "Edit" : "Save") USSD")
-                        .font(.subheadline.bold())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 48)
-                        .background(Color.accentColor.opacity(isUSSDValid() ? 1 : 0.1))
-                        .cornerRadius(8)
-                        .foregroundStyle(isUSSDValid() ? .white : .gray)
-                }
-                .disabled(!isUSSDValid())
 
                 Spacer()
             }
@@ -72,14 +61,40 @@ struct NewDialingView: View {
                 Text(LocalizedStringKey(alertItem.message))
             })
             .padding()
-            .navigationTitle("\(isEditing ? "Edit" : "Create") your own USSD code")
+            .navigationTitle(isEditing ? "Edit Details" : "New USSD")
             .navigationBarTitleDisplayMode(.inline)
-            .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
+            .background(Color.primaryBackground.ignoresSafeArea())
             .onSubmit(manageKeyboardFocus)
             .trackAppearance(.newDialing)
-            .onAppear() {
+            .task {
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.6) {
                     focusedField = .title
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                Button(action: saveUSSD) {
+                    Text("\(isEditing ? "Edit" : "Save") USSD")
+                        .font(.subheadline.bold())
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 48)
+                        .background(Color.accentColor.opacity(isUSSDValid() ? 1 : 0.1))
+                        .cornerRadius(16)
+                        .foregroundStyle(isUSSDValid() ? .white : .gray)
+                }
+                .disabled(!isUSSDValid())
+                .padding()
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    if #available(iOS 26.0, *) {
+                        Button(role: .cancel) {
+                            dismiss()
+                        }
+                    } else {
+                        Button("Close") {
+                            dismiss()
+                        }
+                    }
                 }
             }
         }
@@ -87,7 +102,7 @@ struct NewDialingView: View {
 }
 
 // MARK: Keyboard
-extension NewDialingView {
+private extension NewDialingView {
     func manageKeyboardFocus() {
         switch focusedField {
         case .title:

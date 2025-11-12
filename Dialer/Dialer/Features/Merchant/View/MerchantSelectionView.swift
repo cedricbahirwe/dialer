@@ -166,14 +166,15 @@ private extension MerchantSelectionView {
                             .font(.system(.title3, design: .rounded, weight: .bold))
                             .textCase(nil)
 
-                        Label("View more merchants", systemImage: "chevron.right")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .labelStyle(.iconOnly)
-                            .foregroundStyle(.secondary)
+                        if !merchantStore.merchants.isEmpty {
+                            Label("View more merchants", systemImage: "chevron.right")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .labelStyle(.iconOnly)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
                 .foregroundStyle(.foreground)
-                .disabled(merchantStore.merchants.isEmpty)
 
                 Spacer(minLength: 1)
 
