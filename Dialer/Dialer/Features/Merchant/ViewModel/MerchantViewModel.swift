@@ -38,6 +38,7 @@ class MerchantStore: BaseViewModel {
         do {
             try await merchantProvider.createMerchant(merchant)
             stopFetch()
+            cleanPotentialMerchantCode()
             savedMerchantPublisher.send(merchant)
             await getMerchants()
         } catch {
@@ -120,6 +121,10 @@ class MerchantStore: BaseViewModel {
         } else {
             potentMerchantCode = MerchantCreationModel(code: merchantCode)
         }
+    }
+
+    func cleanPotentialMerchantCode() {
+        potentMerchantCode = nil
     }
 
     func getPotentialMerchantCode() -> MerchantCreationModel? {
