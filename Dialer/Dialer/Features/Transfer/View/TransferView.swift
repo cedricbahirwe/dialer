@@ -71,8 +71,8 @@ struct TransferView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 15) {
-                VStack(spacing: 10) {
+            VStack(spacing: 16) {
+                VStack(spacing: 8) {
                     if isClient {
                         feeHintView
                             .font(.caption)
@@ -97,11 +97,21 @@ struct TransferView: View {
                 }
                 .animation(.default, value: isClient && !transaction.amount.isEmpty)
 
-                VStack(spacing: 10) {
-                    if isClient && !selectedContact.names.isEmpty {
-                        Text(selectedContact.names).font(.caption).foregroundStyle(.accent)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(spacing: 8) {
+                    Group {
+                        if isClient && !selectedContact.names.isEmpty {
+                            Text(selectedContact.names)
+                        } else if isMerchant, let merchant = merchantStore.firstMatchingMerchantCode(transaction.number) {
+                            HStack(spacing: 2) {
+                                Image(systemName: "checkmark.circle.fill")
+
+                                Text(merchant.name)
+                            }
+                        }
                     }
+                    .font(.caption)
+                    .foregroundStyle(.accent)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
                     HStack {
                         NumberField(
@@ -139,12 +149,12 @@ struct TransferView: View {
                         hideKeyboard()
                         transferMoney()
                     }) {
-                        Text("Dial\(transactionSavings == nil ? " USSD" : "")")
+                        Text("Continue")
                             .font(.subheadline.bold())
                             .frame(maxWidth: transactionSavings == nil ? .infinity : 140)
                             .frame(height: 48)
                             .background(Color.accentColor.opacity(transaction.isValid ? 1 : 0.1))
-                            .cornerRadius(10)
+                            .cornerRadius(16)
                             .foregroundStyle(transaction.isValid ? .white : .gray)
                     }
                     .disabled(!transaction.isValid)
@@ -202,6 +212,11 @@ struct TransferView: View {
                 Spacer()
             }
 
+        }
+        .onReceive(merchantStore.savedMerchantPublisher) { result in
+            // Make sure we're in merchant mode
+            guard isMerchant else { return }
+            transaction.number = result.code
         }
         .toolbar {
             ToolbarItem(placement: .keyboard) {
@@ -418,7 +433,13 @@ private extension TransferView {
         case .merchant:
             transaction.number = String(value.prefix(AppConstants.merchantMaxDigits))
             selectedContact = .empty
+            storePotentialMerchant(from: transaction)
         }
+    }
+
+    func storePotentialMerchant(from transaction: Transaction.Model) {
+        guard transaction.type == .merchant else { return }
+        merchantStore.storePotentialMerchantCode(transaction.number)
     }
 
     func handleAmountChange(_ newAmount: String) {

@@ -8,6 +8,7 @@
 import Foundation
 
 final class UserMerchantStore: MerchantStore {
+
     override func getMerchants() async {
         guard let userId = DialerStorage.shared.getSavedDevice()?.deviceHash, !userId.uuidString.isEmpty else { return }
         let sortedMerchants = await merchantProvider.getMerchantsFor(userId)
@@ -22,5 +23,9 @@ final class UserMerchantStore: MerchantStore {
         } catch {
             Log.debug("Failed to delete user merchants: \(error.localizedDescription)")
         }
+    }
+
+    func firstMatchingMerchantCode(_ merchantCode: String) -> Merchant? {
+        merchants.first { $0.code == merchantCode }
     }
 }

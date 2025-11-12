@@ -6,10 +6,15 @@
 //
 
 import Foundation
+import Combine
 
 class MerchantStore: BaseViewModel {
     @Published private(set) var merchants: [Merchant]
     let merchantProvider: MerchantProtocol
+
+    // This code is received from a pending transaction
+    private var potentMerchantCode: MerchantCreationModel?
+    let savedMerchantPublisher = PassthroughSubject<Merchant, Never>()
 
     init(_ merchantProvider: MerchantProtocol = FirebaseManager()) {
         self.merchants = []
@@ -27,19 +32,19 @@ class MerchantStore: BaseViewModel {
     /// Save a new Merchant
     /// - Parameter merchant: new merchant to be saved
     /// - Returns: Whether or not the merchant was saved
-    func saveMerchant(_ merchant: Merchant) async -> Bool {
+    func saveMerchant(_ merchant: Merchant) async throws {
+        try canSaveMerchant(merchant)
         startFetch()
         do {
-            let isMerchantSaved = try await merchantProvider.createMerchant(merchant)
-            
+            try await merchantProvider.createMerchant(merchant)
             stopFetch()
+            savedMerchantPublisher.send(merchant)
             await getMerchants()
-            return isMerchantSaved
         } catch {
+            stopFetch()
             Tracker.shared.logError(error: error)
             Log.debug("Could not save merchant: ", error)
-            stopFetch()
-            return false
+            throw error
         }
     }
 
@@ -87,4 +92,39 @@ class MerchantStore: BaseViewModel {
             }
         }
     }
+
+    func canSaveMerchant(_ newMerchant: Merchant) throws {
+        for merchant in merchants {
+            try validateMerchantName(merchant, newMerchant)
+            try validateMerchantCode(merchant, newMerchant)
+
+        }
+
+        func validateMerchantName(_ existingMerchant: Merchant, _ newMerchant: Merchant) throws {
+            if existingMerchant.name.trimmingCharacters(in: .whitespacesAndNewlines).contains(newMerchant.name.trimmingCharacters(in: .whitespacesAndNewlines)) {
+                throw MerchantCreationModel.Error.invalidInput("You’ve already saved a merchant with this name.")
+            }
+        }
+
+        func validateMerchantCode(_ existingMerchant: Merchant, _ newMerchant: Merchant) throws {
+            if existingMerchant.code.trimmingCharacters(in: .whitespacesAndNewlines).contains(newMerchant.code.trimmingCharacters(in: .whitespacesAndNewlines)) {
+                throw MerchantCreationModel.Error.invalidInput("You’ve already saved a merchant with this code.")
+            }
+        }
+    }
+
+
+    func storePotentialMerchantCode(_ merchantCode: String) {
+        if merchants.contains(where: { $0.code == merchantCode }) {
+            potentMerchantCode = nil
+        } else {
+            potentMerchantCode = MerchantCreationModel(code: merchantCode)
+        }
+    }
+
+    func getPotentialMerchantCode() -> MerchantCreationModel? {
+        return potentMerchantCode
+    }
+
+
 }

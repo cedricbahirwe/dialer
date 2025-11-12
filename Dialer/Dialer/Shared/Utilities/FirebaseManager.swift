@@ -13,7 +13,7 @@ class FirebaseManager: FirebaseCRUD {
 
 // MARK: - Merchant Provider
 extension FirebaseManager: MerchantProtocol {
-
+    @discardableResult
     func createMerchant(_ merchant: Merchant) async throws -> Bool {
         try await create(merchant, in: .merchants)
     }
@@ -225,6 +225,7 @@ extension FirebaseManager: UserProtocol {
 }
 
 protocol MerchantProtocol {
+    @discardableResult
     func createMerchant(_ merchant: Merchant) async throws-> Bool
     func getMerchant(by id: String) async -> Merchant?
     func updateMerchant(_ merchant: Merchant) async throws-> Bool

@@ -13,6 +13,7 @@ struct MerchantSelectionView: View {
     var isPresentedModally = false
     var selectedCode: String
     var onSelectMerchant: (Merchant) -> Void
+
     @FocusState private var isSearching: Bool
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
@@ -61,8 +62,8 @@ struct MerchantSelectionView: View {
                             }
                         }
                     }
-                    .background(Color.offBackground)
-                    .cornerRadius(6)
+                    .padding(4)
+                    .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 16))
 
                     if isSearching {
                         Button(action: endEditing) {
@@ -83,7 +84,8 @@ struct MerchantSelectionView: View {
                     merchantSelectionList
                 }
             }
-            .scrollContentBackground(isPresentedModally ? .visible : .hidden)
+            .scrollContentBackground(.hidden)
+            .background(Color.clear)
         }
         .sheet(isPresented: $showMerchantCreation) {
             CreateMerchantView(merchantStore: merchantStore)
@@ -99,6 +101,7 @@ struct MerchantSelectionView: View {
                     )
                     .presentationDetents([.medium, .large])
                     .presentationContentInteraction(.scrolls)
+                    .presentationCornerRadius(20)
                 } else {
                     MerchantSelectionView(
                         merchantStore: merchantStore,
@@ -265,6 +268,22 @@ private extension MerchantSelectionView {
             searchQuery = ""
             isSearching = false
             hideKeyboard()
+        }
+    }
+}
+
+#Preview {
+    let vm = UserMerchantStore()
+    MerchantSelectionView(
+        merchantStore: vm,
+        isPresentedModally: false,
+        selectedCode: "1234",
+        onSelectMerchant: {_ in }
+    )
+    .task {
+        let deviceHash = DialerStorage.shared.getSavedDevice()?.deviceHash
+        Task {
+           try? await vm.saveMerchant(.init(name: "Testing", address: nil, code:String("123456".shuffled()), ownerId: deviceHash))
         }
     }
 }

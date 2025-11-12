@@ -9,10 +9,16 @@ import SwiftUI
 
 struct CreateMerchantView: View {
     @ObservedObject var merchantStore: MerchantStore
-    
+    @State private var model: MerchantCreationModel
+    @State private var alertItem: (status: Bool, message: String) = (false, "")
+
     @Environment(\.dismiss) private var dismiss
-    @State private var model = MerchantCreationModel()
-    
+
+    init(merchantStore: MerchantStore) {
+        self.merchantStore = merchantStore
+        self._model = State(initialValue: merchantStore.getPotentialMerchantCode() ?? .init())
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             Text("Create Merchant")
@@ -43,7 +49,7 @@ struct CreateMerchantView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
                         .background(Color.accentColor)
-                        .cornerRadius(15)
+                        .cornerRadius(16)
                         .foregroundStyle(Color.white)
                 }
             }
@@ -60,20 +66,26 @@ struct CreateMerchantView: View {
                     .scaleEffect(2)
             }
         }
+        .alert("Merchant Validation", isPresented: $alertItem.status, actions: {
+            Button("Okay", action: {})
+        }, message: {
+            Text(LocalizedStringKey(alertItem.message))
+        })
         .trackAppearance(.newMerchant)
     }
     
     private func saveMerchant()  {
-        do {
-            let merchant = try model.getMerchant()
-            Task {
-                let success = await merchantStore.saveMerchant(merchant)
-                guard success else { return }
+        Task {
+            do {
+                let merchant = try model.getMerchant()
+                try await merchantStore.saveMerchant(merchant)
                 dismiss()
+            } catch {
+                if let validationError = error as? MerchantCreationModel.Error {
+                    alertItem = (true, validationError.message)
+                }
+                Log.debug("Error: \(error.localizedDescription)")
             }
-        } catch {
-            let validationError = error as? MerchantCreationModel.Error
-            Log.debug("Error: \(validationError?.message ?? "")")
         }
     }
 }
