@@ -12,7 +12,10 @@ struct AppConstants {
     private init() { }
 
     static let minAmount = 1
-    static let merchantDigitsRange = 5...7
+    private static let merchantDigitsRangeDefault = 4...7
+    static var merchantDigitsRange: ClosedRange<Int> {
+        getMerchantDigitsRange()
+    }
     static let merchantMaxDigits = merchantDigitsRange.upperBound
     static let airtimeUSSDPrefix: String = "*182*2*1*1*1*"
 
@@ -25,4 +28,20 @@ struct AppConstants {
         }
         return "lasso.badge.sparkles"
     }()
+
+    private static func getMerchantDigitsRange() -> ClosedRange<Int> {
+        let json  = RemoteConfigs.shared.string(for: .merchantDigitsRange) ?? ""
+        let data = Data(json.utf8)
+        let result = try? JSONDecoder().decode(MerchantDigitsRange.self, from: data)
+        return result?.range ?? merchantDigitsRangeDefault
+    }
+}
+
+private struct MerchantDigitsRange: Decodable {
+    let min: Int
+    let max: Int
+
+    var range: ClosedRange<Int> {
+        return min...max
+    }
 }

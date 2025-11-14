@@ -62,5 +62,6 @@ final class RemoteConfigs {
 enum RemoteConfigsFlag: String {
     case latestAppVersion = "latest_app_version"
     case show2024Wrapped = "show_2024_wrapped"
+    case merchantDigitsRange = "merchant_digits_range"
 }
 

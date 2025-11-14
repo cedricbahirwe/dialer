@@ -66,7 +66,6 @@ struct Transaction: Identifiable, Codable {
             case .client:
                 return doubleAmount > 0 && number.count >= 8
             case .merchant:
-                // TODO: Needs a firebase remote config to set the merchant digits count
                 return doubleAmount > 0 && (AppConstants.merchantDigitsRange).contains(number.count)
             }
         }
