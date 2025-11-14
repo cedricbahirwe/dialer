@@ -28,7 +28,7 @@ struct NewDialingView: View {
                             .animation(.default, value: model.editedCode)
                     }
                     TextField("What's your USSD code name?", text: $model.title.animation())
-                        .keyboardType(.default)
+                        .keyboardType(.alphabet)
                         .autocorrectionDisabled()
                         .focused($focusedField, equals: .title)
                         .submitLabel(.next)
@@ -67,7 +67,7 @@ struct NewDialingView: View {
             .onSubmit(manageKeyboardFocus)
             .trackAppearance(.newDialing)
             .task {
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.6) {
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.75) {
                     focusedField = .title
                 }
             }

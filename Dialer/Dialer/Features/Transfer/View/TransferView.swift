@@ -137,7 +137,7 @@ struct TransferView: View {
                                 .imageScale(.large)
                                 .frame(width: 48, height: 48)
                                 .background(Color.accentColor)
-                                .cornerRadius(8)
+                                .cornerRadius(12)
                                 .foregroundStyle(.white)
                         }
                     }
@@ -166,6 +166,8 @@ struct TransferView: View {
                                 return
                             }
 
+                            hideKeyboard()
+
                             Tracker.shared.logEvent(.openDialerSplits)
 
                             if isDialerSplitsEnabled {
@@ -185,10 +187,10 @@ struct TransferView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 44)
                             .background(.black)
-                            .cornerRadius(8, antialiased: false)
+                            .cornerRadius(14, antialiased: false)
                             .padding(3)
                             .overlay {
-                                RoundedRectangle(cornerRadius: 10)
+                                RoundedRectangle(cornerRadius: 16)
                                     .strokeBorder(smartGradient, lineWidth: 1)
                             }
                             .foregroundStyle(smartGradient)
@@ -301,7 +303,6 @@ struct TransferView: View {
         .background(Color.primaryBackground.ignoresSafeArea().onTapGesture(perform: hideKeyboard))
         .trackAppearance(.transfer)
         .task {
-            //            isDialerSplitsEnabled = false
             performInitialization()
             await merchantStore.getMerchants()
         }
@@ -344,6 +345,8 @@ private extension TransferView {
     }
 
     func shakeNumberField() {
+        triggerErrorFeedback()
+
         withAnimation(.default) {
             isShakingNumberField = true
         }
@@ -351,6 +354,11 @@ private extension TransferView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             isShakingNumberField = false
         }
+    }
+
+    func triggerErrorFeedback() {
+        let notification = UINotificationFeedbackGenerator()
+        notification.notificationOccurred(.error)
     }
 
     func showOptimizedTransactions() {

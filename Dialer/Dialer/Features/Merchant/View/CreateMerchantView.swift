@@ -37,6 +37,7 @@ struct CreateMerchantView: View {
                     TextField("Merchant Address", text: $model.address)
                 }
                 .autocorrectionDisabled()
+                .keyboardType(.alphabet)
                 .font(.callout)
                 .padding()
                 .frame(height: 48)
